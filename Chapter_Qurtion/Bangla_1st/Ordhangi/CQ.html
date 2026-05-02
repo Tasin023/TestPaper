@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অর্ধাঙ্গী</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1A0A0F;
+            --glass-core: rgba(107, 15, 32, 0.55);
+            --glass-border: rgba(240, 100, 120, 0.12);
+            --accent: #F2A0AE;
+            --accent-glow: rgba(192, 37, 62, 0.35);
+            --text-primary: #FDE8EC;
+            --text-secondary: #C26070;
+            --card-radius: 28px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            padding-bottom: 120px;
+        }
+
+        /* --- High-End Header --- */
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--accent);
+            text-transform: uppercase;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 20px 0 10px;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff 30%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-secondary); font-weight: 300; }
+
+        /* --- Floating Navigation HUD --- */
+        .mastery-hud {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            background: var(--glass-core);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .progress-container { flex-grow: 1; margin: 0 40px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px; }
+        .bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* --- CQ Analysis Cards --- */
+        .container { width: 100%; max-width: 850px; margin: 50px auto; padding: 0 20px; }
+
+        .cq-card {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cq-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .q-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .q-index {
+            background: var(--accent);
+            color: #000;
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: 'Outfit';
+        }
+        .q-tag { color: var(--accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+        .q-statement { font-size: 1.4rem; font-weight: 500; color: #fff; margin-bottom: 25px; line-height: 1.4; }
+
+        /* --- Premium Reveal Button --- */
+        .reveal-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .reveal-trigger:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        /* --- Answer Drawer --- */
+        .ans-drawer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .is-active .ans-drawer { max-height: 1000px; margin-top: 25px; border: 1px solid rgba(56, 189, 248, 0.1); }
+        .is-active .reveal-trigger { background: var(--accent); color: #000; }
+
+        .ans-body { padding: 25px; color: var(--text-secondary); font-size: 1.15rem; border-left: 4px solid var(--accent); }
+        .ans-body strong { color: var(--accent); display: block; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* --- Global Controls --- */
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .mastery-hud { flex-direction: column; gap: 15px; padding: 20px; border-radius: 25px; }
+            .progress-container { margin: 10px 0; width: 100%; }
+        }
+    </style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+    <header>
+        <span class="category-tag">bangla first paper</span>
+        <h1>অর্ধাঙ্গী</h1>
+        <p>বেগম রোকেয়া — জ্ঞানমূলক ও অনুধাবনমূলক প্রশ্নোত্তর</p>
+    </header>
+
+    <div class="mastery-hud">
+        <div class="hud-label" style="font-family:'Outfit'">TOPICS</div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Mastery Progress</span>
+                <span id="prog-percent">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+        </div>
+        <button class="btn-ghost" onclick="toggleAll()">REVEAL ALL</button>
+    </div>
+
+    <main class="container" id="cq-list"></main>
+
+    <script>
+        const analysisData = [
+ { q: "মুসলিম সমাজে নারী জাগরণের পথিকৃৎ কে?", a: "মুসলিম সমাজে নারী জাগরণের পথিকৃৎ রোকেয়া সাখাওয়াত হোসেন।"  },
+{ q: "রোকেয়া সাখাওয়াত হোসেন কী হিসেবে জীবন শুরু করেন?", a: "রোকেয়া সাখাওয়াত হোসেন একজন লেখক হিসেবে জীবন শুরু করেন।"  },
+{ q: "বিদ্যার্জনের মাধ্যমে রোকেয়া সাখাওয়াত কীসের বেড়াজাল অতিক্রম করেন?", a: "বিদ্যার্জনের মাধ্যমে রোকেয়া সাখাওয়াত সামাজিক সীমাবদ্ধতার বেড়াজাল অতিক্রম করেন।"  },
+{ q: "বেগম রোকেয়া কলম ধরেছিলেন কেন?", a: "সমাজকে জাগানোর লক্ষ্য বেগম রোকেয়া কলম ধরেছিলেন।"  },
+{ q: "সমকালীন হিন্দু বা মুসলমান সমাজে কার তুল্য লেখক ছিল না?", a: "সমকালীন হিন্দু বা মুসলমান সমাজে বেগম রোকেয়ার তুল্য লেখক ছিল না।"  },
+{ q: "বেগম রোকেয়ার রচিত ইংরেজি গ্রন্থের নাম কী?", a: "বেগম রোকেয়ার রচিত ইংরেজি গ্রন্থের নাম 'Sultana's Dream'।"  },
+{ q: "বেগম রোকেয়ার লেখা কোন নামে প্রকাশিত হতো?", a: "বেগম রোকেয়ার লেখা 'মিসেস আর. এস. হোসেন' নামে প্রকাশিত হতো।"  },
+{ q: "বেগম রোকেয়া কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", a: "বেগম রোকেয়া ১৮৮০ খ্রিষ্টাব্দে জন্মগ্রহণ করেন।"  },
+{ q: "বেগম রোকেয়া কোন জেলায় জন্মগ্রহণ করেন?", a: "বেগম রোকেয়া রংপুর জেলা জন্মগ্রহণ করেন।"  },
+{ q: "বেগম রোকেয়া কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", a: "বেগম রোকেয়া ১৯৩২ খ্রিষ্টাব্দে মৃত্যুবরণ করেন।"  },
+{ q: "রোগীর চিকিৎসা করতে হলে প্রথমে কী জানা আবশ্যক?", a: "রোগীর চিকিৎসা করতে হলে প্রথমে রোগের অবস্থা জানা আবশ্যক।"  },
+{ q: "অবনতির উন্নতির পথ আবিষ্কারের আগে কীসের চিত্র দেখাতে হবে?", a: "অবনতির উন্নতির পথ আবিষ্কারের আগে তাদের অবনতির চিত্র দেখাতে হবে।"  },
+{ q: "'স্ত্রীজাতির অবনতি' কী জাতির রচনা?", a: "'স্ত্রীজাতির অবনতি' প্রবন্ধ জাতীয় রচনা।"  },
+{ q: "লেখিকা 'স্ত্রীজাতির অবনতি' প্রবন্ধে নারীদের কোন রোগের কথা উল্লেখ করেছেন?", a: "লেখিকা 'স্ত্রীজাতির অবনতি' প্রবন্ধে নারীদের দাসত্ব রোগের কথা উল্লেখ করেছেন।"  },
+{ q: "দাসত্ব রোগের কারণে আমাদের সামাজিক অবস্থা কেমন হয়েছে?", a: "দাসত্ব রোগের কারণে আমাদের সামাজিক অবস্থা বিপর্যস্ত হয়েছে।"  },
+{ q: "বেগম রোকেয়ার কোন প্রবন্ধে প্রায় সমস্ত নারী জাতির উল্লেখ আছে?", a: "বেগম রোকেয়ার 'স্ত্রীজাতির অবনতি' প্রবন্ধে প্রায় সমস্ত নারী জাতির উল্লেখ আছে।"  },
+{ q: "'পদ্মরাগ' গ্রন্থের রচয়িতা কে?", a: "'পদ্মরাগ' গ্রন্থের রচয়িতা রোকেয়া সাখাওয়াত হোসেন।"  },
+{ q: "যেকোনো নতুন কাজে প্রথমে কোথায় গোলযোগ বাঁধে?", a: "যেকোনো নতুন কাজে প্রথমে সমাজে গোলযোগ বাঁধে।"  },
+{ q: "পার্সি মহিলাদের পর্দা মোচন হলে কী মোচন হয়নি?", a: "পার্সি মহিলাদের পর্দা মোচন হলেও তাদের মানসিক দাসত্ব মোচন হয়নি।"  },
+{ q: "পার্সি পুরুষগণ কিসের অনুকরণ করে স্ত্রীদের পর্দার বাইরে এনেছিলেন?", a: "পার্সি পুরুষগণ অন্ধভাবে বিলাতি সভ্যতার অনুকরণ করে স্ত্রীদের পর্দার বাইরে এনেছিলেন।"  },
+{ q: "আমেরিকা আবিষ্কারে কৃতসংকল্প হন কে?", a: "কলম্বাস আমেরিকা আবিষ্কারে কৃতসংকল্প হন।"  },
+{ q: "কলম্বাসের আমেরিকা আবিষ্কারের সংকল্পকে মানুষ কী মনে করেছিল?", a: "কলম্বাসের আমেরিকা আবিষ্কারের সংকল্পকে মানুষ বাতুলতা মনে করেছিল।"  },
+{ q: "পুরুষগণ স্ত্রীজাতির প্রতি যে সম্মান দেন তাতে আমরা কী হতে পারি না?", a: "পুরুষগণ স্ত্রীজাতির প্রতি যে সম্মান দেন তাতে আমরা তৃপ্ত হতে পারি না।"  },
+{ q: "নারীদের শিক্ষা দেওয়ার জন্য গুরুলোকে কাকে আদর্শ হিসেবে দেখিয়েছেন?", a: "নারীদের শিক্ষা দেওয়ার জন্য গুরুলোকে সীতাদেবীকে আদর্শ হিসেবে দেখিয়েছেন।"  },
+{ q: "কে একাধারে রামচন্দ্রের প্রণয়নী, সহচরী এবং রানী?", a: "সীতা একাধারে রামচন্দ্রের প্রণয়নী, সহচরী এবং রানী।"  },
+{ q: "স্বামিত্বের ষোলআনা পরিচয় কে দিয়েছিলেন?", a: "রামচন্দ্র স্বামিত্বের ষোলআনা পরিচয় দিয়েছিলেন।"  },
+{ q: "বেগম রোকেয়ার মতে রাম সীতার কোন শক্তি বুঝতে চাননি?", a: "বেগম রোকেয়ার মতে রাম সীতার অনুভব শক্তি বুঝতে চাননি।"  },
+{ q: "কারা সাংসারিক জীবনকে দ্বিচক্র শকটের ন্যয় মনে করেছিলেন?", a: "শুক্লকেশ ও বুদ্ধিমানগণ সাংসারিক জীবনকে দ্বিচক্র শকটের ন্যয় মনে করেছিলেন।"  },
+{ q: "কোন ভাষায় কথায় কথায় স্ত্রীকে অংশিনী বলে?", a: "ইংরেজি ভাষায় কথায় কথায় স্ত্রীকে অংশিনী বলে।"  },
+{ q: "কারা গাহস্থ্য ব্যাপারটিকে মস্তকস্বরূপ কল্পনা করেছিলেন?", a: "শাস্ত্রকারগণ গাহস্থ্য ব্যাপারটিকে মস্তকস্বরূপ কল্পনা করেছিলেন।"  }
+ ]
+
+        const list = document.getElementById('cq-list');
+        const bar = document.getElementById('progress-bar');
+        const percentText = document.getElementById('prog-percent');
+        let revealedCount = new Set();
+
+        function render() {
+            list.innerHTML = analysisData.map((item, i) => `
+                <div class="cq-card" id="card-${i}">
+                    <div class="q-meta">
+                        <div class="q-index">${i + 1}</div>
+                        <div class="q-tag">Knowledge Base</div>
+                    </div>
+                    <div class="q-statement">${item.q}</div>
+                    <button class="reveal-trigger" onclick="reveal(${i})">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>বিশ্লেষণ দেখুন</span>
+                    </button>
+                    <div class="ans-drawer">
+                        <div class="ans-body">
+                            <strong>বিশ্লেষণধর্মী উত্তর</strong>
+                            ${item.a}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function reveal(index) {
+            const card = document.getElementById(`card-${index}`);
+            card.classList.toggle('is-active');
+            
+            if(card.classList.contains('is-active')) {
+                revealedCount.add(index);
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = analysisData.length;
+            const current = revealedCount.size;
+            const percentage = Math.round((current / total) * 100);
+            bar.style.width = percentage + '%';
+            percentText.innerText = percentage + '%';
+        }
+
+        function toggleAll() {
+            analysisData.forEach((_, i) => {
+                const card = document.getElementById(`card-${i}`);
+                if(!card.classList.contains('is-active')) {
+                    card.classList.add('is-active');
+                    revealedCount.add(i);
+                }
+            });
+            updateProgress();
+        }
+
+        render();
+    </script>
+</body>
+</html>

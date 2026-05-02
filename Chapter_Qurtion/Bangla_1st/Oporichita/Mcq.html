@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অপরিচিতা</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>অপরিচিতা</h1>
+  <p>রবীন্দ্রনাথ ঠাকুর — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "অনুপমের বাবা কী করে জীবিকা নির্বাহ করতেন?", "options": ["ডাক্তারি", "ওকালতি", "মাস্টারি", "ব্যবসা"], "correct": 1 },
+  { "id": 2, "q": "মামাকে ভাগ্য দেবতার প্রধান এজেন্ট বলার কারণ তাঁর-", "options": ["অপরিণত", "প্রভাব", "বিচক্ষণতা", "ঘোর পূর্ণতা"], "correct": 1 },
+  { "id": 3, "q": "উদ্দীপকের বিনু চাচার সাথে 'অপরিচিতা' গল্পের কোন চরিত্রের মিল আছে?", "options": ["হরিশের", "মামার", "শিক্ষকের", "বিনুদার"], "correct": 3 },
+  { "id": 4, "q": "উক্ত চরিত্রে প্রধান্য পেয়েছে- i. আভিজাত্য ii. হীনম্মন্যতা iii. লোভ (নিচের কোনটি সঠিক?)", "options": ["i", "ii", "i ও iii", "i, ii ও iii"], "correct": 2 },
+  { "id": 5, "q": "রবীন্দ্রনাথ কত খ্রিস্টাব্দে জন্মগ্রহণ করেন?", "options": ["১৮৬১ খ্রিস্টাব্দের ৭ই মে", "১৮৫১ খ্রিস্টাব্দের ৭ই মে", "১৮৭১ খ্রিস্টাব্দের ৭ই মে", "১৮৯১ খ্রিস্টাব্দের ৭ই মে"], "correct": 0 },
+  { "id": 6, "q": "রবীন্দ্রনাথ ঠাকুর কত বঙ্গাব্দে জন্মগ্রহণ করেন?", "options": ["১২৬১ বঙ্গাব্দে", "১২৬৮ বঙ্গাব্দে", "১২৭০ বঙ্গাব্দে", "১২৭২ বঙ্গাব্দে"], "correct": 1 },
+  { "id": 7, "q": "রবীন্দ্রনাথ ঠাকুর কলকাতার কোন পরিবারে জন্মগ্রহণ করেন?", "options": ["মহর্ষি পরিবারে", "ঠাকুর পরিবারে", "সেন পরিবারে", "ভট্টাচার্য পরিবারে"], "correct": 1 },
+  { "id": 8, "q": "রবীন্দ্রনাথ ঠাকুরের পিতার নাম কী?", "options": ["অবনীন্দ্রনাথ ঠাকুর", "শিবনাথ ঠাকুর", "দেবেন্দ্রনাথ ঠাকুর", "বীরেন্দ্রনাথ ঠাকুর"], "correct": 2 },
+  { "id": 9, "q": "রবীন্দ্রনাথ ঠাকুরের মায়ের নাম কী?", "options": ["সারদা দেবী", "সারদা দেবী (Spelling Variant)", "বিমলা দেবী", "কল্যাণী দেবী"], "correct": 1 },
+  { "id": 10, "q": "রবীন্দ্রনাথ ঠাকুর কোন অভিধায় সম্মানিত হয়েছেন?", "options": ["শ্রেষ্ঠ কবি", "বিশ্বকবি", "চারণ কবি", "প্রবীণ কবি"], "correct": 1 },
+  { "id": 11, "q": "বাংলা ছোটগল্পের প্রথম সার্থক শিল্পী কে?", "options": ["রবীন্দ্রনাথ ঠাকুর", "শরৎচন্দ্র চট্টোপাধ্যায়", "মানিক বন্দ্যোপাধ্যায়", "বিভূতিভূষণ বন্দ্যোপাধ্যায়"], "correct": 0 },
+  { "id": 12, "q": "রবীন্দ্রনাথ ঠাকুরের প্রথম রচিত ছোটগল্পের নাম কী?", "options": ["ভিখারিণী", "অপরিচিতা", "রবিবার", "হৈমন্তী"], "correct": 0 },
+  { "id": 13, "q": "কত বঙ্গাব্দে রবীন্দ্রনাথ ঠাকুর তাঁর প্রথম ছোটগল্প 'ভিখারিণী' রচনা করেন?", "options": ["১২৮২ বঙ্গাব্দে", "১২৮৩ বঙ্গাব্দে", "১২৮৪ বঙ্গাব্দে", "১২৮৫ বঙ্গাব্দে"], "correct": 2 },
+  { "id": 14, "q": "কত বছর বয়সে রবীন্দ্রনাথ ঠাকুর তাঁর প্রথম ছোটগল্প রচনা করেন?", "options": ["পনেরো বছর", "ষোলো বছর", "সতেরো বছর", "আঠারো বছর"], "correct": 1 },
+  { "id": 15, "q": "'গল্পগুচ্ছে' রবীন্দ্রনাথ ঠাকুরের কতটি গল্প সংকলিত হয়েছে?", "options": ["৮৫টি", "৯৩টি", "৯৫টি", "১০০টি"], "correct": 2 },
+  { "id": 16, "q": "রবীন্দ্রনাথ ঠাকুরের সর্বশেষ রচিত গল্পের নাম কী?", "options": ["রবিবার", "ক্ষুধিত পাষাণ", "মুসলমানীর গল্প", "নিশীথে"], "correct": 2 },
+  { "id": 17, "q": "কোন সময়টাকে রবীন্দ্রনাথ ঠাকুরের ছোটগল্প রচনার স্বর্ণযুগ বলা হয়?", "options": ["কুষ্টিয়ার শিলাইদহে বসবাসের সময়কে", "জোড়াসাঁকোর ঠাকুরবাড়িতে বসবাসের সময়কে", "শান্তিনিকেতনে বসবাসের সময়কে", "পতিসরে বসবাসের সময়কে"], "correct": 0 },
+  { "id": 18, "q": "কোন কাব্যগ্রন্থের শ্রেষ্ঠ কবিতাগুলো রবীন্দ্রনাথ ঠাকুর শিলাইদহে থাকাকালে রচনা করেন?", "options": ["মানসী", "খেয়া", "বলাকা", "সোনার তরী"], "correct": 3 },
+  { "id": 19, "q": "বিশ শতকের ছোটগল্পে কোন জিনিসটি প্রাধান্য পেয়েছে?", "options": ["প্রকৃতি", "গীতিময়তা", "রাজনীতি", "বাস্তবতা"], "correct": 3 },
+  { "id": 20, "q": "'শেযের কবিতা' রবীন্দ্রনাথ ঠাকুরের কী ধরনের গ্রন্থ?", "options": ["কাব্যগ্রন্থ", "গল্পগ্রন্থ", "উপন্যাস", "নাটক"], "correct": 2 },
+  { "id": 21, "q": "'যোগাযোগ' উপন্যাসটির রচয়িতা কে?", "options": ["রবীন্দ্রনাথ ঠাকুর", "শরৎচন্দ্র চট্টোপাধ্যায়", "মানিক বন্দ্যোপাধ্যায়", "বিভূতিভূষণ বন্দ্যোপাধ্যায়"], "correct": 0 },
+  { "id": 22, "q": "'রক্তকরবী' রবীন্দ্রনাথ ঠাকুরের কী ধরনের গ্রন্থ?", "options": ["কাব্যগ্রন্থ", "গল্পগ্রন্থ", "উপন্যাস", "নাটক"], "correct": 3 },
+  { "id": 23, "q": "'ডাকঘর' নাটকের রচয়িতা কে?", "options": ["রবীন্দ্রনাথ ঠাকুর", "কাজী নজরুল ইসলাম", "মীর মোশাররফ হোসেন", "সৈয়দ শামসুল হক"], "correct": 0 },
+  { "id": 24, "q": "রবীন্দ্রনাথ ঠাকুরের মৃত্যু সাল কত?", "options": ["১৯৪১", "১৯৪৩", "১৯৪৫", "১৯৪৭"], "correct": 0 },
+  { "id": 25, "q": "রবীন্দ্রনাথ ঠাকুরের মৃত্যুর তারিখ কোনটি?", "options": ["৭ই মে", "৭ই জুন", "৭ই জুলাই", "৭ই আগস্ট"], "correct": 3 },
+  { "id": 26, "q": "কত বঙ্গাব্দে রবীন্দ্রনাথ ঠাকুর পরলোকগমন করেন?", "options": ["১৩৪২", "১৩৪৮", "১৩৫৪", "১৩৫৮"], "correct": 1 },
+  { "id": 27, "q": "নিচের কোনটি রবীন্দ্রনাথ ঠাকুরের মৃত্যু দিবস?", "options": ["২৫শে বৈশাখ", "১১ই জ্যৈষ্ঠ", "২২শে শ্রাবণ", "১৩ই কার্তিক"], "correct": 2 },
+  { "id": 28, "q": "রবীন্দ্রনাথ ঠাকুরের জীবনাবসান ঘটে কোথায়?", "options": ["জোড়াসাঁকোর ঠাকুর বাড়িতে", "বোলপুরের শান্তিনিকেতনে", "কুষ্টিয়ার শিলাইদহে", "কলকাতার হাসপাতালে"], "correct": 0 },
+  { "id": 29, "q": "'অপরিচিতা' গল্পে কার আচরণে যৌতুক প্রথা প্রতিরোধের সম্মুখীন হয়েছে?", "options": ["অনুপমের", "কল্যাণীর পিতার", "অনুপমের মামার", "কল্যাণীর"], "correct": 1 },
+  { "id": 30, "q": "নিচের কোনটি 'অপরিচিতা' গল্পে কল্যাণী চরিত্রের ক্ষেত্রে সাদৃশ্যপূর্ণ?", "options": ["ভীতু", "পরমুখাপেক্ষী", "সংকীর্ণমনা", "বলিষ্ঠ ব্যক্তিত্ব"], "correct": 3 },
+  { "id": 31, "q": "'সবুজপত্র' মাসিক পত্রের সম্পাদক কে ছিলেন?", "options": ["রবীন্দ্রনাথ ঠাকুর", "প্রমথ চৌধুরী", "দেবেন্দ্রনাথ ঠাকুর", "অক্ষয়কুমার দত্ত"], "correct": 1 },
+  { "id": 32, "q": "'কন্নুজ' দেশটি কোথায় অবস্থিত?", "options": ["ভারত", "বাংলাদেশ", "মালদ্বীপ", "মায়ানমার"], "correct": 0 },
+  { "id": 33, "q": "বকুল বনের নবপল্লবরাশির সাথে কার তুলনা করেছেন?", "options": ["কল্যাণীর", "অনুপমের", "গাত্রী দর্শনের অভিজ্ঞতার", "পিতার"], "correct": 1 },
+  { "id": 34, "q": "মামার টাকার প্রতি আসক্তিকে অনুপম কার সঙ্গে তুলনা করেছেন?", "options": ["অস্থি-মজ্জা", "হাড়-হাভাতে", "চোখ-কান", "গলা-নাক"], "correct": 0 },
+  { "id": 35, "q": "বাংলা ছোটগল্পের জনক বলা হয় কাকে?", "options": ["বিভূতিভূষণ বন্দ্যোপাধ্যায়", "শরৎচন্দ্র চট্টোপাধ্যায়", "রবীন্দ্রনাথ ঠাকুর", "কাজী নজরুল ইসলাম"], "correct": 2 },
+  { "id": 36, "q": "ধৈর্যই বা হিসাবে কোন জীবনটা বড় নয়?", "options": ["বাল্য জীবন", "যুবক জীবন", "পঁচিশ বছর বয়সের জীবন", "সাতাশ বছর বয়সের জীবন"], "correct": 3 },
+  { "id": 37, "q": "'অপরিচিতা' গল্পে ফুলের বুকের উপরে কী এসে বসেছিল?", "options": ["মৌমাছি", "বোলতা", "হামিংবার্ড", "ভ্রমর"], "correct": 3 },
+  { "id": 38, "q": "'সেই ইতিহাসটুকু আকারে ছোট।' এ চিত্রকল্পে ফুটে ওঠা নিচের কোন যুক্তিটি সমর্থনযোগ্য?", "options": ["অনুপমের বিবাহের দিন ক্ষণ", "অনুপমের সাতাশ বছরের জীবন", "অনুপমের কৈশোর", "অনুপমের যুবক বয়স"], "correct": 1 },
+  { "id": 39, "q": "এশীয়দের মধ্যে সর্বপ্রথম সাহিত্যে নোবেল পুরস্কার পান কে?", "options": ["ড. অমর্ত্য সেন", "ড. মোহাম্মদ ইউনূস", "রবীন্দ্রনাথ ঠাকুর", "মাদার তেরেসা"], "correct": 2 },
+  { "id": 40, "q": "'অপরিচিতা' গল্পে নায়কের বয়স কত বলা হয়েছে?", "options": ["আঠাশ বছর", "ছাব্বিশ বছর", "সাতাশ বছর", "পঁচিশ বছর"], "correct": 2 },
+  { "id": 41, "q": "অনুপমকে শিমুল ফুল, মাকাল ফল অভিহিত করার মধ্যে অনুপমের প্রতি পন্ডিতমশাইয়ের কী ধরণের মনোভাব ফুটে উঠেছে?", "options": ["রাগ", "ভালোবাসা", "তিরস্কার", "বিদ্রূপ"], "correct": 3 },
+  { "id": 42, "q": "'এটা আপনারাই রেখে দিন'-কোনটিকে রেখে দেওয়ার কথা বলা হয়েছে?", "options": ["বালা", "কানের দুল", "এয়ারিং", "হার"], "correct": 2 },
+  { "id": 43, "q": "্যাকরাকে মামা ডেকেছিলেন কেন?", "options": ["গয়না বানাতে", "গয়নার খাঁদ যাচাই করতে", "কন্যে পক্ষকে থকাতে", "ভুল করে"], "correct": 1 },
+  { "id": 44, "q": "কোন শব্দটি অনুপমের কাছে চিরজীবনসের হয়ে রইল?", "options": ["'জায়গা আছে'", "জায়গা নেই", "ভালোবাসি", "মাতৃআজ্ঞা"], "correct": 0 },
+  { "id": 45, "q": "মামা গয়নার হিসাব কেন ফর্দ রেখেছিলেন?", "options": ["ফাঁকি এড়াতে", "স্বভাববশত", "স্মরণ রাখতে", "সকল বিশ্বাসে"], "correct": 0 },
+  { "id": 46, "q": "কল্যাণীর মাতৃআজ্ঞা বলতে কী বোঝা যায়?", "options": ["মায়ের নির্দেশ", "মায়ের নিষেধ", "মাতৃভূমির আদেশ", "জন্মভূমির বাধা"], "correct": 2 },
+  { "id": 47, "q": "কনের পিতা কার সাথে কথা বলা আবশ্যক করলেন না?", "options": ["অনুপমের", "অনুপমের মামার", "ভাগ্যজীবীদের", "হরিশের"], "correct": 1 },
+  { "id": 48, "q": "'এ জোড়া আপনারাই রাখিয়া দিন'- এ কথা কে বলেছেন?", "options": ["অনুপম", "হরিশ", "শম্ভুনাথ", "মামা"], "correct": 2 },
+  { "id": 49, "q": "বাড়ির লোকেরা কেন রেগে আগুন?", "options": ["খেতে না পেয়ে", "গয়না না পেয়ে", "অপমানিত হয়ে", "বিয়েতে যেতে না পেরে"], "correct": 2 },
+  { "id": 50, "q": "মেয়ে-শিক্ষা ব্রত গ্রহণের মাধ্যমে কল্যাণীর কোন চেতনার প্রকাশ পায়?", "options": ["দম্ভিক", "মানবিক", "স্বার্থলোভী", "জরাগ্রস্থ"], "correct": 1 },
+  { "id": 51, "q": "'ও আবার কী বলিবে। আমি যা বলিব তাই হইবে।'-কথাটির মাধ্যমে অনুপমের মামার কোন গুণ প্রকাশ পায়?", "options": ["হীনম্মন্যতা", "নিষ্ঠুরতা", "দাম্ভিকতা", "একরোখা"], "correct": 2 },
+  { "id": 52, "q": "'তব ইহার বিশেষ মূল্য আছে'- এখানে কিসের মূল্যের কথা বলা হয়েছে?", "options": ["জীবনের", "সময়ের", "কর্মের", "ধর্মের"], "correct": 1 },
+  { "id": 53, "q": "ছেলেবেলায় পন্ডিতমশাই অনুপমকে কিসের সাথে তুলনা করতেন?", "options": ["ভিজে বেড়াল", "মাকাল ফল", "টগর ফুল", "পূর্ণিমার চাঁদ"], "correct": 1 },
+  { "id": 54, "q": "অনুপমের আসল অভিভাবক কে?", "options": ["বাবা", "মামা", "মা", "শিক্ষক"], "correct": 1 },
+  { "id": 55, "q": "'অপরিচিতা' গল্পে মামার সাথে অনুপমের বয়সের পার্থক্য কত?", "options": ["বছর চারেক", "বছর ছয়েক", "বছর আটেক", "বছর দশেক"], "correct": 1 },
+  { "id": 56, "q": "কন্যার পিতামাত্রই কোনটি স্বীকার করবেন?", "options": ["অনুপম বুদ্ধিমান", "অনুপম সৎপাত্র", "অনুপম রূপবান", "অনুপম ব্যক্তিত্বসম্পন্ন"], "correct": 1 },
+  { "id": 57, "q": "অনুপম কোনটি খায় না বলে গর্ব প্রকাশ করেছে?", "options": ["তামাক", "মদ", "চুট", "কফি"], "correct": 0 },
+  { "id": 58, "q": "কে নিজেকে ভালো মানুষ বলে আখ্যা দিয়েছে?", "options": ["মামা", "কল্যাণী", "হরিশ", "অনুপম"], "correct": 3 },
+  { "id": 59, "q": "মামা কেমন ঘরের মেয়ে পছন্দ করতেন?", "options": ["ধনী", "গরিব", "গ্রামীণ", "শহুরে"], "correct": 1 },
+  { "id": 60, "q": "অনুপমের বন্ধুর নাম কী?", "options": ["সতীশ", "জ্যোতিষ", "হরিশ", "মনীষ"], "correct": 2 },
+  { "id": 61, "q": "হরিশ কোথায় কাজ করত?", "options": ["কলকাতায়", "আন্দামানে", "রাজপুরে", "কানপুরে"], "correct": 3 },
+  { "id": 62, "q": "অনুপমের শিক্ষাগত যোগ্যতা কী?", "options": ["বিএ পাস", "এমএ পাস", "বিএসসি পাস", "এমএসসি পাস"], "correct": 1 },
+  { "id": 63, "q": "'মেয়ে যদি বল, তবে'- উক্তিটি কার?", "options": ["অনুপমের", "হরিশের", "শম্ভুনাথের", "মামার"], "correct": 1 },
+  { "id": 64, "q": "'অপরিচিতা' গল্পে রসিক মনের মানুষ কে?", "options": ["অনুপম", "হরিশ", "শম্ভুনাথ", "মামা"], "correct": 1 },
+  { "id": 65, "q": "'একবার মামার কাছে কথাটি পাড়িয়া দেখ'-উক্তিটি কার?", "options": ["বিনুদার", "শম্ভুনাথের", "হরিশের", "অনুপমের"], "correct": 2 },
+  { "id": 66, "q": "'মেয়ের চেয়ে মেয়ের বাপের খবরটাই তার কাছে গুরুত্বর'-কার কাছে?", "options": ["হরিশের", "অনুপমের", "মামার", "ঘটকের"], "correct": 2 },
+  { "id": 67, "q": "'বংশের লক্ষ্মীর মঙ্গলঘট ভরা ছিল'-উক্তিতে কাদের কথা বলা হয়েছে?", "options": ["কল্যাণীদের", "মামাদের", "অনুপমদের", "হরিশদের"], "correct": 0 },
+  { "id": 68, "q": "অল্প কথাতে অদ্বিতীয় কে?", "options": ["অনুপম", "কল্যাণী", "মামা", "হরিশ"], "correct": 2 },
+  { "id": 69, "q": "'অপরিচিতা' গল্পে কোন দ্বীপের উল্লেখ আছে?", "options": ["আন্দামান দ্বীপ", "সুইডেন দ্বীপ", "ক্যারিবিয়ান দ্বীপ", "বালি দ্বীপ"], "correct": 0 },
+  { "id": 70, "q": "কে কন্যাকে আশীর্বাদ করতে গেল?", "options": ["হরিশ", "অনুপম", "মামা", "বিনুদা"], "correct": 3 },
+  { "id": 71, "q": "বিনুদার সাথে অনুপমের সম্পর্ক কী?", "options": ["মাসতুতো ভাই", "পিসতুতো ভাই", "ফুফাতো ভাই", "মামাতো ভাই"], "correct": 1 },
+  { "id": 72, "q": "'ফল নয় হে, খাঁটি সোনা বটে।'- উক্তিটি কার?", "options": ["বিনুদার", "হরিশের", "মামার", "ঘটকের"], "correct": 0 },
+  { "id": 73, "q": "বিনুদা 'চমৎকার'- এর স্থলে কী বলে?", "options": ["চলনসই", "অসাধারণ", "বিস্ময়কর", "সালামাট"], "correct": 0 },
+  { "id": 74, "q": "কল্যাণীর পিতার নাম কী?", "options": ["হরিশচন্দ্র দত্ত", "বিমেষবিহারী সেন", "শম্ভুনাথ সেন", "গৌরিশংকর দত্ত"], "correct": 2 },
+  { "id": 75, "q": "শম্ভুনাথ বাবুর বয়স কত?", "options": ["প্রায় চল্লিশ বছর", "প্রায় পঞ্চাশ বছর", "প্রায় ষাট বছর", "প্রায় সত্তর বছর"], "correct": 0 },
+  { "id": 76, "q": "'আহার বিনয়টা অত্যন্ত নগণ্য'- কার?", "options": ["অনুপমের", "বিনুদার", "শম্ভুনাথের", "মামার"], "correct": 2 },
+  { "id": 77, "q": "'বাবাজি একবার এদিকে আসতে হচ্ছে'- উক্তিটি কার?", "options": ["মামার", "শম্ভুনাথের", "হরিশের", "মায়ের"], "correct": 1 },
+  { "id": 78, "q": "কষ্টিপাথর নিয়ে কে বসেছিল?", "options": ["মামা", "্যাকরা", "বিনুদা", "হরিশ"], "correct": 1 },
+  { "id": 79, "q": "'এয়ারিং' কোথা থেকে আনা হয়েছে?", "options": ["বিলাত", "ঢাকা", "কানপুর", "মথুরা"], "correct": 0 },
+  { "id": 80, "q": "'মেয়ের সম্বন্ধটাকে স্থায়ী করার ইচ্ছা আমার নাই'-উক্তিটি কার?", "options": ["বিনুদার", "অনুপমের", "মামার", "শম্ভুনাথ বাবুর"], "correct": 3 },
+  { "id": 81, "q": "অনুপম কাকে নিয়ে তীর্থযাত্রা শুরু করে?", "options": ["কল্যাণীকে", "মাকে", "হরিশকে", "বিমলাদাকে"], "correct": 1 },
+  { "id": 82, "q": "মা-পুত্রের তীর্থযাত্রার বাহন কী ছিল?", "options": ["রেলগাড়ি", "গরুর গাড়ি", "মোটর গাড়ি", "ঘোড়ার গাড়ি"], "correct": 0 },
+  { "id": 83, "q": "'শিগগির চলে আয়, এ গাড়িতে জায়গা আছে'-উক্তিটি কার?", "options": ["অনুপমের", "কল্যাণীর", "বিনুদার", "হরিশের"], "correct": 1 },
+  { "id": 84, "q": "'এখানে জায়গা আছে'-উক্তিটি কার?", "options": ["আশিমার", "গার্ডের", "কল্যাণীর", "অনুপমের"], "correct": 2 },
+  { "id": 85, "q": "স্টেশনে অনুপম কী ফেলে গেল?", "options": ["টিকিট", "ক্যামেরা", "ভোরঙ", "লণ্ঠন"], "correct": 2 },
+  { "id": 86, "q": "ট্রেনে দেখা হওয়ার সময় কল্যাণীর বয়স কত ছিল?", "options": ["১৪/১৫ বছর", "১৫/১৬ বছর", "১৬/১৭ বছর", "১৭/১৮ বছর"], "correct": 1 },
+  { "id": 87, "q": "কল্যাণী মেয়েদের সঙ্গে কতজন মেয়ে ছিল?", "options": ["২/৩", "৩/৪", "৪/৫", "৫/৬"], "correct": 1 },
+  { "id": 88, "q": "কল্যাণী স্টেশন হতে কী খাবার কিনে নেয়?", "options": ["চানা-মুঠ", "ঝালমুড়ি", "চিনাবাদাম", "ঝুরিভাজা"], "correct": 0 },
+  { "id": 89, "q": "শম্ভুনাথ পেশায় কী ছিলেন?", "options": ["উকিল", "শিক্ষক", "ডাক্তার", "ব্যবসায়ী"], "correct": 2 },
+  { "id": 90, "q": "মাতৃ-আজ্ঞা বলতে কল্যাণী বড় প্রতি ইঙ্গিত করেছে?", "options": ["মায়ের প্রতি", "মাতৃভূমির প্রতি", "দেশের প্রতি", "অমরপুরীর প্রতি"], "correct": 1 },
+  { "id": 91, "q": "বিবাহের সময় অনুপমের বয়স কত ছিল?", "options": ["একুশ", "তেইশ", "পঁচিশ", "সাতাইশ"], "correct": 1 },
+  { "id": 92, "q": "গল্পকথকের মায়ের নাম কী?", "options": ["অমলা", "অন্নপূর্ণা", "কল্যাণী", "হৈমন্তী"], "correct": 1 },
+  { "id": 93, "q": "'অন্নপূর্ণার কোলে গজাননের ছোট ভাইটি'- এখানে ছোট ভাইটি কে?", "options": ["গণেশ", "কার্তিক", "পঞ্চানন", "প্রজাপতি"], "correct": 1 },
+  { "id": 94, "q": "হরিশ কী উপলক্ষে কলকাতায় এসেছে?", "options": ["তীর্থে উপলক্ষে", "ছুটি উপলক্ষে", "পূজা উপলক্ষে", "বিয়ে উপলক্ষে"], "correct": 1 },
+  { "id": 95, "q": "কাকে অনুপমের ভাগ্য দেবতা বলে উল্লেখ করা হয়েছে?", "options": ["হরিশকে", "মামাকে", "বিনুদাকে", "শম্ভুনাথকে"], "correct": 1 },
+  { "id": 96, "q": "কার টাকার প্রতি আসক্তি বেশি?", "options": ["শম্ভুনাথের", "কল্যাণীর", "অনুপমের", "মামার"], "correct": 3 },
+  { "id": 97, "q": "'কিছুদিন পূর্বে এমএ পাস করিয়াছি'- উক্তিটি কার?", "options": ["মামার", "বিনুদার", "অনুপমের", "হরিশের"], "correct": 2 },
+  { "id": 98, "q": "'একবার মামার কাছে কথাটি পাড়িয়া দেখ'-কথাটি কিসের সম্বন্ধের?", "options": ["পানের", "চাকরির", "বিয়ের", "সম্পত্তির"], "correct": 2 },
+  { "id": 99, "q": "বিয়ের সময় কল্যাণীর প্রকৃত বয়স কত ছিল?", "options": ["চৌদ্দ", "পনেরো", "ষোল", "সতেরো"], "correct": 1 },
+  { "id": 100, "q": "মামার বাইরের যাত্রাপথের সীমানা কতদূর?", "options": ["ধাপমান পর্যন্ত", "কোন্নগর পর্যন্ত", "কানপুর পর্যন্ত", "হাওড়া পর্যন্ত"], "correct": 1 }
+ ]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অর্ধাঙ্গী</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>অর্ধাঙ্গী</h1>
+  <p>বেগম রোকেয়া — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "রোকেয়া সাখাওয়াত হোসেন কত সালে জন্মগ্রহণ করেন?", "options": ["১৮৮০ সালে", "১৮৮১ সালে", "১৮৮২ সালে", "১৮৮৩ সালে"], "correct": 1 },
+  { "id": 2, "q": "বেগম রোকেয়ার জন্মস্থান 'পায়রাবন্ধ' গ্রাম কোন জেলায় অন্তর্গত?", "options": ["দিনাজপুর", "বগুড়া", "পাবনা", "রংপুর"], "correct": 4 },
+  { "id": 3, "q": "এদেশে নারীজাগরণের পথিকৃৎ কে?", "options": ["জাহানারা ইমাম", "সুলতানা রাজিয়া", "রোকেয়া সাখাওয়াত হোসেন", "সুফিয়া কামাল"], "correct": 3 },
+  { "id": 4, "q": "বেগম রোকেয়া জীবনের শুরুতে কেমন ছিলেন?", "options": ["সমাজসেবী", "পর্দাবিরোধী", "অন্তঃপুরবাসিনী", "শিক্ষাবিদ"], "correct": 3 },
+  { "id": 5, "q": "অবরোধবাসিনীদের কীভাবে উন্মুক্ত বিশ্বে পদার্পণ করতে চেয়েছিলেন বেগম রোকেয়া?", "options": ["গৃহকোণ থেকে বের করে", "চাকরি দিয়ে", "শিক্ষার আলো দিয়ে", "আন্দোলন করে"], "correct": 3 },
+  { "id": 6, "q": "বেগম রোকেয়ার বড় ভাইয়ের নাম কী?", "options": ["সাখাওয়াত হোসেন", "ইব্রাহিম সাবের", "আবু সাবের", "করিম সাবের"], "correct": 2 },
+  { "id": 7, "q": "বেগম রোকেয়াকে কে ইংরেজি শিক্ষায় শিক্ষিত করেছিলেন?", "options": ["তার স্বামী", "তার বড় ভাই", "তার বাবা", "তার বড় বোন"], "correct": 2 },
+  { "id": 8, "q": "বেগম রোকেয়া কার অনুপ্রেরণায় সাহিত্য চর্চায় ব্রতী হন?", "options": ["স্বামী সাখাওয়াত হোসেন", "বড় ভাই ইব্রাহিম সাবের", "বড় বোন করিমুন্নেসা", "পিতা জহিরুদ্দিন সাবের"], "correct": 1 },
+  { "id": 9, "q": "বেগম রোকেয়া কত সালে মৃত্যুবরণ করেন?", "options": ["১৯৩০ সালে", "১৯৩২ সালে", "১৯৩৪ সালে", "১৯৩৬ সালে"], "correct": 2 },
+  { "id": 10, "q": "নিচের কোন নারী লেখকের প্রেরণা ছিলেন বেগম রোকেয়া?", "options": ["সুফিয়া কামাল", "জাহানারা ইমাম", "রোকেয়া সাখাওয়াত হোসেন", "কামিনী রায়"], "correct": 3 },
+  { "id": 11, "q": "'সুলতানার স্বপ্ন' কে রচনা করেছেন?", "options": ["নীলিমা ইব্রাহিম", "নওয়াব ফয়জুন্নেসা", "সেলিনা হোসেন", "রোকেয়া সাখাওয়াত হোসেন"], "correct": 4 },
+  { "id": 12, "q": "নিচের কোনটি বেগম রোকেয়ার রচনা?", "options": ["অবরোধবাসিনী", "ডাকঘর", "তেল-নুন-লকড়ি", "দেয়াল"], "correct": 1 },
+  { "id": 13, "q": "উদ্দীপকের মানিক জোয়ারদার যে বিখ্যাত নারীর কথা বলছিলেন, তিনি কে?", "options": ["সুফিয়া কামাল", "বেগম রোকেয়া", "বেগম ফজিলাতুন্নেসা", "জাহানারা ইমাম"], "correct": 2 },
+  { "id": 14, "q": "অনুচ্ছেদে বর্ণিত মহীয়সী নারীর সাথে বেগম রোকেয়ার মিল কোথায়?", "options": ["শিক্ষানুরাগে", "সমাজসেবায়", "নারী জাগরণে", "সবগুলো"], "correct": 4 },
+  { "id": 15, "q": "'অর্ধাঙ্গী' প্রবন্ধটি কোন গ্রন্থ থেকে নেওয়া হয়েছে?", "options": ["মতিচূর", "পদ্মরাগ", "অবরোধবাসিনী", "সুলতানার স্বপ্ন"], "correct": 1 },
+  { "id": 16, "q": "লেখিকার মতে সমাজ একটি কীসের মতো?", "options": ["নৌকার মতো", "গাড়ির মতো", "বিমানের মতো", "ঘোড়ার মতো"], "correct": 2 },
+  { "id": 17, "q": "পুরুষের তুলনায় নারীরা শিক্ষায় কেমন?", "options": ["সমান", "অগ্রগামী", "পিছিয়ে", "খুবই ভালো"], "correct": 3 },
+  { "id": 18, "q": "লেখিকার মতে পুরুষরা কী মাপেন?", "options": ["নক্ষত্রের দূরত্ব", "জমির পরিমাণ", "সংসারের খরচ", "শস্যের ফলন"], "correct": 1 },
+  { "id": 19, "q": "স্বামী যখন পৃথিবী থেকে সূর্যের দূরত্ব মাপেন, স্ত্রী তখন কী করেন?", "options": ["বালিশের ওয়াড়ে ফুল তোলেন", "রান্না করেন", "শুয়ে থাকেন", "গান শোনেন"], "correct": 1 },
+  { "id": 20, "q": "সমাজরূপী গাড়ির একটি চাকা বড় ও অন্যটি ছোট হলে কী হবে?", "options": ["দ্রুত চলবে", "আস্তে চলবে", "চলবে না বা অচল হবে", "ভালো চলবে"], "correct": 3 },
+  { "id": 21, "q": "লেখিকা নারীদের কার সাথে তুলনা করেছেন?", "options": ["দেবীর সাথে", "দাসের সাথে", "অর্ধ-অঙ্গ বা অর্ধাঙ্গীর সাথে", "মালিকের সাথে"], "correct": 3 },
+  { "id": 22, "q": "স্ত্রী স্বামীর উপযুক্ত সহচরী হতে পারে না কেন?", "options": ["ইচ্ছার অভাবে", "অশিক্ষার কারণে", "শারীরিক দুর্বলতায়", "আর্থিক দৈন্যতায়"], "correct": 2 },
+  { "id": 23, "q": "গৃহিণী শব্দের অর্থ কী?", "options": ["মালিক", "সেবিকা", "গৃহের অধিশ্বরী", "রাঁধুনি"], "correct": 3 },
+  { "id": 24, "q": "পুরুষের উন্নতির জন্য কী প্রয়োজন?", "options": ["অর্থ", "নারীশক্তি বা স্ত্রীর সহায়তা", "একাকীত্ব", "বিলাসিতা"], "correct": 2 },
+  { "id": 25, "q": "কয়টি চাকা বিশিষ্ট গাড়ির সাথে লেখক সমাজের তুলনা করেছেন?", "options": ["এক চাকা", "দুই চাকা", "তিন চাকা", "চার চাকা"], "correct": 2 },
+  { "id": 26, "q": "সমাজের এক অঙ্গ বিকল হলে অন্যটি কী হয়?", "options": ["সবল হয়", "অকেজো বা ক্ষতিগ্রস্ত হয়", "বেশি কাজ করে", "আনন্দিত হয়"], "correct": 2 },
+  { "id": 27, "q": "নারীদের কীসের অধিকারে লেখিকা বেশি গুরুত্ব দিয়েছেন?", "options": ["সম্পত্তি", "ভোট", "শিক্ষা", "সাজগোজ"], "correct": 3 },
+  { "id": 28, "q": "লেখিকা 'অর্ধাঙ্গী' প্রবন্ধে কোন ধর্মের উদাহরণ টেনেছেন?", "options": ["হিন্দু", "ইসলাম", "খ্রিস্টান", "বৌদ্ধ"], "correct": 1 },
+  { "id": 29, "q": "সীতা কার স্ত্রী ছিলেন?", "options": ["রাবণ", "লক্ষ্মণ", "রাম", "কৃষ্ণ"], "correct": 3 },
+  { "id": 30, "q": "সীতাকে রাম কোথায় পাঠিয়েছিলেন?", "options": ["পিত্রালয়ে", "বনবাসে", "স্বর্গে", "পাতালে"], "correct": 2 },
+  { "id": 31, "q": "লেখিকার মতে নারীরা কিসে বন্দি?", "options": ["কারাগারে", "অশিক্ষার অন্ধকারে", "সোনার খাঁচায়", "পাহাড়ের চূড়ায়"], "correct": 2 },
+  { "id": 32, "q": "পুরুষেরা নারীদের কী হিসেবে দেখেন বলে লেখিকা মনে করেন?", "options": ["মালিক", "সেবাদাসী বা পুতুল", "নেত্রী", "সহযোদ্ধা"], "correct": 2 },
+  { "id": 33, "q": "নারীর বুদ্ধিকে লেখিকা কিসের সাথে তুলনা করেছেন?", "options": ["সূর্যের আলো", "ক্ষুরধার তলোয়ার", "অনুজ্জ্বল প্রদীপ", "মরিচা ধরা লোহা"], "correct": 4 },
+  { "id": 34, "q": "স্বামী যখন বিজ্ঞান চর্চা করেন, স্ত্রী তখন কীসের হিসাব রাখেন?", "options": ["বিদেশের খবর", "রান্নাঘরের চাল-ডাল", "ব্যাংক ব্যালেন্স", "গয়নার সেট"], "correct": 2 },
+  { "id": 35, "q": "লেখিকা মতে নারী ও পুরুষ কিসের দুই পাল্লা?", "options": ["তুলাদণ্ডের", "জ্ঞানের", "সংসারের", "জীবনের"], "correct": 1 },
+  { "id": 36, "q": "নারীর অবনতি হলে পুরুষের কী হয়?", "options": ["উন্নতি", "অবনতি বা পঙ্গুত্ব", "গর্ব", "বিজয়"], "correct": 2 },
+  { "id": 37, "q": "লেখিকা কোন ভাষায় নারীদের উন্নতির কথা বলেছেন?", "options": ["উর্দু", "বাংলা", "ইংরেজি", "ফারসি"], "correct": 2 },
+  { "id": 38, "q": "স্বামী যখন পৃথিবী থেকে সূর্য ও নক্ষত্রের দূরত্ব মাপেন, স্ত্রী তখন কী করেন?", "options": ["বালিশের ওয়াড়ে ফুল তোলেন", "বালিশের ওয়ার সেলাই করেন", "বালিশের ওয়ার দৈর্ঘ-প্রস্থ মাপেন", "বালিশের ওয়াড় পরিষ্কার করেন"], "correct": 3 },
+  { "id": 39, "q": "রোকেয়ার সময়কালীন নারীরা কীভাবে ব্যবহৃত হতো?", "options": ["প্রিয়তমা হিসেবে", "সেবাদাসী হিসেবে", "পুরুষের সহচরী হিসেবে", "মালিনি হিসেবে"], "correct": 2 },
+  { "id": 40, "q": "লেখিকা কার সাথে রামের তুলনা করেছেন?", "options": ["দেবীর সাথে", "রাবণের সাথে", "পুতুলের সাথে", "মানুষের সাথে"], "correct": 3 },
+  { "id": 41, "q": "লেখিকার মতে, সীতা রামের নিকট থেকে কোন অধিকার পান নি?", "options": ["স্ত্রীর অধিকার", "সম্পদের অধিকার", "নারীর অধিকার", "ভালোবাসার অধিকার"], "correct": 1 },
+  { "id": 42, "q": "'অর্ধাঙ্গী' প্রবন্ধ অনুসারে স্বামীত্বের ষোলোআনা পরিচয় দেন কে?", "options": ["কৃষ্ণ", "রাবণ", "রাম", "সীতা"], "correct": 3 },
+  { "id": 43, "q": "'তাহারও ইচ্ছা প্রকাশের শক্তি আছে'—কার?", "options": ["পুতুলের", "নারীর", "দাসের", "মালিকের"], "correct": 2 },
+  { "id": 44, "q": "রোকেয়া সাখাওয়াত হোসেনের মতে, নারী স্বামীর—", "options": ["দাসী", "অর্ধাঙ্গ", "গৃহিণী", "অর্ধাঙ্গী"], "correct": 4 },
+  { "id": 45, "q": "'অর্ধাঙ্গী' প্রবন্ধে নারীজাগরণের ক্ষেত্রে কোনটিকে প্রধান অন্তরায় মনে হয়?", "options": ["পর্দা", "অশিক্ষা", "স্বামী", "ধর্ম"], "correct": 3 },
+  { "id": 46, "q": "সুকেশা বুদ্ধিমানগণ নারীর সাংসারিক জীবনকে কিসের সাথে তুলনা করেছেন?", "options": ["তুলাদণ্ডের দুই পাল্লার সাথে", "চন্দ্র ও সূর্যের সাথে", "দু চাকা বিশিষ্ট গাড়ির সাথে", "দুই আসন বিশিষ্ট গাড়ির সাথে"], "correct": 3 },
+  { "id": 47, "q": "কোন ভাষায় স্ত্রীকে 'অর্ধাঙ্গী' বলা হয়?", "options": ["বাংলা", "সংস্কৃত", "আরবি", "ফারসি"], "correct": 2 },
+  { "id": 48, "q": "নারীরা সুশিক্ষিত না হলে সমাজ কেমন থাকবে?", "options": ["উন্নত", "পঙ্গু ও অনুন্নত", "আধুনিক", "বিলাসী"], "correct": 2 },
+  { "id": 49, "q": "লেখিকা 'অর্ধাঙ্গী' প্রবন্ধে কোন বিষয়টির সংস্কার চেয়েছেন?", "options": ["খাদ্যভাস", "পোশাক", "নারীর অবস্থান ও শিক্ষা", "গৃহ সজ্জা"], "correct": 3 },
+  { "id": 50, "q": "প্রবন্ধের মূল কথা কী?", "options": ["রান্না করা", "সংসার চালানো", "নারী-পুরুষের সমঅধিকার ও শিক্ষা", "বিদেশে যাওয়া"], "correct": 3 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

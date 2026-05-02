@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আঠারো বছর বয়স</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>আঠারো বছর বয়স</h1>
+  <p>সুকান্ত ভট্টাচার্য — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData =[
+  { id: 1, q: "সুকান্ত ভট্টাচার্য কত বছর বয়সে মৃত্যুবরণ করেন?", options: ["১৯", "২০", "২১", "২২"], correct: 3 },
+  { id: 2, q: "'এ দেশের বুকে আঠারো আসুক নেমে।' কোন বৈশিষ্ট্যের কারণে কবি আঠারোর প্রত্যাশা করেছেন?", options: ["ইতিবাচক", "দুঃসাহস", "বয়স", "তারুণ্য"], correct: 1 },
+  { id: 3, q: "উদ্দীপকের প্রীতিলতার মাঝে ফুটে ওঠা দিকটি 'আঠার বছর বয়স' কবিতার যে দিকটিকে ইঙ্গিত করে তা হলো- (i. তারুণ্য, ii. আত্মত্যাগ, iii. সর্বনাশের অভিঘাত)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 4, q: "উদ্দীপকের প্রীতিলতার ইঙ্গিতপূর্ণ দিকটি নিচের কোন চরণযুগলে ফুটে উঠেছে?", options: ["এ বয়স জানে রক্তদানের পুণ্য / পাদাঘাতে চায় ভাঙতে পাথর বাধা", "বাষ্পের বেগে স্টিমারের মতো চলে / প্রাণ দেওয়া-নেওয়া ঝুলিটা থাকে না শূন্য", "আঠারো বছর বয়সে নেই ভয় / সঁপে আত্মাকে শপথের কোলাহলে", "এ বয়স বাঁচে দুর্যোগে আর ঝড়ে / বিপদের মুখে এ বয়স অগ্রণী"], correct: 3 },
+  { id: 5, q: "সুকান্ত ভট্টাচার্যের পৈতৃক নিবাস কোথায়?", options: ["গোপালগঞ্জ", "বিক্রমপুর", "কলকাতা", "মানিকগঞ্জ"], correct: 1 },
+  { id: 6, q: "সুকান্ত ভট্টাচার্যের পৈতৃক নিবাস কোন গ্রামে?", options: ["মধুপুর", "রফিকপুর", "কোটালীপাড়ায়", "আটপাড়ায়"], correct: 3 },
+  { id: 7, q: "সুকান্ত ভট্টাচার্য কোথায় জন্মগ্রহণ করেন?", options: ["মাদারীপুরে", "গোপালগঞ্জে", "ঢাকায়", "কলকাতায়"], correct: 4 },
+  { id: 8, q: "সুকান্ত ভট্টাচার্য কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", options: ["১৯২২ খ্রিস্টাব্দে", "১৯২৭ খ্রিস্টাব্দে", "১৯২৬ খ্রিস্টাব্দে", "১৯৩১ খ্রিস্টাব্দে"], correct: 3 },
+  { id: 9, q: "সুকান্ত ভট্টাচার্য কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", options: ["১৯৪৭ খ্রিস্টাব্দে", "১৯৪০ খ্রিস্টাব্দে", "১৯৫১ খ্রিস্টাব্দে", "১৯৪৩ খ্রিস্টাব্দে"], correct: 1 },
+  { id: 10, q: "সুকান্ত ভট্টাচার্য কত বছর বয়সে মৃত্যুবরণ করেন?", options: ["পঁচিশ বছর", "বিশ বছর", "একুশ বছর", "ঊনত্রিশ বছর"], correct: 3 },
+  { id: 11, q: "'আঠারো বছর বয়স' কবিতাটির রচয়িতা কে?", options: ["সত্যেন্দ্রনাথ দত্ত", "সুকান্ত ভট্টাচার্য", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন"], correct: 2 },
+  { id: 12, q: "সুকান্ত ভট্টাচার্য কোন যুগের বিদ্রোহী তরুণ কবি?", options: ["রবীন্দ্র-সুধীন্দ্রনাথোত্তর যুগের", "রবীন্দ্র-জীবনানন্দত্তোর যুগের", "রবীন্দ্র-সত্যেন্দ্রনাথোত্তর যুগের", "রবীন্দ্র-নজরুলোত্তর যুগের"], correct: 4 },
+  { id: 13, q: "সুকান্ত ভট্টাচার্যের বিখ্যাত কাব্যগ্রন্থের নাম কী?", options: ["সাত সাগরের মাঝি", "ছাড়পত্র", "ঘুম নেই", "বিধ্বস্ত নীলিমা"], correct: 2 },
+  { id: 14, q: "'হরতাল' সুকান্ত ভট্টাচার্যের কী জাতীয় রচনা?", options: ["রম্য", "উপন্যাস", "কাব্য", "শিশুতোষ"], correct: 4 },
+  { id: 15, q: "'পূর্বাভাস' কাব্যগ্রন্থটির রচয়িতার নাম কী?", options: ["শামসুর রাহমান", "সুফিয়া কামাল", "জীবনানন্দ দাশ", "সুকান্ত ভট্টাচার্য"], correct: 4 },
+  { id: 16, q: "সুকান্ত ভট্টাচার্য ফ্যাসিবাদবিরোধী লেখক-শিল্পী সংঘের জন্যে কোন কাব্যগ্রন্থটি সম্পাদনা করেন?", options: ["আকাল", "এক ফোঁটা কেমন অনল", "অনেক আকাশ", "হরতাল"], correct: 1 },
+  { id: 17, q: "'আঠারো বছর বয়স' হলো-", options: ["ভীরু", "নির্ভয়", "সংশয়ী", "বিনয়ী"], correct: 2 },
+  { id: 18, q: "\"তবুও থামে না যৌবন-বেগ, জীবনের উল্লাসে\"-এ চরণটির রচয়িতা কে?", options: ["কাজী নজরুল ইসলাম", "সুফিয়া কামাল", "অমিয় চক্রবর্তী", "সুকান্ত ভট্টাচার্য"], correct: 4 },
+  { id: 19, q: "\"প্রাণ দেওয়া-নেওয়া ঝুলিটা থাকে না শূন্য\"-কোন কবিতার অংশ?", options: ["জীবন-বন্দনা", "আঠারো বছর বয়স", "পাঞ্জেরি", "কবর"], correct: 2 },
+  { id: 20, q: "'আঠারো বছর বয়স' কবিতায় 'আঠারো বছর বয়স' কতবার উল্লেখ আছে?", options: ["৬ বার", "৮ বার", "৭ বার", "৯ বার"], correct: 2 },
+  { id: 21, q: "'আঠারো বছর বয়স' কবিতায় 'আঠারো' কত বার আছে?", options: ["৭ বার", "৮ বার", "৯ বার", "১০ বার"], correct: 3 },
+  { id: 22, q: "'আঠারো বছর বয়স' কবিতায় মোট কতটি লাইন আছে?", options: ["৩৯টি", "২৯টি", "৩২টি", "৪২টি"], correct: 3 },
+  { id: 23, q: "'আঠারো বছর বয়স' কবিতায় এই বয়সকে প্রথমে কী বলে সম্বোধন করা হয়েছে?", options: ["নির্ভয়", "দুঃসহ", "সংশয়ী", "বিনয়ী"], correct: 2 },
+  { id: 24, q: "কবিতার ২য় স্তবকে বয়সকে কী নামে সম্বোধন করা হয়েছে?", options: ["দুঃসহ", "বিনয়ী", "দুর্বার", "নির্ভয়"], correct: 4 },
+  { id: 25, q: "পাঠ্যসূচির কোন কবিতায় স্টিমারের কথা উল্লেখ আছে?", options: ["জীবন-বন্দনা", "পাঞ্জেরি", "আঠারো বছর বয়স", "সোনার তরী"], correct: 3 },
+  { id: 26, q: "'আঠারো বছর বয়স' কবিতার প্রথম লাইন কোনটি?", options: ["এ বয়স জানে রক্তদানের পুণ্য", "আঠারো বছর বয়সের নেই ভয়", "আঠারো বছর বয়স যে দুর্বার", "আঠারো বছর বয়স কী দুঃসহ"], correct: 4 },
+  { id: 27, q: "কবিতার শেষ চরণটিতে কী আহ্বান করা হয়েছে?", options: ["এ বয়স যেন না আসে", "এ বয়স যেন চলতে থাকে", "এ বয়স যেন চলে যায়", "এ বয়স যেন চলে আসে"], correct: 4 },
+  { id: 28, q: "আঠারো বছর বয়সের ক্ষেত্রে কোনটি প্রযোজ্য?", options: ["শৈশব থেকে কৈশোরে পদার্পণ", "যৌবন থেকে বৃদ্ধে পদার্পণ", "কৈশোর থেকে যৌবনে পদার্পণ", "যৌবন থেকে কৈশোরে"], correct: 3 },
+  { id: 29, q: "কবিতায় আঠারো বছর বয়সের কোন দিকটির কথা বলা হয়েছে?", options: ["ইতিবাচক", "নেতিবাচক", "আত্মবাচক", "ক ও খ দুটিই"], correct: 4 },
+  { id: 30, q: "রবীন্দ্র-নজরুলোত্তর যুগের বিদ্রোহী তরুণ কবি কে?", options: ["ফররুখ আহমদ", "সুকান্ত ভট্টাচার্য", "সৈয়দ আলী আহসান", "অমিয় চক্রবর্তী"], correct: 2 },
+  { id: 31, q: "সুকান্তের বিখ্যাত কাব্যগ্রন্থের নাম কী?", options: ["হরতাল", "ছাড়পত্র", "হাতেমতায়ী", "পূর্বাভাস"], correct: 2 },
+  { id: 32, q: "কাব্যিক বৈশিষ্ট্যের দিক থেকে যে কবির সঙ্গে সুকান্তের মিল রয়েছে?", options: ["কাজী নজরুল ইসলাম", "জীবনানন্দ দাশ", "রবীন্দ্রনাথ ঠাকুর", "ফররুখ আহমদ"], correct: 1 },
+  { id: 33, q: "কোন বয়সকে কবি দুঃসহ বলেছেন?", options: ["১৪ বছর বয়সকে", "১৮ বছর বয়সকে", "১৫ বছর বয়সকে", "১৯ বছর বয়সকে"], correct: 2 },
+  { id: 34, q: "আঠারো বছর বয়স কী জানে?", options: ["বিপ্লব", "ক্ষত-বিক্ষত হতে", "রক্তদানের পুণ্য", "কাঁদা"], correct: 3 },
+  { id: 35, q: "আঠারো বছর বয়সেই অহরহ কী উঁকি দেয়?", options: ["সাহস", "বিপ্লব", "মন্ত্রণা", "কোলাহল"], correct: 3 },
+  { id: 36, q: "আঠারো বছর বয়সে কানে কী আসে?", options: ["যন্ত্রণা", "মন্ত্রণা", "গুজব", "সত্যের বাণী"], correct: 2 },
+  { id: 37, q: "বিপদের মুখে আঠারো বছর বয়সের রূপ কেমন?", options: ["অগ্রণী", "সাহসী", "কিংকর্তব্যবিমূঢ়", "পশ্চাৎমুখী"], correct: 1 },
+  { id: 38, q: "নতুন কিছু করে কোন বয়সে?", options: ["কিশোর বয়সে", "৪০ বছর বয়সে", "বাল্য বয়সে", "আঠারো বছর বয়সে"], correct: 4 },
+  { id: 39, q: "আঠারো বছর বয়সের নেতিবাচক দিক কোনটি?", options: ["কাঁদতে জানে না", "ভয়ঙ্কর", "হাসতে জানে না", "মাথা নোয়ায় না"], correct: 2 },
+  { id: 40, q: "'ছাড়পত্র' কাব্যগ্রন্থটি প্রকাশিত হয় কত সালে?", options: ["১৯৪৫", "১৯৪৮", "১৯৪৬", "১৯৪৭"], correct: 2 },
+  { id: 41, q: "\"এ বয়স জানে রক্তদানের পুণ্য\"-এ চরণটির রচয়িতা কে?", options: ["অমিয় চক্রবর্তী", "কাজী নজরুল ইসলাম", "সৈয়দ আলী আহসান", "সুকান্ত ভট্টাচার্য"], correct: 4 },
+  { id: 42, q: "সুকান্ত ভট্টাচার্য যে পত্রিকার কিশোর সভা অংশের প্রতিষ্ঠাতা ও আজীবন সম্পাদক ছিলেন?", options: ["আকাল", "সবুজপত্র", "স্বাধীনতা", "সওগাত"], correct: 3 },
+  { id: 43, q: "ভারতীয় কমিউনিস্ট পার্টির সক্রিয় সদস্য ছিলেন কোন কবি?", options: ["সৈয়দ আলী আহসান", "সুকান্ত ভট্টাচার্য", "আহসান হাবীব", "বিষ্ণু দে"], correct: 2 },
+  { id: 44, q: "আঠারো বছর বয়স পথের বাধা কেমন করে ভাঙতে চায়?", options: ["যুদ্ধ করে", "কুঠারাঘাতে", "চরণাঘাতে", "আগুন জ্বালিয়ে"], correct: 3 },
+  { id: 45, q: "সুকান্ত কী ধরনের কবি?", options: ["বিদ্রোহের কবি", "শান্তির কবি", "প্রেমের কবি", "বিপ্লবের কবি"], correct: 4 },
+  { id: 46, q: "আঠারো বছর বয়স কীসের মধ্যে বাঁচে?", options: ["ভালো ও মন্দে", "হাসি আর কান্নায়", "দুর্যোগে আর ঝড়ে", "আশা আর হতাশায়"], correct: 3 },
+  { id: 47, q: "আঠারো বছর বয়সে কী আসে?", options: ["শান্তি", "কান্না", "কল্যাণ", "আঘাত"], correct: 4 },
+  { id: 48, q: "কারা ভীরু, কাপুরুষ নয়?", options: ["বুদ্ধিজীবীরা", "শিশুরা", "তরুণেরা", "বৃদ্ধরা"], correct: 3 },
+  { id: 49, q: "এ দেশের বুকে আবার কী নেমে আসুক বলে সুকান্ত ভট্টাচার্য উল্লেখ করেছেন?", options: ["বাইশ", "কল্যাণ", "শান্তি", "আঠারো"], correct: 4 },
+  { id: 50, q: "আঠারো বছর বয়স দুঃসহ কেন?", options: ["এটাই তারুণ্যের ধর্ম বলে", "পড়াশোনার চাপ থাকে বলে", "বয়ঃসন্ধিকাল বলে দুঃসাহসেরা উকি দেয় বলে", "দুরন্ত বলে"], correct: 3 },
+  { id: 51, q: "'রক্তদানের পুণ্য' বলতে কী বোঝানো হয়েছে?", options: ["রক্ত দানে পুণ্য অর্জন হয়", "রক্ত পোষণ করা হয়", "রক্ত বিলিয়ে দেয়া হয়", "রক্ত দিতে জানা"], correct: 1 },
+  { id: 52, q: "আঠারো বছর বয়স ভয়ংকর হয় কেন?", options: ["দুঃখ সহ্য করতে হয় বলে", "দুঃসহ বলে", "এ বয়স কাঁদতে জানে না", "কানে মন্ত্রণা আসে বলে"], correct: 4 },
+  { id: 53, q: "কেন আঠারো বছর বয়সে মানুষ আত্মপ্রত্যয়ী হয়?", options: ["দুঃসাহসী হয় বলে", "এ বয়সে মানুষ বুদ্ধিমান থাকে বলে", "দুর্বিনীত যৌবনে পদার্পণ করে বলে", "বয়ঃসন্ধিকাল বলে"], correct: 3 },
+  { id: 54, q: "কবি কেন আঠারো বছর বয়সকে আহ্বান জানিয়েছেন?", options: ["দুর্দমনীয় বলে", "গম্ভীর বলে", "আত্মপ্রত্যয়ী বলে", "জাতীয় জীবনের চালিকাশক্তি বলে"], correct: 4 },
+  { id: 55, q: "আঠারো বছর বয়স থরো থরো কাঁপে কেন?", options: ["রাগে", "দুঃখে", "বেদনায়", "উত্তেজনায়"], correct: 3 },
+  { id: 56, q: "আঠারো বছর বয়সে বিপর্যয় নেমে আসার কারণ কী?", options: ["নিজেকে দুর্বল ভাবার কারণে", "অতিরিক্ত মানসিক চাপে", "নিজেকে ঠিকমতো পরিচালনা না করতে পারার কারণে", "অসৎ বন্ধুদের সাথে মেলামেশার কারণে"], correct: 3 },
+  { id: 57, q: "আঠারো বছর বয়সে দুঃসাহসেরা উকি দেয় কেন?", options: ["নিজেকে দুর্বল ভাবার কারণে", "সাহসের অভাব বলে", "কৈশোর থেকে যৌবনে পদার্পণ করে বলে", "বন্ধুদের সাথে মেলামেশার কারণে"], correct: 3 },
+  { id: 58, q: "প্রাণবন্ত তরুণেরা ক্ষুব্ধ হয়ে ওঠে কেন?", options: ["নিজেকে সাহসী ভাবার কারণে", "সাহসের অভাব বলে", "অত্যাচার-শোষণ দেখে", "বিপদে পড়ে"], correct: 3 },
+  { id: 59, q: "দেশ ও জাতির কল্যাণে তারুণ্য শক্তি এগিয়ে আসে কেন?", options: ["তারুণ্য শক্তি অপ্রতিরোধ্য বলে", "তারুণ্য বন্ধনহীন বলে", "তরুণদের প্রধান নীতিই তাই", "তারুণ্যের ইতিবাচক গুণের কারণে"], correct: 4 },
+  { id: 60, q: "সুকান্ত ভট্টাচার্যকে বিপ্লবের কবি কেন বলা হয়?", options: ["তিনি কমিউনিস্ট পার্টির নেতা ছিলেন বলে", "তিনি রাজনীতির সঙ্গে জড়িত ছিলেন বলে", "তাঁর কবিতায় তরুণের জয়গান গাওয়া হয়েছে বলে", "তাঁর কবিতা বিপ্লবের রুদ্ররসে আপ্লুত ছিল বলে"], correct: 4 },
+  { id: 61, q: "কেন আঠারো বছর বয়স এত গুরুত্বপূর্ণ?", options: ["এ বয়স মাথা নত করতে জানে না", "এ বয়স মানবজীবনের এক উত্তরণকালীন পর্যায়", "ভয় থাকে বলে", "এ বয়স হাসতে পারে না"], correct: 2 },
+  { id: 62, q: "'তারুণ্যের ইতিবাচক দিক' বলতে কবি কী বোঝাতে চেয়েছেন?", options: ["তরুণদের বিদ্রোহী সত্তাকে", "তরুণদের খাম-খেয়ালিপনাকে", "তরুণদের ক্ষুব্ধ হয়ে ওঠাকে", "দেশ ও জাতির কল্যাণে তরুণদের অগ্রণী ভূমিকাকে"], correct: 4 },
+  { id: 63, q: "'তারুণ্যের নেতিবাচক দিক' বলতে কবি কী বুঝিয়েছেন?", options: ["তারুণ্যের সাহসকে", "তারুণ্যের যোগ্য নেতৃত্ব ও সঠিক পরিচালনার অভাবকে", "তারুণ্যের নির্ভীক সত্তাকে", "তারুণ্যের বিপ্লবী মনোভাবকে"], correct: 2 },
+  { id: 64, q: "\"এ দেশের বুকে আঠারো আসুক নেমে\"-কবি কেন এ প্রার্থনা করেছেন?", options: ["প্রগতির পথে এগিয়ে চলাই যৌবনের ধর্ম", "কঠিন মনোভাবের জন্য", "অন্যায়ের বিরুধে প্রতিবাদের জন্য", "মাথা তুলে দাঁড়ানোর জন্য"], correct: 1 },
+  { id: 65, q: "\"এ বয়সে কানে আসে কত মন্ত্রণা\" -এ চরণের মাধ্যমে কবি কী বোঝাতে চেয়েছেন?", options: ["তারুণ্যের স্বপ্নবিলাসিতাকে", "তারুণ্যের নির্ভীকতাকে", "তারুণ্যের দুর্বার গতিকে", "তারুণ্যের ইতিবাচক নেতিবাচক নানা তত্ত্ব ও ভাবধারাকে"], correct: 4 },
+  { id: 66, q: "আঠারো বছর বয়স কেন কাঁদতে জানে না?", options: ["এ বয়সে দুঃখ-কষ্ট স্পর্শ করতে পারে না বলে", "এ বয়সে দুর্বিনীত যৌবনে পদার্পণ করে আত্মপ্রত্যয়ী হয় বলে", "এ বয়সে হাসতে নিষেধ আছে বলে", "এ বয়সে কান্না ভালো নয় বলে"], correct: 2 },
+  { id: 67, q: "কবিতায় 'দুর্যোগে হাল ঠিকমতো রাখা ভার' বলতে কবি কী বোঝাতে চেয়েছেন?", options: ["যৌবনে পদার্পণের নানা অসুবিধাকে", "তারুণ্যের বিদ্রোহী সত্তার পরিণতিকে", "তারুণ্যের দুঃসাহসী অভিযানকে", "জীবনের সন্ধিক্ষণে সচেতনতার অভাবে বিপর্যয়ের আভাসকে"], correct: 4 },
+  { id: 68, q: "তাজা তাজা প্রাণে অসহ্য যন্ত্রণার কারণ কোনটি?", options: ["মানসিক বিপর্যয়", "যৌবনে পদার্পণ", "অর্থলোলুপ ব্যক্তিদের দৌরাত্ম্য", "চারপাশের অন্যায়, সামাজিক বৈষম্য ও ভেদাভেদ"], correct: 4 },
+  { id: 69, q: "এ বয়স কেন পথ চলতে থেমে যায় না?", options: ["এ বয়স প্রগতি ও অগ্রগতির", "এ বয়সে চিত্ত অস্থির থাকে", "এ বয়সে দুঃসাহস ভর করে", "এ বয়সে দেহ ও মনে স্থবিরতা আসে"], correct: 1 },
+  { id: 70, q: "'এ বয়স কালো লক্ষ দীর্ঘশ্বাসে'-কেন?", options: ["এ বয়সে লক্ষ্যপথে অনেক বাধা", "এ বয়সে লক্ষ্যভ্রষ্ট হওয়ার অজস্র ব্যর্থতার দীর্ঘশ্বাস", "এ বয়সে খাম-খেয়ালি করা যায় না", "এ বয়সে মনের অবস্থা দুর্বল থাকে বলে"], correct: 2 },
+  { id: 71, q: "আঠারো বছর বয়সে কেউ মাথা নোয়ায় না কেন?", options: ["এ বয়সীরা স্বপ্নে বিভোর থাকে", "এ বয়সীরা মাথা তুলে দাঁড়াতে পারে না", "এ বয়সীরা বুদ্ধিদীপ্ত থাকে না", "এ বয়সীরা আত্মবলে বলীয়ান থাকে"], correct: 4 },
+  { id: 72, q: "'শপথের কোলাহলে' বলতে লেখক কী বোঝাতে চেয়েছেন?", options: ["নিত্যনতুন সৃষ্টির উল্লাসে নব নব শপথে বলীয়ান হওয়াকে", "বিপদের ঝুঁকি নিয়ে জীবনের প্রতি মমতা ত্যাগ করাকে", "তারুণ্যের বিপদ শঙ্কাকে", "তারুণ্যের অগ্রযাত্রাকে"], correct: 1 },
+  { id: 73, q: "\"স্পর্ধায় নেয় মাথা তোলবার ঝুঁকি\" - এখানে কবি কী বুঝিয়েছেন?", options: ["আত্মনির্ভরশীল হয়ে স্বাধীনভাবে চলার ঝুঁকি", "আত্মবলে বলীয়ান না হয়ে ওঠা", "আত্মমর্যাদাবোধ বৃদ্ধি পায় বলে", "পরনির্ভরশীল হয়ে বেঁচে থাকা"], correct: 1 },
+  { id: 74, q: "\"এ বয়সে প্রাণ তীব্র আর প্রখর\"-এখানে 'তীব্র আর প্রখর' বলতে কী বোঝানো হয়েছে?", options: ["অনুভূতির সীমাবদ্ধতা", "বিদ্রোহী মনোভাবাপন্নতা", "বিরহ-বিষণ্ণতা", "অনুভূতির তীব্রতা ও সুগভীর সংবেদনশীলতা"], correct: 4 },
+  { id: 75, q: "আঠারো বছর বয়সকে নিয়ে কবিতা রচনার কারণ কী?", options: ["এ বয়স মানবজীবনের এক উত্তরণকালীন পর্যায়", "এ বয়স বাধাহীন", "এ বয়স যৌবনের উজ্জ্বলতার", "এ বয়স স্থবির"], correct: 1 },
+  { id: 76, q: "কবি সুকান্ত ভট্টাচার্যের সাথে কোন কবির সাদৃশ্য দেখা যায়?", options: ["গোলাম মোস্তফা", "কাজী নজরুল ইসলাম", "জসীমউদ্দীন", "শামসুর রাহমান"], correct: 2 },
+  { id: 77, q: "কবিতার বিচারে সুকান্ত ভট্টাচার্যের সঙ্গে মিল খুঁজে পাওয়া যায় কোন কবির?", options: ["অমিয় চক্রবর্তী", "রবীন্দ্রনাথ ঠাকুর", "আহসান হাবিব", "কাজী নজরুল ইসলাম"], correct: 4 },
+  { id: 78, q: "তারুণ্যের চঞ্চল ও কর্মমুখর প্রাণ স্পন্দনকে কবি কীসের সঙ্গে তুলনা করেছেন?", options: ["ট্রেনের সাথে", "জাহাজের সাথে", "বাষ্পীয় স্টিমারের সাথে", "অটোরিকশার সাথে"], correct: 3 },
+  { id: 79, q: "আঠারো বছর বয়স কীসের প্রতীক?", options: ["উচ্ছ্বলতার", "বিপ্লবের", "যৌবনের", "মানবতার"], correct: 3 },
+  { id: 80, q: "'আঠারো বছর বয়স' কবিতার ইতিবাচক দিক কোনটি?", options: ["কাঁদতে জানা", "কষ্ট", "ক্ষত-বিক্ষত", "দুঃসাহস"], correct: 4 },
+  { id: 81, q: "মানবজীবনের জন্য শুভ ও মঙ্গলজনক বলে মনে করা হয়েছে-", options: ["তারুণ্যের জয়ধ্বনিকে", "যৌবনের স্ততিগান", "তারুণ্যের ধর্মকে", "তারুণ্যের ইতিবাচক বৈশিষ্ট্যকে"], correct: 4 },
+  { id: 82, q: "তারুণ্যের নেতিবাচক দিক কোনটি?", options: ["কালো লক্ষ দীর্ঘশ্বাসে", "বিপ্লব", "কাঁদতে জানে না", "বিরাট দুঃসাহস"], correct: 1 },
+  { id: 83, q: "নিচের কোনটি তারুণ্যের দুর্বার চলার গতির সঙ্গে সাদৃশ্যপূর্ণ?", options: ["জরাজীর্ণতা", "দেহ মনের স্থবিরতা", "সজীবতা", "প্রগতি ও অগ্রগতি"], correct: 4 },
+  { id: 84, q: "\"এ বয়সে কেউ মাথা নোয়াবার নয়\"-এর আগের চরণটি কোনটি?", options: ["আঠারো বছর বয়স কী দুঃসহ", "ক্ষত-বিক্ষত হয় সহস্র প্রাণ", "আঠারো বছর বয়সের নেই ভয়", "পদাঘাতে চায় ভাঙতে পাথর বাধা"], correct: 4 },
+  { id: 85, q: "'আঠারো বছর বয়স' কবিতায় কবির কী প্রকাশিত হয়েছে?", options: ["কবির বাল্য জীবনের অভিজ্ঞতা", "কবির রাজনৈতিক জীবনের অভিজ্ঞতা", "কবির শিক্ষা জীবনের অভিজ্ঞতা", "কবির ব্যক্তিজীবনের অভিজ্ঞতা"], correct: 4 },
+  { id: 86, q: "'আঠারো বছর বয়স' কবিতাটি মূলত-", options: ["যৌবনের কবিতা", "প্রেমের কবিতা", "বিপ্লবাত্মক কবিতা", "সচেতনতামূলক কবিতা"], correct: 1 },
+  { id: 87, q: "কবিতার প্রথম স্তবকে কী প্রকাশিত হয়েছে?", options: ["তারুণ্যের দুর্বলতা", "তারুণ্যের শক্তিময়তা", "তারুণ্যের নিস্পৃহতা", "তারুণ্যের ভয়াবহ রূপ"], correct: 4 },
+  { id: 88, q: "'এ বয়স জানে রক্তদানের পুণ্য'- কথাটির তাৎপর্য কী?", options: ["কল্যাণের জন্য রক্ত ঘোষণা করতে জানে", "রক্ত ঝরাতে পারে", "রক্তাক্ত ঘটনা ঘটাতে পারে", "কল্যাণের জন্য রক্তমূল্য দিতে জানে"], correct: 4 },
+  { id: 89, q: "'আঠারো বছর বয়স' কবিতায় কোন কালের বৈশিষ্ট্যকে উল্লেখ করা হয়েছে?", options: ["কৈশোরের", "যৌবনের", "তারুণ্যের", "বয়ঃসন্ধিকালের"], correct: 4 },
+  { id: 90, q: "কবিতার শেষ স্তবকে কী প্রকাশিত হয়েছে?", options: ["যৌবনের প্রতি ধিক্কার", "যৌবনের প্রতি আহ্বান", "যৌবনের স্ততিগান", "যৌবনের প্রতি বিরক্তি প্রকাশ"], correct: 2 },
+  { id: 91, q: "সুকান্ত ভট্টাচার্যের কবিতার বৈশিষ্ট্য কী?", options: ["প্রকৃতি ও নৈসর্গ প্রীতি", "অন্যায়ের বিরুধে বিদ্রোহ ও সংগ্রামের আহ্বান", "নাগরিক জীবনবোধ", "সামাজিক নিপীড়ন"], correct: 2 },
+  { id: 92, q: "আঠারো বছর বয়স কোন সময়কে নিরূপণ করেছে?", options: ["আত্মনির্ভরশীল হওয়ার সময়কে", "কৈশোর থেকে যৌবনে পদার্পণের সময়কে", "নাগরিক হওয়ার সময়কে", "পরনির্ভরশীল হওয়ার সময়কে"], correct: 2 },
+  { id: 93, q: "কোনটি আঠারো বছর বয়সের ধর্ম?", options: ["আত্মত্যাগের মহান মন্ত্রে উজ্জীবিত হওয়া", "পরিবারকে আর্থিকভাবে সহায়তা করা", "দেশকে উন্নয়নের দিকে ধাবিত করা", "পথে-ঘাটে ঝগড়া করা"], correct: 1 },
+  { id: 94, q: "কবিতার মূল উপজীব্য কোনটি?", options: ["সময়ের সাহসী পদক্ষেপ নেয়া", "অন্যায়ের বিরুধে মাথা তুলে দাঁড়ানো", "আত্মপ্রত্যয়ী হয়ে ওঠার আহ্বান জানানো", "বয়ঃসন্ধিকালের বৈশিষ্ট্য তুলে ধরা"], correct: 4 },
+  { id: 95, q: "যৌবনের ধর্ম কী?", options: ["কর্তব্যপরায়ণ হয়ে ওঠা", "প্রগতির পথে দুর্বার গতিতে এগিয়ে চলা", "নিজেকে উপযুক্তভাবে তৈরি করা", "কারণে অকারণে সংগ্রাম করা"], correct: 2 },
+  { id: 96, q: "সুকান্তের কবিতায় নির্যাতিত মানুষের জন্য মমত্ববোধ প্রকাশিত হয় কেন?", options: ["নির্যাতিত মানুষের জীবনাচরণের প্রেক্ষপটে", "সমাজের দুর্নীতির প্রেক্ষাপটে", "সমাজের কল্যাণের প্রেক্ষাপটে", "বিশ্বব্যাপী যুদ্ধের ভয়াবহতা, দুর্ভিক্ষ ও মানবতার হাহাকারের প্রেক্ষাপটে"], correct: 4 },
+  { id: 97, q: "কবিতায় কবি কী প্রত্যাশা করেছেন?", options: ["তারুণ্য ও যৌবনশক্তি যেন জাতীয় জীবনের চালিকাশক্তি হয়", "আত্মবলে বলীয়ান হওয়া", "তারুণ্যের বিপ্লবী মনোভাব", "তারুণ্যের অগ্রগতি"], correct: 1 },
+  { id: 98, q: "তারুণ্যের সমাজের জন্য ক্ষতিকর বৈশিষ্ট্য কী?", options: ["জীবনের ঝুঁকি নিয়ে এগিয়ে চলা", "যোগ্য নেতৃত্ব ও সঠিক পরিচালনার অভাব", "বিদ্রোহাত্মক মনোভাব", "কঠিন সিদ্ধান্ত"], correct: 2 },
+  { id: 99, q: "তারুণ্যের ইতিবাচক দিকের প্রতি কবির অধিক গুরুত্বের কারণ কী?", options: ["ইতিবাচক দিক জাতীয় জীবনের চালিকাশক্তি", "ইতিবাচক দিক রাষ্ট্রের জন্য মঙ্গলজনক", "ইতিবাচক দিক পরিবারের জন্য মঙ্গলজনক", "ইতিবাচক দিক সমাজ পরিবর্তনে সহায়ক"], correct: 1 }
+]
+
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

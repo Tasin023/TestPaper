@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working on it - Elite Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        body {
+            margin: 0;
+            background: #02040a;
+            color: #fff;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Animated Background Glows */
+        .bg-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            z-index: -1;
+            animation: float 10s infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-20%, -20%); }
+            100% { transform: translate(20%, 20%); }
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .pulse-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 210, 255, 0.1);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .pulse-icon i {
+            font-size: 3rem;
+            color: #00d2ff;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
+        }
+
+        .pulse-ring {
+            position: absolute;
+            border: 2px solid #00d2ff;
+            border-radius: 30px;
+            inset: 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        .back-home-btn {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .back-home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 210, 255, 0.4);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow" style="top: 10%; left: 10%;"></div>
+    <div class="bg-glow" style="bottom: 10%; right: 10%; background: radial-gradient(circle, rgba(112, 0, 255, 0.1) 0%, transparent 70%);"></div>
+
+    <div class="glass-container">
+        <!-- Animated Icon -->
+        <div class="pulse-icon">
+            <div class="pulse-ring"></div>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+        </div>
+
+        <!-- Text Content -->
+        <h1 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+            দুঃখিত!
+        </h1>
+        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+            আমরা এই পৃষ্ঠাটি তৈরির কাজ করছি। শীঘ্রই এটি আপনার জন্য উন্মুক্ত করা হবে।
+        </p>
+
+        <!-- Action Button -->
+       <!-- Corrected Version -->
+        <button onclick="window.location.href='Dashboard.html'" class="back-home-btn w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3">
+            <i class="fa-solid fa-house"></i>
+            Back to home 
+        </button>
+
+        <!-- Signature -->
+        <div class="mt-10 opacity-20 text-[10px] tracking-[5px] uppercase">
+            Tasin Saimon &bull; System Update
+        </div>
+    </div>
+
+</body>
+</html>

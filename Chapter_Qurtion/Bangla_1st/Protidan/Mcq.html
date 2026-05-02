@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>প্রতিদান</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>প্রতিদান</h1>
+  <p>জসীম উদ্দীন — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { id: 1, q: "'প্রতিদান' কবিতায় কবি কাঁটা পেয়ে কী দান করেছেন?", options: ["ঘর", "ফুল", "ঘৃণা", "বাণ"], correct: 2 },
+  { id: 2, q: "'আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর'- এ পঙ্ক্তিতে কী বোঝানো হয়েছে?", options: ["পরোপকার", "সর্বংসহা মনোভাব", "আত্মগ্লানি", "কৃতজ্ঞতাবোধ"], correct: 1 },
+  { id: 3, q: "উদ্দীপকের হাসান (রাঃ)-এর সাথে 'প্রতিদান' কবিতার কোন পক্তির মিল আছে?", options: ["কত ঠাঁই হতে কত কী যে আনি সাজাই নিরন্তর", "দীঘল রজনী তার তরে জাগি ঘুম যে হরেছে মোর", "রঙিন ফুলের সোহাগ জড়ান ফুল মালঞ্চ ধরি", "যে গেছে বুকেতে আঘাত হানিয়া তার লাগি আমি কাঁদি"], correct: 4 },
+  { id: 4, q: "হাসান (রাঃ)-এর সাথে 'প্রতিদান' কবিতার মিলের কারণ কী? i. ক্ষমাশীলতা ii. আত্মপ্রশংসা iii. পারস্পরিক সৌহার্দ", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 5, q: "জসীমউদ্দীন কোন জেলায় জন্মগ্রহণ করেন?", options: ["রংপুর", "ফরিদপুর", "গাজীপুর", "নাটোর"], correct: 2 },
+  { id: 6, q: "জসীমউদ্দীনের মামার বাড়ি কোথায়?", options: ["গোবিন্দপুর গ্রাম", "রাজেন্দ্রপুর", "বনানী", "তাম্বুলখানা"], correct: 4 },
+  { id: 7, q: "জসীমউদ্দীন কত সালে জন্মগ্রহণ করেন?", options: ["১লা জানুয়ারি ১৯০২", "৪ই মার্চ ১৯০৩", "১লা জানুয়ারি ১৯০৩", "১লা মার্চ ১৯০৪"], correct: 3 },
+  { id: 8, q: "জসীমউদ্দীনের বাবার নাম কী?", options: ["অসারউদ্দীন মোল্লা", "আজহার উদ্দীন", "আতাহার আলী", "আসগর আলী"], correct: 1 },
+  { id: 9, q: "জসীমউদ্দীনের মায়ের নাম কী?", options: ["আলেয়া খাতুন", "সখিনা খাতুন", "সালেহা খাতুন", "আমিনা খাতুন"], correct: 4 },
+  { id: 10, q: "জসীমউদ্দীনের পৈতৃক নিবাস কোথায়?", options: ["ফতেপুর", "গোবিন্দপুর", "গাইবান্ধা", "তাম্বুলখানা"], correct: 2 },
+  { id: 11, q: "জসীমউদ্দীন বিএ পাশ করেন কোন কলেজ থেকে?", options: ["ফরিদপুর রাজেন্দ্র কলেজ", "কলকাতা ইসলামিয়া কলেজ", "মিরপুর বাঙলা কলেজ", "খুলনার বিএল কলেজ"], correct: 1 },
+  { id: 12, q: "জসীমউদ্দীন কলিকাতা বিশ্ববিদ্যালয় থেকে কোন ডিগ্রি লাভ করেন?", options: ["বিএ", "ডিলিট", "আইএ", "এমএ"], correct: 4 },
+  { id: 13, q: "জসীমউদ্দীন কোন বিষয়ে এমএ ডিগ্রি লাভ করেন?", options: ["বাংলা ভাষা ও সাহিত্য", "ইংরেজি ভাষা ও সাহিত্য", "গণিত", "আইন"], correct: 1 },
+  { id: 14, q: "জসীমউদ্দীন কোন বিশ্ববিদ্যালয় থেকে এমএ ডিগ্রি লাভ করেন?", options: ["ঢাকা বিশ্ববিদ্যালয়", "পাটনা বিশ্ববিদ্যালয়", "কলিকাতা বিশ্ববিদ্যালয়", "চট্টগ্রাম বিশ্ববিদ্যালয়"], correct: 3 },
+  { id: 15, q: "জসীমউদ্দীন কলেজে অধ্যয়নকালে কোন কবিতা রচনা করে খ্যাতি অর্জন করেন?", options: ["পল্লিজননী", "কবর", "রুপাই", "দেশ"], correct: 2 },
+  { id: 16, q: "জসীমউদ্দীনের ছাত্রাবস্থায় কোন কবিতাটি স্কুল পাঠ্যগ্রন্থে অন্তর্ভুক্ত হয়?", options: ["রুপাই", "কবর", "আসমানী", "পল্লিজননী"], correct: 2 },
+  { id: 17, q: "'কবর' কবিতা কার সৃষ্টি?", options: ["মুনীর চৌধুরী", "রফিক আজাদ", "হুমায়ুন আজাদ", "জসীমউদ্দীন"], correct: 4 },
+  { id: 18, q: "কে 'পল্লিকবি' হিসেবে সমধিক পরিচিত?", options: ["আহসান হাবীব", "সুভাষ মুখোপাধ্যায়", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন"], correct: 4 },
+  { id: 19, q: "জসীমউদ্দীন অধ্যাপক হিসেবে কোথায় কর্মজীবন শুরু করেন?", options: ["ঢাকা বিশ্ববিদ্যালয়", "কলিকাতা বিশ্ববিদ্যালয়", "রবীন্দ্রভারতী বিশ্ববিদ্যালয়", "ঢাকা কলেজ"], correct: 1 },
+  { id: 20, q: "কোন কবি সরকারের প্রচার ও জনসংযোগ বিভাগে উচ্চপদে আসীন হয়েছিলেন?", options: ["সুকান্ত ভট্টাচার্য", "জসীমউদ্দীন", "জীবনানন্দ দাশ", "মাইকেল মধুসূদন দত্ত"], correct: 2 },
+  { id: 21, q: "জসীমউদ্দীনের কবিতার প্রধান উপজীব্য কী?", options: ["পল্লিজীবন", "মধ্যবিত্ত জীবন", "নাগরিক জীবন", "শহুরে জীবন"], correct: 1 },
+  { id: 22, q: "বাংলার গ্রামীণ জীবনের আবহ ফুটে উঠেছে কার কবিতায়?", options: ["মানিক বন্দ্যোপাধ্যায়", "সমর সেন", "জসীমউদ্দীন", "সুকান্ত ভট্টাচার্য"], correct: 3 },
+  { id: 23, q: "জসীমউদ্দীনের কোন কাব্যগ্রন্থ বিভিন্ন বিদেশি ভাষায় অনূদিত হয়েছে?", options: ["ধানখেত", "রাখালি", "নকসী কাঁথার মাঠ", "বালুচর"], correct: 3 },
+  { id: 24, q: "'সোজন বাদিয়ার ঘাট' কী জাতীয় রচনা?", options: ["কাব্য", "উপন্যাস", "ছোটগল্প", "নাটক"], correct: 1 },
+  { id: 25, q: "'ধানখেত' কে রচনা করেছেন?", options: ["বিষ্ণু দে", "আহসান হাবীব", "জীবনানন্দ দাশ", "জসীমউদ্দীন"], correct: 4 },
+  { id: 26, q: "নিচের কোনটি কবি জসীমউদ্দীনের রচনা?", options: ["মানসী", "রূপসী বাংলা", "বালুচর", "সারা দুপুর"], correct: 3 },
+  { id: 27, q: "জসীমউদ্দীনকে কোন বিশ্ববিদ্যালয় ডিলিট প্রদান করে?", options: ["কলিকাতা বিশ্ববিদ্যালয়", "ঢাকা বিশ্ববিদ্যালয়", "রবীন্দ্রভারতী বিশ্ববিদ্যালয়", "দিল্লি বিশ্ববিদ্যালয়"], correct: 3 },
+  { id: 28, q: "রবীন্দ্রভারতী বিশ্ববিদ্যালয় কোথায় অবস্থিত?", options: ["কলকাতায়", "ঢাকায়", "সিরাজগঞ্জে", "দিল্লিতে"], correct: 1 },
+  { id: 29, q: "জসীমউদ্দীন কত খ্রিষ্টাব্দে মারা যান?", options: ["১৯৭৭", "১৯৭৬", "১৯৭৮", "১৯৭৯"], correct: 2 },
+  { id: 30, q: "জসীমউদ্দীন ১৯৭৬ খ্রিষ্টাব্দের কত তারিখে মারা যান?", options: ["১৩ই মার্চ", "১৪ই মার্চ", "১৫ই জুন", "১৬ই জুন"], correct: 2 },
+  { id: 31, q: "জসীমউদ্দীন কোথায় শেষ নিঃশ্বাস ত্যাগ করেন?", options: ["রাজশাহী", "কলকাতা", "ফরিদপুর", "ঢাকা"], correct: 4 },
+  { id: 32, q: "নিজের ঘর ভাঙার প্রতিদানে কবি কী বেঁধে দিতে চান?", options: ["কূল", "ঘর", "বাড়ি", "প্রাসাদ"], correct: 2 },
+  { id: 33, q: "কবি অন্যের ঘর বেঁধে দিতে চান কেন?", options: ["প্রতিদান পাওয়ার জন্য", "সুন্দর পৃথিবী নির্মাণের মানসে", "নিজের অভ্যাসগত কারণে", "অর্থলাভের বাসনায়"], correct: 2 },
+  { id: 34, q: "ক্ষতি করলে উপকার করা— হাসিবের এই গুণের সাথে 'প্রতিদান' কবিতার সাদৃশ্য কোথায়?", options: ["পরার্থে আত্মনিবেদনে", "করুণায়", "প্রীতিময় সম্পর্কে", "প্রতিশোধে"], correct: 1 },
+  { id: 35, q: "কবি কাকে আপন করতে কেঁদে বেড়ান?", options: ["যে তাঁকে পর করেছে", "যে তাকে আপন করেছে", "যে তাঁকে ভালোবেসেছে", "যে তাঁকে আশ্রয় দিয়েছে"], correct: 1 },
+  { id: 36, q: "'আপন করিতে কাঁদিয়া বেড়াই যে মোরে করেছে পর'-এ পঙ্ক্তিতে কী বোঝানো হয়েছে?", options: ["আত্মঅহংকার", "ক্ষমাশীলতা", "আন্তরিকতা", "আত্মগ্লানি"], correct: 2 },
+  { id: 37, q: "পরকে কবি কী করতে চেয়েছেন?", options: ["আপন", "অবজ্ঞা", "পর", "ঘৃণা"], correct: 1 },
+  { id: 38, q: "উল্লিখিত পঙ্ক্তিটি 'প্রতিদান' কবিতায় কত বার ব্যবহার হয়েছে?", options: ["১ বার", "৩ বার", "২ বার", "৪ বার"], correct: 2 },
+  { id: 39, q: "কবি কেঁদে বেড়ান কেন?", options: ["আপন জনের জন্য", "ব্যর্থ হয়েছেন বলে", "পরকে আপন করতে", "কূল ভেঙেছে বলে"], correct: 3 },
+  { id: 40, q: "জালালের বিপদে এগিয়ে আসার মধ্যে 'প্রতিদান' কবিতার কোন দিকটি প্রকাশ পেয়েছে?", options: ["আত্মগ্লানি", "আন্তরিকতা", "ক্ষমাশীলতা", "আত্মত্যাগ"], correct: 3 },
+  { id: 41, q: "'যে মোরে করিল পথের বিবাগী'- এ পঙক্তির পরবর্তী চরণ কী?", options: ["পথে পথে আমি ফিরি তার লাগি", "পথে ঘাটে আমি ফিরি তার লাগি", "পথ হতে পথে ফিরি তার লাগি", "পথে পথে ফিরি তার লাগি"], correct: 1 },
+  { id: 42, q: "কবি পথে পথে ফিরছেন কেন?", options: ["অনিষ্টকারীর উপকারের জন্য", "প্রতিশোধ গ্রহণের জন্য", "আত্মগ্লানির কারণে", "ক্ষমা প্রার্থনার জন্য"], correct: 1 },
+  { id: 43, q: "যে কবির ঘুম কেড়েছে, কবি তার জন্য কী করেন?", options: ["কণ্টকশয্যা তৈরি করেন", "মৃত্যুফাঁদ তৈরি করেন", "দীঘল রজনী জাগেন", "ঘর বাঁধেন"], correct: 3 },
+  { id: 44, q: "কবি পথে পথে কাকে খুঁজে ফিরেছেন?", options: ["যে কবির ঘর ভেঙেছে", "যে কবির বুকে আঘাত করেছে", "যে কবির ঘুম কেড়েছে", "যে কবিকে পথের বিবাগী করেছে"], correct: 4 },
+  { id: 45, q: "'প্রতিদান' কবিতায় উল্লিখিত রজনী কেমন ছিল?", options: ["জ্যোৎস্নাশোভিত", "অন্ধকারাচ্ছন্ন", "মেঘাচ্ছন্ন", "দীঘল"], correct: 4 },
+  { id: 46, q: "কবি কেন দীঘল রজনী জেগেছেন?", options: ["মহৎ বলে", "স্বার্থপর বলে", "লোভী বলে", "আত্মগ্লানিতে"], correct: 1 },
+  { id: 47, q: "ঘুম হরণকারীর জন্য দীঘল রজনী জেগে কবি কীসের পরিচয় দিয়েছেন?", options: ["দুর্বলতার", "কৃতজ্ঞতার", "প্রতিশোধপরায়ণতার", "মহত্ত্বের"], correct: 4 },
+  { id: 48, q: "'আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর' পঙ্ক্তিটি কত বার ব্যবহৃত হয়েছে?", options: ["১ বার", "৩ বার", "২ বার", "৪ বার"], correct: 3 },
+  { id: 49, q: "'প্রতিদান' কবিতায় কবি কী কী বেঁধে দিতে চেয়েছেন?", options: ["কূল ও নৌকা", "ঘর ও বাড়ি", "বাগান ও কূপ", "ঘর ও কূল"], correct: 4 },
+  { id: 50, q: "রাজার ক্ষমা করে দেওয়ার গুণের সাথে 'প্রতিদান' কবিতার কবির সাদৃশ্য কোথায়?", options: ["ত্যাগে", "ক্ষমাশীলতায়", "ক্ষমতায়", "প্রতিদানে"], correct: 2 }
+]
+
+ let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

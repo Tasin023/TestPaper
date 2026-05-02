@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বিভীষণের প্রতি মেঘনাদ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1A0A0F;
+            --glass-core: rgba(107, 15, 32, 0.55);
+            --glass-border: rgba(240, 100, 120, 0.12);
+            --accent: #F2A0AE;
+            --accent-glow: rgba(192, 37, 62, 0.35);
+            --text-primary: #FDE8EC;
+            --text-secondary: #C26070;
+            --card-radius: 28px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            padding-bottom: 120px;
+        }
+
+        /* --- High-End Header --- */
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--accent);
+            text-transform: uppercase;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 20px 0 10px;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff 30%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-secondary); font-weight: 300; }
+
+        /* --- Floating Navigation HUD --- */
+        .mastery-hud {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            background: var(--glass-core);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .progress-container { flex-grow: 1; margin: 0 40px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px; }
+        .bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* --- CQ Analysis Cards --- */
+        .container { width: 100%; max-width: 850px; margin: 50px auto; padding: 0 20px; }
+
+        .cq-card {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cq-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .q-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .q-index {
+            background: var(--accent);
+            color: #000;
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: 'Outfit';
+        }
+        .q-tag { color: var(--accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+        .q-statement { font-size: 1.4rem; font-weight: 500; color: #fff; margin-bottom: 25px; line-height: 1.4; }
+
+        /* --- Premium Reveal Button --- */
+        .reveal-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .reveal-trigger:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        /* --- Answer Drawer --- */
+        .ans-drawer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .is-active .ans-drawer { max-height: 1000px; margin-top: 25px; border: 1px solid rgba(56, 189, 248, 0.1); }
+        .is-active .reveal-trigger { background: var(--accent); color: #000; }
+
+        .ans-body { padding: 25px; color: var(--text-secondary); font-size: 1.15rem; border-left: 4px solid var(--accent); }
+        .ans-body strong { color: var(--accent); display: block; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* --- Global Controls --- */
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .mastery-hud { flex-direction: column; gap: 15px; padding: 20px; border-radius: 25px; }
+            .progress-container { margin: 10px 0; width: 100%; }
+        }
+    </style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+    <header>
+        <span class="category-tag">bangla first paper</span>
+        <h1>বিভীষণের প্রতি মেঘনাদ</h1>
+        <p>মাইকেল মধুসূদন দত্ত — জ্ঞানমূলক ও অনুধাবনমূলক প্রশ্নোত্তর</p>
+    </header>
+
+    <div class="mastery-hud">
+        <div class="hud-label" style="font-family:'Outfit'">TOPICS</div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Mastery Progress</span>
+                <span id="prog-percent">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+        </div>
+        <button class="btn-ghost" onclick="toggleAll()">REVEAL ALL</button>
+    </div>
+
+    <main class="container" id="cq-list"></main>
+
+    <script>
+        const analysisData = [
+{ q: "মাইকেল মধুসূদন দত্ত কোথায় জন্মগ্রহণ করেন?", a: "যশোর জেলার সাগরদাঁড়ি গ্রামে জন্মগ্রহণ করেন।" },
+{ q: "বাংলায় চতুর্দশপদী কবিতা বা সনেটের প্রবর্তন করেন কে?", a: "মাইকেল মধুসূদন দত্ত।" },
+{ q: "‘শর্মিষ্ঠা’, ‘পদ্মাবতী’ মধুসূদনের কী ধরনের রচনা?", a: "‘শর্মিষ্ঠা’ ও ‘পদ্মাবতী’ মধুসূদন রচিত নাট্যগ্রন্থ।" },
+{ q: "মাইকেল মধুসূদন দত্ত কোথায় মৃত্যুবরণ করেন?", a: "কলকাতায় মৃত্যুবরণ করেন।" },
+{ q: "কুম্ভকর্ণ কে?", a: "রাবণের মধ্যম সহোদর।" },
+{ q: "রাঘবদাস কে?", a: "বিভীষণ।" },
+{ q: "রক্ষোরথি বলে সম্বোধন করা হয়েছে কাকে?", a: "বিভীষণকে।" },
+{ q: "মেঘনাদ ক্ষুদ্রমতি নর বলেছেন কাকে?", a: "লক্ষ্মণকে।" },
+{ q: "রাজহংস কোথায় কেলি করে না?", a: "সলিলে কেলি করে না।" },
+{ q: "দুরাচার দৈত্য কোথায় ভ্রমে?", a: "নন্দন-কাননে ভ্রমে।" },
+{ q: "মেঘনাদ লক্ষ্মণকে কোথায় পাঠিয়ে দেয়ার কথা বলেন?", a: "মেঘনাদ লক্ষ্মণকে শমন-ভবনে পাঠানোর কথা বলেন।" },
+{ q: "বাসববিজয়ী বলা হয় কাকে?", a: "মেঘনাদকে।" },
+{ q: "বিভীষণ রাঘবদাস- একথা শুনে মেঘনাদের কী ইচ্ছে হয়?", a: "মেঘনাদের মরার ইচ্ছে হয়।" },
+{ q: "দেবকুল সতত কী হতে বিরত?", a: "পাপ হতে বিরত।" },
+{ q: "বনবাসী বলতে কাকে বোঝানো হয়েছে?", a: "লক্ষ্মণকে বোঝানো হয়েছে।" },
+{ q: "‘জীমূতেন্দ্র’ শব্দের অর্থ কী?", a: "মেঘের ডাক।" },
+{ q: "‘মৃগেন্দ্রকেশরী’ শব্দের অর্থ কী?", a: "কেশরযুক্ত পশুরাজ সিংহ।" },
+{ q: "‘মেঘনাদবধ’ কাব্যটি মোট কয়টি সর্গে বিন্যস্ত?", a: "নয়টি সর্গে বিন্যস্ত।" },
+{ q: "‘বিভীষণের প্রতি মেঘনাদ’ ‘মেঘনাদবধ’ কাব্যের কোন সর্গ থেকে সংকলিত হয়েছে?", a: "‘মেঘনাদবধ’ কাব্যের ষষ্ঠ সর্গ থেকে সংকলিত হয়েছে।" },
+{ q: "‘মেঘনাদবধ’ কাব্যের ষষ্ঠ সর্গের শিরোনাম কী?", a: "ষষ্ঠ সর্গের শিরোনাম হলো ‘বধো’ (বধ)।" },
+{ q: "রাবণের জ্যেষ্ঠপুত্রের নাম কী?", a: "মেঘনাদ।" },
+{ q: "রামায়ণ-এর রচয়িতার নাম কী?", a: "বাল্মীকি।" },
+{ q: "‘বসুধা’ শব্দের অর্থ কী?", a: "‘বসুধা’ শব্দের অর্থ পৃথিবী।" },
+{ q: "সৌমিত্রি হলো কে?", a: "সৌমিত্রি লক্ষ্মণ।" },
+{ q: "মহারথী প্রথা কী?", a: "শ্রেষ্ঠ বীরদের আচরণ প্রথা।" },
+{ q: "নিকুম্ভিলা যজ্ঞাগার কোথায়?", a: "নিকুম্ভিলা যজ্ঞাগার লঙ্কাপুরীতে।" },
+{ q: "‘অম্বর’ শব্দের অর্থ কী?", a: "‘অম্বর’ শব্দের অর্থ আকাশ।" },
+{ q: "পরদোষে কে মজিতে চায় না?", a: "পরদোষে বিভীষণ মজিতে চায় না।" },
+{ q: "আধুনিক বাংলা কবিতার অগ্রদূত কে?", a: "আধুনিক বাংলা কবিতার অগ্রদূত মাইকেল মধুসূদন দত্ত।" },
+{ q: "তস্কর শব্দের অর্থ কী?", a: "তস্কর শব্দের অর্থ চোর।" }
+ ]
+
+        const list = document.getElementById('cq-list');
+        const bar = document.getElementById('progress-bar');
+        const percentText = document.getElementById('prog-percent');
+        let revealedCount = new Set();
+
+        function render() {
+            list.innerHTML = analysisData.map((item, i) => `
+                <div class="cq-card" id="card-${i}">
+                    <div class="q-meta">
+                        <div class="q-index">${i + 1}</div>
+                        <div class="q-tag">Knowledge Base</div>
+                    </div>
+                    <div class="q-statement">${item.q}</div>
+                    <button class="reveal-trigger" onclick="reveal(${i})">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>বিশ্লেষণ দেখুন</span>
+                    </button>
+                    <div class="ans-drawer">
+                        <div class="ans-body">
+                            <strong>বিশ্লেষণধর্মী উত্তর</strong>
+                            ${item.a}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function reveal(index) {
+            const card = document.getElementById(`card-${index}`);
+            card.classList.toggle('is-active');
+            
+            if(card.classList.contains('is-active')) {
+                revealedCount.add(index);
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = analysisData.length;
+            const current = revealedCount.size;
+            const percentage = Math.round((current / total) * 100);
+            bar.style.width = percentage + '%';
+            percentText.innerText = percentage + '%';
+        }
+
+        function toggleAll() {
+            analysisData.forEach((_, i) => {
+                const card = document.getElementById(`card-${i}`);
+                if(!card.classList.contains('is-active')) {
+                    card.classList.add('is-active');
+                    revealedCount.add(i);
+                }
+            });
+            updateProgress();
+        }
+
+        render();
+    </script>
+</body>
+</html>

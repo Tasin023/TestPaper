@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>রেইনকোট</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>রেইনকোট</h1>
+  <p>আখতারুজ্জামান ইলিয়াস — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "কোন ভবনটিতে 'রেইনকোট' গল্পের অধিকাংশ ঘটনা বিবৃত হয়েছে?", "options": ["আবদুল সাত্তার মৃধা", "ড. আফাজ আহমদ", "আখতারুজ্জামান ইলিয়াস", "নুরুল হুদা"], "correct": 4 },
+  { "id": 2, "q": "নুরুল হুদাকে পাকিস্তানি হানাদার বাহিনীর তলব করার কারণ—", "options": ["কমান্ডারের নির্দেশে", "প্রিন্সিপালের অভিযোগে", "মুক্তিযোদ্ধাদের সহযোগী ভেবে", "তাকে মুক্তিযোদ্ধা সন্দেহ"], "correct": 4 },
+  { "id": 3, "q": "অনুচ্ছেদে 'রেইনকোট' গল্পের কোন ভাবের প্রতিফলন ঘটেছে?", "options": ["পাক হানাদার বাহিনীর নৃশংসতা", "মুক্তিযোদ্ধাদের অদম্য শক্তি-সাহস", "মুক্তিযোদ্ধাদের প্রতি গভীর আস্থা", "তৎকালীন সাধারণ মানুষের উৎকণ্ঠা"], "correct": 2 },
+  { "id": 4, "q": "উক্ত ভাবটি যে বাক্যে প্রকাশ পেয়েছে তা হলো—", "options": ["মিলিশিয়ান লোক ইলেকট্রিক ট্রান্সফর্মার জোর দিয়া", "একটি জিপ উড়াইয়া দিয়া, কলজের গেটে বোমা বসানো হুকুম", "নুরুল হুদার ঝুলন্ত শরীর এতটাই কাঁপে যে চাবুকের বাড়ির দিকে আর মনোযোগ দেওয়া হয়ে ওঠে না", "বউয়ের এই আইডিয়ার জন্যই তাকে এতটা তড়িৎ ঘড়িতে হয়"], "correct": 3 },
+  { "id": 5, "q": "আখতারুজ্জামান ইলিয়াস ১৯৪৩ সালের কত তারিখে জন্মগ্রহণ করেন?", "options": ["১১ই ফেব্রুয়ারি", "১২ই ফেব্রুয়ারি", "১৩ই ফেব্রুয়ারি", "১৪ই ফেব্রুয়ারি"], "correct": 2 },
+  { "id": 6, "q": "আখতারুজ্জামান ইলিয়াস জন্মগ্রহণ করেন কোন জেলায়?", "options": ["বগুড়া", "সিরাজগঞ্জ", "গাইবান্ধা", "পঞ্চগড়"], "correct": 1 },
+  { "id": 7, "q": "আখতারুজ্জামান ইলিয়াস কোন বিশ্ববিদ্যালয় থেকে স্নাতক ও স্নাতকোত্তর ডিগ্রি লাভ করেন?", "options": ["ঢাকা বিশ্ববিদ্যালয়", "রাজশাহী বিশ্ববিদ্যালয়", "চট্টগ্রাম বিশ্ববিদ্যালয়", "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়"], "correct": 1 },
+  { "id": 8, "q": "আখতারুজ্জামান ইলিয়াসের পাঁচটি গ্রন্থে কয়টি গল্প সংকলিত আছে?", "options": ["২৮টি", "২৬টি", "৩০টি", "৩১টি"], "correct": 1 },
+  { "id": 9, "q": "আখতারুজ্জামান ইলিয়াস রচিত 'খোঁয়ারি' কী ধরনের রচনা?", "options": ["ছোটগল্প", "উপন্যাস", "নাটক", "প্রবন্ধ"], "correct": 1 },
+  { "id": 10, "q": "আখতারুজ্জামান ইলিয়াসের কয়টি ছোটগল্প গ্রন্থ রয়েছে?", "options": ["৫টি", "৬টি", "৭টি", "৮টি"], "correct": 1 },
+  { "id": 11, "q": "আখতারুজ্জামান ইলিয়াসের পিতৃপ্রদত্ত নাম কী?", "options": ["মোহাম্মদ আখতারুজ্জামান", "আখতারুজ্জামান ইলিয়াস", "মোহাম্মদ ইলিয়াস উদ্দিন", "আখতারুজ্জামান মোহাম্মদ ইলিয়াস"], "correct": 4 },
+  { "id": 12, "q": "আখতারুজ্জামান ইলিয়াসের মাতার নাম কী?", "options": ["মনোয়ারা ইলিয়াস", "মরিয়ম ইলিয়াস", "শরিফা ইলিয়াস", "সামসুন নাহার ইলিয়াস"], "correct": 2 },
+  { "id": 13, "q": "আখতারুজ্জামান ইলিয়াস ১৯৯৭ সালের কত তারিখে মৃত্যুবরণ করেন?", "options": ["পহেলা জানুয়ারি", "দোসরা জানুয়ারি", "তেসরা জানুয়ারি", "চৌঠা জানুয়ারি"], "correct": 4 },
+  { "id": 14, "q": "আখতারুজ্জামান ইলিয়াস কোন রোগে আক্রান্ত হয়ে মৃত্যুবরণ করেন?", "options": ["জন্ডিস", "ক্যান্সার", "কলেরা", "বক্ষব্যাধি"], "correct": 2 },
+  { "id": 15, "q": "আখতারুজ্জামান ইলিয়াস কোন গ্রামে জন্মগ্রহণ করেন?", "options": ["গোটটিয়া গ্রামে", "চুল্লিয়া গ্রামে", "গোহাটী গ্রামে", "শংকরপাশা গ্রামে"], "correct": 3 },
+  { "id": 16, "q": "‘রেইনকোট’ গল্পের গল্পকার কে?", "options": ["জহির রায়হান", "আখতারুজ্জামান ইলিয়াস", "শওকত ওসমান", "কাজী মোতাহার হোসেন"], "correct": 2 },
+  { "id": 17, "q": "আখতারুজ্জামান ইলিয়াস কোথায় জন্মগ্রহণ করেন?", "options": ["বাবার বাড়িতে", "আত্মীয়ের বাড়িতে", "অনাথ আশ্রমে", "মাতুলালয়ে"], "correct": 4 },
+  { "id": 18, "q": "আখতারুজ্জামান ইলিয়াস রচিত ছোট গল্প গ্রন্থের সংখ্যা কয়টি?", "options": ["৭টি", "২টি", "৩টি", "৫টি"], "correct": 4 },
+  { "id": 19, "q": "আখতারুজ্জামান ইলিয়াস কত সালে ‘বাংলা একাডেমি’ পুরস্কার লাভ করেন?", "options": ["১৯৮৬ সালে", "১৯৮৩ সালে", "১৯৭১ সালে", "১৯৭৭ সালে"], "correct": 2 },
+  { "id": 20, "q": "আখতারুজ্জামান ইলিয়াস কত সালে মৃত্যুবরণ করেন?", "options": ["১৯৭৭ সালের ৪ জানুয়ারি", "১৯৯৬ সালের ১০ জানুয়ারি", "১৯৯৭ সালের ৪ জানুয়ারি", "২০০০ সালের ১১ অক্টোবর"], "correct": 3 },
+  { "id": 21, "q": "‘রেইনকোট’ গল্পে কখন থেকে বৃষ্টি শুরুর কথা বলা হয়েছে?", "options": ["ভোর রাত থেকে", "সকাল থেকে", "বিকাল থেকে", "রাত থেকে"], "correct": 1 },
+  { "id": 22, "q": "ইলেকট্রিক ট্রান্সফর্মারটি কাদের দেয়াল ঘেঁষে ছিল?", "options": ["কলেজের সামনে", "কলেজের পিছনে", "বাড়ির সামনে", "বাড়ির পিছনে"], "correct": 1 },
+  { "id": 23, "q": "প্রিন্সিপালের কোয়ার্টারটি কোথায়?", "options": ["মাঠ পেরিয়ে ডান দিকে", "মাঠ পেরিয়ে বাঁ দিকে", "মাঠের সীমানায়", "মাঠের পিছন দিকে"], "correct": 2 },
+  { "id": 24, "q": "প্রিন্সিপাল কোয়ার্টারের সঙ্গে আর কী ছিল?", "options": ["বিরাট বাড়ি", "সরকারি অফিস", "মিলিশিয়ার ক্যাম্প", "কলেজের অফিস"], "correct": 3 },
+  { "id": 25, "q": "মিলিশিয়া প্রাদুর্ভাবের পর থেকে কাকে দেখে কলেজের সবাই আতঙ্কে ছিল?", "options": ["কর্মচারীকে", "আহমদকে", "মিলিশিয়ার বড় কর্তাকে", "ইসহাককে"], "correct": 4 },
+  { "id": 26, "q": "এপ্রিলের শুরু থেকে কে বাংলা বলা ছেড়েছে?", "options": ["ইসহাক", "কর্ণেল", "আসমা", "মিন্টু"], "correct": 1 },
+  { "id": 27, "q": "পাকিস্তানের জন্য দিনরাত কে দোয়া দরুদ পড়ে?", "options": ["আসমা", "মিন্টু", "প্রিন্সিপাল", "ইসহাক"], "correct": 4 },
+  { "id": 28, "q": "পাকিস্তান বাঁচাতে হলে স্কুল কলেজ থেকে শহিদ মিনার হটাতে হবে। নির্দেশটি কে মিলিশিয়ার বড় কর্তাদের কাছে করেছিল?", "options": ["মিন্টু", "নুরুল হুদা", "প্রিন্সিপাল", "ইসহাক"], "correct": 3 },
+  { "id": 29, "q": "পাকিস্তানের পাক সাফ শরীরটাকে নাপাক করতে হলে এসব কাঁটা উপড়াতে হবে।— উক্তিতে ‘কাঁটা’ বলতে কোন জিনিসটিকে বোঝানো হয়েছে?", "options": ["মুক্তিযুদ্ধের গান", "শহিদ মিনার", "মুক্তিযোদ্ধা", "শ্যাম সংগীত"], "correct": 2 },
+  { "id": 30, "q": "‘আসমা’ সম্পর্কে মিন্টুর কী হয়?", "options": ["দূরসম্পর্কের বোন", "আপন বোন", "চাচাতো বোন", "মামাতো বোন"], "correct": 2 },
+  { "id": 31, "q": "মগবাজারের ফ্ল্যাট থেকে মিন্টু কবে চলে যায়?", "options": ["জুলাই মাসের ২৩ তারিখে", "জুন মাসের ২৩ তারিখে", "মে মাসের ২৩ তারিখে", "মার্চ মাসের ২৩ তারিখে"], "correct": 2 },
+  { "id": 32, "q": "প্রফেসরের স্ত্রী আসমার জন্য হন্যে হয়ে লেগে গেল কেন?", "options": ["পাশের বাড়িতে গোলাগুলি শুনে", "মিলিশিয়াদের অত্যাচারে", "পাশের ফ্ল্যাটের মহিলার কথা শুনে", "মুক্তিযোদ্ধাদের আশ্রয় দেওয়ার ভয়ে"], "correct": 3 },
+  { "id": 33, "q": "মিলিশিয়া লাগার পর থেকে তারা কতবার বাড়ি পাল্টিয়েছিল?", "options": ["একবার", "দুইবার", "তিনবার", "চারবার"], "correct": 4 },
+  { "id": 34, "q": "ওয়েল্ডিং ওয়ার্কশপের মালিকের শ্বশুর কী ছিল?", "options": ["মুক্তিযোদ্ধা", "রাজাকার", "চোরচক্রধারী", "সুদ ব্যবসায়ী"], "correct": 2 },
+  { "id": 35, "q": "এই আইকে নিয়ে এরকম বাড়াবাড়ি করাটা কি আসমার ঠিক হচ্ছে? বাক্যটিতে ‘বাড়াবাড়ি’ বলতে কী বোঝানো হয়েছে?", "options": ["মিন্টুকে গুরুত্ব দেওয়া", "মিন্টুকে মিলিশিয়ার পক্ষে নিতে বলা", "মিন্টুর সঙ্গে প্রফেসরের ধৈর্য্যের তুলনা দেওয়া", "মিন্টুর সঙ্গে প্রফেসরের কাজের তুলনা দেওয়া"], "correct": 1 },
+  { "id": 36, "q": "প্রফেসর কার ‘রেইনকোটটি’ পরে?", "options": ["সাত্তার", "মিন্টুর", "ইসহাক", "ইশাক"], "correct": 2 },
+  { "id": 37, "q": "আসমার ছেলের বয়স কত বছর?", "options": ["তিন বছর", "চার বছর", "পাঁচ বছর", "ছয় বছর"], "correct": 3 },
+  { "id": 38, "q": "রেইনকোটটি কী রঙের মতো দেখাচ্ছিল?", "options": ["খাকি রঙের", "মাটি রঙের", "কালো রঙের", "ছাই রঙের"], "correct": 2 },
+  { "id": 39, "q": "‘আকবর সাজিদ’ কোন বিষয়ের প্রফেসর ছিলেন?", "options": ["বাংলা", "ইংরেজি", "ফারাসি", "উর্দু"], "correct": 4 },
+  { "id": 40, "q": "প্রিন্সিপালের নাম কী ছিল?", "options": ["আফাজ আহমদ", "আকবর আহমেদ", "আসাদ আহমেদ", "আহমদ আলী"], "correct": 1 },
+  { "id": 41, "q": "প্রফেসর নুরুল হুদা যখন রেইনকোট পরে হাঁটছিল সে সময় কোন ঋতু ছিল?", "options": ["গ্রীষ্ম", "বর্ষা", "হেমন্ত", "শীত"], "correct": 2 },
+  { "id": 42, "q": "‘রেইনকোট’ গল্পে কলেজের পিওনটির নাম কী ছিল?", "options": ["ইসমাইল", "ইশতিয়াক", "ইসহাক", "ইমরান"], "correct": 3 },
+  { "id": 43, "q": "‘আবদুস সাত্তার মৃধা’ কোন বিষয়ের প্রফেসর ছিলেন?", "options": ["বাংলা", "কেমিস্ট্রি", "উর্দু", "জিওগ্রাফি"], "correct": 4 },
+  { "id": 44, "q": "চলন্ত বাস থেকে দুজন যাত্রী নেমে যায়, তাদের কী বলে মনে হয়?", "options": ["ক্রিমিনাল, চোর অথবা পকেটমার", "মুক্তিযোদ্ধা অথবা কলেজ পড়ুয়া ছাত্র", "রাজাকার অথবা ডাকাত", "চোর অথবা ডাকাত"], "correct": 2 },
+  { "id": 45, "q": "বাসে বসে নুরুল হুদা কার সম্পর্কের ভাবছিল?", "options": ["চোর, ডাকাত", "রাজাকার", "মুক্তিযোদ্ধা", "সহকর্মী"], "correct": 4 },
+  { "id": 46, "q": "নুরুল হুদা কোন বিষয়ের লেকচারার ছিলেন?", "options": ["বাংলা", "আরবি", "কেমিস্ট্রি", "উর্দু"], "correct": 3 },
+  { "id": 47, "q": "মিলিশিয়ারা নুরুল হুদাকে ধরে নিয়ে প্রথমে কী বিষয় প্রশ্ন করে?", "options": ["বাড়ির বিষয়ে", "অফিসের বিষয়ে", "মিন্টুর বিষয়ে", "কলেজের বিষয়ে"], "correct": 4 },
+  { "id": 48, "q": "কলেজে মোট কয়টি আলমারি আনা হয়েছে বলে ‘নুরুল হুদা’ মিলিশিয়াদের জানায়?", "options": ["তিনটি", "চারটি", "পাঁচটি", "দশটি"], "correct": 4 },
+  { "id": 49, "q": "মিলিশিয়ারা নুরুল হুদাকে কার ঘনিষ্ঠ মানুষ বলে মনে করে?", "options": ["আফাজ সাহেবকে", "মিন্টুকে", "নুরুল হুদাকে", "আবদুস সাত্তারকে"], "correct": 2 },
+  { "id": 50, "q": "মিলিশিয়া কাদেরকে ছদ্মবেশী মিসক্রিয়েন্ট মনে করে?", "options": ["শিক্ষকদের", "কুলিদের", "বাসের যাত্রীদের", "পিওনদের"], "correct": 2 },
+  { "id": 51, "q": "‘বর্ষাকালেই তো যুদ্ধ’ কথাটি কে বলেছিল?", "options": ["পিওন", "প্রিন্সিপাল", "তুলি", "নুরুল হুদা"], "correct": 4 },
+  { "id": 52, "q": "নুরুল হুদা যে মিসক্রিয়েন্টের সক্রিয় সদস্য, মিলিশিয়ারা আরো নিশ্চিত হয় কীভাবে?", "options": ["তার মৌনতায়", "স্বীকারোক্তিতে", "চিৎকার করে অস্বীকার করায়", "কুলিদের সম্পর্কে বলায়"], "correct": 1 },
+  { "id": 53, "q": "নুরুল হুদাকে কাদের সাথে মিলিশিয়ারা গুলিয়ে দেয়?", "options": ["চোরের সঙ্গে", "ফাঁসির সঙ্গে", "ঘরের ছাদ থেকে আঁড়াতে", "দড়ির সাথে"], "correct": 3 },
+  { "id": 54, "q": "নুরুল হুদার শরীরে মিলিশিয়ার চাবুকের বাড়ি কী বলে মনে হয়?", "options": ["অসহ্য যন্ত্রণা", "স্রেফ উৎপাতে", "ভয়ংকর অত্যাচার", "বিরামহীন আঘাত"], "correct": 2 },
+  { "id": 55, "q": "রেইনকোটটা খুলে ফেললেও নুরুল হুদার শরীরে কী অনুভূত হয়?", "options": ["রেইনকোটের গরম", "রেইনকোটের ভেজা গন্ধ"], "correct": 1 },
+  { "id": 56, "q": "নুরুল হুদার মেয়ের বয়স কত ছিল?", "options": ["তিন বছর", "চার বছর", "সাড়ে চার বছর", "আড়াই বছর"], "correct": 4 },
+  { "id": 57, "q": "‘ড্রেসিং টেবিলের সামনে দাঁড়িয়ে নিজের নতুনরুপ সে ছায়াচাকা যায়।’ উক্তিটি কার সম্পর্কে বলা হয়েছে?", "options": ["প্রিন্সিপাল", "পিওন", "নুরুল হুদা", "মিন্টু"], "correct": 3 },
+  { "id": 58, "q": "‘ঐ ঠিকানারা বলে দিলে তাকে সম্মানে ছেড়ে দেওয়া হবে।’ কাদের ঠিকানার কথা বলা হয়েছে?", "options": ["মুক্তিযোদ্ধাদের ঠিকানা", "প্রিন্সিপালের ঠিকানা", "প্রফেসরদের ঠিকানা", "উর্দু প্রফেসরদের ঠিকানা"], "correct": 1 },
+  { "id": 59, "q": "‘পিওন কি তাকে মিসক্রিয়েন্টের লোক ভাবে নাকি?’ বাক্যটিতে ‘মিসক্রিয়েন্ট’ বলতে মূলত কাদের বোঝানো হয়েছে?", "options": ["মিলিশিয়া", "মুক্তিযোদ্ধা", "রাজাকার", "মুক্তিযোদ্ধাদের পরিবার"], "correct": 2 },
+  { "id": 60, "q": "‘পাকিস্তান বালি বাঁচাতে হলে তো স্কুল কলেজ থেকে শহিদ মিনার হটাও।’ বাক্যটিতে শহিদ মিনার প্রকৃতপক্ষে কিসের প্রতীক?", "options": ["বাঙালি জাতীয়তাবাদ বিকাশের প্রতীক", "বাঙালি জাতির প্রতীক", "স্মৃতি রক্ষার প্রতীক", "বাংলা ভাষা চর্চার প্রতীক"], "correct": 1 },
+  { "id": 61, "q": "মিলিশিয়াদের শহিদ মিনার হটানোর পরামর্শের মধ্য দিয়ে প্রিন্সিপালের চরিত্রের কী প্রকাশ পেয়েছে?", "options": ["মিলিশিয়াদের সচেতন করা", "মিলিশিয়াদের তোষামোদ করা", "মিলিশিয়াদের সাহস জোগানো", "মিলিশিয়াদের সঙ্গ পরামর্শ দেওয়া"], "correct": 2 },
+  { "id": 62, "q": "‘রেডিও টেলিভিশন সব বলছে, সিচুয়েশন নরমাল।’ নুরুল হুদার এ ধরনের নিশ্চয়তার নেপথ্যে কোন বিষয়টি কাজ করেছে?", "options": ["সাহস", "ভয়", "ক্ষোভ", "আবেগ"], "correct": 2 },
+  { "id": 63, "q": "‘বউয়ের এই আইডিয়ার জন্যই তাকে এতটা তড়িৎ হয়ে থাকতে হয়।’ কেন?", "options": ["আইডিয়াটি ছিল বীরত্বপূর্ণ", "আইডিয়াটি মুক্তিযোদ্ধাদের জন্য", "আইডিয়াটি নুরুল হুদার জন্য", "আইডিয়াটি ছিল কাম্য"], "correct": 2 },
+  { "id": 64, "q": "‘বাসের লোক দুটো পালিয়ে গেল তাকে দেখেই।’ নুরুল হুদা এর কারণ হিসেবে কোনটিকে শনাক্ত করল?", "options": ["তার চেহারা", "তার উগ্রতা", "গায়ে থাকা রেইনকোটটি", "মাথার টুপি"], "correct": 3 },
+  { "id": 65, "q": "মিলিটারি অফিসারকে দেখে প্রিন্সিপালের কালো মুখ বেগুনি হয় কেন?", "options": ["উত্তেজনায়", "ভয়ে", "দুশ্চিন্তায়", "উৎকণ্ঠায়"], "correct": 2 },
+  { "id": 66, "q": "‘আমার নাম? সত্যি বলেছে? আমার নাম বলেছে?’ বাক্যটিতে নুরুল হুদার কী ধরনের মনোভাব বিবৃত হয়েছে?", "options": ["অজানা ভয়", "মুক্তিযোদ্ধাদের প্রতি আক্রোশ", "মুক্তিযোদ্ধাদের প্রতি গভীর অনুভূতি", "মুক্তিযোদ্ধাদের প্রতি বিরূপ মনোভাব"], "correct": 1 },
+  { "id": 67, "q": "তার মৌনতা মিলিশিয়াকে আরো নিশ্চিত করে কেন?", "options": ["মৌনতা সম্মতির লক্ষণ বলে", "প্রথম থেকেই তিনি মৌন ছিলেন বলে", "মৌনতা তাদের সুযোগ করে দেয় বলে", "মিলিটারি পূর্ব থেকেই তার সম্পর্কে জানত বলে"], "correct": 4 },
+  { "id": 68, "q": "চাবুক তাকে ঘেষে এবং তার তপ্ত তাদের আঘাত কম না। এখানে মূলত কাদের আস্থার কথা বলা হচ্ছে?", "options": ["মিলিটারি বাহিনীর", "মুক্তিযোদ্ধাদের আস্থার", "সহকর্মীদের আস্থার", "পরিবারের আস্থার"], "correct": 2 },
+  { "id": 69, "q": "নুরুল হুদার ঝুলন্ত শরীর কাঁপতে থাকে কেন?", "options": ["মিলিটারি বাহিনীর ভয়ে", "পরিবারের দুশ্চিন্তায়", "অসহ্য যন্ত্রণা ও আঘাতে", "মুক্তিযোদ্ধাদের সাথে সম্পৃক্ত থাকার উত্তেজনায়"], "correct": 4 },
+  { "id": 70, "q": "চাবুকের বাড়ির দিকে তার মনোযোগ শেষ হয়ে ওঠে না কেন?", "options": ["মৃত্যু নিশ্চিত জানায়", "ধীরে ধীরে শরীর অবশ হওয়ায়", "ক্রমাগত চাবুক দিয়ে বাড়ি দেওয়ায়", "মুক্তিযোদ্ধাদের সাথে সম্পৃক্ত গভীর ভাবনায়"], "correct": 4 },
+  { "id": 71, "q": "দেশকে মুক্ত করার জন্য ১৯৭১ সালে মুক্তিযোদ্ধারা অকাতরে প্রাণ দেন। ‘রেইনকোট’ গল্পে মুক্তিযোদ্ধাদের অন্য আর একটি নামে চিনতে পারি। সেটি কী?", "options": ["মুক্তিবাহিনী", "মিলিশিয়েন্ট", "মিসক্রিয়েন্ট", "মুক্তিকামী"], "correct": 3 },
+  { "id": 72, "q": "মুক্তিযুদ্ধের সময় সহায়তা করতে বাধ্য হয়েছে স্কুল-কলেজ, অফিস-আদালত। কার্যক্রম বন্ধ থাকলেও কর্মচারী-কর্মকর্তাদের ঠিকই হাজিরা দিতে হয়েছে। এরকম কোন প্রতিষ্ঠানের কথা আমরা ‘রেইনকোট’ গল্পে জানতে পারি?", "options": ["স্কুল", "বীমা অফিস", "কলেজ", "আদালত"], "correct": 3 },
+  { "id": 73, "q": "‘রাজাকার’ বা ‘মুক্তিবাহিনী’ কোনোটির সঙ্গেই সরাসরি জড়িত নয়, বরং হানাদার বাহিনীকে খুশি করার জন্য তোষামোদি চরিত্র হিসেবে কার পরিচয় পাওয়া যায়?", "options": ["নুরুল হুদা", "প্রিন্সিপাল", "ইসহাক", "দোকানদার"], "correct": 2 },
+  { "id": 74, "q": "বঙ্গবন্ধুর ৭ই মার্চের ভাষণ ও ‘রেইনকোট’ গল্পে রেইনকোটটি মূলত কিসের প্রতীক?", "options": ["মুক্তিযুদ্ধে অংশ নেওয়ার", "মুক্তিযোদ্ধাদের পথ প্রদর্শনের", "মুক্তিযোদ্ধাদের একত্রিত হওয়ার", "স্বাধীনতার চেতনায় উজ্জীবিত হওয়ার"], "correct": 4 },
+  { "id": 75, "q": "শহিদদের স্মৃতিকে অম্লান রাখার জন্য জাতীয়ভাবে শহিদ মিনারের মতো আর কী তৈরি হয়েছে?", "options": ["স্মৃতিসৌধ", "শহিদ বেদি", "স্মৃতিস্তম্ভ", "স্মৃতিফলক"], "correct": 1 },
+  { "id": 76, "q": "দেশকে স্বাধীন করার অদম্য বাসনায় মরণভয় জয় করে যুদ্ধে ছুটে গিয়েছিল অনেক তরুণ প্রাণ। ‘রেইনকোট’ গল্পে এরকম কথা কার সমর্থনে মেলে?", "options": ["নুরুল হুদা", "মিন্টু", "দোকানদার", "ইসহাক"], "correct": 2 },
+  { "id": 77, "q": "বড়রা মাঝেমধ্যে মিলিশিয়ার ভয়ে দেখে তারা ‘তৈরি’ থাকে। ‘তৈরি’ শব্দটির সাথে নিচের কোন শব্দটির মিল রয়েছে?", "options": ["কাজের উপায়", "নতুন চিন্তা", "এলোমেলো চিন্তা", "পূর্বের চেতনায় ফেরা"], "correct": 4 },
+  { "id": 78, "q": "‘ফের নতুন করে অপরাধীদের দেশে যেতে এখন ভালো লাগছে।’ লেখকদের নুরুল হুদার এ ভাবনার কারণ কী ছিল?", "options": ["অপরাধীরা ধরা পড়ায়", "অপরাধীরা অপরাধ স্বীকার করায়", "বাস থেকে অপরাধীরা নেমে যাওয়ায়", "অপরাধীদের বাস থেকে নামিয়ে দেওয়ায়"], "correct": 3 },
+  { "id": 79, "q": "লেকচারার ও তার সহকর্মীকে মিলিশিয়া প্রথম কোথায় নিয়ে আসে?", "options": ["ক্যাম্পের তিন তলায়", "মস্ত উঁচু একটি ঘরে", "একটি পুরনো বাড়িতে", "কলেজের অফিসে"], "correct": 2 },
+  { "id": 80, "q": "‘সর্বজনীন আকুপাংচারিং’ বলতে কী বোঝায়?", "options": ["সুঁই থেরাপি কার্যক্রম", "রাষ্ট্রবিরোধী কার্যক্রম", "জনসেবা বিরোধী কার্যক্রম", "গণশত্রু বিরোধী কার্যক্রম"], "correct": 2 },
+  { "id": 81, "q": "‘ওয়েল্ডিং ওয়ার্কশপ’ বলতে কী বোঝানো হয়েছে?", "options": ["ঝালাই কারখানা", "মেরামত কারখানা", "গাড়ি তৈরির কারখানা", "গাড়ি রঙের কারখানা"], "correct": 1 },
+  { "id": 82, "q": "নুরুল হুদাকে বহনকৃত বাস আসাদ গেট বাসস্টপেজে এলে কতজন যাত্রী উঠল?", "options": ["৪ জন", "৫ জন", "৮ জন", "৯ জন"], "correct": 4 },
+  { "id": 83, "q": "কে একটু বাচাল টাইপের?", "options": ["সাজিদ", "দোকানদার ছেলেটি", "ইসহাক", "প্রিন্সিপাল"], "correct": 2 },
+  { "id": 84, "q": "রেইনকোট কার গায়ে ছিল?", "options": ["ইসহাক", "মিন্টু", "নুরুল হুদার গায়ে", "প্রিন্সিপালের"], "correct": 3 },
+  { "id": 85, "q": "নুরুল হুদা কারোর নাম কত বার?", "options": ["তিন", "চার", "পাঁচ", "ছয়"], "correct": 3 },
+  { "id": 86, "q": "ইসহাক পা ধুয়ে আগে প্যান্ট না পরে কোট পরল কেন?", "options": ["প্যান্টের বোতাম নষ্ট ছিল", "প্যান্টের বেল্ট নেই বলে", "প্যান্টের ইস্ত্রি নষ্ট", "প্যান্টের পকেটে মানিব্যাগ নেই বলে"], "correct": 3 },
+  { "id": 87, "q": "বাস কিসের সামনে গিয়ে থেমে আছে?", "options": ["বড় রাস্তার", "জেব্রা ক্রসিং", "অফিস", "থানা"], "correct": 2 },
+  { "id": 88, "q": "‘রেইনকোট’ গল্পে কোন মাসটি যুদ্ধের সময় চলছে?", "options": ["ভাদ্র", "কার্তিক", "জ্যৈষ্ঠ", "চৈত্র"], "correct": 3 },
+  { "id": 89, "q": "ইসহাককে কে কলেজের পিয়ন ভাবল না কেন?", "options": ["প্রিন্সিপাল", "ইসমাইল", "উঁচু পদের অফিসার", "ইলেকট্রিক মিস্ত্রি"], "correct": 3 },
+  { "id": 90, "q": "সবাইকে রেইনকোট পরতে হবে কেন?", "options": ["প্রিন্সিপালের নির্দেশ আছে", "উঁচু পদের অফিসারদের হুকুম", "মিলিটারি অফিসারদের নির্দেশ", "নিয়মকানুন মেনে"], "correct": 3 },
+  { "id": 91, "q": "আসমা মিন্টু কে হয়?", "options": ["চাচাতো বোন", "বান্ধবী", "আপন বোন", "মামাতো বোন"], "correct": 3 },
+  { "id": 92, "q": "কে রেইনকোট খোলার সময় রেইনকোট চিবোয়?", "options": ["নুরুল হুদা", "ইসহাক", "মিন্টু", "আসমা"], "correct": 2 },
+  { "id": 93, "q": "কারও সাহায্য নিয়ে জিপ নামায় কারা?", "options": ["গাড়ি নষ্ট হলে পিয়ন", "গাড়ি চুরি করে চোর", "গাড়ি চুরি করে ডাকাত", "গাড়ি মেরামতের সময় পিয়ন"], "correct": 2 },
+  { "id": 94, "q": "ইসহাক নুরুল হুদার বাসায় কত বার এসেছিল?", "options": ["দুই", "তিন", "এক", "চার"], "correct": 2 },
+  { "id": 95, "q": "মিলিটারি কলেজের আলমারি নিতে আসে কেন?", "options": ["ক্যাম্পের জন্য আলমারি প্রয়োজন", "অস্ত্র লুকিয়ে রাখার জন্য", "বিদেশে পাঠিয়ে দেওয়ার জন্য", "রাজ্য শাসনের খাতিরে"], "correct": 2 },
+  { "id": 96, "q": "আসমার বড় ভাই মিলিশিয়াদের সাথে কীভাবে কথা বললেন?", "options": ["ধমকের সুরে", "ভয়ে ভয়ে", "শান্তভাবে", "কর্কশ সুরে"], "correct": 2 },
+  { "id": 97, "q": "নুরুল হুদা চাবুকের বাড়ির শব্দটা কেমন শোনেন?", "options": ["খুব জোরে", "খুবই কম", "খুবই মৃদু ও অস্পষ্ট", "খুবই গম্ভীর ও চাপা"], "correct": 3 },
+  { "id": 98, "q": "নুরুল হুদাকে কখন ক্যান্টনমেন্টে নেওয়া হল?", "options": ["বিকেল ৪টা ২৫ মিনিটে", "দুপুর ১২টার দিকে", "সকাল ৯টার দিকে", "বিকেল ৩টা ২০ মিনিটে"], "correct": 4 },
+  { "id": 99, "q": "নুরুল হুদা চাবুকের বাড়ির শব্দটার সাথে নিজের কোন কথা শোনেন?", "options": ["অসহ্য যন্ত্রণা", "চাবুক না চালিয়ে তাকে ছেড়ে দিতে বলেন", "চাবুকের শব্দের সাথে নিজের নাম ও ঠিকানা শোনেন", "চাবুকের শব্দের সাথে নিজের গগনবিদারী চিৎকার শোনেন"], "correct": 2 },
+  { "id": 100, "q": "মিন্টুর রেইনকোট পরে নুরুল হুদা যখন কলেজে আসছিলেন, তখন কার কথা মনে পড়ল?", "options": ["আসমার কথা", "মিন্টুর কথা", "পিওন ইসহাক সাহেবের কথা", "প্রিন্সিপাল আফাজ আহমেদের কথা"], "correct": 2 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

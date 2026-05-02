@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100vh;
+    background: #050508;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .bg-blobs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(100px); }
+  .blob-1 { width: 500px; height: 500px; background: #e05a30; opacity: 0.13; top: -120px; right: -100px; }
+  .blob-2 { width: 420px; height: 420px; background: #4ab3f4; opacity: 0.10; bottom: -80px; left: -80px; }
+  .blob-3 { width: 260px; height: 260px; background: #a86cc9; opacity: 0.07; top: 40%; left: 45%; }
+
+  .page {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 60px 24px;
+  }
+
+  .back-btn {
+    position: absolute; top: 32px; left: 36px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.22);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .back-btn:hover { color: rgba(255,255,255,0.55); }
+  .back-btn svg { width: 14px; height: 14px; }
+
+  .subject-tag {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.22);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px; padding: 5px 14px; margin-bottom: 36px;
+  }
+
+  .hero { text-align: center; margin-bottom: 64px; }
+
+  .title-block {
+    position: relative; display: inline-block;
+    line-height: 0.88; margin-bottom: 6px;
+  }
+  .title-block::before {
+    content: '';
+    position: absolute;
+    width: 36px; height: 36px;
+    background: #e8271a;
+    top: 4px; left: -14px; z-index: 0;
+  }
+  .title-main {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(80px, 14vw, 148px);
+    font-weight: 400; color: #f0ece3;
+    letter-spacing: -4px; line-height: 0.88;
+    display: block; position: relative; z-index: 1;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.6);
+  }
+  .title-wave { display: block; width: 100%; margin-top: -8px; overflow: visible; }
+  .hero-sub {
+    font-size: 12px; font-weight: 300; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.22); margin-top: 20px;
+  }
+
+  .cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; width: 100%; max-width: 620px;
+  }
+
+  .bento-link {
+    display: flex; flex-direction: column;
+    text-decoration: none; border-radius: 22px;
+    overflow: hidden; position: relative;
+    transition: transform 0.3s cubic-bezier(.22,1,.36,1);
+  }
+  .bento-link:hover { transform: translateY(-6px); }
+  .bento-link::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 55%);
+    border-radius: inherit; pointer-events: none;
+  }
+  .card-mcq { border: 1px solid rgba(0,229,255,0.2); }
+  .card-cq  { border: 1px solid rgba(255,0,229,0.2); }
+
+  .card-visual {
+    height: 150px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-mcq .card-visual { background: linear-gradient(145deg,#062030,#0d5a80,#00b8d4); }
+  .card-cq  .card-visual { background: linear-gradient(145deg,#1e0030,#7a0080,#cc00cc); }
+
+  .vis-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.07); }
+  .vc1 { width: 180px; height: 180px; top:-60px; right:-40px; }
+  .vc2 { width: 100px; height: 100px; bottom:-30px; left:-20px; }
+
+  .vis-icon {
+    position: relative; z-index: 2;
+    width: 52px; height: 52px; border-radius: 15px;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .card-mcq .vis-icon { background: rgba(0,229,255,0.2); border: 1px solid rgba(0,229,255,0.3); }
+  .card-cq  .vis-icon { background: rgba(255,0,229,0.2); border: 1px solid rgba(255,0,229,0.3); }
+  .vis-icon svg { width: 24px; height: 24px; stroke: rgba(255,255,255,0.85); fill: none; stroke-width: 1.6; }
+
+  .card-body {
+    flex: 1; padding: 20px 22px 28px;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .card-mcq .card-body { background: rgba(0,229,255,0.06); }
+  .card-cq  .card-body { background: rgba(255,0,229,0.06); }
+
+  .card-number {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; margin-bottom: 8px; display: block;
+  }
+  .card-mcq .card-number { color: rgba(0,229,255,0.5); }
+  .card-cq  .card-number { color: rgba(255,0,229,0.5); }
+
+  .card-name {
+    font-size: 17px; font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 7px; letter-spacing: -0.02em;
+  }
+  .card-desc {
+    font-size: 12px; font-weight: 300;
+    color: rgba(255,255,255,0.28);
+    line-height: 1.7; margin-bottom: 26px;
+  }
+
+  /* ══ NEON SKEWED BUTTON ══ */
+  .neon-btn {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 32px 12px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: #06060a;
+    border: none; outline: none; cursor: pointer;
+    text-decoration: none;
+    /* Skewed right edge via clip-path */
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+    transition: transform 0.2s, filter 0.2s;
+  }
+
+  /* Dark triangle layered on top-right corner for the "skewed tab" look */
+  .neon-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 24px;
+    background: #050508;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .card-mcq .neon-btn {
+    background: #00e5ff;
+    animation: glowCyan 2.2s ease-in-out infinite;
+  }
+  .card-cq .neon-btn {
+    background: #ff00e5;
+    animation: glowMagenta 2.2s ease-in-out infinite;
+  }
+
+  .neon-btn:hover { transform: scale(1.05); filter: brightness(1.2); }
+  .neon-btn:active { transform: scale(0.96); }
+
+  .neon-btn svg {
+    position: relative; z-index: 3;
+    width: 13px; height: 13px;
+    stroke: #06060a; fill: none; stroke-width: 2.5;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .neon-btn:hover svg { transform: translateX(3px); }
+
+  .btn-text { position: relative; z-index: 3; }
+
+  @keyframes glowCyan {
+    0%, 100% { box-shadow: 0 0 12px #00e5ff, 0 0 28px rgba(0,229,255,0.45); }
+    50%       { box-shadow: 0 0 24px #00e5ff, 0 0 60px rgba(0,229,255,0.7), 0 0 100px rgba(0,229,255,0.25); }
+  }
+  @keyframes glowMagenta {
+    0%, 100% { box-shadow: 0 0 12px #ff00e5, 0 0 28px rgba(255,0,229,0.45); }
+    50%       { box-shadow: 0 0 24px #ff00e5, 0 0 60px rgba(255,0,229,0.7), 0 0 100px rgba(255,0,229,0.25); }
+  }
+
+  .footer-note {
+    margin-top: 40px;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.1); text-transform: uppercase;
+  }
+
+  @media (max-width: 520px) {
+    .cards { grid-template-columns: 1fr; max-width: 340px; }
+    .back-btn { top: 20px; left: 20px; }
+    .title-main { font-size: 72px; letter-spacing: -2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="page">
+
+  <a class="back-btn" href="../Chaprets.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M19 12H5M10 7l-5 5 5 5"/>
+    </svg>
+    ফিরে যান
+  </a>
+
+  <div class="subject-tag">বাংলা প্রথম পত্র</div>
+
+  <div class="hero">
+    <div class="title-block">
+      <span class="title-main">বিভীষণের প্রতি মেঘনাদ</span>
+    </div>
+    <svg class="title-wave" viewBox="0 0 560 28" fill="none" xmlns="http://www.w3.org/2000/svg" height="28">
+      <path d="M0 20 Q70 4 140 18 Q210 32 280 16 Q350 0 420 18 Q490 34 560 14"
+        stroke="#e8271a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="cards">
+
+    <a href="Mcq.html" class="bento-link card-mcq">
+      <div class="card-visual">
+        <div class="vis-circle vc1"></div>
+        <div class="vis-circle vc2"></div>
+        <div class="vis-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <circle cx="12" cy="17" r="0.5" fill="rgba(255,255,255,0.85)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-number">01 · MCQ</span>
+        <div class="card-name">বহুনির্বাচনী প্রশ্ন</div>
+        <div class="card-desc">আপনার মেধা বাড়াতে ক্লিক করে MCQ অনুশীলন শুরু করুন।</div>
+        <span class="neon-btn">
+          <span class="btn-text">শুরু করুন</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a href="CQ.html" class="bento-link card-cq">
+      <div class="card-visual">
+        <div class="vis-circle vc1"></div>
+        <div class="vis-circle vc2"></div>
+        <div class="vis-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-number">02 · CQ</span>
+        <div class="card-name">সৃজনশীল প্রশ্ন</div>
+        <div class="card-desc">বিস্তারিত উত্তরের জন্য CQ বিভাগে প্রবেশ করুন।</div>
+        <span class="neon-btn">
+          <span class="btn-text">শুরু করুন</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer-note">একটি প্রশ্ন বিভাগ বেছে নিন</div>
+
+</div>
+</body>
+</html>

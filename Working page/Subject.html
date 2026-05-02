@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Academic Subjects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle at 50% 50%, #0a192f 0%, #02040a 100%);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Home Assistant Style Button */
+        .subject-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Icon Pill Section */
+        .icon-pill {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .subject-info {
+            flex-grow: 1;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+        }
+
+        .subject-status {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Arrow Indicator */
+        .arrow-box {
+            background: rgba(0, 0, 0, 0.3);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        /* Custom Colors for Subjects */
+        .bg-bangla { background: #ff5e62; box-shadow: 0 0 15px rgba(255, 94, 98, 0.3); }
+        .bg-english { background: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+        .bg-ict { background: #a8ff78; color: #000; box-shadow: 0 0 15px rgba(168, 255, 120, 0.3); }
+        .bg-islam { background: #ffbd39; color: #000; box-shadow: 0 0 15px rgba(255, 189, 57, 0.3); }
+        .bg-civics { background: #9d50bb; box-shadow: 0 0 15px rgba(157, 80, 187, 0.3); }
+        .bg-social { background: #00f2fe; color: #000; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
+        .bg-logic { background: #f093fb; color: #000; box-shadow: 0 0 15px rgba(240, 147, 251, 0.3); }
+
+        .back-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #00d2ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <!-- Back Button -->
+        <div class="mb-10">
+            <button onclick="window.location.href='Dashboard.html'" class="back-btn px-6 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
+                <i class="fas fa-chevron-left"></i> ফিরে যান
+            </button>
+        </div>
+
+        <h2 class="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+            আপনার বিষয় নির্বাচন করুন
+        </h2>
+
+        <style>
+            .subject-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: transform 0.2s ease;
+            }
+            .subject-link:active {
+                transform: scale(0.98);
+            }
+        </style>
+
+        <!-- Main Subject Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Bangla 1st (Active Page) -->
+            <a href="../Chapter_Qurtion/Bangla_1st/Chaprets.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-bangla"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Bangla 1st Paper</span>
+                        <span class="subject-status">Ready to study</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Bangla 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-bangla"><i class="fa-solid fa-pen-nib"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Bangla 2nd Paper</span>
+                        <span class="subject-status">Ready to study</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- English 1st -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-english"><i class="fa-solid fa-language"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">English 1st Paper</span>
+                        <span class="subject-status">Ready to study</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- English 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-english"><i class="fa-solid fa-spell-check"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">English 2nd Paper</span>
+                        <span class="subject-status">Ready to study</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- ICT -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-ict"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">ICT</span>
+                        <span class="subject-status">Online</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Islam History 1st -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-islam"><i class="fa-solid fa-mosque"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Islam History 1st</span>
+                        <span class="subject-status">Historical</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Islam History 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-islam"><i class="fa-solid fa-kaaba"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Islam History 2nd</span>
+                        <span class="subject-status">Historical</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Civics 1st -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-civics"><i class="fa-solid fa-landmark"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Civics 1st</span>
+                        <span class="subject-status">Governance</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Civics 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-civics"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Civics 2nd</span>
+                        <span class="subject-status">Constitution</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Social Work 1st -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-social"><i class="fa-solid fa-hands-holding-child"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Social Work 1st</span>
+                        <span class="subject-status">Active</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Social Work 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-social"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Social Work 2nd</span>
+                        <span class="subject-status">Active</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Logic 1st -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-logic"><i class="fa-solid fa-brain"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Logic 1st</span>
+                        <span class="subject-status">Rational</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+
+            <!-- Logic 2nd -->
+            <a href="Working.html" class="subject-link">
+                <div class="subject-card">
+                    <div class="icon-pill bg-logic"><i class="fa-solid fa-lightbulb"></i></div>
+                    <div class="subject-info">
+                        <span class="subject-name">Logic 2nd</span>
+                        <span class="subject-status">Analysis</span>
+                    </div>
+                    <div class="arrow-box"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-20 text-center">
+            <div class="inline-block bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-xs tracking-widest text-gray-400">
+                MADE BY <span class="text-sky-400 font-bold">TASIN SAIMON</span> 
+                <span class="mx-2 text-gray-600">|</span> 
+                IDEA BY <span class="text-indigo-400 font-bold">MD EMON GAZI</span> 
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

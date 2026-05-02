@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বিভীষণের প্রতি মেঘনাদ</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>বিভীষণের প্রতি মেঘনাদ</h1>
+  <p>মাইকেল মধুসূদন দত্ত — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "শমন-ভবন কী?", "options": ["দেবালয়", "যমালয়", "যজ্ঞাগার", "বাসবালয়"], "correct": 2 },
+  { "id": 2, "q": "'হায় তাত উচিত কি তব এ কাজ' বলতে কী বোঝানো হয়েছে?", "options": ["কুম্ভকর্ণের সহায়তা", "লক্ষ্মণের প্রবেশ", "বিভীষণের সহায়তা", "রামচন্দ্রের আজ্ঞা"], "correct": 3 },
+  { "id": 3, "q": "উদ্দীপকের ইদ্রিস চরিত্রটি 'বিভীষণের প্রতি মেঘনাদ' কবিতার কোন চরিত্রের প্রতিনিধিত্ব করেছে?", "options": ["কুম্ভকর্ণের", "বিভীষণের", "লক্ষ্মণের", "রামের"], "correct": 2 },
+  { "id": 4, "q": "উক্ত চরিত্রের (বিভীষণ) সঙ্গে সাদৃশ্যপূর্ণ চরণ কোনটি?", "options": ["নিজ গৃহপথ, তাত দেখাও তস্করে?", "রাঘব দাস আমি; কী প্রকারে তাঁহার বিপক্ষ কাজ করিব।", "গতি যার নীচ সহ, নীচ সে দুর্মতি।", "সবগুলো"], "correct": 4 },
+  { "id": 5, "q": "আধুনিক বাংলা কবিতার অগ্রদূত বলা হয় কাকে?", "options": ["ঈশ্বরচন্দ্র গুপ্ত", "মাইকেল মধুসূদন দত্ত", "রবীন্দ্রনাথ ঠাকুর", "জীবনানন্দ দাশ"], "correct": 2 },
+  { "id": 6, "q": "মাইকেল মধুসূদন দত্তের জন্ম কত সালে?", "options": ["১৮২৪ খ্রিস্টাব্দে", "১৮২৫ খ্রিস্টাব্দে", "১৮২৬ খ্রিস্টাব্দে", "১৮২৭ খ্রিস্টাব্দে"], "correct": 1 },
+  { "id": 7, "q": "মাইকেল মধুসূদন দত্তের জন্ম জানুয়ারির কত তারিখে?", "options": ["২৪ তারিখে", "২৫ তারিখে", "২৬ তারিখে", "২৭ তারিখে"], "correct": 2 },
+  { "id": 8, "q": "মাইকেল মধুসূদন দত্তের পিতার নাম কী?", "options": ["রাজশেখর দত্ত", "রাজনারায়ণ দত্ত", "রামশেখর দত্ত", "রামনরায়ণ দত্ত"], "correct": 2 },
+  { "id": 9, "q": "মাইকেল মধুসূদন দত্তের মায়ের নাম কী?", "options": ["জাবী দত্ত", "অর্পণা দত্ত", "জাবী দেবী", "জাহ্নবী দেবী"], "correct": 4 },
+  { "id": 10, "q": "মাইকেল মধুসূদন দত্তের বহু ভাষায় দক্ষতা ছিল, নিচের কোনটি সঠিক নয়?", "options": ["গ্রিক ও লাতিন", "হিব্রু ও ফরাসি", "জার্মান ও ইতালীয়", "সংস্কৃত ও ফারসি"], "correct": 4 },
+  { "id": 11, "q": "মাইকেল মধুসূদন দত্ত কোন কলেজে অধ্যয়ন করেছিলেন?", "options": ["বেথুন কলেজে", "হিন্দু কলেজে", "সাগরদাঁড়ি কলেজে", "প্রেসিডেন্সি কলেজে"], "correct": 2 },
+  { "id": 12, "q": "মাইকেল মধুসূদন দত্ত কত সালে খ্রিষ্টধর্ম গ্রহণ করেন?", "options": ["১৮২৪ খ্রিষ্টাব্দে", "১৮৩৩ খ্রিষ্টাব্দে", "১৮৩৪ খ্রিষ্টাব্দে", "১৮৪৩ খ্রিষ্টাব্দে"], "correct": 4 },
+  { "id": 13, "q": "মধুসূদনের নামের আগে 'মাইকেল' শব্দটি যোগ করেন কখন?", "options": ["অন্নপ্রাশনের সময়", "খ্রিষ্টধর্ম গ্রহণের কালে", "ইংরেজি সাহিত্যচর্চার সময়", "বিলেত যাত্রার কালে"], "correct": 2 },
+  { "id": 14, "q": "মাইকেল মধুসূদন দত্তের সাহিত্যে কোন দুটি বিষয়ের আশ্চর্য মিলন ঘটেছে?", "options": ["রোমান্টিক ও মরমী", "ধ্রুপদী ও উপযোগবাদী", "রোমান্টিক ও ধ্রুপদী", "ধ্রুপদী ও উত্তরাধুনিক"], "correct": 3 },
+  { "id": 15, "q": "সাহিত্যচর্চার শুরুতে মাইকেল মধুসূদন দত্ত কোন ভাষায় গ্রন্থ রচনা করেন?", "options": ["বাংলা", "ইংরেজি", "সংস্কৃত", "ফারসি"], "correct": 2 },
+  { "id": 16, "q": "মধুসূদন-পূর্ব হাজার বছরের বাংলা কবিতা কোন ছন্দে লেখা হতো?", "options": ["মুক্তক", "স্বরবৃত্ত", "পয়ার", "গদ্যছন্দ"], "correct": 3 },
+  { "id": 17, "q": "মাইকেল মধুসূদন দত্ত কোন ছন্দের প্রবর্তক?", "options": ["অক্ষরবৃত্ত", "মাত্রাবৃত্ত", "স্বরবৃত্ত", "অমিত্রাক্ষর"], "correct": 4 },
+  { "id": 18, "q": "অমিত্রাক্ষর ছন্দ মূলত কোন ছন্দের নবরূপায়ণ?", "options": ["মন্দাক্রান্তা", "মাত্রাবৃত্ত", "অক্ষরবৃত্ত", "স্বরবৃত্ত"], "correct": 3 },
+  { "id": 19, "q": "মাইকেল মধুসূদন দত্তের শ্রেষ্ঠ কীর্তি কোনটি?", "options": ["চতুর্দশপদী কবিতাবলি", "বীরাঙ্গনা কাব্য", "মেঘনাদবধ-কাব্য", "ব্রজাঙ্গনা কাব্য"], "correct": 3 },
+  { "id": 20, "q": "'একেই কি বলে সভ্যতা' কী ধরনের গ্রন্থ?", "options": ["কাব্য", "উপন্যাস", "নাটক", "প্রহসন"], "correct": 4 },
+  { "id": 21, "q": "নিচের কোনটি মাইকেল মধুসূদন দত্ত রচিত প্রহসন?", "options": ["ব্রজাঙ্গনা", "বীরাঙ্গনা", "তিলোত্তমাসম্ভব", "একেই কী বলে সভ্যতা"], "correct": 4 },
+  { "id": 22, "q": "নিচের কোনটি মাইকেল মধুসূদন দত্ত রচিত প্রহসন?", "options": ["বুড়ো সালিকের ঘাড়ে রোঁ", "কৃষ্ণকুমারী", "তিলোত্তমাসম্ভব", "শর্মিষ্ঠা"], "correct": 1 },
+  { "id": 23, "q": "মাইকেল মধুসূদনের জন্ম কোন জেলায়?", "options": ["ফরিদপুর", "যশোর", "কুষ্টিয়া", "মাগুরা"], "correct": 2 },
+  { "id": 24, "q": "মধুসূদনের জন্ম কোন গ্রামে?", "options": ["কাঁঠালপাড়া", "বীরসিংহ", "কাঁচড়াপাড়া", "সাগরদাঁড়ি"], "correct": 4 },
+  { "id": 25, "q": "মধুসূদন কত সালে মৃত্যুবরণ করেন?", "options": ["১৮৭৬ সাল", "১৮৭৫ সাল", "১৮৭৪ সাল", "১৮৭৩ সাল"], "correct": 4 },
+  { "id": 26, "q": "কোনটি মাইকেল মধুসূদন দত্তের প্রয়াণ দিবস?", "options": ["২৬ জুন", "২৭ জুন", "২৮ জুন", "২৯ জুন"], "correct": 4 },
+  { "id": 27, "q": "লক্ষ্মণ কোথায় প্রবেশ করলেন?", "options": ["স্বপ্নপুরে", "রক্ষঃপুরে", "যমপুরে", "অন্তঃপুরে"], "correct": 2 },
+  { "id": 28, "q": "রক্ষঃপুরে কে প্রবেশ করলেন?", "options": ["নিকষা", "রাবণ", "লক্ষ্মণ", "রাঘব"], "correct": 3 },
+  { "id": 29, "q": "নিকুম্ভিলা যজ্ঞাগারে পশিল কে?", "options": ["মেঘনাদ", "লক্ষ্মণ", "বিভীষণ", "রাম"], "correct": 2 },
+  { "id": 30, "q": "নিকষা সতী কার জননী?", "options": ["রামের", "লক্ষ্মণের", "মেঘনাদের", "বিভীষণের"], "correct": 4 },
+  { "id": 31, "q": "বিভীষণের সহোদর কে?", "options": ["রাম", "রাবণ", "লক্ষ্মণ", "মেঘনাদ"], "correct": 2 },
+  { "id": 32, "q": "বিভীষণ মেঘনাদের কী হন?", "options": ["বাবা", "ভাই", "মামা", "কাকা"], "correct": 4 },
+  { "id": 33, "q": "মেঘনাদ কোথায় যেতে চেয়েছেন?", "options": ["লঙ্কাপুরে", "অস্ত্রাগারে", "যজ্ঞাগারে", "যমপুরে"], "correct": 2 },
+  { "id": 34, "q": "রামানুজকে মেঘনাদ কোথায় পাঠাতে চেয়েছেন?", "options": ["স্বর্গলোকে", "রক্ষঃপুরে", "শমন-ভবনে", "নিকুম্ভিলায়"], "correct": 3 },
+  { "id": 35, "q": "বিভীষণ নিজেকে কী বলে উল্লেখ করেছেন?", "options": ["ঈশ্বরদাস", "রাঘবদাস", "রক্ষঃদাস", "লক্ষ্মণদাস"], "correct": 2 },
+  { "id": 36, "q": "বিভীষণের বাক্য শুনে মেঘনাদের কী ইচ্ছে হয়েছে?", "options": ["বাঁচিবার", "মরিবার", "মারিবার", "ত্যাজিবার"], "correct": 2 },
+  { "id": 37, "q": "স্থাণুর ললাটে বিধি কাকে স্থাপন করেছেন?", "options": ["বিধুকে", "সিধুকে", "সিন্ধুকে", "নদীকে"], "correct": 1 },
+  { "id": 38, "q": "মৃগেন্দ্রকেশরী কাকে মিত্রভাবে সম্ভাষে না?", "options": ["হরিণকে", "বাঘকে", "শৃগালকে", "কুকুরকে"], "correct": 3 },
+  { "id": 39, "q": "মেঘনাদ কাকে 'বিজ্ঞতম' বলেছেন?", "options": ["রামকে", "রাবণকে", "লক্ষ্মণকে", "বিভীষণকে"], "correct": 4 },
+  { "id": 40, "q": "মেঘনাদ কাকে 'অজ্ঞ' বলেছেন?", "options": ["পিতৃব্যকে", "রাবণকে", "লক্ষ্মণকে", "নিজেকে"], "correct": 4 },
+  { "id": 41, "q": "মেঘনাদের মতে, লক্ষ্মণের আচরণ দেখে লঙ্কার কে হাসবে?", "options": ["নর", "শিশু", "নারী", "বৃদ্ধ"], "correct": 2 },
+  { "id": 42, "q": "'ছাড়হ পথ' কাকে বলা হয়েছে?", "options": ["কুম্ভকর্ণকে", "লক্ষ্মণকে", "বিভীষণকে", "রাবণকে"], "correct": 3 },
+  { "id": 43, "q": "দেব-দৈত্য-নর রণে বিভীষণ স্বচক্ষে কার পরাক্রম দেখেছেন?", "options": ["রামের", "মেঘনাদের", "লক্ষ্মণের", "কুম্ভকর্ণের"], "correct": 2 },
+  { "id": 44, "q": "মেঘনাদের দৃষ্টিতে নন্দ-কাননে কে ভ্রমণ করেছে?", "options": ["কিন্নর", "দৈত্য", "মানব", "পশু"], "correct": 4 },
+  { "id": 45, "q": "মেঘনাদের দৃষ্টিতে প্রফুল্ল কমলে কী বাস করেছে?", "options": ["পতঙ্গ", "কীট", "ভ্রমর", "দৈত্য"], "correct": 2 },
+  { "id": 46, "q": "মলিনবদন লাজে কে উত্তর দিয়েছিলেন?", "options": ["রাবণ-অনুজ", "রাবণ-পুত্র", "রাঘব-অনুজ", "রাঘব-পুত্র"], "correct": 1 },
+  { "id": 47, "q": "'নহি দোষী আমি' কে বলেছেন?", "options": ["রাবণ", "বিভীষণ", "লক্ষ্মণ", "মেঘনাদ"], "correct": 2 },
+  { "id": 48, "q": "পাপপূর্ণ বলা হয়েছে কোনটিকে?", "options": ["রামরাজ্য", "লঙ্কাপুরী", "স্বর্গরাজ্য", "যজ্ঞস্থলী"], "correct": 2 },
+  { "id": 49, "q": "কাল সলিলে ডুবেছে কোনটি?", "options": ["বিধূ", "লঙ্কা", "রথী", "স্থানু"], "correct": 2 },
+  { "id": 50, "q": "নিশীথে অম্বরে মন্দ্রে কোনটি?", "options": ["জীমূতেন্দ্র", "রত্নাকার", "বীরেন্দ্র", "সৌদামিনী"], "correct": 1 },
+  { "id": 51, "q": "নির্গুণ হলেও কে শ্রেয়?", "options": ["পরজন", "স্বজন", "নিধন", "দুর্জন"], "correct": 2 },
+  { "id": 52, "q": "'বাসববিজয়ী' বলা হয়েছে কাকে?", "options": ["মেঘনাদকে", "লক্ষ্মণকে", "রাবণকে", "বিভীষণকে"], "correct": 1 },
+  { "id": 53, "q": "বিভীষণের কথা শুনে মেঘনাদের মরতে ইচ্ছে হয়েছিল কেন?", "options": ["শত্রুপক্ষের বিজয় সুনিশ্চিত জেনে", "আপনজনের বিশ্বাসঘাতকতা দেখে", "লক্ষ্মণের হাতে মৃত্যু আসন্ন জেনে", "পিত্যব্যের মুখে রামের স্তুতি শুনে"], "correct": 4 },
+  { "id": 54, "q": "'হে বীরকেশরী' বলে কাকে নির্দেশ করা হয়েছে?", "options": ["লক্ষ্মণকে", "রাবণকে", "বিভীষণকে", "রামকে"], "correct": 3 },
+  { "id": 55, "q": "লক্ষ্মণকে ক্ষুদ্রমতি নর বলার কারণ কী?", "options": ["তুচ্ছ মানব বংশোদত হওয়ায়", "শারীরিকভাবে খর্বকায় হওয়ায়", "শত্রুর সঙ্গে হীন আঁতাত করায়", "অস্ত্রহীনকে যুদ্ধে আহ্বান করায়"], "correct": 4 },
+  { "id": 56, "q": "মেঘনাদ লক্ষ্মণকে 'দুর্বল মানব' কেন বলেছেন?", "options": ["অবয়বে বীরোচিত নয় বলে", "মানবিক দুর্বলতা আছে বলে", "নিরস্ত্রকে আক্রমণ করতে এসেছে বলে", "শারীরিকভাবে খর্বকায় বলে"], "correct": 3 },
+  { "id": 57, "q": "'মহারথি প্রথা' নয় কোনটি?", "options": ["সশস্ত্র যুদ্ধের মহড়া", "অস্ত্রহীনকে যুদ্ধে আহ্বান", "যুদ্ধের পোশাক পরা", "যুদ্ধক্ষেত্রে দম্ভ প্রকাশ"], "correct": 2 },
+  { "id": 58, "q": "'ডরিবে এ দাস হেন দুর্বল মানবে?' - এখানে 'দুর্বল মানব' কে?", "options": ["বিভীষণ", "অরিন্দম", "বাসব", "লক্ষ্মণ"], "correct": 4 },
+  { "id": 59, "q": "'নিকুম্ভিলা যজ্ঞাগারে প্রগলভে পশিল দম্ভী' - এখানে 'দম্ভী' বলে কাকে বোঝানো হয়েছে?", "options": ["ইন্দ্রজিৎকে", "রাবণকে", "রাক্ষসকে", "লক্ষ্মণকে"], "correct": 4 },
+  { "id": 60, "q": "'দুরাচার দৈত্য' বলে কাকে নির্দেশ করা হয়েছে?", "options": ["ময়দানবকে", "বিভীষণকে", "লক্ষ্মণকে", "রাবণকে"], "correct": 3 },
+  { "id": 61, "q": "'রাবণ-অনুজ' বলে কাকে বোঝানো হয়েছে?", "options": ["রামকে", "কুম্ভকর্ণকে", "লক্ষ্মণকে", "বিভীষণকে"], "correct": 4 },
+  { "id": 62, "q": "'রাবণ-আত্মজ' শব্দটি কার সম্পর্কে ব্যবহৃত হয়েছে?", "options": ["মেঘনাদ", "লক্ষ্মণ", "রাম", "কুম্ভকর্ণ"], "correct": 1 },
+  { "id": 63, "q": "বিভীষণ রাজা বলতে কাকে বুঝিয়েছেন?", "options": ["রাবণ", "রাঘব", "বিভীষণ", "অরিন্দম"], "correct": 2 },
+  { "id": 64, "q": "লঙ্কার দুরবস্থার জন্য বিভীষণ কোন বিষয়টিকে দায়ী করেছেন?", "options": ["মেঘনাদের ইন্দ্রজয়কে", "রাজার কর্মদোষকে", "রাবণের যুদ্ধ নীতিকে", "রামের অভিশাপকে"], "correct": 2 },
+  { "id": 65, "q": "বিভীষণের বিমাতাসুলভ আচরণের জন্য মেঘনাদ কোন বিষয়টিকে দায়ী করেছেন?", "options": ["স্নেহের অভাব", "সঙ্গদোষ", "জ্ঞানের অভাব", "আত্মাভিমান"], "correct": 2 },
+  { "id": 66, "q": "'বাসবত্রাস' বলে কাকে বোঝানো হয়েছে?", "options": ["লক্ষ্মণকে", "রামকে", "মেঘনাদকে", "রাবণকে"], "correct": 3 },
+  { "id": 67, "q": "মেঘনাদকে 'বাসবত্রাস' বলার কারণ কী?", "options": ["বাসবের মতোই ভয়ঙ্কর বলে", "বাসবকে বিতাড়িত করেছে বলে", "বাসবকে পরাজিত করেছে বলে", "বাসবের শঙ্কাহরণ করেছে বলে"], "correct": 3 },
+  { "id": 68, "q": "রুষিলা 'বাসবত্রাস' - কেন?", "options": ["রামের পক্ষাবলম্বনের ব্যাখ্যা শুনে", "মেঘনাদকে আঘাত করার ক্ষোভে", "মেঘনাদের পথরোধ করার কারণে", "লক্ষ্মণকে পথ দেখানোর কারণে"], "correct": 1 },
+  { "id": 69, "q": "'বীরেন্দ্র বলী' কাকে বলা হয়েছে?", "options": ["রাবণকে", "লক্ষ্মণকে", "রামকে", "মেঘনাদকে"], "correct": 4 },
+  { "id": 70, "q": "'রাক্ষসরাজানুজ' বলে কাকে সম্বোধন করা হয়েছে?", "options": ["রামকে", "লক্ষ্মণকে", "বিভীষণকে", "মেঘনাদকে"], "correct": 3 },
+  { "id": 71, "q": "'হেন সহবাসে, হে পিতৃব্য, বর্বরতা কেন না শিখিবে' - এখানে কোন সাহচর্যের কথা বলা হয়েছে?", "options": ["স্ত্রী-পরিবারের", "রাম-লক্ষ্মণের", "শিব-পার্বতীর", "রাম-রাবণের"], "correct": 2 },
+  { "id": 72, "q": "'গুণহীন স্বজন' শ্রেয় কেন?", "options": ["গুণ মূল্যহীন বলে", "বিপদে ভরসা বলে", "প্রকৃত বান্ধব বলে", "স্বজন নির্গুণ বলে"], "correct": 4 },
+  { "id": 73, "q": "বিভীষণ ও মেঘনাদের মধ্যে কোন সম্পর্কটি বিদ্যমান?", "options": ["পিতা-পুত্র", "অগ্রজ-অনুজ", "কাকা-ভাইপো", "মামা-ভাগ্নে"], "correct": 3 },
+  { "id": 74, "q": "কার সহায়তায় লক্ষ্মণ যজ্ঞাগারে প্রবেশের সুযোগ পেয়েছিলেন?", "options": ["রাম", "বিভীষণ", "ইন্দ্র", "কুম্ভকর্ণকে"], "correct": 2 },
+  { "id": 75, "q": "'বিভীষণের প্রতি মেঘনাদ' কবিতায় 'তাত' কাকে বোঝানো হয়েছে?", "options": ["রাবণকে", "বাসবকে", "কুম্ভকর্ণকে", "বিভীষণকে"], "correct": 4 },
+  { "id": 76, "q": "মেঘনাদের পিতৃব্যের নাম কী?", "options": ["রাবণ", "রাঘব", "বিভীষণ", "অরিন্দম"], "correct": 3 },
+  { "id": 77, "q": "মেঘনাদের পিতার নাম কী?", "options": ["বিভীষণ", "রাবণ", "রাঘব", "লক্ষ্মণ"], "correct": 2 },
+  { "id": 78, "q": "অরিন্দম বলা হয় কাকে?", "options": ["রাবণ", "লক্ষ্মণ", "বিভীষণ", "মেঘনাদ"], "correct": 4 },
+  { "id": 79, "q": "'ঘরের শত্রু বিভীষণ' - এ প্রবাদবাক্যটি বিভীষণের কোন আচরণকে কেন্দ্র করে প্রচলিত?", "options": ["স্বজনের প্রতি উদাসীনতা", "পরধর্মের অনুসরণ", "শত্রুপক্ষের সঙ্গে আঁতাত", "দুর্জনের সাহচর্য"], "correct": 3 },
+  { "id": 80, "q": "'রাঘবদাস আমি' - উক্তিটির সঙ্গে মুক্তিযুদ্ধের কোন চরিত্রের মিল রয়েছে?", "options": ["হানাদারদের", "মুক্তিযোদ্ধাদের", "রাজাকারদের", "গেরিলাদের"], "correct": 3 },
+  { "id": 81, "q": "'চণ্ডালে বসাও আনি রাজার আলয়ে' - পঙ্ক্তিটির মধ্য দিয়ে কোন ভাব সর্বাধিক জোরালো হয়েছে?", "options": ["বিস্ময়", "ঘৃণা", "তিরস্কার", "ক্রোধ"], "correct": 3 },
+  { "id": 82, "q": "বিভীষণের প্রতি মেঘনাদের বক্তব্যে কোন বিষয়টি প্রাধান্য পেয়েছে?", "options": ["কুলমর্যাদা", "অহংকার", "নৈতিকতা", "বীরত্ব"], "correct": 1 },
+  { "id": 83, "q": "মেঘনাদকে 'রাবণি' সম্বোধন করা হয়েছে কোন যুক্তিতে?", "options": ["রাঘবকে ঘৃণা করে বলে", "রাবণের শ্রেষ্ঠ পুত্র বলে", "রাক্ষসরাজের ভক্ত বলে", "রাবণি তার ডাক নাম"], "correct": 2 },
+  { "id": 84, "q": "বিভীষণের স্বজনের প্রতি বিশ্বাসঘাতকতার পেছনে কোন বিষয়টি ক্রিয়াশীল ছিল?", "options": ["স্বার্থচিন্তা", "অর্থচিন্তা", "অনুচিন্তা", "ধর্মবোধ"], "correct": 4 },
+  { "id": 85, "q": "আত্মপক্ষ সমর্থনের ক্ষেত্রে বিভীষণ কোন বিষয়টিকে সামনে এনেছেন?", "options": ["ইতিহাস চেতনা", "স্বাজাত্যবোধ", "প্রতিবাদী চেতনা", "নৈতিকতা"], "correct": 4 },
+  { "id": 86, "q": "মেঘনাদের নিজেকে 'দাস' বলার পেছনে কোন মনোভাবটি ক্রিয়াশীল?", "options": ["কুলগৌরব", "বিনয়", "আত্মগ্লানি", "সংকোচ"], "correct": 1 },
+  { "id": 87, "q": "রাবণের মধ্যম সহোদর কে?", "options": ["অরিন্দম", "কুম্ভকর্ণ", "বিভীষণ", "রাবণি"], "correct": 2 },
+  { "id": 88, "q": "'বিভীষণের প্রতি মেঘনাদ' কবিতায় অরিন্দম কে?", "options": ["বিভীষণ", "মেঘনাদ", "কুম্ভকর্ণ", "রক্ষোরথী"], "correct": 2 },
+  { "id": 89, "q": "রাবণের মাকে কী নামে অভিহিত করা হয়?", "options": ["সুমিত্রা", "নিকষা", "বিধু", "রাবণি"], "correct": 2 },
+  { "id": 90, "q": "মেঘের ডাক বা আওয়াজকে কবিতায় কী বলা হয়েছে?", "options": ["গর্জন", "জীমূতেন্দ্র", "বর্ষণ", "জীতেন্দ্র"], "correct": 2 },
+  { "id": 91, "q": "কাকে 'রথী' বলা হয়?", "options": ["চোর", "রথচালক", "বীর", "ঘোড়াচালক"], "correct": 3 },
+  { "id": 92, "q": "কর্মদোষে কনক-লঙ্কাকে বিপদগ্রস্ত করেছেন কে?", "options": ["লঙ্কার রাজা", "রাঘব-দাস", "রাবণ-পুত্র", "কুম্ভকর্ণ"], "correct": 1 },
+  { "id": 93, "q": "'তাত' শব্দটির অর্থ কী?", "options": ["মাতা", "পিতা", "ভাই", "বোন"], "correct": 2 },
+  { "id": 94, "q": "'নন্দন-কানন' কী?", "options": ["পুত্রের বাগান", "লঙ্কার উদ্যান", "স্বর্গের উদ্যান", "মনোহর ক্ষেত্র"], "correct": 3 },
+  { "id": 95, "q": "'বিধু' শব্দের অর্থ কী?", "options": ["সূর্য", "চাঁদ", "বৃক্ষ", "হস্ত"], "correct": 2 },
+  { "id": 96, "q": "'আহবে' শব্দের অর্থ কী?", "options": ["ক্ষোভে", "অস্ত্রে", "যুদ্ধে", "যজ্ঞে"], "correct": 3 },
+  { "id": 97, "q": "'দুর্মতি' শব্দটির অর্থ কী?", "options": ["সৎ বুদ্ধি", "মতিভ্রম", "অসৎ বুদ্ধি", "জ্ঞানী"], "correct": 3 },
+  { "id": 98, "q": "'তস্কর' শব্দটির অর্থ কী?", "options": ["সাধু", "চোর", "বীর", "জ্ঞানী"], "correct": 2 },
+  { "id": 99, "q": "নিকুম্ভিলা যজ্ঞাগারটি কোথায় অবস্থিত?", "options": ["যমপুরে", "লঙ্কাপুরীতে", "স্বর্গরাজ্যে", "নিকুম্ভিলায়"], "correct": 2 },
+  { "id": 100, "q": "বিভীষণ কোন বংশের সন্তান?", "options": ["রক্ষঃবংশ", "নরকুল", "দেবকুল", "দৈত্যকুল"], "correct": 1 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

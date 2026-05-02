@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বিলাসী</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>বিলাসী</h1>
+  <p>শরৎচন্দ্র চট্টোপাধ্যায় — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "‘ঘন জঙ্গলের পথ। একটু দেখে পা ফেলে যেয়ো।’ - উক্তিটি কার?", "options": ["ন্যাড়ার", "বিলাসীর", "মৃত্যুঞ্জয়ের", "খুড়ার"], "correct": 1 },
+  { "id": 2, "q": "‘মহত্ত্বের কাহিনী আমাদের অনেক আছে।’ এখানে 'মহত্ত্ব' কী অর্থে ব্যবহৃত হয়েছে?", "options": ["ব্যঙ্গার্থে", "প্রশংসার্থে", "ক্ষোভার্থে", "নিশ্চয়ার্থে"], "correct": 0 },
+  { "id": 3, "q": "অনুচ্ছেদের সঙ্গে ‘বিলাসী’ গল্পের যে দিকের সাদৃশ্য রয়েছে তা হলো- (i. নারীর প্রতি নির্যাতন, ii. কুসংস্কারাচ্ছন্ন সমাজ, iii. গ্রামীণ বিচার ব্যবস্থা)", "options": ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], "correct": 3 },
+  { "id": 4, "q": "এই অবস্থা বিবেচনায় নিয়ে বলা যায়, নিলুফা ও বিলাসী উভয়েই- (i. প্রতিবাদী নারীসত্তা, ii. নির্যাতিত নারী, iii. কুসংস্কারের শিকার)", "options": ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], "correct": 3 },
+  { "id": 5, "q": "শরৎচন্দ্র চট্টোপাধ্যায় কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", "options": ["১৮৭৬ খ্রিষ্টাব্দে", "১৮৭৮ খ্রিষ্টাব্দে", "১৮৭৭ খ্রিষ্টাব্দে", "১৮৭৯ খ্রিষ্টাব্দে"], "correct": 0 },
+  { "id": 6, "q": "শরৎচন্দ্র চট্টোপাধ্যায় পশ্চিমবঙ্গের হুগলি জেলার কোন গ্রামে জন্মগ্রহণ করেন?", "options": ["হরিশপুর গ্রামে", "লাহিড়ীপাাড়া গ্রামে", "দেবানন্দপুর গ্রামে", "কাঁঠালপাড়া গ্রামে"], "correct": 2 },
+  { "id": 7, "q": "শরৎচন্দ্র চট্টোপাধ্যায়ের পিতার নাম কী?", "options": ["শ্যামাকান্ত চট্টোপাধ্যায়", "উপেন্দ্রনাথ চট্টোপাধ্যায়", "মতিলাল চট্টোপাধ্যায়", "নীহার রঞ্জন চট্টোপাধ্যায়"], "correct": 2 },
+  { "id": 8, "q": "শরৎচন্দ্র চট্টোপাধ্যায়ের মাতার নাম কী?", "options": ["ভগবতী দেবী", "ভুবনমোহিনী দেবী", "শ্যামা দেবী", "সারদা দেবী"], "correct": 1 },
+  { "id": 9, "q": "শরৎচন্দ্র বাংলা সাহিত্যের কোন শাখায় সবচেয়ে জনপ্রিয়?", "options": ["উপন্যাস", "ছোটগল্প", "নাটক", "প্রবন্ধ"], "correct": 0 },
+  { "id": 10, "q": "শরৎচন্দ্র চট্টোপাধ্যায় কত বছর বয়সে সন্ন্যাসী হয়েছিলেন?", "options": ["১৮ বছর", "২১ বছর", "২৩ বছর", "২৪ বছর"], "correct": 3 },
+  { "id": 11, "q": "কোন খ্যাতির কারণে জমিদারের বন্ধু হয়েছিলেন শরৎচন্দ্র চট্টোপাধ্যায়?", "options": ["ছোটগল্পকার হিসেবে", "সংগীতজ্ঞ হিসেবে", "ঔপন্যাসিক হিসেবে", "আত্মজীবনীকার হিসেবে"], "correct": 1 },
+  { "id": 12, "q": "সমাজের নিচু তলার মানুষ অপূর্ব মানব-মহিমা নিয়ে চিত্রিত হয়েছে কার উপন্যাসে?", "options": ["মাইকেল মধুসূদন দত্ত", "জীবনানন্দ দাশ", "শরৎচন্দ্র চট্টোপাধ্যায়ের", "প্রমথ চৌধুরীর"], "correct": 2 },
+  { "id": 13, "q": "শরৎচন্দ্রের কৃতিত্ব কোন ক্ষেত্রে?", "options": ["উচ্চ মধ্যবিত্তের জীবন চিত্রণে", "মধ্যবিত্ত শ্রেণির জীবন চিত্রণে", "উচ্চবিত্ত শ্রেণির জীবন চিত্রণে", "অন্ত্যজ শ্রেণির মানুষের জীবন চিত্রণে"], "correct": 3 },
+  { "id": 14, "q": "শরৎচন্দ্র রচিত প্রথম মুদ্রিত গল্প কোনটি?", "options": ["মহেশ", "বিলাসী", "মন্দির", "হরিলক্ষ্মী"], "correct": 2 },
+  { "id": 15, "q": "শরৎচন্দ্র কোন গল্পের জন্য কুন্তলীন পুরস্কার পেয়েছিলেন?", "options": ["মহেশ", "ছোটগল্প", "মন্দির", "আত্মজীবনী"], "correct": 2 },
+  { "id": 16, "q": "‘দেবদাস’ শরৎচন্দ্র চট্টোপাধ্যায়ের কোন জাতীয় গ্রন্থ?", "options": ["ভ্রমণকাহিনী", "ছোটগল্প", "উপন্যাস", "আত্মজীবনী"], "correct": 2 },
+  { "id": 17, "q": "‘চরিত্রহীন’ কে রচনা করেন?", "options": ["সৈয়দ ওয়ালীউল্লাহ", "সুকান্ত ভট্টাচার্য", "হুমায়ূন আহমেদ", "শরৎচন্দ্র চট্টোপাধ্যায়"], "correct": 3 },
+  { "id": 18, "q": "কোনটি শরৎচন্দ্র চট্টোপাধ্যায় রচিত উপন্যাস?", "options": ["ঘরে বাইরে", "রাজসিংহ", "চোখের বালি", "শ্রীকান্ত"], "correct": 3 },
+  { "id": 19, "q": "‘গৃহদাহ’ উপন্যাসটির রচয়িতা কে?", "options": ["শরৎচন্দ্র চট্টোপাধ্যায়", "বঙ্কিমচন্দ্র চট্টোপাধ্যায়", "কাজী নজরুল ইসলাম", "জহির রায়হান"], "correct": 0 },
+  { "id": 20, "q": "কোনগুলো শরৎচন্দ্র চট্টোপাধ্যায় রচিত উপন্যাস?", "options": ["ঘরে বাইরে, নৌকাডুবি", "বিষবৃক্ষ, রাজসিংহ", "চরিত্রহীন, দেনা-পাওনা", "মৃত্তিকা, পথরাগ"], "correct": 2 },
+  { "id": 21, "q": "সাহিত্যকর্মের স্বীকৃতি হিসেবে ঢাকা বিশ্ববিদ্যালয় শরৎচন্দ্র চট্টোপাধ্যায়কে কত সালে ডি.লিট ডিগ্রি প্রদান করে?", "options": ["১৯৩৩ সালে", "১৯৩৪ সালে", "১৯৩৬ সালে", "১৯৩৫ সালে"], "correct": 2 },
+  { "id": 22, "q": "শরৎচন্দ্র চট্টোপাধ্যায় কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", "options": ["১৯৩৩ সালে", "১৯৩৮ সালে", "১৯৩৬ সালে", "১৯৩৫ সালে"], "correct": 1 },
+  { "id": 23, "q": "শরৎচন্দ্র চট্টোপাধ্যায় কোথায় মৃত্যুবরণ করেন?", "options": ["কলকাতায়", "আসামে", "হুগলীতে", "রেঙ্গুনে"], "correct": 0 },
+  { "id": 24, "q": "ন্যাড়ার স্কুলে যাতায়াতের পথ কত ক্রোশ দূরে?", "options": ["এক ক্রোশ", "দুই ক্রোশ", "তিন ক্রোশ", "চার ক্রোশ"], "correct": 1 },
+  { "id": 25, "q": "ন্যাড়া ও তার সহপাঠীরা দুই ক্রোশ পথ হেঁটে স্কুলে যাওয়ার কারণ কী?", "options": ["দুরের স্কুলের সুনাম থাকায়", "কাছের স্কুল বন্ধ থাকায়", "কাছে স্কুল না থাকায়", "কাছের স্কুলের দুর্নাম থাকায়"], "correct": 2 },
+  { "id": 26, "q": "বিলাসী গল্পে বর্ণিত বাল্যের বাড়ি পৌঁছাতে তাদের শতকরা কতভাগকে বিদ্যার্জনের জন্য দীর্ঘ দূরত্ব অতিক্রম করতে হয়?", "options": ["৪০ ভাগকে", "৬০ ভাগকে", "৮০ ভাগকে", "১০০ ভাগকে"], "correct": 2 },
+  { "id": 27, "q": "‘সরস্বতী খুশি হইয়া বর দিবেন কী’ - এ কথার কারণ কী?", "options": ["ছাত্রদের কষ্ট", "ছাত্রদের আগ্রহ", "ছাত্রদের খুশি", "ছাত্রদের সহনশীলতা"], "correct": 0 },
+  { "id": 28, "q": "‘ম্যালেরিয়ার কথাটি না হয় নাই পড়িলাম’ - উক্তিটি কোন রচনার অন্তর্গত?", "options": ["অপরিচিতা", "বিলাসী", "আমার পথ", "মাসি-পিসি"], "correct": 1 },
+  { "id": 29, "q": "বিলাসী গল্পে ভদ্রলোকদের শহর ছেড়ে আর গ্রামে আসা হয় না কেন?", "options": ["গ্রামের পরিবেশ পছন্দ হয় না বলে", "গ্রামের শিক্ষার ভালো পরিবেশ না থাকায়", "শহরের নাগরিক সুবিধায় স্বাচ্ছন্দ্যবোধ করায়", "শহরের অর্থনৈতিক উন্নতি হারানোর শঙ্কায়"], "correct": 2 },
+  { "id": 30, "q": "‘অকালপক্ব’ রসনদানীয় কথা কোন গল্পে উল্লেখ আছে?", "options": ["অপরিচিতা", "একটি তুলসী গাছের কাহিনী", "আহ্বান", "বিলাসী"], "correct": 3 },
+  { "id": 31, "q": "মাঝে মাঝেই স্কুলের পথে কার সাথে ন্যাড়ার দেখা হতো?", "options": ["বিলাশীর সাথে", "মৃত্যুঞ্জয়ের সাথে", "মৃত্যুঞ্জয়ের খুড়ার সাথে", "বুড়ো মালোর সাথে"], "correct": 1 },
+  { "id": 32, "q": "‘সম্ভবত তাহা প্রত্নতাত্ত্বিকের গবেষণার বিষয়’ - উক্তিটিতে কী প্রকাশ পেয়েছে?", "options": ["বিশ্বাস", "ব্যঙ্গ", "বিস্ময়", "হতাশা"], "correct": 1 },
+  { "id": 33, "q": "ন্যাড়া পরীক্ষার উত্তরপত্রে হুমায়ুনের পিতার নাম কী লেখে?", "options": ["হালকু খাঁ", "বাবর খাঁ", "চেঙ্গিস খাঁ", "তোগলক খাঁ"], "correct": 2 },
+  { "id": 34, "q": "বিলাসী গল্পে মৃত্যুঞ্জয় কোন ক্লাসে পড়ত?", "options": ["ফার্স্ট ক্লাসে", "থার্ড ক্লাসে", "ফোর্থ ক্লাসে", "সেকেন্ড ক্লাসে"], "correct": 1 },
+  { "id": 35, "q": "গ্রামের এক প্রান্তে কার বাগান ছিল?", "options": ["মৃত্যুঞ্জয়ের", "বিলাশীর", "ন্যাড়ার", "খুড়ার"], "correct": 0 },
+  { "id": 36, "q": "মৃত্যুঞ্জয়ের কীসের বাগান ছিল?", "options": ["আম-কাঁঠালের", "কলা-আনারসের", "পেয়ারা-লিচুর", "আপেল-কমলার"], "correct": 0 },
+  { "id": 37, "q": "মৃত্যুঞ্জয়ের জীবিকানির্বাহ হতো কীভাবে?", "options": ["আমবাগান জমা দিয়ে", "চাকরি দ্বারা", "সাপ খেলা দেখিয়ে", "ব্যবসা দ্বারা"], "correct": 0 },
+  { "id": 38, "q": "মৃত্যুঞ্জয়ের খুড়ার কাজ কী ছিল?", "options": ["ভাইপোর নানাবিধ দুর্নাম করা", "ভাইপোর নানাবিধ সুনাম করা", "ভাইপোর সঙ্গে ঝগড়া করা", "ভাইপোর নানাবিধ সেবা করা"], "correct": 0 },
+  { "id": 39, "q": "মৃত্যুঞ্জয়ের বাগানের অর্ধেক অংশ কে নিজের বলে দাবি করত?", "options": ["খুড়া", "সাপুড়ে", "ন্যাড়া", "মুসেববাবু"], "correct": 0 },
+  { "id": 40, "q": "‘উপরের আদালতের হুকুমে’ বলতে কোনটিকে বোঝানো হয়েছে?", "options": ["হাইকোর্টের নির্দেশে", "জজকোর্টের নির্দেশে", "স্রষ্টার নির্দেশে", "খুড়ার নির্দেশে"], "correct": 2 },
+  { "id": 41, "q": "বিলাসী গল্পে মৃত্যুঞ্জয় প্রসঙ্গে 'সুনাম' কথাটি দ্বারা কী প্রকাশ পেয়েছে?", "options": ["দুর্নাম", "খ্যাতি", "সম্মান", "প্রতাপ"], "correct": 0 },
+  { "id": 42, "q": "বিলাসী গল্পে ন্যাড়া তার এক আত্মীয়ের কাহিনী উল্লেখ করে কী বোঝাতে চেয়েছে?", "options": ["স্বামীর গুরুত্ব", "স্বেচ্ছাচারিতা", "প্রেমের মহিমা", "মেকি স্বামীপ্রেম"], "correct": 3 },
+  { "id": 43, "q": "মৃত্যুঞ্জয় শয্যাগত প্রায় কতদিন?", "options": ["এক মাস", "দেড় মাস", "দুই মাস", "আড়াই মাস"], "correct": 1 },
+  { "id": 44, "q": "অসুস্থ মৃত্যুঞ্জয়কে দেখতে ন্যাড়া কখন তার বাড়িতে যায়?", "options": ["ভোরে", "সন্ধ্যায়", "দুপুরে", "গভীর রাতে"], "correct": 1 },
+  { "id": 45, "q": "মৃত্যুঞ্জয়ের পোড়াবাড়িতে কিসের বালাই নেই?", "options": ["কুটুমের", "প্রাচীরের", "সাজ-সজ্জার", "অভিজাত্যের"], "correct": 1 },
+  { "id": 46, "q": "যমরাজ মৃত্যুঞ্জয়ের সাথে সুবিধা করতে পারেনি কেবল কার জোরে?", "options": ["বিলাশীর", "ন্যাড়ার", "বুড়ো মালোর", "মৃত্যুঞ্জয়ের"], "correct": 0 },
+  { "id": 47, "q": "সামনে পরীক্ষা বলে সুরভী নাওয়া-খাওয়া ভুলে রাত জেগে পড়াশোনা করায় ওর ল্যাকশাময় চেহারা ফ্যাকাশে হয়ে গেছে। সুরভীর ক্ষেত্রে প্রযোজ্য উক্তি কোনটি?", "options": ["ঠিক যেন ফুলদানিতে জল দিয়া ভিজাইয়া রাখা বাসি ফুলের মতো", "অতিকায় হস্তী লোপ পাইয়াছে কিন্তু তেলাপোকা টিকিয়া আছে", "বাস্তবিক যমরাজ চেষ্টার ত্রুটি কিছু করেন নাই", "মা-সরস্বতী কোথায় যে লুকাইবেন, ভাবিয়া পান না"], "correct": 0 },
+  { "id": 48, "q": "অসুস্থ থাকাকালে মৃত্যুঞ্জয় কত দিন অচেতন অবস্থায় ছিল?", "options": ["৭-৮ দিন", "১০-১৫ দিন", "৮-১০ দিন", "১৫-২০ দিন"], "correct": 1 },
+  { "id": 49, "q": "মৃত্যুঞ্জয়কে সেবাযত্ন করে যমের মুখ থেকে ফিরিয়ে এনেছে কে?", "options": ["বিলাসী", "খুড়া", "ন্যাড়া", "বুড়ো মালো"], "correct": 0 },
+  { "id": 50, "q": "‘ঠিক যেন ফুলদানিতে জল দিয়া ভিজাইয়া রাখা বাসি ফুলের মতো’ -উক্তিটি কার সম্পর্কে বলা হয়েছে?", "options": ["মৃত্যুঞ্জয়", "ন্যাড়া", "বিলাসী", "খুড়া"], "correct": 2 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

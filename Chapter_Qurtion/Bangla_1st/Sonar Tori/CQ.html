@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সোনার তরী </title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1A0A0F;
+            --glass-core: rgba(107, 15, 32, 0.55);
+            --glass-border: rgba(240, 100, 120, 0.12);
+            --accent: #F2A0AE;
+            --accent-glow: rgba(192, 37, 62, 0.35);
+            --text-primary: #FDE8EC;
+            --text-secondary: #C26070;
+            --card-radius: 28px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            padding-bottom: 120px;
+        }
+
+        /* --- High-End Header --- */
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--accent);
+            text-transform: uppercase;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 20px 0 10px;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff 30%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-secondary); font-weight: 300; }
+
+        /* --- Floating Navigation HUD --- */
+        .mastery-hud {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            background: var(--glass-core);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .progress-container { flex-grow: 1; margin: 0 40px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px; }
+        .bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* --- CQ Analysis Cards --- */
+        .container { width: 100%; max-width: 850px; margin: 50px auto; padding: 0 20px; }
+
+        .cq-card {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cq-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .q-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .q-index {
+            background: var(--accent);
+            color: #000;
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: 'Outfit';
+        }
+        .q-tag { color: var(--accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+        .q-statement { font-size: 1.4rem; font-weight: 500; color: #fff; margin-bottom: 25px; line-height: 1.4; }
+
+        /* --- Premium Reveal Button --- */
+        .reveal-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .reveal-trigger:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        /* --- Answer Drawer --- */
+        .ans-drawer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .is-active .ans-drawer { max-height: 1000px; margin-top: 25px; border: 1px solid rgba(56, 189, 248, 0.1); }
+        .is-active .reveal-trigger { background: var(--accent); color: #000; }
+
+        .ans-body { padding: 25px; color: var(--text-secondary); font-size: 1.15rem; border-left: 4px solid var(--accent); }
+        .ans-body strong { color: var(--accent); display: block; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* --- Global Controls --- */
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .mastery-hud { flex-direction: column; gap: 15px; padding: 20px; border-radius: 25px; }
+            .progress-container { margin: 10px 0; width: 100%; }
+        }
+    </style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+    <header>
+        <span class="category-tag">bangla first paper</span>
+        <h1>সোনার তরী</h1>
+        <p>রবীন্দ্রনাথ ঠাকুর — জ্ঞানমূলক ও অনুধাবনমূলক প্রশ্নোত্তর</p>
+    </header>
+
+    <div class="mastery-hud">
+        <div class="hud-label" style="font-family:'Outfit'">TOPICS</div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Mastery Progress</span>
+                <span id="prog-percent">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+        </div>
+        <button class="btn-ghost" onclick="toggleAll()">REVEAL ALL</button>
+    </div>
+
+    <main class="container" id="cq-list"></main>
+
+    <script>
+        const analysisData = [
+{ q: "রবীন্দ্রনাথ ঠাকুর কত সালে জন্মগ্রহণ করেন?", a: "রবীন্দ্রনাথ ঠাকুর ১৮৬১ সালে জন্মগ্রহণ করেন।" },
+{ q: "রবীন্দ্রনাথের ঠাকুর বঙ্গাব্দের কোন তারিখে জন্মগ্রহণ করেন?", a: "রবীন্দ্রনাথ ঠাকুর ১২৬৮ বঙ্গাব্দের ২৫শে বৈশাখ জন্মগ্রহণ করেন।" },
+{ q: "রবীন্দ্রনাথের প্রথম কাব্য প্রকাশিত হয় কত বছর বয়সে?", a: "রবীন্দ্রনাথের প্রথম কাব্য প্রকাশিত হয় ১৫ বছর বয়সে।" },
+{ q: "রবীন্দ্রনাথ ঠাকুরের প্রথম কাব্যগ্রন্থ কোনটি?", a: "রবীন্দ্রনাথ ঠাকুরের প্রথম কাব্যগ্রন্থ 'বনফুল'।" },
+{ q: "রবীন্দ্রনাথ ঠাকুর কোন কাব্যের জন্য নোবেল পুরস্কার লাভ করেন?", a: "রবীন্দ্রনাথ ঠাকুর 'গীতাঞ্জলি' কাব্যের জন্য নোবেল পুরস্কার লাভ করেন।" },
+{ q: "রবীন্দ্রনাথ ঠাকুর কত সালে নোবেল পুরস্কার পান?", a: "রবীন্দ্রনাথ ঠাকুর ১৯১৩ সালে নোবেল পুরস্কার পান।" },
+{ q: "এশীয়দের মধ্যে সর্বপ্রথম সাহিত্যে নোবেল পান কে?", a: "এশীয়দের মধ্যে সর্বপ্রথম সাহিত্যে নোবেল পান রবীন্দ্রনাথ ঠাকুর।" },
+{ q: "বাংলা ছোটগল্পের পথিকৃৎ কে?", a: "বাংলা ছোটগল্পের পথিকৃৎ রবীন্দ্রনাথ ঠাকুর।" },
+{ q: "‘সোনার তরী’ কবিতায় কোন ঋতুর কথা আছে?", a: "‘সোনার তরী’ কবিতায় বর্ষা ঋতুর কথা আছে।" },
+{ q: "ধান কাটার সময় খেতে কতজন লোক ছিল?", a: "ধান কাটার সময় খেতে একজন লোক ছিল।" },
+{ q: "ভরা নদীর স্রোত দেখতে কেমন?", a: "ভরা নদীর স্রোত দেখতে ক্ষুরের মতো ধারালো।" },
+{ q: "ধান কাটার সময় কী এলো?", a: "ধান কাটার সময় বর্ষা এলো।" },
+{ q: "‘সোনার তরী’ কবিতায় ক'খানি খেত ছিল?", a: "‘সোনার তরী’ কবিতায় একখানি খেত ছিল।" },
+{ q: "ধানখেতটির আকৃতি কীসের মতো?", a: "ধানখেতটির আকৃতি ছোটো দ্বীপের মতো।" },
+{ q: "‘সোনার তরী’ কবিতায় কী মেঘে ঢাকা ছিল?", a: "‘সোনার তরী’ কবিতার গ্রামখানি মেঘে ঢাকা ছিল।" },
+{ q: "নিরুপায় ঢেউগুলো কোথায় ভাঙে?", a: "নিরুপায় ঢেউগুলো তরীর দু'ধারে ভাঙে।" },
+{ q: "কাকে দেখে কবির পরিচিত মনে হয়েছে?", a: "মাঝিকে দেখে কবির পরিচিত মনে হয়েছে।" },
+{ q: "‘ওগো, তুমি কোথা যাও কোন বিদেশে?’- কাকে বলা হয়েছে?", a: "‘ওগো, তুমি কোথা যাও কোন বিদেশে?’ সোনার তরীর মাঝিকে উদ্দেশ করে বলা হয়েছে।" },
+{ q: "কৃষক ‘ওগো’ বলে কাকে সম্বোধন করেছেন?", a: "কৃষক মাঝিকে ‘ওগো’ বলে সম্বোধন করেছেন।" },
+{ q: "কৃষক মাঝিকে কোথায় তরী ভেড়ানোর কথা বলেছেন?", a: "কৃষক মাঝিকে নদীকূলে তরী ভেড়ানোর কথা বলেছেন।" },
+{ q: "কবি তাঁর সোনার ফসল কোথায় তুলে দিয়েছেন?", a: "কবি তাঁর সোনার ফসল সোনার তরীতে তুলে দিয়েছেন।" },
+{ q: "শ্রাবণগগন ঘিরে কী ঘুরে ফেরে?", a: "শ্রাবণগগণ ঘিরে ঘন মেঘ ঘুরে ফেরে।" },
+{ q: "‘শূন্য নদীর তীরে’- মাত্রাবৃত্ত ছন্দে কত মাত্রা?", a: "‘শূন্য নদীর তীরে’- মাত্রাবৃত্ত ছন্দে ৮ মাত্রা।" },
+{ q: "শূন্য নদীর তীরে কে পড়ে রইল?", a: "শূন্য নদীর তীরে কৃষক পড়ে রইল।" },
+{ q: "‘ক্ষুরধারা’ কী?", a: "‘ক্ষুরধারা’ হলো ক্ষুরের মতো ধারালো প্রবাহ বা স্রোত।" },
+{ q: "‘খরপরশা’ শব্দের অর্থ কী?", a: "‘খরপরশা’ শব্দের অর্থ শানিত বা ধারালো বল্লম।" },
+{ q: "‘সোনার তরী’ কবিতায় উল্লেখিত বাঁকা জল কীসের প্রতীক?", a: "কবিতায় উল্লেখিত বাঁকা জল কালস্রোতের প্রতীক।" },
+{ q: "‘থরে বিথরে’ শব্দগুচ্ছের অর্থ কী?", a: "‘থরে বিথরে’ শব্দগুচ্ছের অর্থ- স্তরে স্তরে।" },
+{ q: "‘সোনার তরী’ কবিতায় উল্লিখিত মাঝি কীসের প্রতীক?", a: "‘সোনার তরী’ কবিতায় উল্লিখিত মাঝি মহাকালের প্রতীক।" },
+{ q: "‘নৌকা’ এবং ‘মাঝি’ কীসের প্রতীক?", a: "‘নৌকা’ এবং ‘মাঝি’ মহাকালের প্রতীক।" },
+{ q: "‘সোনার তরী’ কবিতার রচয়িতা কে?", a: "‘সোনার তরী’ কবিতার রচয়িতা রবীন্দ্রনাথ ঠাকুর।" },
+{ q: "‘সোনার তরী’ কবিতাটি কোন কাব্যগ্রন্থের অন্তর্ভুক্ত?", a: "‘সোনার তরী’ কবিতাটি ‘সোনার তরী’ কাব্যগ্রন্থের অন্তর্ভুক্ত।" },
+{ q: "‘সোনার তরী’ কবিতায় কী মিশে রয়েছে?", a: "‘সোনার তরী’ কবিতায় কবির জীবনদর্শন মিশে রয়েছে।" },
+{ q: "‘সোনার তরী’ কবিতাটি কোন ছন্দে রচিত?", a: "‘সোনার তরী’ কবিতাটি মাত্রাবৃত্ত ছন্দে রচিত।" },
+{ q: "‘সোনার তরী’ কবিতার পূর্ণ পর্ব কত মাত্রার?", a: "‘সোনার তরী’ কবিতার পূর্ণ পর্ব ৮ মাত্রার।" },
+{ q: "‘সোনার তরী’ কবিতায় রূপকার্থে কার দুঃখ প্রকাশিত হয়েছে?", a: "‘সোনার তরী’ কবিতায় রূপকার্থে কবির দুঃখ প্রকাশিত হয়েছে।" }
+ ]
+
+        const list = document.getElementById('cq-list');
+        const bar = document.getElementById('progress-bar');
+        const percentText = document.getElementById('prog-percent');
+        let revealedCount = new Set();
+
+        function render() {
+            list.innerHTML = analysisData.map((item, i) => `
+                <div class="cq-card" id="card-${i}">
+                    <div class="q-meta">
+                        <div class="q-index">${i + 1}</div>
+                        <div class="q-tag">Knowledge Base</div>
+                    </div>
+                    <div class="q-statement">${item.q}</div>
+                    <button class="reveal-trigger" onclick="reveal(${i})">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>বিশ্লেষণ দেখুন</span>
+                    </button>
+                    <div class="ans-drawer">
+                        <div class="ans-body">
+                            <strong>বিশ্লেষণধর্মী উত্তর</strong>
+                            ${item.a}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function reveal(index) {
+            const card = document.getElementById(`card-${index}`);
+            card.classList.toggle('is-active');
+            
+            if(card.classList.contains('is-active')) {
+                revealedCount.add(index);
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = analysisData.length;
+            const current = revealedCount.size;
+            const percentage = Math.round((current / total) * 100);
+            bar.style.width = percentage + '%';
+            percentText.innerText = percentage + '%';
+        }
+
+        function toggleAll() {
+            analysisData.forEach((_, i) => {
+                const card = document.getElementById(`card-${i}`);
+                if(!card.classList.contains('is-active')) {
+                    card.classList.add('is-active');
+                    revealedCount.add(i);
+                }
+            });
+            updateProgress();
+        }
+
+        render();
+    </script>
+</body>
+</html>

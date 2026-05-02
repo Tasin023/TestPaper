@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>মাসি-পিসি</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>মাসি-পিসি</h1>
+  <p>মানিক বন্দ্যোপাধ্যায় — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "মাণিক বন্দ্যোপাধ্যায়ের পৈতৃক বাড়ি কোথায়?", "options": ["বিক্রমপুর", "মেদিনীপুর", "ঢাকা", "শান্তিপুর"], "correct": 0 },
+  { "id": 2, "q": "মাণিক বন্দ্যোপাধ্যায়ের প্রকৃত নাম কী?", "options": ["অধরচন্দ্র", "প্রবোধকুমার", "বিমলচন্দ্র", "অমূল্য রতন"], "correct": 1 },
+  { "id": 3, "q": "মাণিক বন্দ্যোপাধ্যায় কত সালে জন্মগ্রহণ করেন?", "options": ["১৯০৫", "১৯০৮", "১৯১০", "১৯১২"], "correct": 1 },
+  { "id": 4, "q": "মাণিক বন্দ্যোপাধ্যায়ের প্রথম প্রকাশিত গল্প কোনটি?", "options": ["অতসী মামী", "প্রাগৈতিহাসিক", "সরীসৃপ", "হারাণের নাতজামাই"], "correct": 0 },
+  { "id": 5, "q": "পদ্মানদীর মাঝি কার শ্রেষ্ঠ রচনা?", "options": ["রবীন্দ্রনাথ ঠাকুর", "শরৎচন্দ্র চট্টোপাধ্যায়", "মাণিক বন্দ্যোপাধ্যায়", "তারাশঙ্কর বন্দ্যোপাধ্যায়"], "correct": 2 },
+  { "id": 6, "q": "পুতুলনাচের ইতিকথা কোন জাতীয় রচনা?", "options": ["নাটক", "উপন্যাস", "ছোটগল্প", "ভ্রমণকাহিনী"], "correct": 1 },
+  { "id": 7, "q": "জননী উপন্যাসের রচয়িতা কে?", "options": ["বিভূতিভূষণ বন্দ্যোপাধ্যায়", "মাণিক বন্দ্যোপাধ্যায়", "সৈয়দ ওয়ালীউল্লাহ", "শওকত ওসমান"], "correct": 1 },
+  { "id": 8, "q": "চিহ্ন উপন্যাসের লেখক কে?", "options": ["মাণিক বন্দ্যোপাধ্যায়", "জহির রায়হান", "আখতারুজ্জামান ইলিয়াস", "শওকত আলী"], "correct": 0 },
+  { "id": 9, "q": "মাণিক বন্দ্যোপাধ্যায়ের ছোটগল্পের সংখ্যা কত?", "options": ["একশটি", "দুইশটি", "তিনশটির অধিক", "পাঁচশটি"], "correct": 2 },
+  { "id": 10, "q": "মাণিক বন্দ্যোপাধ্যায়ের গল্পগ্রন্থের সংখ্যা কত?", "options": ["দশটি", "বিশটি", "একুশটি", "পঁচিশটি"], "correct": 1 },
+  { "id": 11, "q": "মাণিক বন্দ্যোপাধ্যায়ের সাহিত্যে ফুটে উঠেছে—", "options": ["আভিজাত্য", "যান্ত্রিক জীবন", "শ্রমজীবী মানুষের জীবন", "কাল্পনিক জগত"], "correct": 2 },
+  { "id": 12, "q": "মাণিক বন্দ্যোপাধ্যায় কত সালে মৃত্যুবরণ করেন?", "options": ["১৯৫২ সালে", "১৯৫৬ সালে", "১৯৫৮ সালে", "১৯৬০ সালে"], "correct": 1 },
+  { "id": 13, "q": "আল্লাদির স্বামীর নাম কী?", "options": ["কৈলাশ", "যগু", "গোকুল", "কানাই"], "correct": 1 },
+  { "id": 14, "q": "মাসি-পিসি কিসের ব্যবসা শুরু করে?", "options": ["ফলমূলের", "কাপড়ের", "শাকসবজি ও তরকারির", "মুদি"], "correct": 2 },
+  { "id": 15, "q": "মাসি-পিসি তরকারি বিক্রির সিদ্ধান্ত নেয় কোথায়?", "options": ["বন্দরে", "শহরে", "গঞ্জে", "মহল্লায়"], "correct": 1 },
+  { "id": 16, "q": "খড় মাথায় তুলে নিতে কত জনে সাহায্য করেছে?", "options": ["২ জনে", "৩ জনে", "৪ জনে", "৫ জনে"], "correct": 0 },
+  { "id": 17, "q": "খড় স্থানান্তরের কাজ করছে কত জনে?", "options": ["২ জনে", "৩ জনে", "৪ জনে", "৫ জনে"], "correct": 1 },
+  { "id": 18, "q": "চৌকিদার কে?", "options": ["কৈলাশ", "গোকুল", "বুড়ো রহমান", "কানাই"], "correct": 3 },
+  { "id": 19, "q": "নকশা পাড়ের শাল মুড়ি দিয়েছিল কে?", "options": ["মাসি", "পিসি", "আল্লাদি", "রহমানের মেয়ে"], "correct": 1 },
+  { "id": 20, "q": "বাইরে থেকে মাসির উদ্দেশ্যে কে হাঁকাহাঁকি করে?", "options": ["যগু", "কৈলাশ", "কানাই", "গোকুল"], "correct": 1 },
+  { "id": 21, "q": "‘বেলা আর নেই কৈলেশ’—কথাটি কে বলেছে?", "options": ["মাসি", "পিসি", "আল্লাদি", "রহমান"], "correct": 1 },
+  { "id": 22, "q": "ছাই বর্ণ বিশিষ্ট খড়কে কী বলে?", "options": ["ছাই", "পাণ্ডুর", "গোধূলির রং", "মেটে"], "correct": 1 },
+  { "id": 23, "q": "‘ধপসা’ কোন শব্দের আঞ্চলিক উচ্চারণ?", "options": ["ধাপ্পা", "ধবধবে", "দোবসা", "ধুপসি"], "correct": 1 },
+  { "id": 24, "q": "গল্পে লেখক ‘প্যাঁচালো’ বলতে কী বুঝিয়েছেন?", "options": ["বক্রতিলকা", "নির্লিপ্ততা", "বিতর্ক", "আড়ষ্টতা"], "correct": 0 },
+  { "id": 25, "q": "‘মাসি-পিসি’ গল্পটি প্রথম প্রকাশিত হয় কোন পত্রিকায়?", "options": ["যুগবাণী", "কল্লোল", "পূর্বাশা", "নওরোজ"], "correct": 2 },
+  { "id": 26, "q": "‘মাসি-পিসি’ কী জাতীয় রচনা?", "options": ["ছোটগল্প", "উপন্যাস", "প্রবন্ধ", "নাটক"], "correct": 0 },
+  { "id": 27, "q": "‘আঁস্তাকুড় পথে ওরা খড় ফেলে দিয়েছে কলহ করে’—কেন?", "options": ["চলাচলের সুবিধার জন্য", "খড় অনেক বেশি বলে", "কাজে ফাঁকি দেওয়ার জন্য", "মাসিদের প্রতি রাগের কারণে"], "correct": 3 },
+  { "id": 28, "q": "খড় ডিঙানোর মাথায় খড়ের বোঝা তুলে দেওয়ার জন্য আল্লাদির সাথে কতজন মানুষ ছিল?", "options": ["একজন", "দুইজন", "তিনজন", "চারজন"], "correct": 1 },
+  { "id": 29, "q": "কানাইটা চুল বলতে কেমন চুলকে বোঝায়?", "options": ["লম্বা চুল", "কোঁকড়ানো চুল", "ছোট করে ছাঁটা চুল", "অগোছালো চুল"], "correct": 2 },
+  { "id": 30, "q": "লেখক ‘পাণ্ডুর’ অর্থে কোন বর্ণকে বুঝিয়েছেন?", "options": ["প্রদীপ্ত", "অস্পষ্ট ফ্যাকাশে", "ছাই রঙের মতো", "বিবর্ণ লাল"], "correct": 1 },
+  { "id": 31, "q": "‘মরণ ঠেকাতেই কুড়িয়ে আনছে তাদের জীবনীশক্তি’—এখানে ‘মরণ’ কোন অর্থে ব্যবহৃত হয়েছে?", "options": ["মৃত্যু", "নিপীড়ন", "দুর্ভিক্ষ বা মহামারী", "দুর্নীতি"], "correct": 2 },
+  { "id": 32, "q": "ভোজনের পাশাপাশি মাসি-পিসির বহরে কত জোড়া খাসি গরু লাগত?", "options": ["এক জোড়া", "দু'জোড়া", "তিন জোড়া", "চার জোড়া"], "correct": 1 },
+  { "id": 33, "q": "দুর্ভিক্সের সময়ে মাসি-পিসির শাকটা ঘাস রেখে খাওয়াটা ছাঁটাই করার কারণ—", "options": ["আর্থিক সংকট", "সামাজিক সংকট", "পারিবারিক সংকট", "রাজনৈতিক সংকট"], "correct": 0 },
+  { "id": 34, "q": "“তোর মেসো ঠিক ছিল, শাশুড়ি-মনদ ছিল বাঘ।” এখানে ‘বাঘ’ কী অর্থে ব্যবহৃত হয়েছে?", "options": ["ভয়ংকর", "হিংস্র", "নিষ্ঠুর", "ক্রুর"], "correct": 2 },
+  { "id": 35, "q": "আল্লাদির পিসে স্বভাবে কার মতো ছিল?", "options": ["যগুর", "কৈলাশের", "গোকুলের", "কানাইয়ের"], "correct": 0 },
+  { "id": 36, "q": "গর্ভাবস্থায় মেয়েদের কার কাছে থাকতে হয় বলে মাসি জানায়?", "options": ["মাসি-পিসির কাছে", "বাবা-মায়ের কাছে", "দাদা-ভাবির কাছে", "মা-মাসির কাছে"], "correct": 3 },
+  { "id": 37, "q": "আল্লাদি কত মাসের গর্ভবতী?", "options": ["তিন", "চার", "পাঁচ", "ছয়"], "correct": 0 },
+  { "id": 38, "q": "পুলের তলা দিয়ে দ্বিতীয় যে সালতি আসে, তাতে মোট কতজন মানুষ রয়েছে?", "options": ["দুইজন", "তিনজন", "চারজন", "পাঁচজন"], "correct": 1 },
+  { "id": 39, "q": "‘মেটে ময়লা থানের আঁচল দুজনেরই কোমরে বাঁধা’—এখানে ‘থান’ বলতে কী বোঝানো হয়েছে?", "options": ["গড়না", "শাড়ি", "গামছা", "চাদর"], "correct": 1 },
+  { "id": 40, "q": "‘অল্পবয়সী একটি বউ। গায়ে জামা আছে, সস্তা পপেলিন—’ বর্ণনাটি কার ক্ষেত্রে নির্দেশ করে?", "options": ["মাসিকে", "পিসিকে", "আল্লাদিকে", "কৈলাশকে"], "correct": 2 },
+  { "id": 41, "q": "আল্লাদি ঘরে এসে পড়ায় মাসি-পিসির মধ্যকার মিল কী হলো?", "options": ["অজমজমাট", "সুদৃঢ়", "শক্ত", "তাজা"], "correct": 1 },
+  { "id": 42, "q": "যগু আল্লাদিকে কেন নিতে চায়?", "options": ["যৌতুকের লোভে", "ভালোবেসে", "সম্পত্তির লোভে", "খাবার ও নির্যাতনের লোভে"], "correct": 3 },
+  { "id": 43, "q": "কার নজর থেকে আল্লাদিকে সামলে রাখতে হবে মাসি-পিসির?", "options": ["যগুর", "গোকুলের", "কৈলাশ ও কানাইয়ের", "পাড়ার লোকজনের"], "correct": 1 },
+  { "id": 44, "q": "আল্লাদির বাবার বেশিরভাগ সম্পদ কার দখলে গেছে?", "options": ["যগুর", "গোকুলের", "দারোগা বাবুর", "বড় বাবুর"], "correct": 1 },
+  { "id": 45, "q": "মাসি-পিসির উপর আল্লাদির সব দায়িত্ব কেন?", "options": ["বাবা-মা নেই বলে", "আল্লাদি তাদের কাছে থাকে বলে", "আল্লাদির বাবা তাদের দেখাশোনা করত বলে", "যগু তাকে নির্যাতন করে বলে"], "correct": 0 },
+  { "id": 46, "q": "আল্লাদিকে একা রেখে কোথাও যেতে মাসি-পিসির সাহস হয় না কেন?", "options": ["একা পেয়ে কেউ ক্ষতি করবে বলে", "যগু তুলে নিয়ে যাবে বলে", "একা থাকতে আল্লাদি ভয় পায় বলে", "তারা আল্লাদিকে অনেক ভালোবাসে বলে"], "correct": 1 },
+  { "id": 47, "q": "দারোগা বাবু কার সাথে বসে আছে বলে কানাই মাসি-পিসিকে জানায়?", "options": ["সরকার বাবুর সাথে", "ইন্সপেক্টর বাবুর সাথে", "বাবুর সাথে", "যগুর সাথে"], "correct": 3 },
+  { "id": 48, "q": "আল্লাদিকে মাসি-পিসি কু-মতলবে আটকে রেখেছে বলে কার ধারণা?", "options": ["যগুর", "কৈলাশের", "দারোগার", "রহমানের"], "correct": 0 },
+  { "id": 49, "q": "স্বামী নিতে চাইলে বউকে আটকে রাখা আইনের দৃষ্টিতে কেমন?", "options": ["স্বাভাবিক", "অন্যায়", "মহাপাপ", "শাস্তিযোগ্য অন্যায়"], "correct": 3 },
+  { "id": 50, "q": "‘জেল হয়ে যাবে তোমাদের’—উক্তিটিতে কী প্রকাশ পেয়েছে?", "options": ["আশঙ্কা", "ভয়", "ঘৃণা", "আনন্দ"], "correct": 1 },
+  { "id": 51, "q": "গোকুল কেন কানাইকে সাথে করে মাসি-পিসির বাড়িতে এসেছে?", "options": ["যগুর জন্য আল্লাদিকে নিতে", "যুগপৎ ভয় ও লোভের কারণে", "পারিবারিক বিবাদের মীমাংসা করতে", "ঘর দখলের উদ্দেশ্যে"], "correct": 0 },
+  { "id": 52, "q": "সরকার বাবুর সঙ্গে মাসি-পিসির ঝগড়া হয়েছে কী নিয়ে?", "options": ["অ্যাবনিয়া দর নিয়ে", "বাজারের তোলা নিয়ে", "তরকারি বিক্রি নিয়ে", "বাজারের জায়গা দখল নিয়ে"], "correct": 1 },
+  { "id": 53, "q": "মাসি-পিসি মূলত কোন সমাজের কাছে হার মেনেছে?", "options": ["সন্ন্যাসী সমাজ", "মাতৃতান্ত্রিক সমাজ", "পিতৃতান্ত্রিক সমাজ", "ব্যক্তিতান্ত্রিক সমাজ"], "correct": 2 },
+  { "id": 54, "q": "মাসি-পিসি আল্লাদিকে কোথায় পাঠাতে নারাজ?", "options": ["স্কুলে", "কাজে", "শ্বশুরবাড়িতে", "শহরে"], "correct": 2 },
+  { "id": 55, "q": "“এতবড় সোমত্ত মেয়ে”—কাকে নির্দেশ করে এ কথা বলা হয়েছে?", "options": ["মাসিকে", "পিসিকে", "আল্লাদিকে", "রহমানকে"], "correct": 2 },
+  { "id": 56, "q": "মাসি-পিসির ঘরে মোট কতজন মানুষ থাকে?", "options": ["দুইজন", "তিনজন", "চারজন", "পাঁচজন"], "correct": 1 },
+  { "id": 57, "q": "“খুনসুটি রাখো দিকি কৈলাশ তোমার”—মাসির এ উক্তিতে কৈলাশের প্রতি কী প্রকাশ পেয়েছে?", "options": ["স্নেহ", "বিরক্তি", "অবজ্ঞা", "ক্ষোভ"], "correct": 1 },
+  { "id": 58, "q": "উজ্জ্বল জ্যোৎস্নায় কোন লোকটাকে মাসি-পিসির অচেনা মনে হলো?", "options": ["মাথায় লাল পাগড়ি আঁটা লোকটা", "মাথায় সবুজ পাগড়ি আঁটা লোকটা", "তিন জন পেয়াদা শেষের জনকে", "তিন জন পেয়াদা প্রথম জনকে"], "correct": 0 },
+  { "id": 59, "q": "বাইরে শোরগোল হলেও আল্লাদির কোনো পরিভ্রম হয়নি কেন?", "options": ["শুয়ে-বসে ছিল বলে", "মাসি-পিসি কাজ করতে দেয়নি বলে", "মাসি-পিসি নিজেরাই নৌকা চালিয়েছে বলে", "আল্লাদি নিজে কাজ করতে চায়নি বলে"], "correct": 2 },
+  { "id": 60, "q": "কে আল্লাদিকে পাওয়ার আশা এখনো ছাড়েনি?", "options": ["যগু", "কানাই", "গোকুল", "উসমান"], "correct": 0 },
+  { "id": 61, "q": "যগু কে?", "options": ["মাসির স্বামী", "পিসির স্বামী", "আল্লাদির স্বামী", "কৈলাশের ভাই"], "correct": 2 },
+  { "id": 62, "q": "যগুর সাথে কৈলাশের কোথায় দেখা হয়েছে বলে উল্লেখ করা হয়েছে?", "options": ["মদের দোকানে", "চায়ের দোকানে", "মন্দিরের চাতালে", "বাজারের মোড়ে"], "correct": 1 },
+  { "id": 63, "q": "পিসির মতে যগু বারো মাস কোথায় পড়ে থাকে?", "options": ["বাজারে", "মুড়ির দোকানে", "খালে-বিলে", "কৈলাশের আস্তানায়"], "correct": 1 },
+  { "id": 64, "q": "“যগু আর সেই যগু নেই”—উক্তিটি দ্বারা কী বোঝানো হয়েছে?", "options": ["যগুর চরিত্রে পরিবর্তন এসেছে", "যগুর চরিত্র অপরিবর্তনীয় রয়ে গেছে", "যগু আরো বেশি খারাপ হয়ে গেছে", "যগু মারা গেছে"], "correct": 0 },
+  { "id": 65, "q": "মাসি-পিসি বুক নতুন জোর পায় কেন?", "options": ["প্রতিবেশীরা তাদের সাথে আছে বলে", "সবাই কানাইয়ের ওপর রেগে আছে বলে", "সবার সঙ্গে একই আচরণ করা হয়েছে বলে", "প্রতিবেশীরা তাদের সান্ত্বনা দিয়েছে বলে"], "correct": 1 },
+  { "id": 66, "q": "কীভাবে আল্লাদির গর্ভপাত হয়েছিল?", "options": ["লাথির চোটে", "আঘাত খেয়ে", "ভীষণ জ্বরে", "স্বাভাবিকভাবে"], "correct": 0 },
+  { "id": 67, "q": "যগু আল্লাদিকে কীসের সাথে শিকল বেঁধে রাখত?", "options": ["বেড়ার সাথে", "খুঁটির সাথে", "গাছের সাথে", "চালের সাথে"], "correct": 1 },
+  { "id": 68, "q": "যগু মাসি-পিসির বাড়িতে গেলে কেমন অভ্যর্থনা পায়?", "options": ["গালাগাল শোনে", "কটু কথা শোনে", "অসম্মানিত হয়", "জামাই আদর পায়"], "correct": 3 },
+  { "id": 69, "q": "‘বজ্জাত হোক, খুনে হোক, জামাই তো’—এ উক্তিতে কী প্রকাশ পেয়েছে?", "options": ["স্বামীর প্রতি ভালোবাসা", "মুখের প্রতি ঘৃণা", "মেয়ের প্রতি ভালোবাসা", "মেয়ে ও জামাইয়ের প্রতি দরদ"], "correct": 3 },
+  { "id": 70, "q": "মাসির মতে, মেয়ের জামাই যতবার আসবে, ততবার কী পাবে?", "options": ["অভ্যর্থনা", "খাবার", "অপবাদ", "জামাই-আদর"], "correct": 3 },
+  { "id": 71, "q": "মায়ের বোন মাসি হলে বাপের বোন হলো কী?", "options": ["ঠাকুরদি", "পিসি", "পিসিমা", "মাসিমা"], "correct": 1 },
+  { "id": 72, "q": "কোন কলেজ থেকে মাণিক বন্দ্যোপাধ্যায় আই.এসসি পাস করেন?", "options": ["বাঁকুড়া ওয়েসলিয়ান মিশন কলেজ", "কলকাতা প্রেসিডেন্সি কলেজ", "মেদিনীপুর সেন্ট্রাল কলেজ", "কুচবিহার মডার্ন কলেজ"], "correct": 0 },
+  { "id": 73, "q": "কৈলাশের সাথে নৌকায় যে বৃদ্ধ থাকে, তার নাম কী?", "options": ["রহিম মিঞা", "করিম মিঞা", "বুড়ো রহমান", "আলিম মিঞা"], "correct": 2 },
+  { "id": 74, "q": "বুড়ো রহমানের মেয়ে কোথায় মারা গেছে?", "options": ["বাবার বাড়িতে", "নৌকাসড়িতে", "পথে হাঁটতে হাঁটতে", "শ্বশুরবাড়িতে"], "correct": 3 },
+  { "id": 75, "q": "শ্বশুরবাড়িতে না যাওয়ার জন্য কে কান্নাকাটি করে কেঁদেছে?", "options": ["আল্লাদি", "মাসি", "রহমানের মেয়ে", "পিসি"], "correct": 0 },
+  { "id": 76, "q": "জমির সরক্ষণ আর স্ত্রীকে নির্যাতন করা, এ দুটির সাথে ‘মাসি-পিসি’ গল্পের কার মিল রয়েছে?", "options": ["বুড়ো রহমানের", "কৈলাশের", "যগুর", "দারোগা বাবুর"], "correct": 2 },
+  { "id": 77, "q": "আল্লাদির দিকে কে হলাহল চোখে তাকায়?", "options": ["যগু", "কৈলাশ", "রহমান", "মাসি"], "correct": 0 },
+  { "id": 78, "q": "রহমান তার মেয়েকে জোর করে শ্বশুরবাড়িতে পাঠিয়েছিল কেন?", "options": ["মেয়ের ভোলার জন্য", "মেয়ের মৃত্যুর জন্য", "সমাজের মুখ রক্ষার জন্য", "বিভিন্ন চাপের জন্য"], "correct": 2 },
+  { "id": 79, "q": "যগু কী নেওয়ার জন্য জিদ করবে?", "options": ["মরমারি করবে", "জমি নেবে", "মামলা করবে", "প্রার্থনা করবে"], "correct": 1 },
+  { "id": 80, "q": "আল্লাদি অস্ফুট আর্তনাদের মতো শব্দ করে কেন?", "options": ["মাসির কথা শুনে", "রহমানের দিকে তাকিয়ে", "কৈলাশের কথা মনে করে", "মামলার কথা শুনে"], "correct": 3 },
+  { "id": 81, "q": "কার ফ্যাকাশে মুখে রহমান নিজের মেয়ের মুখের ছাপ দেখতে পায়?", "options": ["মাসির", "পিসির", "আল্লাদির", "আল্লাদির মায়ের"], "correct": 2 },
+  { "id": 82, "q": "নিরাশ্রয় বিধবারা কীভাবে বেঁচে থাকে?", "options": ["আরাম-আয়েশে", "কুঁকড়ে গেমে", "ভিক্ষা করে", "ঝগড়া করে"], "correct": 1 },
+  { "id": 83, "q": "কোথায় ফলমূলের দাম চড়া?", "options": ["গ্রামের বাজারে", "সবখানে", "ঘাটে", "শহরের বাজারে"], "correct": 3 },
+  { "id": 84, "q": "মাসি-পিসি জীবিকার তাগিদে কীসের ব্যবসা শুরু করে?", "options": ["কাপড়ের ব্যবসা", "শাকসবজির ব্যবসা", "খড়কুটার ব্যবসা", "হাঁস-মুরগির ব্যবসা"], "correct": 1 },
+  { "id": 85, "q": "মাসি-পিসিরা ঘড়া আর হাঁড়ি-কলসিতে কোথা থেকে জল নিয়ে এসে ভর্তি করে রাখে?", "options": ["পুকুর", "খাল", "নদী", "ডোবা"], "correct": 0 },
+  { "id": 86, "q": "দুর্ভিক্ষকে ঠেকিয়েছিল কে?", "options": ["আল্লাদির মা", "আল্লাদির বাবা", "মাসি", "পিসি"], "correct": 1 },
+  { "id": 87, "q": "আল্লাদির বাবা কী রোগে মারা যায়?", "options": ["আমাশয়", "বসন্ত", "কলেরা", "কালাজ্বর"], "correct": 2 },
+  { "id": 88, "q": "কলেরায় আল্লাদি পরিবারের কত জন সদস্যকে হারিয়েছিল?", "options": ["দুইজন", "তিনজন", "চারজন", "পাঁচজন"], "correct": 1 },
+  { "id": 89, "q": "‘রফিক মিঞার মেয়ে শ্বশুরবাড়িতে নির্যাতিত হয়ে মারা গেছে’—রফিক মিঞার সাথে ‘মাসি-পিসি’ গল্পের কার মিল রয়েছে?", "options": ["যগুর", "কৈলাশের", "দারোগার", "রহমানের"], "correct": 3 },
+  { "id": 90, "q": "‘মাসি-পিসি’ গল্পে পাতাশূন্য গাছটাতে কোন পতি দল উড়ে এসে বসেছে?", "options": ["টিয়া পাখিরা", "কাকেরা", "চিলেরা", "শকুনেরা"], "correct": 3 },
+  { "id": 91, "q": "মাসি-পিসির সমস্ত মন জুড়ে কীসের ভাবনা রয়েছে?", "options": ["ব্যবসার ভাবনা", "নতুন সংসারের ভাবনা", "আল্লাদিকে রক্ষার ভাবনা", "পালিয়ে যাওয়ার ভাবনা"], "correct": 2 },
+  { "id": 92, "q": "আল্লাদির সব দায়িত্ব মাসি-পিসি কেন নিয়েছে?", "options": ["সাবলম্বী বলে", "বিধবা বলে", "পিতা-মাতা হারা বলে", "ধনী বলে"], "correct": 2 },
+  { "id": 93, "q": "আল্লাদিকে মাসি-পিসি শ্বশুরবাড়ি পাঠানোর কথা চিন্তাও করতে পারে না কেন?", "options": ["স্বামী মাতাল বলে", "স্বামী পঙ্গু বলে", "স্বামী উদাস বলে", "স্বামী খুনি বলে"], "correct": 3 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

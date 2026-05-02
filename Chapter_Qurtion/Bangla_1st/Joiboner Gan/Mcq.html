@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>যৌবনের গান</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>যৌবনের গান</h1>
+  <p>কাজী নজরুল ইসলাম — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "'যৌবনের গান' মূলত একটি কী?", "options": ["কবিতা", "উপন্যাস", "অভিভাষণ", "ছোটগল্প"], "correct": 3 },
+  { "id": 2, "q": "কাজী নজরুল ইসলাম 'যৌবনের গান' ভাষণটি কোথায় প্রদান করেন?", "options": ["সিরাজগঞ্জ", "চট্টগ্রাম", "ঢাকা", "কুমিল্লা"], "correct": 1 },
+  { "id": 3, "q": "নজরুলের মতে তারুণ্য পরিমাপের মাপকাঠি কোনটি?", "options": ["গায়ের জোর", "বয়স", "মনের সজীবতা", "ধন-সম্পদ"], "correct": 3 },
+  { "id": 4, "q": "বার্ধক্য বলতে প্রাবন্ধিক কী বুঝিয়েছেন?", "options": ["জরা ও জড়তা", "অধিক বয়স", "অভিজ্ঞতা", "শান্তি"], "correct": 1 },
+  { "id": 5, "q": "যৌবন কিসের পুজারি?", "options": ["শান্তির", "শক্তির ও সত্যের", "বিলাসের", "অন্ধকারের"], "correct": 2 },
+  { "id": 6, "q": "কারা অজানাকে জানতে চায় এবং অজেয়কে জয় করতে চায়?", "options": ["বৃদ্ধরা", "বালকরা", "তরুণেরা", "বিলাসীরা"], "correct": 3 },
+  { "id": 7, "q": "তরুণদের প্রধান বৈশিষ্ট্য কী?", "options": ["সংকীর্ণ গণ্ডির ঊর্ধ্বে", "নিয়ম মেনে চলা", "শান্ত থাকা", "পলায়নবৃত্তি"], "correct": 1 },
+  { "id": 8, "q": "বয়সের ফ্রেমে কাকে বেঁধে রাখা যায় না?", "options": ["বৃদ্ধকে", "তারুণ্যকে", "বালককে", "শিশুকাকে"], "correct": 2 },
+  { "id": 9, "q": "নজরুলের মতে, কাদের দেশ, জাতি ও ধর্ম নেই?", "options": ["অলসদের", "তরুণদের", "পণ্ডিতদের", "নিষ্ক্রিয়দের"], "correct": 2 },
+  { "id": 10, "q": "যৌবন শক্তির ধর্ম কী?", "options": ["সঞ্চিত করা", "উজ্জীবিত করা", "ধ্বংস করা", "স্থবির থাকা"], "correct": 2 },
+  { "id": 11, "q": "প্রাবন্ধিক তারুণ্য দেখেছেন কাদের মাঝে?", "options": ["আরব বেদুইনদের", "বিলাসীদের", "বৃদ্ধদের", "শান্ত বালকদের"], "correct": 1 },
+  { "id": 12, "q": "'তিমির-কুন্তলা' শব্দের অর্থ কী?", "options": ["আলোর ঝর্ণা", "অন্ধকার যার কেশ", "রাত্রি", "বিচরণ"], "correct": 2 },
+  { "id": 13, "q": "কালাপাহাড় কে ছিলেন?", "options": ["একজন কবি", "একজন বীর যোদ্ধা", "একজন দার্শনিক", "একজন শিল্পী"], "correct": 2 },
+  { "id": 14, "q": "মুসোলিনি কোন দেশের একনায়ক ছিলেন?", "options": ["রাশিয়া", "জার্মানি", "ইতালি", "তুরস্ক"], "correct": 3 },
+  { "id": 15, "q": "কারা মৃত্যুকে মুঠোর তলে রাখে?", "options": ["বৃদ্ধরা", "ভীতুরা", "তরুণেরা", "বিলাসীরা"], "correct": 3 },
+  { "id": 16, "q": "'যৌবনের মাতৃরূপ' বলতে কোনটিকে বোঝানো হয়েছে?", "options": ["শাসন", "সেবাপরায়ণ দিক", "স্নেহ", "সংরক্ষণ"], "correct": 2 },
+  { "id": 17, "q": "যৌবনের সীমা পরিক্রমণ আজও কার শেষ হয়নি?", "options": ["পাঠকের", "তরুণের", "লেখকের", "শ্রমিকের"], "correct": 3 },
+  { "id": 18, "q": "কে বার্ধক্যের কঙ্কাল বহন করে না?", "options": ["বৃদ্ধ", "তরুণ", "অলস", "ভীতু"], "correct": 2 },
+  { "id": 19, "q": "নজরুলের মতে প্রাণের প্রাচুর্য কোথায়?", "options": ["বৃদ্ধের মনে", "ধনীর সিন্দুকে", "যৌবনের মাঝে", "বিলাসে"], "correct": 3 },
+  { "id": 20, "q": "কাদেরকে সকল দেশের সকল ধর্মের লোক শ্রদ্ধা করে?", "options": ["বিপ্লবী তরুণদের", "পণ্ডিতদের", "বিলাসীদের", "রাজাদের"], "correct": 1 },
+  { "id": 21, "q": "যৌবন কিসের সাধনা করে?", "options": ["পুরাতনের", "সুন্দরের ও নূতনের", "অন্ধকারের", "স্থবিরতার"], "correct": 2 },
+  { "id": 22, "q": "পরাণ বা প্রাণের ধর্ম কী?", "options": ["শান্ত থাকা", "গতিশীলতা", "ভয় পাওয়া", "সঞ্চিত করা"], "correct": 2 },
+  { "id": 23, "q": "কবি নিজেকে কী হিসেবে অভিহিত করেছেন?", "options": ["ধ্যানী", "পূজারী", "দলপতি", "সহযাত্রী"], "correct": 4 },
+  { "id": 24, "q": "যৌবনের গান প্রবন্ধে কিসের জয়গান গাওয়া হয়েছে?", "options": ["বার্ধক্যের", "যৌবনশক্তির", "প্রকৃতির", "ইতিহাসের"], "correct": 2 },
+  { "id": 25, "q": "কাজী নজরুল ইসলাম কত বছর বয়সে বাকশক্তি হারান?", "options": ["৪৩ বছর", "৪৬ বছর", "৫৩ বছর", "৫৬ বছর"], "correct": 1 },
+  { "id": 26, "q": "তরুণদের আদর্শ কী হওয়া উচিত?", "options": ["সুবিধাবাদী হওয়া", "বিপ্লবী ও সত্যনিষ্ঠ", "ভীতু হওয়া", "অলস হওয়া"], "correct": 2 },
+  { "id": 27, "q": "'চঞ্চু' শব্দের অর্থ কী?", "options": ["চোখ", "নাক", "পাখির ঠোঁট", "কান"], "correct": 3 },
+  { "id": 28, "q": "যৌবনের গান প্রবন্ধে 'অরুণ' শব্দের অর্থ কী?", "options": ["চাঁদ", "সূর্য", "তারা", "মেঘ"], "correct": 2 },
+  { "id": 29, "q": "নজরুল তরুণদের কোন গান গাইতে বলেছেন?", "options": ["শোকের গান", "যৌবনের গান", "বিরহের গান", "নিদ্রার গান"], "correct": 2 },
+  { "id": 30, "q": "যৌবনের প্রধান শত্রু কোনটি?", "options": ["সাহস", "ভয় ও জড়তা", "গতি", "আলো"], "correct": 2 },
+  { "id": 31, "q": "তরুণদের কোন দিকে নজর দিতে হবে?", "options": ["পিছনের দিকে", "ভবিষ্যৎ ও সুন্দরের দিকে", "বিলাসের দিকে", "নিদ্রার দিকে"], "correct": 2 },
+  { "id": 32, "q": "যৌবন কিসের নিশান ওড়ায়?", "options": ["বিজয় নিশান", "পরাজয় নিশান", "শোক নিশান", "স্থবিরতা"], "correct": 1 },
+  { "id": 33, "q": "কাদের মধ্যে জড়তা নেই?", "options": ["মৃতদের", "বৃদ্ধদের", "তরুণদের", "অলসদের"], "correct": 3 },
+  { "id": 34, "q": "যৌবন কিসের অবসান চায়?", "options": ["আলোর", "অন্ধকারের ও পরাধীনতার", "গতির", "জীবনের"], "correct": 2 },
+  { "id": 35, "q": "নজরুলের মতে তরুণরা কিসের যাত্রী?", "options": ["বিলাসের", "মুক্তির", "নিদ্রার", "অন্ধকারের"], "correct": 2 },
+  { "id": 36, "q": "তরুণদের মনে কিসের আগুন জ্বলছে?", "options": ["হিংসার", "বিদ্রোহের ও সত্যের", "লোভের", "শোকের"], "correct": 2 },
+  { "id": 37, "q": "যৌবন কোন পথ বেছে নেয়?", "options": ["সহজ পথ", "দুর্গম ও কণ্টকাকীর্ণ পথ", "বিলাসের পথ", "নিদ্রার পথ"], "correct": 2 },
+  { "id": 38, "q": "কারা পৃথিবীকে নতুন করে সাজায়?", "options": ["বৃদ্ধরা", "পণ্ডিতরা", "তরুণেরা", "ভীতুরা"], "correct": 3 },
+  { "id": 39, "q": "যৌবনের মূল লক্ষ্য কী?", "options": ["ঘুমিয়ে থাকা", "অধিকার আদায় ও মুক্তি", "বিলাস করা", "ভয় পাওয়া"], "correct": 2 },
+  { "id": 40, "q": "নজরুল তরুণদের কী হওয়ার আহ্বান জানিয়েছেন?", "options": ["ভীতু", "নির্ভীক ও অকুতোভয়", "অলস", "স্বার্থপর"], "correct": 2 },
+  { "id": 41, "q": "যৌবন কিসের পূজা করে না?", "options": ["সত্যের", "অসত্যের ও জড়তার", "গতির", "আলোর"], "correct": 2 },
+  { "id": 42, "q": "তরুণদের কণ্ঠে কিসের ধ্বনি শোনা যায়?", "options": ["শোকের", "বিপ্লবের", "কান্নার", "নিদ্রার"], "correct": 2 },
+  { "id": 43, "q": "যৌবন কিসের প্রতীক?", "options": ["মরণের", "জীবনের ও গতির", "স্থবিরতার", "ভয়ের"], "correct": 2 },
+  { "id": 44, "q": "কারা সমাজকে এগিয়ে নিয়ে যায়?", "options": ["নিষ্ক্রিয়রা", "তরুণেরা", "বৃদ্ধরা", "বিলাসীরা"], "correct": 2 },
+  { "id": 45, "q": "যৌবন কোনটিকে ভয় পায় না?", "options": ["আলোকে", "মৃত্যুকে", "গতিকে", "সত্যকে"], "correct": 2 },
+  { "id": 46, "q": "তরুণদের হৃদয় কেমন হওয়া উচিত?", "options": ["সংকীর্ণ", "বিশাল ও উদার", "অন্ধকার", "স্থবির"], "correct": 2 },
+  { "id": 47, "q": "যৌবন কিসের জয়ধ্বনি দেয়?", "options": ["পরাজয়ের", "বিজয় ও স্বাধীনতার", "পরাধীনতার", "অন্ধকারের"], "correct": 2 },
+  { "id": 48, "q": "নজরুলের মতে তারুণ্য কীসের উৎস?", "options": ["দুঃখের", "অফুরন্ত শক্তির", "নিরাশার", "ভয়ের"], "correct": 2 },
+  { "id": 49, "q": "যৌবন কাকে আলিঙ্গন করে?", "options": ["জড়তাকে", "সংগ্রামকে", "নিদ্রাকে", "অন্ধকারকে"], "correct": 2 },
+  { "id": 50, "q": "কারা ইতিহাসের স্রষ্টা?", "options": ["ভীতুরা", "অলসরা", "তরুণেরা", "পণ্ডিতরা"], "correct": 3 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

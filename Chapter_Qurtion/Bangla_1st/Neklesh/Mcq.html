@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>নেকলেস</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>নেকলেস</h1>
+  <p>গী দ্য মোপাসাঁ — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { "id": 1, "q": "এক সন্ধ্যায় মাদাম লোইসেলের স্বামী মঁসিয়ে কী হাতে ঘরে ফিরলেন?", "options": ["সুন্দর গয়নার বাক্স", "একটি বড় খাম", "উজ্জ্বল রৌপ্য পাত্র", "কারুকার্যপূর্ণ পর্দা"], "correct": 2 },
+  { "id": 2, "q": "মাদাম লোইসেলের সর্বদা দুঃখের কারণ, সে—", "options": ["নেকলেস হারিয়ে ফেলেছে", "কাঙ্ক্ষিত জীবন পায়নি", "রান্নাঘরে কাজ করে", "দামি পোশাক পরতে পারে না"], "correct": 2 },
+  { "id": 3, "q": "উদ্দীপকের তন্বীর সাথে 'নেকলেস' গল্পের মাদাম লোইসেলের সাদৃশ্য কোন দিক থেকে?", "options": ["উচ্চাকাঙ্ক্ষী", "দরিদ্রতা", "শারীরিক গঠন", "নিপীড়িত"], "correct": 1 },
+  { "id": 4, "q": "মাদাম লোইসেলের জীবনে তন্বীর পরিণতির মতো ঘটনার প্রেক্ষাপট হলো—", "options": ["আভিজাত্যের মোহ", "স্বামীর নির্যাতন", "দারিদ্র্য", "মাতা-পিতার অবহেলা"], "correct": 1 },
+  { "id": 5, "q": "গী দ্য মোপাসাঁ কত সালে জন্মগ্রহণ করেন?", "options": ["১৮৫০ সালে", "১৮৫২ সালে", "১৮৫৩ সালে", "১৮৫৪ সালে"], "correct": 1 },
+  { "id": 6, "q": "মোপাসাঁর মৃত্যু হয় কত তারিখে?", "options": ["৫ই মে", "৫ই জুন", "৫ই জুলাই", "৫ই আগস্ট"], "correct": 3 },
+  { "id": 7, "q": "গী দ্য মোপাসাঁ ফ্রান্সের কোন শহরে জন্মগ্রহণ করেন?", "options": ["নর্মান্ডি", "প্যারিস", "নান্টেস", "স্টার্সবার্গ"], "correct": 1 },
+  { "id": 8, "q": "কত সালে গী দ্য মোপাসাঁ নিম্ন মাধ্যমিক স্কুলে ভর্তি হন?", "options": ["১৮৫৩ সালে", "১৮৫৭ সালে", "১৮৬৩ সালে", "১৮৬৭ সালে"], "correct": 4 },
+  { "id": 9, "q": "মোপাসাঁর সাহিত্য গুরু কে ছিলেন?", "options": ["এমিল জোলা", "গুস্তাভ ফ্লবেয়ার", "বালজাক", "ভিক্টর হুগো"], "correct": 2 },
+  { "id": 10, "q": "মোপাসাঁ কোন যুদ্ধে অংশগ্রহণ করেছিলেন?", "options": ["ফরাসি-জার্মান যুদ্ধ", "প্রথম বিশ্বযুদ্ধ", "বিপ্লবী যুদ্ধ", "ক্রিমিয়ার যুদ্ধ"], "correct": 1 },
+  { "id": 11, "q": "মোপাসাঁ পেশায় প্রথমে কী ছিলেন?", "options": ["শিক্ষক", "সৈনিক", "সরকারি কর্মচারী", "সাংবাদিক"], "correct": 3 },
+  { "id": 12, "q": "মোপাসাঁর প্রথম গল্প কোনটি?", "options": ["পেল দ্য সুইফ্ট", "অঁদ্রি", "দ্য নেকলেস", "বে আমী"], "correct": 1 },
+  { "id": 13, "q": "মাদাম লোইসেলের বাবা কী ছিলেন?", "options": ["কেরানি", "শিক্ষক", "ব্যবসায়ী", "ডাক্তার"], "correct": 1 },
+  { "id": 14, "q": "লোইসেলের স্বামী কোন মন্ত্রণালয়ে চাকরি করতেন?", "options": ["পররাষ্ট্র মন্ত্রণালয়", "শিক্ষা মন্ত্রণালয়", "অর্থ মন্ত্রণালয়", "স্বাস্থ্য মন্ত্রণালয়"], "correct": 2 },
+  { "id": 15, "q": "মাদাম লোইসেলের বিয়ে হয়েছিল কার সাথে?", "options": ["এক ধনী ব্যবসায়ীর সাথে", "এক অখ্যাত কেরানির সাথে", "এক জমিদারের সাথে", "এক উচ্চপদস্থ কর্মকর্তার সাথে"], "correct": 2 },
+  { "id": 16, "q": "মাদিলদা তার গয়না না থাকাতে কীসের অভাব বোধ করত?", "options": ["সৌন্দর্যের", "আভিজাত্যের", "সুখ ও কাম্য হওয়ার", "পোশাকের"], "correct": 3 },
+  { "id": 17, "q": "মাদাম লোইসেলের বান্ধবীর নাম কী ছিল?", "options": ["মাদাম ব্রেটন", "মাদাম ফোরস্টিয়ার", "মাদাম জর্জ", "মাদাম জুলিয়া"], "correct": 2 },
+  { "id": 18, "q": "নেকলেসটি কোন ধাতুর তৈরি ছিল?", "options": ["সোনা", "হীরা", "রূপা", "মুক্তা"], "correct": 2 },
+  { "id": 19, "q": "মাদিলদা তার বান্ধবীর কাছ থেকে কী ধার নিয়েছিল?", "options": ["একটি আংটি", "একটি ব্রেসলেট", "হীরার হার", "পোশাক"], "correct": 3 },
+  { "id": 20, "q": "বল নাচের দাওয়াতটি কোন তারিখের জন্য ছিল?", "options": ["১০ই জানুয়ারি", "১৮ই জানুয়ারি", "২০শে জানুয়ারি", "২৫শে জানুয়ারি"], "correct": 2 },
+  { "id": 21, "q": "পোশাক কেনার জন্য লোইসেল তার স্ত্রীকে কত ফ্রাঁ দিয়েছিলেন?", "options": ["২০০ ফ্রাঁ", "৩০০ ফ্রাঁ", "৪০০ ফ্রাঁ", "৫০০ ফ্রাঁ"], "correct": 3 },
+  { "id": 22, "q": "লোইসেল ৪০০ ফ্রাঁ কী কেনার জন্য জমিয়েছিলেন?", "options": ["একটি গাড়ি", "একটি বন্দুক", "নতুন বাড়ি", "ঘড়ি"], "correct": 2 },
+  { "id": 23, "q": "মাদিলদার হারটি হারিয়েছিল কোথায়?", "options": ["গাড়িতে", "নাচের আসরে", "রাস্তায়", "বন্ধুর বাড়িতে"], "correct": 2 },
+  { "id": 24, "q": "আসল নেকলেসটির দাম কত ছিল?", "options": ["৫০০ ফ্রাঁ", "১০০০ ফ্রাঁ", "৫০০০ ফ্রাঁ", "১০০০০ ফ্রাঁ"], "correct": 1 },
+  { "id": 25, "q": "হারানো হারটির বদলে যে নতুন হার কেনা হলো তার দাম কত ছিল?", "options": ["১৮০০০ ফ্রাঁ", "৩৬০০০ ফ্রাঁ", "৪০০০০ ফ্রাঁ", "৫০০০০ ফ্রাঁ"], "correct": 2 },
+  { "id": 26, "q": "লোইসেল তার বাবার কাছ থেকে উত্তরাধিকার সূত্রে কত ফ্রাঁ পেয়েছিলেন?", "options": ["৫০০০ ফ্রাঁ", "১০০০০ ফ্রাঁ", "১৫০০০ ফ্রাঁ", "১৮০০০ ফ্রাঁ"], "correct": 4 },
+  { "id": 27, "q": "ঋণ শোধ করতে লোইসেল দম্পতির কত সময় লেগেছিল?", "options": ["৫ বছর", "৮ বছর", "১০ বছর", "১২ বছর"], "correct": 3 },
+  { "id": 28, "q": "মাদাম লোইসেলের রূপের বিজয় হয়েছিল কোথায়?", "options": ["বাসায়", "মন্ত্রণালয়ে", "বল নাচের আসরে", "বাজারে"], "correct": 3 },
+  { "id": 29, "q": "মাদিলদা তার হার হারানোর কথা বান্ধবীকে জানায়নি কেন?", "options": ["লজ্জায়", "ভয়ে", "অহংকারে", "রাগে"], "correct": 2 },
+  { "id": 30, "q": "নেকলেস গল্পটি কোন ভাষায় রচিত?", "options": ["ইংরেজি", "ফরাসি", "জার্মান", "স্প্যানিশ"], "correct": 2 },
+  { "id": 31, "q": "মোপাসাঁ কত সালে মারা যান?", "options": ["১৮৯১ সালে", "১৮৯৩ সালে", "১৮৯৫ সালে", "১৯০০ সালে"], "correct": 2 },
+  { "id": 32, "q": "মোপাসাঁর সমাধি কোথায় অবস্থিত?", "options": ["প্যারিস", "নর্মান্ডি", "লন্ডন", "বার্লিন"], "correct": 1 },
+  { "id": 33, "q": "মাদিলদা সবসময় নিজেকে কী মনে করত?", "options": ["দুর্ভাগা", "সৌভাগ্যবতী", "সাধারণ", "অসুখী"], "correct": 1 },
+  { "id": 34, "q": "লোইসেল দম্পতি দাওয়াত পেয়েছিল কার কাছ থেকে?", "options": ["শিক্ষামন্ত্রীর", "রাষ্ট্রপতির", "প্রধানমন্ত্রী", "মেয়রের"], "correct": 1 },
+  { "id": 35, "q": "নাচের অনুষ্ঠানে মাদিলদা কখন বাড়ি ফিরল?", "options": ["রাত ২টায়", "রাত ৩টায়", "ভোর ৪টায়", "সকাল ৬টায়"], "correct": 3 },
+  { "id": 36, "q": "নেকলেসটি ফিরে পেতে তারা কত দিন অপেক্ষা করেছিল?", "options": ["এক সপ্তাহ", "দুই সপ্তাহ", "তিন দিন", "এক মাস"], "correct": 1 },
+  { "id": 37, "q": "মাদিলদার বান্ধবী ফোরস্টিয়ার পেশায় কী ছিলেন?", "options": ["শিক্ষিকা", "ধনী গৃহবধূ", "ব্যবসায়ী", "শিল্পী"], "correct": 2 },
+  { "id": 38, "q": "মাদিলদা যখন হার ফেরত দিল, ফোরস্টিয়ার কী বললেন?", "options": ["ধন্যবাদ দিলেন", "বিরক্তি প্রকাশ করলেন", "খুশি হলেন", "কান্না করলেন"], "correct": 2 },
+  { "id": 39, "q": "নেকলেস গল্পটির মূল উপজীব্য কী?", "options": ["দারিদ্র্য", "লোভ ও উচ্চাকাঙ্ক্ষা", "বন্ধুত্ব", "দাম্পত্য কলহ"], "correct": 2 },
+  { "id": 40, "q": "মাদিলদা কোনটির জন্য পাগল ছিল?", "options": ["গয়না ও পোশাক", "বাগান করা", "বই পড়া", "ভ্রমণ"], "correct": 1 },
+  { "id": 41, "q": "লোইসেল দম্পতি ঋণ শোধের জন্য কোথায় থাকল?", "options": ["নতুন অট্টালিকায়", "একটি চিলেকোঠায়", "বস্তিতে", "হোটেলে"], "correct": 2 },
+  { "id": 42, "q": "মাদিলদা ১০ বছর পর কার সাথে দেখা করল?", "options": ["স্বামীর সাথে", "ফোরস্টিয়ারের সাথে", "বাবার সাথে", "মন্ত্রণালয়ের বড় কর্তার সাথে"], "correct": 2 },
+  { "id": 43, "q": "মাদিলদা কেন বুড়ো হয়ে গিয়েছিল?", "options": ["অসুখের জন্য", "কঠোর পরিশ্রমের জন্য", "খাবারের অভাবে", "মানসিক উদ্বেগে"], "correct": 2 },
+  { "id": 44, "q": "ফোরস্টিয়ারের হারটি আসলে কেমন ছিল?", "options": ["খুব দামী", "নকল বা ইমিটেশন", "স্বর্ণের", "খাঁটি হীরের"], "correct": 2 },
+  { "id": 45, "q": "গল্পের শেষে মাদিলদা কী জানতে পারল?", "options": ["হারটি পাওয়া গেছে", "হারটি সস্তা ছিল", "বান্ধবী মারা গেছে", "স্বামী চাকরি হারিয়েছে"], "correct": 2 },
+  { "id": 46, "q": "মাদিলদা কার সাথে হাঁটতে বের হয়েছিল?", "options": ["স্বামীর সাথে", "একাকী", "বান্ধবীর সাথে", "সন্তানের সাথে"], "correct": 2 },
+  { "id": 47, "q": "রোজ শাঁজলে এলাকায় মাদিলদা কাকে দেখল?", "options": ["শিক্ষামন্ত্রীকে", "মাদাম ফোরস্টিয়ারকে", "তার সহকর্মীকে", "তার বাবাকে"], "correct": 2 },
+  { "id": 48, "q": "মাদিলদার হাড় ভাঙা খাটুনি শুরু হলো কেন?", "options": ["বিলাসের জন্য", "ঋণ শোধের জন্য", "শাস্তি হিসেবে", "স্বামীর আদেশে"], "correct": 2 },
+  { "id": 49, "q": "লোইসেল প্রতিদিন সন্ধ্যায় কী করত?", "options": ["নাচ শিখত", "কেরানির কাজ করত", "বই পড়ত", "গান শুনত"], "correct": 2 },
+  { "id": 50, "q": "গল্পের শেষে পাঠকদের মধ্যে কী অনুভূতি জাগে?", "options": ["হাস্যরস", "করুণ রস ও বিস্ময়", "ভয়", "ঘৃণা"], "correct": 2 },
+  { "id": 51, "q": "মাদাম লোইসেল কার রূপ দেখে ঈর্ষান্বিত হতো?", "options": ["ফোরস্টিয়ার", "নিজের", "রানীর", "প্রতিবেশীর"], "correct": 1 },
+  { "id": 52, "q": "মাদিলদার স্বামী অতিরিক্ত উপার্জনের জন্য কী করত?", "options": ["ব্যবসা", "অনুবাদ বা নকল করার কাজ", "চুরি", "শিক্ষকতা"], "correct": 2 },
+  { "id": 53, "q": "মাদিলদা যখন হার ফেরত দিতে গেল, তার অবস্থা কেমন ছিল?", "options": ["খুব সুখী", "বিপর্যস্ত ও মলিন", "অহংকারী", "অসুস্থ"], "correct": 2 },
+  { "id": 54, "q": "মাদিলদার বান্ধবীর বাচ্চার নাম কী ছিল?", "options": ["জুলাই", "জর্জ", "ব্রেটন", "জানানো হয়নি"], "correct": 4 },
+  { "id": 55, "q": "নেকলেসটি কোন বাক্সে ছিল?", "options": ["কালো ভেলভেটের", "সাদা সিল্কের", "লাল কাপড়ের", "কাঠের বাক্সে"], "correct": 1 },
+  { "id": 56, "q": "মাদিলদা প্রথম কোন গয়নাটি দেখেছিল?", "options": ["মুক্তার হার", "ব্রেসলেট", "ভেনিসীয় ক্রুশ", "হীরার হার"], "correct": 2 },
+  { "id": 57, "q": "লোইসেল নাচের অনুষ্ঠান শেষে কেন ঘুমাচ্ছিলেন?", "options": ["নেশায়", "অত্যধিক পরিশ্রমে", "মাদিলদার জন্য অপেক্ষায়", "অসুস্থতায়"], "correct": 3 },
+  { "id": 58, "q": "মাদিলদার স্বামী কোন দিন বন্দুক কিনতে চেয়েছিলেন?", "options": ["রবিবার", "সোমবার", "শুক্রবার", "শনিবার"], "correct": 1 },
+  { "id": 59, "q": "মাদিলদা নাচের আসর থেকে দ্রুত কেন চলে যেতে চেয়েছিল?", "options": ["লজ্জায়", "আটপৌরে চাদরের জন্য", "বৃষ্টির জন্য", "স্বামীর চাপে"], "correct": 2 },
+  { "id": 60, "q": "গল্পের সমাপ্তি কেমন ছিল?", "options": ["সুখকর", "ট্র্যাজিক ও নাটকীয়", "অসমাপ্ত", "হাস্যকর"], "correct": 2 },
+  { "id": 61, "q": "মাদাম লোইসেলের কাছে জীবন কেমন ছিল?", "options": ["আনন্দের", "কান্না ও হাসির মিশ্রণ", "বিলাসের", "শিক্ষার"], "correct": 2 },
+  { "id": 62, "q": "মাদিলদা কেন আয়নার সামনে দাঁড়িয়ে নিজের রূপ দেখল?", "options": ["হারটি দেখার জন্য", "মেকআপ চেক করতে", "অহংকারে", "কান্না করতে"], "correct": 1 },
+  { "id": 63, "q": "লোইসেল দম্পতি হার হারানোর পর প্রথমে কোথায় গিয়েছিল?", "options": ["পুলিশের কাছে", "গয়নার দোকানে", "সংবাদপত্র অফিসে", "ফোরস্টিয়ারের বাড়ি"], "correct": 2 },
+  { "id": 64, "q": "মাদিলদার স্বামী প্রতিদিন কত ফ্রাঁ আয় করত?", "options": ["৫ ফ্রাঁ", "১০ ফ্রাঁ", "নির্দিষ্ট নয়", "খুবই সামান্য"], "correct": 4 },
+  { "id": 65, "q": "মাদিলদা নিজেকে কোন শ্রেণীর মনে করত?", "options": ["উচ্চবিত্ত", "মধ্যবিত্ত", "নিম্নবিত্ত", "শ্রমজীবী"], "correct": 2 },
+  { "id": 66, "q": "হারানো হারের জন্য লোইসেল বিজ্ঞাপন দিয়েছিল কোথায়?", "options": ["রেডিওতে", "সংবাদপত্রে", "টিভিতে", "লিফলেটে"], "correct": 2 },
+  { "id": 67, "q": "মাদিলদা বান্ধবীর বাড়িতে কেন যেত না?", "options": ["ঝগড়ার জন্য", "হীনম্মন্যতার কারণে", "দূরত্বের জন্য", "অসুস্থতার জন্য"], "correct": 2 },
+  { "id": 68, "q": "নতুন হারটি কেনার জন্য তারা কত ফ্রাঁ বাকি রেখেছিল?", "options": ["১৮০০০", "১৮০০০", "৫০০০", "১০০০০"], "correct": 1 },
+  { "id": 69, "q": "ঋণ শোধের পর মাদিলদার অনুভূতি কী ছিল?", "options": ["গর্ব", "ক্ষোভ", "বিস্ময়", "শান্তি"], "correct": 1 },
+  { "id": 70, "q": "মাদিলদার চেহারায় কীসের ছাপ পড়েছিল?", "options": ["সুখ", "অভিজাত্য", "দারিদ্র্য ও কষ্ট", "উদাসীনতা"], "correct": 3 },
+  { "id": 71, "q": "লোইসেল দম্পতির জন্য শিক্ষা কী ছিল?", "options": ["অল্পে তুষ্টি", "মিথ্যা বলা ঠিক নয়", "ভাগ্যের পরিহাস", "সবগুলো"], "correct": 4 },
+  { "id": 72, "q": "নেকলেসটি কোন দোকানের বাক্সে ছিল?", "options": ["প্যালেস রয়াল", "প্যারিস গ্যালারি", "ব্রেটন শপ", "মিনিস্ট্রি শপ"], "correct": 1 },
+  { "id": 73, "q": "মাদিলদা কার সাথে বেশি কথা বলত না?", "options": ["স্বামীর সাথে", "চাকরানীর সাথে", "প্রতিবেশীর সাথে", "বান্ধবীর সাথে"], "correct": 2 },
+  { "id": 74, "q": "মাদিলদার স্বামী তাকে কী বলে সান্ত্বনা দিত?", "options": ["ফুল পরতে", "গয়না কিনতে", "ধৈর্য ধরতে", "ঘুমাতে"], "correct": 1 },
+  { "id": 75, "q": "নাচের অনুষ্ঠানে পুরুষরা মাদিলদাকে কী করতে চেয়েছিল?", "options": ["পরিচয় হতে", "গান শুনতে", "নাচতে", "উপহার দিতে"], "correct": 1 },
+  { "id": 76, "q": "মাদিলদা কতক্ষণ আয়নার সামনে দাঁড়িয়ে ছিল?", "options": ["এক মিনিট", "অনেকক্ষণ", "অল্পক্ষণ", "পুরো রাত"], "correct": 2 },
+  { "id": 77, "q": "গল্পে ফোরস্টিয়ার চরিত্রের প্রধান বৈশিষ্ট্য কী?", "options": ["অহংকার", "উদারতা ও আভিজাত্য", "মিথ্যাচার", "দয়া"], "correct": 2 },
+  { "id": 78, "q": "মাদিলদা কেন নাচের দিন খুব সুন্দর সেজেছিল?", "options": ["স্বামীর জন্য", "নিজের রূপ প্রদর্শনের জন্য", "রানীর জন্য", "বন্ধুর জন্য"], "correct": 2 },
+  { "id": 79, "q": "নেকলেস গল্পটি বাংলা অনুবাদ করেছেন কে?", "options": ["রবীন্দ্রনাথ ঠাকুর", "পূর্ণেন্দু পত্রী", "খালিদ মাহমুদ", "সুভাষ মুখোপাধ্যায়"], "correct": 3 },
+  { "id": 80, "q": "মাদিলদা পানির কল থেকে বালতি নিয়ে আসত কেন?", "options": ["ব্যায়ামের জন্য", "চাকরানী না থাকায়", "পানির অভাবে", "স্বামীর আদেশে"], "correct": 2 },
+  { "id": 81, "q": "মাদিলদার রান্নাঘর কেমন ছিল?", "options": ["আধুনিক", "বিবর্ণ ও মলিন", "বিরাট", "পরিষ্কার"], "correct": 2 },
+  { "id": 82, "q": "গল্পের প্রেক্ষাপট কোন দেশের?", "options": ["ইংল্যান্ড", "ফ্রান্স", "আমেরিকা", "জার্মানি"], "correct": 2 },
+  { "id": 83, "q": "মাদিলদা হারের বদলে কী ফেরত দিতে চেয়েছিল?", "options": ["টাকা", "একই রকম অন্য একটি হার", "ক্ষমা", "আংটি"], "correct": 2 },
+  { "id": 84, "q": "লোইসেল কেন রাত জেগে কাজ করত?", "options": ["শখের বসে", "ঋণ শোধের জন্য", "চাকরি বাঁচানোর জন্য", "বই লেখার জন্য"], "correct": 2 },
+  { "id": 85, "q": "মাদিলদা কেন ফোরস্টিয়ারের সাথে কথা বলতে চাইল?", "options": ["সত্যিটা জানানোর জন্য", "টাকা ধার নিতে", "গল্প করতে", "শত্রুতা মিটিয়ে নিতে"], "correct": 1 },
+  { "id": 86, "q": "মাদিলদাকে দেখে ফোরস্টিয়ার কী বললেন?", "options": ["চিনতে পারলেন", "অবাক হলেন ও চিনতে পারলেন না", "হাসলেন", "তাড়িয়ে দিলেন"], "correct": 2 },
+  { "id": 87, "q": "মাদিলদার জীবনের বড় ভুল কোনটি ছিল?", "options": ["বিয়ে করা", "হার ধার নেওয়া ও সত্যি না বলা", "নাচে যাওয়া", "চাকরি করা"], "correct": 2 },
+  { "id": 88, "q": "মাদিলদা তার যৌবন হারিয়েছে কীভাবে?", "options": ["অসুখে", "অভাব ও পরিশ্রমে", "দুশ্চিন্তায়", "সবগুলো"], "correct": 4 },
+  { "id": 89, "q": "হারটি কত ক্যারাটের হীরা ছিল বলে মাদিলদা ভেবেছিল?", "options": ["২৪", "১৮", "অজানা", "খাঁটি"], "correct": 4 },
+  { "id": 90, "q": "লোইসেল দম্পতির ভাগ্য কেমন ছিল?", "options": ["সহজ", "কঠিন ও নিষ্ঠুর", "রহস্যময়", "সুখকর"], "correct": 2 },
+  { "id": 91, "q": "মাদিলদা কার সাথে প্রথম বান্ধবীর বাড়িতে গিয়েছিল?", "options": ["একা", "স্বামীর সাথে", "বাবার সাথে", "মাতার সাথে"], "correct": 1 },
+  { "id": 92, "q": "ফোরস্টিয়ারের প্রতিক্রিয়া কেমন ছিল আসল হারের কথা শুনে?", "options": ["রাগ", "বিস্ময় ও করুণা", "হাসি", "ঘৃণা"], "correct": 2 },
+  { "id": 93, "q": "মাদিলদার স্বামী তাকে কত বছর সময় দিয়েছিলেন?", "options": ["নির্দিষ্ট নয়", "১০ বছর", "৫ বছর", "৮ বছর"], "correct": 2 },
+  { "id": 94, "q": "গল্পের শেষ উক্তিটি কার?", "options": ["মাদিলদা", "লোইসেল", "মাদাম ফোরস্টিয়ার", "লেখক"], "correct": 3 },
+  { "id": 95, "q": "মাদিলদা কি সুখী হয়েছিল ঋণ শোধের পর?", "options": ["হ্যাঁ", "না", "শান্তি পেয়েছিল", "জানানো হয়নি"], "correct": 3 },
+  { "id": 96, "q": "বাড়ি ফিরবার পথে মাদিলদা নিজেকে কী দিয়ে ঢেকেছিল?", "options": ["রেশমী চাদর", "আটপৌরে চাদর", "দামী কোট", "ওড়না"], "correct": 2 },
+  { "id": 97, "q": "মাদিলদার হারটি না হারালে কী হতো বলে সে ভেবেছিল?", "options": ["সে ধনী হতো", "কে জানে জীবন কেমন হতো", "সে দুঃখী হতো", "সে বিখ্যাত হতো"], "correct": 2 },
+  { "id": 98, "q": "মাদিলদা রূপের বিজয়গর্বে কী ভুলে গিয়েছিল?", "options": ["স্বামীকে", "বাস্তবতাকে", "ঋণকে", "পরিবারকে"], "correct": 2 },
+  { "id": 99, "q": "মাদিলদা ও তার স্বামীর চরিত্রের মধ্যে মিল কোথায়?", "options": ["সততা ও মর্যাদা রক্ষায়", "লোভে", "বিলাসে", "আলস্যে"], "correct": 1 },
+  { "id": 100, "q": "আভিজাত্যের অদম্য বাসনায় মাদিলদা কী হারিয়েছিল?", "options": ["যৌবন ও সুখ", "গয়না", "স্বামী", "টাকা"], "correct": 1 }
+]
+
+ let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

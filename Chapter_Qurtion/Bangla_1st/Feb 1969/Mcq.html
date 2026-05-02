@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ফেব্রুয়ারি-১৯৬৯ </title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>ফেব্রুয়ারি-১৯৬৯</h1>
+  <p>শামসুর রাহমান — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { id: 1, q: "'ফেব্রুয়ারি-১৯৬৯' কবিতায় বর্ণমালাকে কীসের সঙ্গে তুলনা করা হয়েছে?", options: ["নক্ষত্র", "রক্ত", "ফুল", "রৌদ্র"], correct: 1 },
+  { id: 2, q: "\"আবার ফুটেছে দ্যাখো কৃষ্ণচূড়া থরে থরে শহরের পথে\"- চরণটি আমাদের জাতীয় জীবনের কোন দিকটি তুলে ধরে?", options: ["গণআন্দোলন", "ভাষা আন্দোলন", "স্বাধীনতা আন্দোলন", "স্বদেশী আন্দোলন"], correct: 2 },
+  { id: 3, q: "উদ্দীপকের ত্যাগী মানুষদের প্রতিচ্ছবি 'ফেব্রুয়ারি ১৯৬৯' কবিতায় যাদের নির্দেশ করে তারা হলেন- (i. সালাম, ii. বরকত, iii. দুঃখিনী মাতা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 4, q: "ওই ব্যক্তিদের আত্মত্যাগের মূলমন্ত্র কী ছিল?", options: ["আদর্শ", "দেশপ্রেম", "বিদ্রোহ", "স্বাধিকার"], correct: 2 },
+  { id: 5, q: "শামসুর রাহমানের জন্ম কত সালে?", options: ["১৯২৭", "১৯২৮", "১৯২৯", "১৯৩০"], correct: 3 },
+  { id: 6, q: "শামসুর রাহমানের পৈতৃক নিবাস কোথায়?", options: ["নোয়াখালী", "নরসিংদি", "নেত্রকোনা", "কুমিল্লা"], correct: 2 },
+  { id: 7, q: "শামসুর রাহমানের জন্ম কোন গ্রামে?", options: ["পাড়াতলি", "বালিয়াকান্দি", "কাঁঠালপাড়া", "সাগরদাড়ি"], correct: 1 },
+  { id: 8, q: "শামসুর রাহমানের পিতার নাম কী?", options: ["আহমদ উল্লাহ", "মুখলেসুর রহমান চৌধুরী", "আফসার আহমেদ চৌধুরী", "আলফাজ রাহমান"], correct: 2 },
+  { id: 9, q: "শামসুর রাহমানের মাতার নাম কী?", options: ["আসমা খাতুন", "মোমেনা খাতুন", "আমেনা বেগম", "আম্বিয়া বেগম"], correct: 3 },
+  { id: 10, q: "শামসুর রাহমান কত খ্রিস্টাব্দে প্রবেশিকা পাস করেন?", options: ["১৯৪২ খ্রিস্টাব্দে", "১৯৪৩ খ্রিস্টাব্দে", "১৯৪৪ খ্রিস্টাব্দে", "১৯৪৫ খ্রিস্টাব্দে"], correct: 4 },
+  { id: 11, q: "শামসুর রাহমান কত সালে ইন্টারমিডিয়েট পাস করেন?", options: ["১৯৪৭ খ্রিস্টাব্দে", "১৯৪৬ খ্রিস্টাব্দে", "১৯৪৫ খ্রিস্টাব্দে", "১৯৪৪ খ্রিস্টাব্দে"], correct: 1 },
+  { id: 12, q: "শামসুর রাহমান কোন কলেজ থেকে ইন্টারমিডিয়েট পাস করেন?", options: ["কবি নজরুল কলেজ", "ঢাকা কলেজ", "আইডিয়াল কলেজ", "জগন্নাথ কলেজ"], correct: 2 },
+  { id: 13, q: "শামসুর রাহমান কোন বিশ্ববিদ্যালয় থেকে বিএ পাস করেন?", options: ["ঢাকা বিশ্ববিদ্যালয়", "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়", "চট্টগ্রাম বিশ্ববিদ্যালয়", "রাজশাহী বিশ্ববিদ্যালয়"], correct: 1 },
+  { id: 14, q: "কর্মজীবনে শামসুর রাহমান কী ছিলেন?", options: ["শিক্ষক", "সাংবাদিক", "ব্যবসায়ী", "চাকরিজীবী"], correct: 2 },
+  { id: 15, q: "শামসুর রাহমান কত খ্রিস্টাব্দে প্রথম সাংবাদিকতা শুরু করেন?", options: ["১৯৫৫ খ্রিস্টাব্দে", "১৯৫৬ খ্রিস্টাব্দে", "১৯৫৭ খ্রিস্টাব্দে", "১৯৫৮ খ্রিস্টাব্দে"], correct: 3 },
+  { id: 16, q: "কোন পত্রিকায় সাংবাদিকতার মাধ্যমে শামসুর রাহমান কর্মজীবন শুরু করেন?", options: ["দৈনিক ইত্তেফাক", "দৈনিক মর্নিং-নিউজ", "দৈনিক বাংলা", "ডেইলি স্টার"], correct: 2 },
+  { id: 17, q: "শামসুর রাহমান কত খ্রিস্টাব্দে 'দৈনিক পাকিস্তান' পত্রিকায় যোগ দেন?", options: ["১৯৬২ খ্রিস্টাব্দে", "১৯৬৪ খ্রিস্টাব্দে", "১৯৬৬ খ্রিস্টাব্দে", "১৯৬৮ খ্রিস্টাব্দে"], correct: 2 },
+  { id: 18, q: "'দৈনিক পাকিস্তান' পত্রিকাটি পরবর্তীতে কী নামে রূপ লাভ করে?", options: ["দৈনিক বাংলা", "বাংলার বাণী", "দৈনিক ইত্তেফাক", "দৈনিক সংবাদ"], correct: 1 },
+  { id: 19, q: "কোন পত্রিকায় শামসুর রাহমানের প্রথম কবিতা প্রকাশিত হয়?", options: ["দৈনিক সংবাদ", "দৈনিক ইত্তেফাক", "সাপ্তাহিক সোনার বাংলা", "সাপ্তাহিক ২০০০"], correct: 3 },
+  { id: 20, q: "কত খ্রিষ্টাব্দে শামসুর রাহমানের প্রথম কবিতা প্রকাশিত হয়?", options: ["১৯৪৭ খ্রিষ্টাব্দে", "১৯৪৮ খ্রিষ্টাব্দে", "১৯৪৯ খ্রিষ্টাব্দে", "১৯৫০ খ্রিষ্টাব্দে"], correct: 3 },
+  { id: 21, q: "নিচের কোনটি শামসুর রাহমানের কাব্যগ্রন্থ?", options: ["রাত্রিশেষ", "নিজ বাসভূমে", "লোক-লোকান্তর", "কালের কলস"], correct: 2 },
+  { id: 22, q: "শামসুর রাহমানের মৃত্যু হয় কত খ্রিস্টাব্দে?", options: ["২০০৪ খ্রিস্টাব্দে", "২০০৫ খ্রিস্টাব্দে", "২০০৬ খ্রিস্টাব্দে", "২০০৭ খ্রিস্টাব্দে"], correct: 3 },
+  { id: 23, q: "কোনটি শামসুর রাহমান রচিত উপন্যাস নয়?", options: ["অদ্য আঁধার এক", "অক্টোপাস", "এলো সে অবেলায়", "সীমানা ছাড়িয়ে"], correct: 4 },
+  { id: 24, q: "কোন গ্রন্থটি শামসুর রাহমানের রচনা নয়?", options: ["নিজ বাসভূমি", "রৌদ্র করোটিতে", "বন্দী শিবির থেকে", "পায়ের আওয়াজ পাওয়া যায়"], correct: 4 },
+  { id: 25, q: "শামসুর রাহমান একুশে পদক পান কত খ্রিস্টাব্দে?", options: ["১৯৬৬ খ্রিস্টাব্দে", "১৯৭৭ খ্রিস্টাব্দে", "১৯৯১ খ্রিস্টাব্দে", "১৯৯২ খ্রিস্টাব্দে"], correct: 2 },
+  { id: 26, q: "সর্বত্র তছনছ হচ্ছে কী?", options: ["শালবন", "হরিৎমাঠ", "কমলবন", "মধুবন"], correct: 3 },
+  { id: 27, q: "সারাদেশ কাদের অশুভ আস্তানা?", options: ["দালালের", "শোষকের", "পুলিশের", "ঘাতকের"], correct: 4 },
+  { id: 28, q: "কখন সালাম আবার ফিরে আসে?", options: ["বায়ান্নতে", "উনসত্তরে", "ছেষট্টিতে", "একাত্তরে"], correct: 2 },
+  { id: 29, q: "শূন্যে ফ্ল্যাগ তুলে ধরে কে?", options: ["কামার", "কুমোর", "সালাম", "বরকত"], correct: 3 },
+  { id: 30, q: "ঘাতকের থাবার সামনে বুক পাতে কে?", options: ["তরুণ", "নব্য লেখক", "শিক্ষক", "বরকত"], correct: 4 },
+  { id: 31, q: "কার চোখ আজ আলোচিত ঢাকা?", options: ["রফিকের", "জব্বারের", "সালামের", "বরকতের"], correct: 3 },
+  { id: 32, q: "সালামের হাত থেকে কী ঝরে পড়ে?", options: ["অবিমিশ্র রক্ত", "ঝলকিত অস্ত্র", "অবিনাশী বর্ণমালা", "অজস্র ফুল"], correct: 3 },
+  { id: 33, q: "কার মুখ আজ তরুণ শ্যামল পূর্ব বাংলা?", options: ["সালামের", "রফিকের", "জব্বারের", "বরকতের"], correct: 4 },
+  { id: 34, q: "কৃষ্ণচূড়া কোথায় ফুটেছে?", options: ["ঝুলন্ত গাছে", "গ্রামের বাঁকে", "নদীর ধারে", "শহরের পথে"], correct: 4 },
+  { id: 35, q: "কৃষ্ণচূড়া রং কীসের প্রতীক হিসেবে ব্যবহৃত হয়েছে?", options: ["একুশের চেতনা", "স্বাধীনতার চেতনা", "উনসত্তরের গণঅভ্যুত্থান", "ছেষট্টির ছয় দফার চেতনা"], correct: 1 },
+  { id: 36, q: "উনসত্তরের গণঅভ্যুত্থানে কীসের চেতনা কাজ করেছে?", options: ["লাহোর প্রস্তাবের চেতনা", "একুশের চেতনা", "স্বাধীনতার চেতনা", "স্বৈরাচার বিরোধী চেতনা"], correct: 2 },
+  { id: 37, q: "'ফেব্রুয়ারি ১৯৬৯' কবিতায় মূলত ফুটে উঠেছে?", options: ["সহিংস চেতনা", "সন্ত্রাসী মনোভাব", "দেশপ্রেমের চেতনা", "মানুষের প্রতি ভালোবাসা"], correct: 3 },
+  { id: 38, q: "'ফেব্রুয়ারি ১৯৬৯' কবিতাটি কোন কারণে সার্থক?", options: ["ভাষার জন্য", "রসের জন্য", "বর্ণনার জন্য", "চেতনার জন্য"], correct: 4 },
+  { id: 39, q: "কবিতায় কোনটি প্রস্ফুটিত হয়েছে?", options: ["বাঙালির ভ্রাতৃত্ববোধ", "সংঘবদ্ধ প্রতিবাদী আন্দোলন", "বাঙালির স্বদেশপ্রেম", "জীবনের তাৎপর্য"], correct: 2 },
+  { id: 40, q: "কবি শামসুর রাহমান এই কবিতায় কোন বিষয়ে জোর দিয়েছেন?", options: ["ভাষা আন্দোলনের প্রতি", "দেশপ্রেমের প্রতি", "দেশের প্রকৃতির প্রতি", "স্বাধীনতাকামী মানুষের চেতনাবোধে"], correct: 4 },
+  { id: 41, q: "এই কবিতায় কোন শ্রেণিকে প্রতিবাদের হাতিয়ার হিসেবে দেখানো হয়েছে?", options: ["রাজনৈতিক নেতা", "পুলিশ বাহিনী", "আমজনতা", "কারখানার শ্রমিক"], correct: 3 },
+  { id: 42, q: "একুশের কৃষ্ণচূড়ার রংকে কবি কীসের রং হিসেবে উল্লেখ করেছেন?", options: ["বাঙালির প্রিয় রং", "বাঙালির চেতনার রং", "বাঙালির ঐতিহ্যের রং", "জাতীয় পতাকার রং"], correct: 2 },
+  { id: 43, q: "\"এ রঙের বিপরীত আছে অন্য রং\"- এখানে 'অন্য রং' দ্বারা কোন রংকে ইঙ্গিত করা হয়েছে?", options: ["সাদা", "লাল", "কালো", "হলুদ"], correct: 3 },
+  { id: 44, q: "\"সারাদেশ ঘাতকের অশুভ আস্তানা\"- এখানে 'ঘাতক' দ্বারা কাদেরকে বোঝানো হয়েছে?", options: ["পাকিস্তানি শাসকগোষ্ঠীকে", "বাঙালি সন্ত্রাসীদের", "আন্দোলনকারী জনতাকে", "নর-হত্যাকারী জল্লাদদের"], correct: 1 },
+  { id: 45, q: "সালাম রাজপথে নেমে কী করে?", options: ["স্লোগান দেয়", "পতাকা ওড়ায়", "শহিদ হয়", "ভাষণ দেয়"], correct: 2 },
+  { id: 46, q: "\"বুক পাতে ঘাতকের থাবার মুখে\"-কে?", options: ["তরুণ ছাত্র", "ফতুর কৃষক", "আসাদুজ্জামান", "বরকত"], correct: 4 },
+  { id: 47, q: "কবিতায় \"অবিনাশী বর্ণমালা\"- বলতে কোন বর্ণমালাকে বোঝানো হয়েছে?", options: ["বাংলা বর্ণমালাকে", "পৃথিবীর সকল বর্ণমালাকে", "প্রাচীন বর্ণমালাকে", "উর্দু বর্ণমালাকে"], correct: 1 },
+  { id: 48, q: "'হৃদয়ের হরিৎ উপত্যকা' দ্বারা কী বোঝানো হয়েছে?", options: ["রাজপথকে", "পূর্ব বাংলাকে", "বধ্যভূমিকে", "হৃদয়ের উপত্যকাকে"], correct: 2 },
+  { id: 49, q: "শহিদের ঝলকিত রক্তের বুদবুদ বলা হয়েছে কোন ফুলকে?", options: ["রক্তজবা", "কৃষ্ণচূড়া", "পলাশ", "শিমুল"], correct: 2 },
+  { id: 50, q: "একুশের কৃষ্ণচূড়া কোনটির প্রতীক?", options: ["আমাদের সংগ্রামের", "আমাদের আকাঙ্ক্ষার", "আমাদের চেতনার", "আমাদের বিজয়ের"], correct: 3 },
+  { id: 51, q: "একুশের কৃষ্ণচূড়ার বিপরীত রং আমাদের মনে কী আনে?", options: ["প্রত্যয়", "সাহস", "পরাজয়", "সন্ত্রাস"], correct: 4 },
+  { id: 52, q: "একুশের কৃষ্ণচূড়ার বিপরীত রং আমাদের মনে কখন সন্ত্রাস আনে?", options: ["বছরে বছরে", "দিনে দিনে", "দিনে রাতে", "সকাল-সন্ধ্যায়"], correct: 4 },
+  { id: 53, q: "কোন রঙে পথ-ঘাট ছেয়ে গেছে?", options: ["একুশের কৃষ্ণচূড়ার রঙে", "কৃষ্ণচূড়ার বিপরীত রঙে", "পলাশ ফুলের রঙে", "পলাশের বিপরীত রঙে"], correct: 2 },
+  { id: 54, q: "বহুলোক কোথায় ভূলুণ্ঠিত?", options: ["ঘাতকের আস্তানায়", "ঘাতকের দেশে", "যুদ্ধ ক্ষেত্রে", "রাজপথে"], correct: 1 },
+  { id: 55, q: "এই কবিতায় কোন কোন ভাষাশহিদদের কথা বলা হয়েছে?", options: ["সালাম, বরকত", "সালাম, জব্বার", "বরকত, শফিউর", "জব্বার, শফিউর"], correct: 1 },
+  { id: 56, q: "সালামের হাত থেকে অবিরত কী ঝরে পড়ে?", options: ["বিনাশী বর্ণমালা", "অবিনাশী বর্ণমালা", "নক্ষত্রমালা", "স্বরবর্ণমালা"], correct: 2 },
+  { id: 57, q: "সালামের হাত থেকে অবিনাশী বর্ণমালা কীসের মতো ঝরে পড়ে?", options: ["ঝরনার মতো", "গ্রহের মতো", "নক্ষত্রের মতো", "চাঁদের মতো"], correct: 3 },
+  { id: 58, q: "কোন কবিকে তাঁরই ইচ্ছানুসারে মায়ের সমাধির মধ্যে সমাহিত করা হয়?", options: ["আবু জাফর আবদুল্লাহকে", "আহসান হাবীবকে", "শামসুর রাহমানকে", "সৈয়দ শামসুল হককে"], correct: 3 },
+  { id: 59, q: "কোনটি 'ফেব্রুয়ারি ১৯৬৯' কবিতায় ব্যবহৃত ইংরেজি শব্দ?", options: ["ফুল", "ফ্ল্যাগ", "রং", "পথ"], correct: 2 },
+  { id: 60, q: "এই কবিতার কবি কোন ফুলকে শহিদের রক্তের সাথে তুলনা করেছেন?", options: ["গোলাপ", "জবা", "পলাশ", "কৃষ্ণচূড়া"], correct: 4 },
+  { id: 61, q: "'একুশের কৃষ্ণচূড়া' কথাটি আমাদের কী স্মরণ করিয়ে দেয়?", options: ["একুশে এপ্রিলের কথা", "একুশে আগস্টের কথা", "একুশে ফেব্রুয়ারির কথা", "একুশে জানুয়ারির কথা"], correct: 3 },
+  { id: 62, q: "কোন রং চোখে ভালো লাগে না?", options: ["যে রং পাকা নয়", "যে রং গাঢ় নয়", "যে রং হালকা নয়", "যে রং সন্ত্রাস আনে"], correct: 4 },
+  { id: 63, q: "\"এখন সে রঙে ছেয়ে গেছে পথঘাট, সারাদেশে\"-এখানে কোন রঙের কথা বলা হয়েছে?", options: ["কৃষ্ণচূড়ার রং", "সন্ত্রাসের রং", "ভালোবাসার রং", "সবকয়টি"], correct: 2 },
+  { id: 64, q: "কবিতায় কবি কোন আন্দোলনের প্রেক্ষাপট তুলে ধরেছেন?", options: ["১৯৫২ সালের ভাষা আন্দোলন", "১৯৭১ সালের মুক্তিযুদ্ধ", "তেভাগা আন্দোলন", "১৯৬৯ সালের গণঅভ্যুত্থান"], correct: 4 },
+  { id: 65, q: "'কমল' শব্দের অর্থ কী?", options: ["গোলাপ", "পদ্ম", "কৃষ্ণচূড়া", "কলমিলতা"], correct: 2 },
+  { id: 66, q: "'চোখ' শব্দের সমার্থক শব্দ নয় কোনটি?", options: ["নেত্র", "আঁখি", "নয়ন", "কাজল"], correct: 4 },
+  { id: 67, q: "'যার বিনাশ নেই' তাকে এককথায় কী বলে?", options: ["বিনাশী", "অবিনাশী", "বিনাশযোগ্য", "ধ্বংস"], correct: 2 },
+  { id: 68, q: "নিচের কোনটি নক্ষত্রের সমার্থক শব্দ?", options: ["তারা", "চাঁদ", "গ্রহ", "ধূমকেতু"], correct: 1 },
+  { id: 69, q: "এই কবিতাটি কবির কোন কাব্য থেকে নেওয়া হয়েছে?", options: ["নিজ বাসভূমে", "রৌদ্র করোটিতে", "বিধ্বস্ত নীলিমা", "নিরালোকে দিব্যরথ"], correct: 1 },
+  { id: 70, q: "১৯৬৯-এর গণআন্দোলনের প্রেক্ষাপটে রচিত কবিতা কোনটি?", options: ["শহিদ স্মরণে", "মাগো ওরা বলে", "ফেব্রুয়ারি ১৯৬৯", "স্বাধীনতা তুমি"], correct: 3 },
+  { id: 71, q: "'হরিৎ' শব্দের অর্থ কী?", options: ["লাল বর্ণ", "নীল বর্ণ", "সবুজ বর্ণ", "হলুদ বর্ণ"], correct: 3 },
+  { id: 72, q: "নিচের কোনটি ভিন্নার্থক শব্দ?", options: ["বুদ্বুদ", "জলবিম্ব", "পানির ভুড়ভুড়ি", "জল"], correct: 4 },
+  { id: 73, q: "এই কবিতাটির মোট কয়টি চরণ?", options: ["৯৬টি", "৪৫টি", "২৮টি", "৩০টি"], correct: 4 },
+  { id: 74, q: "কবিতার রচয়িতা কে?", options: ["শামসুর রাহমান", "আহসান হাবীব", "সৈয়দ আলী আহসান", "নির্মলেন্দু গুণ"], correct: 1 },
+  { id: 75, q: "কবিতাটি কোন কাব্যগ্রন্থ থেকে চয়ন করা হয়েছে?", options: ["নিজ বাসভূমে", "বিধ্বস্ত নীলিমা", "রৌদ্র করোটিতে", "বন্দী শিবির থেকে"], correct: 1 },
+  { id: 76, q: "কবিতাটি কোন পটভূমি রচিত হয়েছে?", options: ["১৯৫২-এর ভাষা আন্দোলন", "১৯৫৬-এর নির্বাচন", "১৯৬৬-এর ছয় দফা", "১৯৬৯-এর গণজাগরণ"], correct: 4 },
+  { id: 77, q: "\"মানবিক বাগান, কমল বন হচ্ছে তছনছ\"-চরণটি দ্বারা কবি কী বুঝিয়েছেন?", options: ["মূল্যবোধের অবক্ষয়", "মানুষের তৈরি বাগানের কারণে কমল বন নষ্ট হচ্ছে", "বাগান ধ্বংস হওয়া", "বন ধ্বংস করে নগর সৃষ্টি করা"], correct: 1 },
+  { id: 78, q: "\"ফোটে ফুল বাস্তবের বিশাল চত্বরে\" -চরণটির পরের চরণ কোনটি?", options: ["হৃদয়ের হরিৎ উপত্যকায় সেই ফুল আমাদেরই প্রাণ", "দেখলাম রাজপথে, যে দেখলাম আমরা সবাই", "সালামের মুখ আজ তরুণ শ্যামল পূর্ব বাংলা", "বুঝি তাই উনিশশো উনসত্তরেও"], correct: 1 },
+  { id: 79, q: "শিহরিত ক্ষণে ক্ষণে আনন্দের রৌদ্রে আর-", options: ["আনন্দের ছায়া", "কষ্টের ছায়ায়", "দুঃখের ছায়ায়", "ভালোবাসার মায়ায়"], correct: 3 },
+  { id: 80, q: "কবিতাটির শেষ চরণ কোনটি?", options: ["এখানে এসেছি কেন? এখানে কী কাজ আমাদের?", "বাহিরকে আমরা করেছি ঘর, ঘরকে বাহির", "শিহরিত ক্ষণে ক্ষণে আনন্দের রৌদ্র আর দুঃখের ছায়ায়", "আবার ফুটেছে দ্যাখো কৃষ্ণচূড়া থরে থরে শহরের পথে"], correct: 3 },
+  { id: 81, q: "বীরের রক্তে দুখিনী মাতার অশ্রুজলে ফুল ফোটে- (i. হৃদয়ের গীত উপত্যকায়, ii. হৃদয়ের হরিৎ উপত্যকায়, iii. বাস্তবের বিশাল চত্ত্বরে)", options: ["i ও iii", "ii ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 82, q: "আসাদ উনসত্তরের গণঅভ্যুত্থানে শহিদ হয়। এ কবিতায় উল্লিখিত ভাষা শহিদ হলেন- (i. সালাম, ii. রফিক, iii. বরকত)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 83, q: "কবিতায় নামের আড়ালে লুকিয়ে আছে- (i. বায়ান্নর ২১শে ফেব্রুয়ারির আন্দোলন, ii. একাত্তরের স্বাধীনতা আন্দোলন, iii. ঊনসত্তরের গণঅভ্যুথানের জোয়ার)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 84, q: "কবিতায় শামসুর রাহমানের অভিব্যক্তি- (i. একুশ আমাদের চেতনার নাম, ii. একুশের চেতনায় উনসত্তর আসে, iii. একুশ ও উনসত্তর বাঙালির ঐক্যবদ্ধ সংগ্রামের ফল)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 85, q: "কবিতায় লক্ষণীয় বিষয়- (i. আন্দোলন সংগ্রামে বাঙালির চেতনাবোধ, ii. জীবনের তাৎপর্যের দার্শনিক উন্মোচন, iii. আন্দোলন সংগ্রাম বাঙালির ঐতিহ্য)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 86, q: "কবিতার আড়ালে প্রকাশ পায়- (i. ভাষা শহিদদের মহান আত্মত্যাগ, ii. আন্দোলনের সাধারণ মানুষের অবদান, iii. বাঙালির স্বদেশপ্রেম)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 87, q: "ঘাতকের আস্তানায় ভূলুণ্ঠিতদের মধ্যে কেউ কেউ- (i. মৃত, ii. অর্ধ-মৃত, iii. বিপ্লবী)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 88, q: "\"চতুর্দিকে মানবিক বাগান, কমলবন হচ্ছে তছনছ।\"-পঙ্ক্তিটি দ্বারা বোঝানো হয়েছে- (i. শাসকদের নির্মম অত্যাচার, ii. স্বৈরতান্ত্রিক মনোভাব, iii. অমানবিক নিষ্ঠুরতা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 89, q: "১৯৫২ সালের যেসব ভাষা শহিদদের নাম উল্লেখ রয়েছে তারা হলো- (i. সালাম, ii. রফিক, iii. বরকত)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 90, q: "থরে থরে ফোটা কৃষ্ণচূড়া ফুল দেখে কবির মনে হয়েছে- (i. এরা যেন শহিদের ঝলকিত রক্তের বুদ্বুদ, ii. এরা শহিদের স্মৃতিগন্ধে ভরা, iii. এরা আমাদের চেতনার রং)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 91, q: "'একুশের কৃষ্ণচূড়া'র বিপরীত রং সম্পর্কে বলা যায়'- (i. এ রং কবির ভালো লাগে না, ii. এ রং আমাদের মনে সন্ত্রাস আনে, iii. এ রং আমাদের সংগ্রামী করে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 3 },
+  { id: 92, q: "বীরের রক্তে দুখিনী মাতার অশ্রুজলে ফুল ফোটে- (i. হৃদয়ের গীত উপত্যকায়, ii. হৃদয়ের হরিৎ উপত্যকায়, iii. বাস্তবের বিশাল চত্বরে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 3 },
+  { id: 93, q: "'মানবিক বাগান' দ্বারা বোঝানো হয়েছে- (i. মনুষ্যত্ব, ii. মানবীয় জগৎ, iii. ন্যায় ও মঙ্গলের জগৎ)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 94, q: "১৯৬৯ সালের আন্দোলনে পুলিশের গুলিতে মৃত্যুবরণ করেন- (i. মতিউর, ii. আসাদুজ্জামান, iii. ড. শামসুজ্জোহা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 95, q: "কবির উল্লেখযোগ্য কাব্যগ্রন্থ হলো- (i. রৌদ্র করোটিতে, ii. সিন্দু হিন্দোল, iii. বন্দী শিবির থেকে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 96, q: "কবিতায় স্মৃতিচারণ করা হয়েছে- (i. ভাষা শহিদদের, ii. মুক্তিযোযোদ্ধাদের, iii. শহিদ বুদ্ধিজীবীদের)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 97, q: "শামসুর রাহমানের কবিতার লক্ষণীয় বৈশিষ্ট্য হলো- (i. নাগরিক জীবনের চিত্র, ii. একাকিত্ব, iii. সামাজিক বন্ধন)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 98, q: "চেতনার রঙের বিপরীত রং হলো- (i. যে রং সংগ্রাম আনে, ii. যে রং লাগে না ভালো, iii. যে রং সন্ত্রাস আনে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 3 },
+  { id: 99, q: "মানবিক বাগান বলতে বোঝায়- (i. মানবীয় জগৎ, ii. মনুষ্যত্ব, iii. ন্যায় ও মঙ্গলের জগৎ)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 100, q: "১৯৬৯-এর আন্দোলনে শহিদ হন- (i. বরকত, ii. আসাদুজ্জামান, iii. ড. শামসুজ্জোহা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 3 },
+  { id: 101, q: "ঘাতকের আস্তানায় সাধারণ মানুষের অবস্থা ছিল- (i. কেউ মরা, ii. আধমরা কেউ, iii. কেউ বা ভীষণ জেদি)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 }
+]
+
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

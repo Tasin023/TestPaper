@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>যৌবনের গান</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1A0A0F;
+            --glass-core: rgba(107, 15, 32, 0.55);
+            --glass-border: rgba(240, 100, 120, 0.12);
+            --accent: #F2A0AE;
+            --accent-glow: rgba(192, 37, 62, 0.35);
+            --text-primary: #FDE8EC;
+            --text-secondary: #C26070;
+            --card-radius: 28px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            padding-bottom: 120px;
+        }
+
+        /* --- High-End Header --- */
+        header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--accent);
+            text-transform: uppercase;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 20px 0 10px;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff 30%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: var(--text-secondary); font-weight: 300; }
+
+        /* --- Floating Navigation HUD --- */
+        .mastery-hud {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            background: var(--glass-core);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .progress-container { flex-grow: 1; margin: 0 40px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 8px; }
+        .bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* --- CQ Analysis Cards --- */
+        .container { width: 100%; max-width: 850px; margin: 50px auto; padding: 0 20px; }
+
+        .cq-card {
+            background: var(--glass-core);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cq-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .q-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .q-index {
+            background: var(--accent);
+            color: #000;
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: 'Outfit';
+        }
+        .q-tag { color: var(--accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+        .q-statement { font-size: 1.4rem; font-weight: 500; color: #fff; margin-bottom: 25px; line-height: 1.4; }
+
+        /* --- Premium Reveal Button --- */
+        .reveal-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .reveal-trigger:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        /* --- Answer Drawer --- */
+        .ans-drawer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .is-active .ans-drawer { max-height: 1000px; margin-top: 25px; border: 1px solid rgba(56, 189, 248, 0.1); }
+        .is-active .reveal-trigger { background: var(--accent); color: #000; }
+
+        .ans-body { padding: 25px; color: var(--text-secondary); font-size: 1.15rem; border-left: 4px solid var(--accent); }
+        .ans-body strong { color: var(--accent); display: block; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* --- Global Controls --- */
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .mastery-hud { flex-direction: column; gap: 15px; padding: 20px; border-radius: 25px; }
+            .progress-container { margin: 10px 0; width: 100%; }
+        }
+    </style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+    <header>
+        <span class="category-tag">bangla first paper</span>
+        <h1>যৌবনের গান</h1>
+        <p>কাজী নজরুল ইসলাম — জ্ঞানমূলক ও অনুধাবনমূলক প্রশ্নোত্তর</p>
+    </header>
+
+    <div class="mastery-hud">
+        <div class="hud-label" style="font-family:'Outfit'">TOPICS</div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Mastery Progress</span>
+                <span id="prog-percent">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+        </div>
+        <button class="btn-ghost" onclick="toggleAll()">REVEAL ALL</button>
+    </div>
+
+    <main class="container" id="cq-list"></main>
+
+    <script>
+        const analysisData = [
+{ q: "কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", a: "কাজী নজরুল ইসলাম ১৮৯৯ খ্রিষ্টাব্দে জন্মগ্রহণ করেন।" },
+{ q: "কাজী নজরুল ইসলাম কোন গ্রামে জন্মগ্রহণ করেন?", a: "কাজী নজরুল ইসলাম চুরুলিয়া গ্রামে জন্মগ্রহণ করেন।" },
+{ q: "ছেলেবেলায় নজরুল কোন গানের দলে যোগ দিয়েছিলেন?", a: "ছেলেবেলায় নজরুল লেটো গানের দলে যোগ দিয়েছিলেন।" },
+{ q: "কাজী নজরুল ইসলাম কোন স্কুলে লেখাপড়া করেন?", a: "কাজী নজরুল ইসলাম দরিরামপুর হাই স্কুলে লেখাপড়া করেন।" },
+{ q: "কাজী নজরুল ইসলাম কত সালে সেনাবাহিনীর বাঙালি পল্টনে যোগ দেন?", a: "কাজী নজরুল ইসলাম ১৯১৭ সালে সেনাবাহিনীর বাঙালি পল্টনে যোগ দেন।" },
+{ q: "নজরুল ইসলাম সেনাবাহিনীর বাঙালি পল্টনে যোগ দিতে কোথায় যান?", a: "নজরুল ইসলাম সেনাবাহিনীর বাঙালি পল্টনে যোগ দিতে করাচি যান।" },
+{ q: "সাপ্তাহিক 'বিজলী' পত্রিকায় নজরুলের কোন কবিতাটি প্রকাশিত হয়?", a: "সাপ্তাহিক 'বিজলী' পত্রিকায় নজরুলের 'বিদ্রোহী' কবিতাটি প্রকাশিত হয়।" },
+{ q: "কাজী নজরুল ইসলাম সম্পাদিত ধুমকেতু কী জাতীয় প্রকাশনা?", a: "কাজী নজরুল ইসলাম সম্পাদিত ধুমকেতু একটি পত্রিকা।" },
+{ q: "কাজী নজরুল ইসলামকে কত সালে বাংলাদেশে আনা হয়?", a: "কাজী নজরুল ইসলামকে ১৯৭২ সালে বাংলাদেশে আনা হয়।" },
+{ q: "কাজী নজরুল ইসলামকে কত সালে বাংলাদেশের নাগরিকত্ব প্রদান করা হয়?", a: "কাজী নজরুল ইসলামকে ১৯৭৬ সালে বাংলাদেশের নাগরিকত্ব প্রদান করা হয়।" },
+{ q: "কাজী নজরুল ইসলামকে কোন উপাধিতে ভূষিত করা হয়েছে?", a: "কাজী নজরুল ইসলামকে 'জাতীয় কবি' উপাধিতে ভূষিত করা হয়েছে।" },
+{ q: "কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", a: "কাজী নজরুল ইসলাম ১৯৭৬ খ্রিষ্টাব্দে মৃত্যুবরণ করেন।" },
+{ q: "কাজী নজরুলকে কোন মর্যাদায় সমাহিত করা হয়?", a: "কাজী নজরুলকে সামরিক মর্যাদায় সমাহিত করা হয়।" },
+{ q: "কাজী নজরুলকে কোথায় সমাহিত করা হয়?", a: "কাজী নজরুলকে ঢাকা বিশ্ববিদ্যালয়ে সমাহিত করা হয়।" },
+{ q: "কবি নিজেকে কাদের দলে বলতে দ্বিধা করেন না?", a: "যাঁরা কর্মী নন ধ্যানী কবি নিজেকে তাঁদের দলের বলতে দ্বিধা করেন না।" },
+{ q: "ফুলের মাঝে মাটির মমতা-রসের মতো অবস্থান কাদের?", a: "ফুলের মাঝে মাটির মমতা-রসের মতো অবস্থান ধ্যানীদের।" },
+{ q: "'যৌবনের গান' প্রবন্ধে কর্মী বলা হয়েছে কাদের?", a: "যাঁরা ধ্যানীর ধ্যানকে রূপ দেন তাঁদেরকে 'যৌবনের গান' প্রবন্ধে কর্মী বলা হয়েছে।" },
+{ q: "ধ্যানী ও কর্মীর সম্মিলিত রূপ কীসের মতো?", a: "ধ্যানী ও কর্মীর সম্মিলিত রূপ প্রাণহীন পাষাণে প্রাণ সঞ্চারের মতো।" },
+{ q: "যৌবন কীসের নাম?", a: "যৌবন অজানাকে জানার ও অজেয়কে জয় করার নাম।" },
+{ q: "বৃদ্ধ কারা?", a: "যাঁদের মনের শক্তি ফুরিয়ে গেছে এবং যাঁরা নতুনকে ভয় পান তাঁরাই বৃদ্ধ।" },
+{ q: "বার্ধক্য কীসের চিহ্ন?", a: "বার্ধক্য জড়তা ও অচলতার চিহ্ন।" },
+{ q: "যৌবনের ধর্ম কী?", a: "যৌবনের ধর্ম হলো সকল বাধা উপেক্ষা করে সামনে এগিয়ে চলা।" },
+{ q: "কাজী নজরুল ইসলাম রচিত 'ছায়ানট' কী?", a: "কাজী নজরুল ইসলাম রচিত 'ছায়ানট' হলো কাব্যগ্রন্থ।" },
+{ q: "'যৌবনের গান' প্রবন্ধে লেখক কীসের গান গান?", a: "'যৌবনের গান' প্রবন্ধে লেখক যৌবনের গান গান।" },
+{ q: "'যৌবনের গান' প্রবন্ধে লেখকের গান কোথায় জোয়ার আনে?", a: "'যৌবনের গান' প্রবন্ধে লেখকের গান তারুণ্যের ভরা-ভাদরে জোয়ার আনে।" },
+{ q: "প্রাবন্ধিক কোন দলে?", a: "প্রাবন্ধিক কমবক্তার দলে।" },
+{ q: "কাদের বাণী বৃষ্টিধারার মতো অবিরল ধারায় আসে?", a: "বক্তৃতায় যারা দিগ্বিজয়ী তাদের বাণী বৃষ্টিধারার মতো অবিরল ধারায় আসে।" },
+{ q: "কবিদের বাণী কীসের মতো বয়?", a: "কবিদের বাণী ক্ষীণ ঝরনাধারার মতো বয়।" },
+{ q: "লেখক কাদের বহু পশ্চাতে ফেলে এসেছেন?", a: "লেখক দিগ্বিজয়ী বক্তাদের বহু পশ্চাতে ফেলে এসেছেন।" },
+{ q: "যৌবন কীসের মধ্য দিয়ে সার্থকতা লাভ করে?", a: "যৌবন আত্মত্যাগের মধ্য দিয়ে সার্থকতা লাভ করে।" }
+ ]
+
+        const list = document.getElementById('cq-list');
+        const bar = document.getElementById('progress-bar');
+        const percentText = document.getElementById('prog-percent');
+        let revealedCount = new Set();
+
+        function render() {
+            list.innerHTML = analysisData.map((item, i) => `
+                <div class="cq-card" id="card-${i}">
+                    <div class="q-meta">
+                        <div class="q-index">${i + 1}</div>
+                        <div class="q-tag">Knowledge Base</div>
+                    </div>
+                    <div class="q-statement">${item.q}</div>
+                    <button class="reveal-trigger" onclick="reveal(${i})">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>বিশ্লেষণ দেখুন</span>
+                    </button>
+                    <div class="ans-drawer">
+                        <div class="ans-body">
+                            <strong>বিশ্লেষণধর্মী উত্তর</strong>
+                            ${item.a}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function reveal(index) {
+            const card = document.getElementById(`card-${index}`);
+            card.classList.toggle('is-active');
+            
+            if(card.classList.contains('is-active')) {
+                revealedCount.add(index);
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = analysisData.length;
+            const current = revealedCount.size;
+            const percentage = Math.round((current / total) * 100);
+            bar.style.width = percentage + '%';
+            percentText.innerText = percentage + '%';
+        }
+
+        function toggleAll() {
+            analysisData.forEach((_, i) => {
+                const card = document.getElementById(`card-${i}`);
+                if(!card.classList.contains('is-active')) {
+                    card.classList.add('is-active');
+                    revealedCount.add(i);
+                }
+            });
+            updateProgress();
+        }
+
+        render();
+    </script>
+</body>
+</html>

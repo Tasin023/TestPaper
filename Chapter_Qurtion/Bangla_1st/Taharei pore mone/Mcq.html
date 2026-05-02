@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>তাহারেই পড়ে মনে</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>তাহারেই পড়ে মনে</h1>
+  <p>সুফিয়া কামাল — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData = [
+  { id: 1, q: "'উত্তরী' শব্দের অর্থ কী?", options: ["চাদর", "কুয়াশা", "সমীর", "উত্তর দিক"], correct: 1 },
+  { id: 2, q: "'কহিল সে স্নিগ্ধ আঁখি তুলি'-চরণটিতে 'স্নিগ্ধ আঁখি' বলতে বোঝায়-", options: ["মায়াবী চোখ", "কোমল চোখ", "অশ্রুসজল চোখ", "উৎসুক চোখ"], correct: 2 },
+  { id: 3, q: "উদ্দীপকের (তাজমহল ও মমতাজ) ভাবের প্রতিফলন নিচের কোন চরণে ঘটেছে?", options: ["যদিও এসেছে তবু তুমি তারে করিলে বৃথাই।", "তাহারেই পড়ে মনে, ভুলিতে পারি না কোনো মতে।", "তরী তার এসেছে কি? বেজেছে কি আগমনী গান?", "বাতাবি নেবুর ফুল ফুটেছে কি? ফুটেছে কি আমের মুকুল?"], correct: 2 },
+  { id: 4, q: "শাহজাহান ও সুফিয়া কামালের আচরণের ভিন্নতা থাকলেও উভয়ই-", options: ["আবেগাশ্রয়ী ও অহঙ্কারী", "অভিমানী ও সেহপরায়ণ", "স্মৃতিকাতর ও প্রেমময়", "উদাসীন ও মেধাবী"], correct: 3 },
+  { id: 5, q: "কবি সুফিয়া কামাল কত খ্রিস্টাব্দে জন্মগ্রহণ করেন?", options: ["১৯১৫ খ্রিস্টাব্দে", "১৯১৬ খ্রিস্টাব্দে", "১৯১১ খ্রিস্টাব্দে", "১৯১৭ খ্রিস্টাব্দে"], correct: 3 },
+  { id: 6, q: "সুফিয়া কামাল কোথায় জন্মগ্রহণ করেন?", options: ["ফরিদপুর", "বরিশাল", "চট্টগ্রাম", "খুলনা"], correct: 2 },
+  { id: 7, q: "কবি সুফিয়া কামাল কত খ্রিস্টাব্দে মৃত্যুবরণ করেন?", options: ["১৯৯৪ খ্রিস্টাব্দে", "১৯৯৫ খ্রিস্টাব্দে", "১৯৯৬ খ্রিস্টাব্দে", "১৯৯৯ খ্রিস্টাব্দে"], correct: 4 },
+  { id: 8, q: "কবি সুফিয়া কামাল কোথায় মৃত্যুবরণ করেন?", options: ["বরিশাল", "কালকিনিতে", "ঢাকায়", "প্যারিসে"], correct: 3 },
+  { id: 9, q: "কবি সুফিয়া কামাল কত তারিখে মৃত্যুবরণ করেন?", options: ["১৯ নভেম্বর", "৩০ নভেম্বর", "২১ নভেম্বর", "২২ নভেম্বর"], correct: 4 },
+  { id: 10, q: "কবি সুফিয়া কামালের প্রথম স্বামী কবে মৃত্যুবরণ করেন?", options: ["১৯২৫ খ্রিস্টাব্দে", "১৯৩০ খ্রিস্টাব্দে", "১৯৩৪ খ্রিস্টাব্দে", "১৯৩২ খ্রিস্টাব্দে"], correct: 4 },
+  { id: 11, q: "কবি সুফিয়া কামালের প্রথম স্বামীর নাম কী?", options: ["সৈয়দ নেহাল হোসেন", "সৈয়দ নেহাল রহমান", "কামাল হোসেন", "নেহাল হাসান"], correct: 1 },
+  { id: 12, q: "নারী আন্দোলনের অন্যতম পথিকৃৎ কে?", options: ["বেগম রোকেয়া", "জাহানারা ইমাম", "নীলিমা ইব্রাহিম", "সুফিয়া কামাল"], correct: 4 },
+  { id: 13, q: "সুফিয়া কামালের জন্মের সময় মুসলমান নারীদের কী অবস্থা ছিল?", options: ["বিভিন্ন উচ্চপদস্থ চাকরি করার সুযোগ ছিল", "স্ব-নির্ভর ছিল", "স্কুল-কলেজে পড়ার সুযোগ ছিল না", "স্বামীর ওপর নির্ভরশীল ছিল"], correct: 3 },
+  { id: 14, q: "'সাঁঝের মায়া' কাব্যগ্রন্থটি কার লেখা?", options: ["বেগম রোকেয়ার", "রবীন্দ্রনাথ ঠাকুর", "সেলিনা হক", "সুফিয়া কামালের"], correct: 4 },
+  { id: 15, q: "'মায়া কাজল' কোন জাতীয় রচনা?", options: ["ছোট গল্প", "কাব্য", "নাটক", "উপন্যাস"], correct: 2 },
+  { id: 16, q: "সুফিয়া কামালের রচিত গল্পগ্রন্থ কোনটি?", options: ["কেয়ার কাঁটা", "বলাকা", "অর্কেস্ট্রা", "চোরাবালি"], correct: 1 },
+  { id: 17, q: "'উদাত্ত পৃথিবী' কাব্যগ্রন্থটি কার রচনা?", options: ["সেলিনা হোসেনের", "কামিনী রায়ের", "সুফিয়া কামালের", "বেগম রোকেয়ার"], correct: 3 },
+  { id: 18, q: "'একাত্তরের ডায়েরী' কী জাতীয় রচনা?", options: ["গল্পগ্রন্থ", "কাহিনিকাব্য", "ভ্রমণকাহিনি", "স্মৃতিকথা"], correct: 4 },
+  { id: 19, q: "'ইতল বিতল' সুফিয়া কামালের কী জাতীয় রচনা?", options: ["কল্পকাহিনি", "রূপকথা", "শিশুতোষ", "স্মৃতিকথা"], correct: 3 },
+  { id: 20, q: "কবির তীব্র বিমুখতা কার প্রতি?", options: ["স্বামীর প্রতি", "ভক্তদের প্রতি", "বসন্তের প্রতি", "প্রকৃতি প্রেমিকদের প্রতি"], correct: 3 },
+  { id: 21, q: "কবি মাঘের সন্ন্যাসী বলেছেন কাকে?", options: ["শীত ঋতুকে", "শরৎ ঋতুকে", "হেমন্ত ঋতুকে", "বসন্ত ঋতুকে"], correct: 1 },
+  { id: 22, q: "\"বসন্তে বরিয়া তুমি লবে না কি তব বন্দনায়?\" - এটি কোন কবিতার অংশ বিশেষ?", options: ["আঠারো বছর বয়স", "তাহারেই পড়ে মনে", "জীবন-বন্দনা", "কবর"], correct: 2 },
+  { id: 23, q: "বাংলাদেশের জনমানসে নন্দিত মাতৃমূর্তিতে ভাস্বর হয়ে আছেন কে?", options: ["সুফিয়া কামাল", "কামিনী রায়", "বেগম রোকেয়া", "জাহানারা ইমাম"], correct: 1 },
+  { id: 24, q: "সুফিয়া কামালের পৈতৃক নিবাস কোথায়?", options: ["খুলনা", "মাদারীপুর", "বিক্রমপুর", "কুমিল্লা"], correct: 3 },
+  { id: 25, q: "'তাহারেই পড়ে মনে' কবিতাটি কবির কোন কাব্যগ্রন্থ থেকে নেয়া হয়েছে?", options: ["মৃত্তিকার ঘ্রাণ", "উদাত্ত পৃথিবী", "ইতল বিতল", "সাঁঝের মায়া"], correct: 4 },
+  { id: 26, q: "শীত প্রকৃতিতে কী দেয়?", options: ["রিক্ততার রূপ", "আশার রূপ", "অপার সম্ভাবনার রূপ", "হতাশার রূপ"], correct: 1 },
+  { id: 27, q: "'তাহারেই পড়ে মনে' কবিতায় কোন ঋতুকে বসন্তের বিপরীতে স্থাপন করা হয়েছে?", options: ["বর্ষা", "হেমন্ত", "শীত", "শরৎ"], correct: 3 },
+  { id: 28, q: "পুষ্পশূন্য দিগন্তের পথে কে চলে গেছে?", options: ["হেমন্তের নবান্ন উৎসব", "বসন্তের কোকিল", "মাঘের সন্ন্যাসী", "কবির স্বামী"], correct: 3 },
+  { id: 29, q: "কবির হৃদয় দ্বারে কার আবেদন ব্যর্থ হয়ে গেছে?", options: ["বসন্তের আবেদন", "কবিভক্তের আবেদন", "রিক্ততার আবেদন", "শীতের আবেদন"], correct: 1 },
+  { id: 30, q: "'তাহারেই পড়ে মনে' কবিতায় কোন দুয়ার খুলে গেছে?", options: ["দক্ষিণ", "উত্তর", "পূর্ব", "পশ্চিম"], correct: 1 },
+  { id: 31, q: "কবিতায় কবি সুফিয়া কামাল কোন ফুল ফোটার কথা জানতে চেয়েছেন?", options: ["মালতি ফুল", "মাধবী ফুল", "বকুল ফুল", "বাতাবি নেবুর ফুল"], correct: 4 },
+  { id: 32, q: "কবিতায় কবি কোন গান বাজার কথা জানতে চেয়েছেন?", options: ["বিজয়ী গান", "লোকায়ত গান", "আগমনী গান", "শ্রুতিমধুর গান"], correct: 3 },
+  { id: 33, q: "কবিতায় কীসের বুকে গন্ধ নেই?", options: ["মাধবী", "মালতি", "বকুল", "কদম"], correct: 1 },
+  { id: 34, q: "কবি কাকে কিছুতেই ভুলতে পারছেন না?", options: ["নবান্ন উৎসবকে", "শীতের করুণ বিদায়কে", "বসন্তের অপার সৌন্দর্যকে", "বর্ষার বারিধারাতে"], correct: 2 },
+  { id: 35, q: "\"দক্ষিণ দুয়ার গেছে খুলি\"- কথাটি দ্বারা কী বোঝায়?", options: ["দখিনা বাতাস", "দখিনা দরজায় আঘাত", "সমীরণ", "দখিনা বাতাসের আগমন"], correct: 4 },
+  { id: 36, q: "'তাহারেই পড়ে মনে' কবিতায় কবিকে সম্বোধন করা হয়েছে-", options: ["কবি প্রবর", "প্রিয় কবি", "হে কবি", "ওগো"], correct: 3 },
+  { id: 37, q: "কবিতায় কে কবিকে সম্বোধন করেছে?", options: ["কবির মন", "কবির ভক্ত", "কবির স্বামী", "কবির প্রেমিক"], correct: 2 },
+  { id: 38, q: "বসন্তের আগমন সত্ত্বেও কবি কেমন?", options: ["উদাসী", "আবেগী", "উন্মনা", "নিরাবেগ"], correct: 3 },
+  { id: 39, q: "কাকে স্মরণ করে প্রকৃতিতে বসন্ত এসেছে?", options: ["কবিকে", "কবির স্বামীকে", "শীতকে", "ফাগুনকে"], correct: 4 },
+  { id: 40, q: "কবিভক্তের মতে কবি বসন্তের প্রতি কী প্রদর্শন করেছে?", options: ["উপেক্ষা", "ভালোবাসা", "আবেগ", "ক্ষোভ"], correct: 1 },
+  { id: 41, q: "বসন্ত প্রকৃতিতে আসল কী-না এ বিষয়টি যে কবি খেয়াল করেননি তা কীভাবে বোঝা যায়?", options: ["তার প্রশ্ন থেকে", "তার অজ্ঞাতা থেকে", "তার ক্ষোভ থেকে", "তার ভালোবাসা থেকে"], correct: 1 },
+  { id: 42, q: "প্রকৃতিতে বসন্ত এলেও কবি তাকে বরণ করতে পারেননি কেন?", options: ["শীতের রিক্ততা কবির পছন্দ এ জন্য", "কবি বসন্তকে পছন্দ না করার জন্য", "কবির ব্যক্তিজীবনের দুঃখময় ঘটনার জন্য", "কবি প্রকৃতি প্রেমিক না বলে"], correct: 3 },
+  { id: 43, q: "দখিনা সমির ফুলের গন্ধে কেন আকুল হয়েছে?", options: ["শরতের আগমনের কারণে", "শীতের আগমনের কারণে", "নবান্ন উৎসবের কারণে", "বসন্তের আগমনের কারণে"], correct: 4 },
+  { id: 44, q: "কবি উন্মনা, উদাসীন হয়েছেন কেন?", options: ["স্বামীর মৃত্যুর জন্য", "ছেলের মৃত্যুর জন্য", "মেয়ের মৃত্যুর জন্য", "মায়ের মৃত্যুর জন্য"], correct: 1 },
+  { id: 45, q: "কবিভক্ত কবিকে বসন্তের বন্দনার জন্য মিনতি করেছেন কেন?", options: ["কবি ভক্তদের মনে করে দিতে বলেছেন বলে", "কবি বসন্তকে ঘৃণা করেন না বলে", "ভক্তরা কবিকে আগে থেকেই মনে করিয়ে দেন বলে", "কবির প্রিয় বিয়োগে বসন্তের কথা ভুলে গেছেন বলে"], correct: 4 },
+  { id: 46, q: "গঠনরীতির দিক থেকে 'তাহারেই পড়ে মনে' কোন ধরনের কবিতা?", options: ["স্বগতোক্তি", "কাহিনিমূলক", "সাধারণ বর্ণনা", "সংলাপ নির্ভর"], correct: 4 },
+  { id: 47, q: "ব্যবহৃত 'কুহেলি উত্তরী' শব্দটি কী অর্থ বহন করে?", options: ["মাঘের চাদর", "উত্তরের কুয়াশা", "কুয়াশার চাদর", "মাঘের কুয়াশা"], correct: 3 },
+  { id: 48, q: "কবি গীত রচনা না করলেও বসন্তের আগমন বার্তা ধ্বনিত হয়েছে কীভাবে?", options: ["শীতের রিক্ততাকে ঢেকে রেখে", "সৌন্দর্যের বিকাশ লাভ", "কালের অনিবার্য নিয়ম", "গ্রীষ্মের উষ্ণতাকে ঢেকে রাখা"], correct: 3 },
+  { id: 49, q: "'মাঘের সন্ন্যাসী' বলতে কবিতায় কী বোঝানো হয়েছে?", options: ["শীতের রিক্ততাকে", "বসন্তের বিদায়কে", "শীতের বিদায়কে", "শীতের আগমনকে"], correct: 3 },
+  { id: 50, q: "শীতের রিক্ততার কথাই কবির বার বার মনে হয়েছে কেন?", options: ["শীতেই কবি প্রিয়জনকে হারিয়েছেন বলে", "শীতে অনেক রকমের পিঠা খাওয়া যায় বলে", "শীতে কবি কষ্ট পান বলে", "শীতে কবি অসুস্থ থাকেন বলে"], correct: 1 },
+  { id: 51, q: "এবার বসন্তে কবির নীরব থাকার কারণ কী?", options: ["কবির কাব্যকে ভক্তরা গ্রহণ না করায়", "কাব্য রচনা না করতে পারা", "ভক্তদের ভালোবাসা না পাওয়া", "প্রিয় হারানোর শোক"], correct: 4 },
+  { id: 52, q: "কবিহৃদয়ে কেন বসন্ত নাড়া দেয়নি?", options: ["কবি ব্যক্তিজীবনে বসন্তকে ঘৃণা করেন", "কবি ব্যক্তিজীবনে শোকে মুহ্যমান ছিলেন", "কবি কাব্য রচনায় বসন্তকে উপলক্ষ করতে চান না", "কবি বসন্তের সৌন্দর্যে মুগ্ধ হন না"], correct: 2 },
+  { id: 53, q: "বসন্তের আগমন সম্পর্কে কবি সন্দিহান হয়েছেন কেন?", options: ["শোকে কাতর বলে বসন্ত তাকে আন্দোলিত করেনি", "প্রকৃতিতে বসন্তের আগমনের কোনো চিহ্ন নেই বলে", "কোনো লক্ষণ ছাড়াই বসন্তের আগমন ঘটেছে বলে", "শীতের রিক্ততার পরে বসন্ত আসে বলে"], correct: 1 },
+  { id: 54, q: "কবি তার ভক্তের মিনতি রাখলেন না কেন?", options: ["কবি ভক্তদের পছন্দ করেন না", "কবি স্বামী হারানোর বেদনায় কাতর", "কবিদের ভক্ত দরকার হয় না", "কবি প্রকৃতিকে মূল্য দেন না"], correct: 2 },
+  { id: 55, q: "সুফিয়া কামাল বসন্তের আবেদনকে ব্যর্থ করলেন কীভাবে?", options: ["প্রকৃতির প্রতি আস্থাশীল না হয়ে", "ভক্তদের কথা না শুনে", "কোনো কাব্য রচনা না করে", "স্বামী হারানোর বেদনায় কাতর হয়ে"], correct: 3 },
+  { id: 56, q: "\"গিয়াছে চলিয়া ধীরে পুষ্পশূন্য দিগন্তের পথে\"- বলতে সুফিয়া কামাল কী বোঝাতে চেয়েছেন?", options: ["স্বামীর মৃত্যুকে", "বসন্তের আগমনকে", "রিক্ত হাতে শীতের বিদায়কে", "শীতের আগমনকে"], correct: 3 },
+  { id: 57, q: "শীতকে মাঘের সন্ন্যাসী বলা হয়েছে কেন?", options: ["সন্ন্যাসীরা শীতকে ভালোবাসেন বলে", "সন্ন্যাসীরা শীতে সর্বত্যাগী হয় বলে", "পৌষ ও মাঘ মাস নিয়ে শীতকাল গঠিত হয় বলে", "শীতের বিদায় সর্বত্যাগী সন্ন্যাসীর মতো বলে"], correct: 4 },
+  { id: 58, q: "কবির কাব্য প্রেরণাদাতা বলতে কাকে বোঝানো হয়েছে?", options: ["কবির স্বামীকে", "কবির ভক্তকে", "কবির নিজেকে", "কবির মাতাকে"], correct: 1 },
+  { id: 59, q: "'বসন্ত-বন্দনা' বলতে কী বোঝানো হয়েছে?", options: ["বসন্তে কোকিলের মতো গান গাওয়া", "বসন্তে বন্দনা করা", "বসন্ত ঋতুতে কাব্য রচনা করা", "বসন্ত ঋতুকে স্ততি করা"], correct: 4 },
+  { id: 60, q: "কবি 'তাহারেই পড়ে মনে' কবিতায় নীরব কেন?", options: ["ব্যস্ততায়", "বিরহে", "শূন্যতায়", "শোকে"], correct: 4 },
+  { id: 61, q: "কবিকে বন্দনা-গীত রচনা করতে আহ্বান জানিয়েছেন কেন?", options: ["কবি বিরহিণী বলে", "এটা কবির দায়িত্ব বলে", "কবি আত্মাভিমানী বলে", "কবি ভালো পারেন বলে"], correct: 2 },
+  { id: 62, q: "কবি শীতকে মাঘের সন্ন্যাসীরূপে কল্পনা করেছেন কেন?", options: ["কবি শীতকে পছন্দ করেন বলে", "কুয়াশার চাদর গায়ে মিলিয়ে গেছে বলে", "মাঘ মাসে শীত বিদায় নেয় বলে", "মাঘের সঙ্গে শীতের ভালো সম্পর্ক বলে"], correct: 2 },
+  { id: 63, q: "কবিভক্তরা বসন্ত ঋতুর স্ততি করেছেন কেন?", options: ["বসন্তে মন কোকিলের মতো গেয়ে ওঠে বলে", "বসন্ত নীরব বলে", "বসন্তে মন উন্মনা হয় বলে", "বসন্ত সৌন্দর্যের আঁধার বলে"], correct: 4 },
+  { id: 64, q: "'ফুল কি ফোটেনি শাখে?'-কবি এ জাতীয় প্রশ্ন করছেন কেন?", options: ["বসন্তের আগমন জানার জন্য", "বন্দনাগীত রচনার জন্য", "উদাসীনতার জন্য", "বিরহের জন্য"], correct: 3 },
+  { id: 65, q: "কবিমন অবসন্ন হয়ে যাওয়ার কারণ?", options: ["বন্দনাগীত রচনা না করতে পারা", "বিষাদ", "ব্যস্ততায়", "রিক্ততা"], correct: 2 },
+  { id: 66, q: "সুফিয়া কামালকে কেন সমস্ত সৌন্দর্য স্পর্শ করতে পারে না?", options: ["আনন্দের ফোয়ারা বয়ে যাওয়ায়", "বেদনার সাগরে নিমজ্জিত থাকায়", "সৌন্দর্যে কবি আকৃষ্ট নন", "কবি প্রকৃতি প্রেমিক না বলে"], correct: 2 },
+  { id: 67, q: "'ঋতুর রাজন' বলতে কবি কাকে বুঝিয়েছেন?", options: ["বৈশাখকে", "শরৎকে", "শীতকে", "বসন্তকে"], correct: 4 },
+  { id: 68, q: "কবি সুফিয়া কামাল নীরব কেন?", options: ["ব্যস্ততায়", "বিষণ্ণতায়", "অসুস্থ বলে", "শোকে"], correct: 4 },
+  { id: 69, q: "কবিভক্তরা কেন কবিকে প্রশ্ন করেছেন?", options: ["কবি অস্থির বলে", "কবি উন্মনা বলে", "কবি ভাবুক বলে", "কবি অসুস্থ বলে"], correct: 2 },
+  { id: 70, q: "প্রকৃতিতে বসন্ত আসে কখন?", options: ["বৈশাখ আগমনের সাথে সাথে", "চৈত্র আগমনের সাথে সাথে", "পৌষ আগমনের সাথে সাথে", "ফাল্গুন আগমনের সাথে সাথে"], correct: 4 },
+  { id: 71, q: "বসন্তের আগমনে কবিকে উজ্জীবিত করার প্রচেষ্টায় কবিভক্তের কোন মনোভাবের পরিচয় পাওয়া যায়?", options: ["প্রেম", "ভালোবাসা", "আন্তরিকতা", "উদাসীনতা"], correct: 3 },
+  { id: 72, q: "শীতের সাথে প্রকৃতির কোন রূপের সম্পর্ক রয়েছে?", options: ["সরসতার", "রিক্ততার", "প্রাপ্তির", "শূন্যতার"], correct: 2 },
+  { id: 73, q: "কবির নীরবতাকে নিচের কোনটির সাথে তুলনা করা যায়?", options: ["বসন্ত বন্দনার সাথে", "শীতের কুয়াশার সাথে", "শরতের শিশিরের সাথে", "জ্যৈষ্ঠের খররৌদ্রের সাথে"], correct: 2 },
+  { id: 74, q: "কবির উদাসীনতাকে তুলনা করা যায় কোনটির সাথে?", options: ["বসন্তের সৌন্দর্য", "শীতের রিক্ততা", "শীতের জরাজীর্ণতা", "প্রকৃতির বিরূপতা"], correct: 2 },
+  { id: 75, q: "শীতকে তুলনা করা হয়েছে কীসের সাথে?", options: ["বসন্তের সৌন্দর্য", "মাঘের সন্ন্যাসী", "জরাজীর্ণতা", "শীতের রিক্ততা"], correct: 2 },
+  { id: 76, q: "কবিভক্ত কবিমনে কীসের আহ্বান জাগাতে চেয়েছেন?", options: ["শীতের বিদায়ী বার্তা", "বসন্তের বিদায়ী বার্তা", "বসন্তের আগমনী বার্তা", "কাব্য রচনার"], correct: 3 },
+  { id: 77, q: "'তাহারেই পড়ে মনে' কবিতায় কবির অনুভূতির সাথে তুলনীয় কোনটি?", options: ["বসন্তের সৌন্দর্য", "প্রকৃতির বিরূপতা", "শীতের রিক্ততা", "বসন্তের চিত্র"], correct: 3 },
+  { id: 78, q: "তাহারেই পড়ে মনে কবিতায় কোন বিষয়টি বেশি প্রকাশিত?", options: ["বসন্ত প্রকৃতির রূপ সৌন্দর্য", "কবির শূন্যতাবোধ", "কবির স্বামীর স্মৃতিচারণ", "কবির রিক্ত মন"], correct: 2 },
+  { id: 79, q: "বসন্ত যে প্রকৃতিতে এসেছে কবিভক্তের কোন কথায় এ বিষয়টি আমরা নিশ্চিত হই?", options: ["এখনো দেখনি তুমি?", "ফুল কী ফুটেনি শাখে?", "এসেছে তা ফাগুন স্মরিয়া", "পুষ্পারতি লভেনি ঋতুর রাজন?"], correct: 4 },
+  { id: 80, q: "কবিভক্তের মতে বসন্ত ব্যর্থ কেন?", options: ["কবি তাকে বরণ করেননি বলে", "ফুল ফোটেনি বলে", "বসন্ত শীতের দুর্ভোগ লাঘব করতে পারে নি বলে", "উপরের সবগুলো"], correct: 1 },
+  { id: 81, q: "নিচের কোন কবিতায় প্রকৃতি ও মানবমনের সম্পর্কের একটি গুরুত্বপূর্ণ সংযোগের বিষয়টি প্রকাশিত হয়েছে?", options: ["আমার পূর্ব বাংলা", "পাঞ্জেরী", "তাহারেই পড়ে মনে", "কবর"], correct: 3 },
+  { id: 82, q: "\"কুহেলি উত্তরী তলে মাঘের সন্ন্যাসী\"-এখানে কবির অনুভূতি-", options: ["প্রকৃতির প্রতি বিরূপতার জন্ম দিয়েছে", "কবির সন্ন্যাসীর মতো চলে যাওয়া", "বসন্ত সৌন্দর্য নিয়ে আবির্ভূত হয়েছে", "শীতের রিক্ততায় উদাসিত হয়েছে"], correct: 4 },
+  { id: 83, q: "কবি হৃদয়ের বেদনার চিত্র কোন বিষয়টির ভেতর দিয়ে ফুটিয়ে তুলেছেন?", options: ["মানবজীবনের গতি-প্রকৃতি", "প্রকৃতির সৌন্দর্যের চিত্র", "শীতের সর্বত্যাগী সন্ন্যাসীর রূপ", "বসন্তের বিদায়ী বার্তা"], correct: 3 },
+  { id: 84, q: "সুফিয়া কামাল খ্যাতি অর্জন করেছিলেন কীসে?", options: ["তাহারেই পড়ে মনে কবিতা লিখে", "সাহিত্য সাধনা ও নারী আন্দোলনে ব্রতী হয়ে", "নারী আন্দোলনে ব্রতী হয়ে", "সমাজ সংস্কার করে"], correct: 2 },
+  { id: 85, q: "\"বাতাবি নেবুর ফুল ফুটেছে কি?\" এখানে কী প্রকাশিত হয়েছে?", options: ["কবির জিজ্ঞাসা", "কবির আকুলতা", "কবির উদাসীনতা", "কবির ব্যাকুলতা"], correct: 3 },
+  { id: 86, q: "\"এমন উন্মনা তুমি?\"- এটি কার উক্তি?", options: ["ভক্তদের", "কবির", "কবির স্বামীর", "কবির মায়ের"], correct: 1 },
+  { id: 87, q: "'বরিয়া' শব্দের অর্থ কী?", options: ["বহিয়া করা", "স্মৃতি মনে করা", "বরণ করা", "হাজির করা"], correct: 3 },
+  { id: 88, q: "'রচিয়া' শব্দের অর্থ কী?", options: ["সহে না অর্থে", "রচে অর্থে", "রহে না", "রচনা করে"], correct: 4 },
+  { id: 89, q: "'উত্তরী' শব্দের অর্থ কী?", options: ["উত্তর দিক", "উত্তরদাতা", "চাদর", "উত্তরসূরি"], correct: 3 },
+  { id: 90, q: "'কুহেলি' শব্দের অর্থ কী?", options: ["কোকিলের ডাক", "কুয়াশা", "নিরাশা", "দৃষ্টিভ্রম"], correct: 2 },
+  { id: 91, q: "'অলখ' বলতে কী বোঝানো হয়েছে?", options: ["অলংকার", "দৃষ্টির কাছাকাছি", "দৃষ্টির অগোচরে", "দৃষ্টির সীমানায়"], correct: 3 },
+  { id: 92, q: "'মাধবী' শব্দটি 'তাহারেই পড়ে মনে' কবিতায় কবি কী অর্থে ব্যবহার করেছেন?", options: ["সবুজ পাতা", "ফুল", "গুল্মলতা", "বাসন্তীলতা"], correct: 4 },
+  { id: 93, q: "'পাথার' শব্দটি 'তাহারেই পড়ে মনে' কবিতায় কোন অর্থে ব্যবহৃত হয়েছে?", options: ["নদী অর্থে", "পাথর অর্থে", "পর্বত অর্থে", "সমুদ্র অর্থে"], correct: 4 },
+  { id: 94, q: "'পুরস্কার' শব্দটি ব্যাকরণের কোন নিয়েমে নিষ্পন্ন হয়েছে?", options: ["সমাসযোগে", "প্রকৃতিযোগে", "সন্ধিযোগে", "উপসর্গযোগে"], correct: 3 },
+  { id: 95, q: "'উন্মনা' শব্দটি ব্যাকরণের কোন নিয়মে গঠিত হয়েছে?", options: ["সমাসযোগে", "সন্ধিযোগে", "প্রত্যয়যোগে", "উপসর্গযোগে"], correct: 2 },
+  { id: 96, q: "'উন্মনা' শব্দটির সঠিক সন্ধিবিচ্ছেদ কোনটি?", options: ["উন+মন", "উঃ+মনা", "উনা+মন", "উৎ+মনা"], correct: 4 },
+  { id: 97, q: "কোনটি 'ফাগুন' শব্দটির ব্যুৎপত্তি নির্দেশক শব্দ?", options: ["ফাগুন", "ফাগুয়ান", "ফাল্গুন", "ফল্গু"], correct: 3 },
+  { id: 98, q: "'দখিনা' শব্দটিতে কোন প্রত্যয় ব্যবহৃত হয়েছে?", options: ["দক্ষিণ + অনা", "দক্ষিণ + অ", "দক্ষিণ + আ", "দক্ষি + ইনা"], correct: 3 },
+  { id: 99, q: "কোনটি 'কুঁড়ি' শব্দটির ব্যুৎপত্তি নির্দেশক শব্দ?", options: ["কড়ি", "বিশ", "কুরি", "কোরক"], correct: 4 },
+  { id: 100, q: "'দিগন্ত' শব্দটির সঠিক সন্ধিবিচ্ছেদ হিসেবে কোনটি সঠিক?", options: ["দিক + অন্ত", "দিগ + অন্ত", "দিগা + অন্ত", "দিক + আন্ত"], correct: 1 }
+]
+
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

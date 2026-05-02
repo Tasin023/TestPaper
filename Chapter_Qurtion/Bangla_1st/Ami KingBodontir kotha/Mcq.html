@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমি কিংবদন্তির কথা বলছি</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>আমি কিংবদন্তির কথা বলছি</h1>
+  <p>আবু জাফর ওবায়দুল্লাহ — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData =[
+  { id: 1, q: "কবির পূর্বপুরুষের করতলে কিসের সৌরভ ছিল?", options: ["রক্তজবার", "পলিমাটির", "শস্যদানার", "শ্বাপদের"], correct: 2 },
+  { id: 2, q: "\"আমি কিংবদন্তির কথা বলছি\"- বলতে কবি কী বোঝাতে চেয়েছেন? (i. বাঙালির হাজার বছরের ইতিহাস-ঐতিহ্য, ii. বাঙালির সুদীর্ঘকালের শোষণ-বঞ্চনার ইতিকথা, iii. অন্যায়-অত্যাচারের বিরুধে বাঙালির শাশ্বত প্রতিবাদী সত্তা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 3, q: "কবিতাংশের 'বাংলার আলপথ'- এর সাথে 'আমি কিংবদন্তির কথা বলছি' কবিতার সাদৃশ্যপূর্ণ চেতনা হলো- (i. ইতিহাসমনস্কতা, ii. ঐতিহ্যপ্রিয়তা, iii. সংগ্রামশীলতা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 1 },
+  { id: 5, q: "আবু জাফর ওবায়দুল্লাহ কোন জেলায় জন্মগ্রহণ করেন?", options: ["খুলনা", "ভোলা", "বরিশাল", "সাতক্ষীরা"], correct: 3 },
+  { id: 6, q: "আবু জাফর ওবায়দুল্লাহ যে গ্রামে জন্মগ্রহণ করেন তার নাম কী?", options: ["বহেরচর, ক্ষুদ্রকাঠি", "বহেরচর, বড়কাঠি", "শিলচর, ক্ষুদ্রকাঠি", "শিলচর, বড়কাঠি"], correct: 1 },
+  { id: 7, q: "আবু জাফর ওবায়দুল্লাহ কত তারিখে জন্মগ্রহণ করেন?", options: ["৮ ফেব্রুয়ারি, ১৯৩৩", "৮ ফেব্রুয়ারি, ১৯৩৪", "৮ ফেব্রুয়ারি, ১৯৩৫", "৯ ফেব্রুয়ারি, ১৯৩৪"], correct: 2 },
+  { id: 8, q: "আবু জাফর ওবায়দুল্লাহ কোন বিষয়ে বিএ (সম্মান) ও এমএ ডিগ্রি লাভ করেন?", options: ["বাংলা সাহিত্যে", "ইতিহাসে", "দর্শনে", "ইংরেজি সাহিত্যে"], correct: 4 },
+  { id: 9, q: "আবু জাফর ওবায়দুল্লাহ কোন বিশ্ববিদ্যালয়ে অধ্যাপনা করেন?", options: ["ঢাকা বিশ্ববিদ্যালয়ে", "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ে", "জগন্নাথ বিশ্ববিদ্যালয়ে", "রাজশাহী বিশ্ববিদ্যালয়ে"], correct: 1 },
+  { id: 10, q: "অধ্যাপনা ছেড়ে আবু জাফর ওবায়দুল্লাহ কোন পেশায় যোগ দেন?", options: ["সাংবাদিকতায়", "এনজিও প্রতিষ্ঠানে", "সিভিল সার্ভিসে", "বাংলা একাডেমিতে"], correct: 3 },
+  { id: 11, q: "কে সরকারের বিভিন্ন উচ্চপদে দায়িত্ব পালন করেন?", options: ["আল মাহমুদ", "আবু জাফর ওবায়দুল্লাহ", "দিলওয়ার", "আহসান হাবীব"], correct: 2 },
+  { id: 12, q: "১৯৮২ খ্রিষ্টাব্দে আবু জাফর ওবায়দুল্লাহ কোন মন্ত্রণালয়ের দায়িত্ব পালন করেন?", options: ["বিদ্যুৎ ও জালানি মন্ত্রণালয়ে", "সংস্কৃতি মন্ত্রণালয়ে", "খাদ্য ও কৃষি মন্ত্রণালয়ে", "কৃষি ও পানিসম্পদ মন্ত্রণালয়ে"], correct: 3 },
+  { id: 13, q: "আবু জাফর ওবায়দুল্লাহ কোন দেশে বাংলাদেশের রাষ্ট্রদূতের দায়িত্ব পালন করেন?", options: ["যুক্তরাজ্যে", "অস্ট্রেলিয়ায়", "যুক্তরাষ্ট্রে", "ইংল্যান্ডে"], correct: 3 },
+  { id: 14, q: "রাষ্ট্রভাষা আন্দোলন এবং সে বিষয়ের সাহিত্য রচনায় বিশেষ অবদান রাখায় আবু জাফর ওবায়দুল্লাহ কী লাভ করেন?", options: ["একুশে পদক", "স্বাধীনতা পুরস্কার", "বাংলা একাডেমি পুরস্কার", "আদমজী পুরস্কার"], correct: 1 },
+  { id: 15, q: "সাহিত্যে অবদানের জন্য আবু জাফর ওবায়দুল্লাহকে কী পুরস্কার প্রদান করা হয়?", options: ["একুশে পদক", "স্বাধীনতা পুরস্কার", "বাংলা একাডেমি পুরস্কার", "আদমজী পুরস্কার"], correct: 3 },
+  { id: 16, q: "'সাত নরীর হার' ও 'কখনো রং কখনো সুর' কাব্যগ্রন্থ দুটির রচয়িতা কে?", options: ["সিকান্দার আবু জাফর", "আবু জাফর ওবায়দুল্লাহ", "দিলওয়ার", "আদমজী পুরস্কার"], correct: 2 },
+  { id: 17, q: "আবু জাফর ওবায়দুল্লাহ কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", options: ["১৯৯০ খ্রিষ্টাব্দে", "২০০০ খ্রিষ্টাব্দে", "২০০১ খ্রিষ্টাব্দে", "২০০২ খ্রিষ্টাব্দে"], correct: 3 },
+  { id: 18, q: "কবি আবু জাফর ওবায়দুল্লাহ কোন পুরুষের কথা বলেছেন?", options: ["পূর্বপুরুষ", "উত্তর পুরুষ", "মাতৃপুরুষ", "পিতৃপুরুষ"], correct: 1 },
+  { id: 19, q: "আমাদের পূর্বপুরুষের করতলে কোন মাটির সৌরভ ছিল?", options: ["বেলে মাটি", "দো-আঁশ মাটি", "পলি মাটি", "এঁটেল মাটি"], correct: 3 },
+  { id: 20, q: "আমাদের পূর্ব পুরুষের পিঠে কিসের মতো ক্ষত ছিল?", options: ["কৃষ্ণচূড়া", "শিমুল", "রক্তজবা", "জবা"], correct: 3 },
+  { id: 21, q: "আমাদের পূর্বপুরুষ কী রকম পাহাড়ের কথা বলতেন?", options: ["হিমালয় পর্বত", "বিন্ধ্য পর্বত", "অতিক্রান্ত পাহাড়", "ছোট পাহাড়"], correct: 3 },
+  { id: 22, q: "আমাদের পূর্বপুরুষরা কোন জমি আবাদের কথা বলতেন?", options: ["উর্বর জমি", "মাঠের জমি", "নিচু জমি", "পতিত জমি"], correct: 4 },
+  { id: 23, q: "'তিনি কবি এবং কবিতার কথা বলতেন'-এখানে তিনি কে?", options: ["আমাদের ওপর পুরুষ", "আমাদের পূর্বপুরুষ", "আমাদের মাতৃপুরুষ", "আমাদের ভবিষ্যৎ পুরুষ"], correct: 2 },
+  { id: 24, q: "'জিহ্বায় উচ্চারিত প্রতিটি সত্য শব্দ' কী?", options: ["গান", "স্লোগান", "কবিতা", "গদ্য"], correct: 3 },
+  { id: 25, q: "কর্ষিত জমির প্রতিটি শস্যদানা কী?", options: ["গান", "স্লোগান", "কবিতা", "গদ্য"], correct: 3 },
+  { id: 26, q: "যে কবিতা শুনতে জানে না সে কী শুনবে?", options: ["ঝড়ের আর্তনাদ", "বজ্রের নিনাদ", "বৃষ্টির শব্দ", "মেঘের গর্জন"], correct: 1 },
+  { id: 27, q: "কে দিগন্তের অধিকার থেকে বঞ্চিত হবে?", options: ["যে কবিতা পড়তে জানে না", "যে কবিতা শুনতে জানে না", "যে কবিতা লিখতে জানে না", "যে কবিতা পাঠ করতে জানে না"], correct: 2 },
+  { id: 28, q: "'সে আজন্ম ক্রীতদাস থেকে যাবে'-চরণটির পূর্বের চরণ কোনটি?", options: ["আমি উচ্চারিত ঝড়ের মতো", "যে কবিতা শুনতে জানে না", "আমি উচ্চারিত সত্যের মতো", "সে ঝড়ের আর্তনাদ শুনবে"], correct: 2 },
+  { id: 29, q: "মায়ের ছেলেরা ভালোবেসে কোথায় যায়?", options: ["গ্রামে", "বিদেশে", "যুদ্ধে", "পরপারে"], correct: 3 },
+  { id: 30, q: "কবির মতে কে নদীতে ভাসতে পারে না?", options: ["যে সাঁতার জানে না", "যে কবিতা শুনতে জানে না", "যে গান শোনে না", "যে ভালোবাসতে জানে না"], correct: 2 },
+  { id: 31, q: "কবিতায় কবি কার মৃত্যুর কথা বলেছেন?", options: ["মায়ের", "পিতার", "গর্ভবতী বোনের", "ভাইয়ের"], correct: 3 },
+  { id: 32, q: "কবিতায় কবি ভালোবাসা দিলে কে মরে যায় বলেছেন?", options: ["মা", "বোন", "ভাই", "বন্ধু"], correct: 1 },
+  { id: 33, q: "শস্যের সম্ভার কাকে সমৃদ্ধ করবে?", options: ["যে মৎস্য লালন করে", "যে কর্ষণ করে", "কবির ভাইদের", "দেশের মানুষকে"], correct: 2 },
+  { id: 34, q: "কবির মতে প্রবহমান নদী কাকে পুরস্কৃত করবে?", options: ["যে ভালোবাসতে জানে", "যে সাঁতার জানে", "যে মৎস্য লালন করে", "যে মৎস্য শিকার করে"], correct: 3 },
+  { id: 35, q: "কে জমি কর্ষণ করে?", options: ["জেলে", "চাষি", "তাঁতি", "কামার"], correct: 2 },
+  { id: 36, q: "কবিতা কীসের অনিবার্য অভ্যুত্থান?", options: ["পলিমাটির", "ঝড়ের", "সশস্ত্র সুন্দরের", "বীরের"], correct: 3 },
+  { id: 37, q: "কবির পূর্বপুরুষ কী ছিলেন?", options: ["চাষি", "কবি", "ক্রীতদাস", "জমিদার"], correct: 3 },
+  { id: 38, q: "পলিমাটির সৌরভ বলতে কী বোঝানো হয়েছে?", options: ["উর্বর মাটি", "নরম মাটি", "নদীমাতৃক দেশ", "কোমল হৃদয়"], correct: 3 },
+  { id: 39, q: "অরণ্য এবং শ্বাপদের কথা কে বলতেন?", options: ["ইতিহাসবিদ", "কবির পূর্বপুরুষ", "কবির ভাই", "জ্ঞানীজন"], correct: 2 },
+  { id: 40, q: "যে কবিতা শুনতে জানে না, সে আজন্ম কী থেকে যাবে?", options: ["বন্দি", "মনিব", "দাস", "ক্রীতদাস"], correct: 4 },
+  { id: 41, q: "কবি উচ্চারিত সত্যের মতো কীসের কথা বলেছেন?", options: ["আকাঙ্ক্ষার", "আশার", "স্বপ্নের", "ইচ্ছার"], correct: 3 },
+  { id: 42, q: "কবি উনুনের আগুনে আলোকিত কেমন জানালার কথা বলেছেন?", options: ["উজ্জ্বল", "নিষ্প্রভ", "ছোট", "বড়"], correct: 1 },
+  { id: 43, q: "নিচের কোনটি যে সাঁতার জানে না তাকেও ভাসিয়ে রাখে?", options: ["স্থির নদী", "প্রবহমান নদী", "পাহাড়ি নদী", "সমুদ্র"], correct: 2 },
+  { id: 44, q: "যে কবিতা শুনতে জানে না, সে কোথায় ভাসতে পারবে না?", options: ["পুকুরে", "খালে", "নদীতে", "সমুদ্রে"], correct: 3 },
+  { id: 45, q: "যে কবিতা শুনতে জানে না, সে কার সঙ্গে খেলা করতে পারবে না?", options: ["সন্তানের", "বন্ধুর", "গাভীর", "মাছের"], correct: 4 },
+  { id: 46, q: "যে কবিতা শুনতে জানে না, সে মায়ের কোলে শুয়ে কী শুনতে পাবে না?", options: ["গান", "গল্প", "কবিতা", "ছড়া"], correct: 2 },
+  { id: 47, q: "'কিংবদন্তির কথা' বলেছেন কে?", options: ["আবু জাফর শামসুদ্দীন", "আবু জাফর ওবায়দুল্লাহ", "শামসুদ্দীন জাফর", "আহসান হাবীব"], correct: 2 },
+  { id: 48, q: "কবি কোন ধরনের স্নেহের কথা বলেছেন?", options: ["মায়ের", "পিতার", "স্নিগ্ধ", "বিচলিত"], correct: 4 },
+  { id: 49, q: "গর্ভবতী বোনের মৃত্যুর কথা বলা হয়েছে কোন কবিতায়?", options: ["লোক-লোকান্তর", "রক্তে আমার অনাদি অস্থি", "সেই অস্ত্র", "আমি কিংবদন্তির কথা বলছি"], correct: 4 },
+  { id: 50, q: "ভালোবাসা দিলে মা মরে যায়, আর কী আসে?", options: ["ভয়", "বিদ্রোহ", "যুদ্ধ", "আন্দোলন"], correct: 3 },
+  { id: 51, q: "যে কবিতা শুনতে জানে না, সে সন্তানের জন্য কী করতে পারে না?", options: ["মরতে পারে না", "বাঁচতে পারে না", "দায়িত্ব পালন করতে পারে না", "সুন্দর ভবিষ্যৎ তৈরি করতে পারে না"], correct: 1 },
+  { id: 52, q: "যে কবিতা শুনতে জানে না, সে ভালোবেসে কোথায় যেতে পারে না?", options: ["যুদ্ধে", "গ্রামে", "আন্দোলনে", "বিদেশে"], correct: 1 },
+  { id: 53, q: "যে কবিতা শুনতে জানে না, সে সূর্যকে কোথায় ধরে রাখতে পারে না?", options: ["হাতে", "মাথায়", "অন্তরে", "হৃৎপিণ্ডে"], correct: 4 },
+  { id: 54, q: "'আমি কিংবদন্তির কথা বলছি' কবিতায় আমাদের পূর্বপুরুষের পিঠে রক্তজবার মতো ক্ষত ছিল কেন?", options: ["তিনি যোদ্ধা ছিলেন বলে", "তিনি ক্রীতদাস ছিলেন বলে", "বন্যা পশুর আক্রমণে", "তিনি অভিশপ্ত ছিলেন বলে"], correct: 2 },
+  { id: 55, q: "শস্যের সম্ভার কাকে সমৃদ্ধ করে?", options: ["যে মৎস্য পালন করে", "যে কর্ষণ করে", "যে গাভীর পরিচর্যা করে", "যে লৌহখণ্ডকে প্রলম্বিত করে"], correct: 2 },
+  { id: 56, q: "যে কর্ষণ করে তাকে কী বলা যায়?", options: ["জেলে", "কামার", "কৃষক", "রাখাল"], correct: 3 },
+  { id: 57, q: "কাকে প্রবহমান নদী পুরস্কৃত করবে?", options: ["যে নৌকা চালায়", "যে কর্ষণ করে", "যে গাভীর পরিচর্যা করে", "যে মৎস্য পালন করে"], correct: 4 },
+  { id: 58, q: "জননীর আশীর্বাদ কাকে দীর্ঘায়ু করবে?", options: ["যে নৌকা চালায়", "যে কর্ষণ করে", "যে গাভীর পরিচর্যা করে", "যে মৎস্য পালন করে"], correct: 3 },
+  { id: 59, q: "ইস্পাতের তরবারি কাকে সশস্ত্র করবে?", options: ["যে কর্ষণ করে", "যে লৌহখন্ডকে প্রজ্বলিত করে", "যে যুদ্ধে যায়", "যে মৎস্য পালন করে"], correct: 2 },
+  { id: 60, q: "'আমি কিংবদন্তির কথা বলছি' কবিতায় যে পুত্রগণের কথা বলেছেন তারা কেমন?", options: ["দীর্ঘদেহী", "খর্বদেহী", "স্থূলদেহী", "সূক্ষ্মদেহী"], correct: 1 },
+  { id: 61, q: "'আমি কিংবদন্তির কথা বলছি' কবিতায় কবি কার মৃত্যুর কথা বলেছেন?", options: ["ভাইয়ের", "মায়ের", "বোনের", "নিজের"], correct: 3 },
+  { id: 62, q: "'আমি কিংবদন্তির কথা বলছি' কবিতায় কবি কার যুদ্ধের কথা বলেছেন?", options: ["বাবার", "ভাইয়ের", "বন্ধুর", "নিজের"], correct: 2 },
+  { id: 63, q: "কবিতা কার অনিবার্য অভ্যুথান?", options: ["সশস্ত্রের", "সুন্দরের", "শস্ত্রহীন সুন্দরের", "সশস্ত্র সুন্দরের"], correct: 4 },
+  { id: 64, q: "হিংস্র মাংসাশী শিকারি জন্তুকে কী বলা হয়?", options: ["দৈত্য", "দানব", "শ্বাপদ", "অসুর"], correct: 3 },
+  { id: 65, q: "কোনটি সকল শক্তির উৎস?", options: ["চন্দ্র", "গ্রহ", "পৃথিবী", "সূর্য"], correct: 4 },
+  { id: 66, q: "'আমি কিংবদন্তির কথা বলছি' কবিতামতে মুক্তির সামর্থ্য অর্জনের একমাত্র উপায় কোনটি?", options: ["গল্প শোনা", "কবিতা শোনা", "গান শোনা", "কবিতা পাঠ"], correct: 2 },
+  { id: 67, q: "কোন কবির নিরলস সাফল্যে 'আমি কিংবদন্তির কথা বলছি' কবিতাটি বাংলা সাহিত্যকে সমৃদ্ধ করেছে?", options: ["সৈয়দ শামসুল হক", "আহসান হাবীব", "আবু জাফর ওবায়দুল্লাহ", "জসীমউদ্দীন"], correct: 3 },
+  { id: 68, q: "কবির পূর্বপুরুষের করতলে কীসের সৌরভ ছিল?", options: ["শ্বাপদের", "রক্তজবার", "পলিমাটির", "শস্যদানার"], correct: 3 },
+  { id: 69, q: "\"আমি উচ্চারিত সত্যের মতো স্বপ্নের কথা বলছি।\"-এখানে 'স্বপ্ন' শব্দটির সর্বোচ্চ গ্রহণযোগ্য অর্থ কোনটি?", options: ["যন্ত্রণার", "হতাশার", "নিপীড়নের", "স্বপ্ন অথচ মিথ্যে নয়"], correct: 4 },
+  { id: 70, q: "\"আমরা কি তাঁর মতো কবিতার কথা বলতে পারব\"-পঙ্ক্তিটিতে কবিমনের কোন দিকটি প্রকাশ পেয়েছে?", options: ["আনন্দ", "বিস্ময়", "হতাশা", "শঙ্কা"], correct: 4 },
+  { id: 71, q: "\"ক্ষণকালের জন্য স্থির ছিল\"-কথাটি দ্বারা কী বোঝায়?", options: ["বাতাসের খামখেয়ালি আচরণ", "বাতাসের প্রবাহের অনুপস্থিতি", "লেখকের মনের ভাববিহলতা", "লেখকের মতিভ্রম"], correct: 2 },
+  { id: 72, q: "\"সে সূর্যকে হৃৎপিণ্ডে ধরে রাখতে পারে না\"- পঙ্ক্তিটিতে 'সূর্য' কোন অর্থ বহন করছে?", options: ["অরুণ কান্ড", "অর্ক", "তেজ", "অগ্নিগোলক"], correct: 3 },
+  { id: 73, q: "মানুষের জিহ্বায় উচ্চারিত কোন ধরনের শব্দ একেকটি কবিতা?", options: ["বিদ্ধ", "মুক্ত", "তীব্র", "মৃদু"], correct: 1 },
+  { id: 74, q: "'অরণ্য এবং শ্বাপদ'-এই শব্দযুগল কীসের প্রতীক?", options: ["বিপদের", "সতর্কতার", "রোমাঞ্চের", "বন-বনানীর"], correct: 1 },
+  { id: 75, q: "\"প্রতিটি শস্যদানা কবিতা\"-এটিকে কীভাবে ব্যাখ্যা করা সম্ভব?", options: ["শ্রম = কবিতা", "সতকতা = কবিতা", "খাদ্যশস্য = কবিতা", "রক্ত = কবিতা"], correct: 3 },
+  { id: 76, q: "'킹বদন্তি' শব্দটির অর্থ কী?", options: ["অদুত", "কিংকর্তব্যবিমূঢ়", "জনশ্রুতি", "বেদান্ত জাতীয়"], correct: 3 },
+  { id: 77, q: "কবিতায় 'অতিক্রান্ত পাহাড়' অনুষঙ্গটি কোন অর্থে ব্যবহৃত হয়েছে?", options: ["বিপদের", "বাধা-বিপত্তির", "পথের", "দীর্ঘসূত্রতার"], correct: 2 },
+  { id: 78, q: "'রক্তজবার মতো ক্ষত' উপমাটি কোন অর্থে ব্যবহৃত হয়েছে?", options: ["নিপীড়নের", "প্রাকৃতিক সৌন্দর্যের", "রোগের", "ওযুধের ভয়াবহতা"], correct: 1 },
+  { id: 79, q: "'করতল' শব্দটির অর্থ কী?", options: ["বাদ্যযন্ত্র", "হাতের তালু", "পায়ের পাতা", "করর তল"], correct: 2 },
+  { id: 80, q: "কবি শেষ পঙ্ক্তিতে 'তাঁর' বলতে কী বুঝিয়েছেন?", options: ["নিজেকে", "পূর্বপুরুষকে", "মাকে", "বাবাকে"], correct: 2 },
+  { id: 81, q: "লোকপরম্পরায় শ্রুত ও কথিত বিষয়, যা একটি জাতির ঐতিহ্যের পরিচয়বাহী তাকে কী বলে?", options: ["কিংবদন্তি", "লোককথা", "খনার বচন", "বাগধারা"], correct: 1 },
+  { id: 82, q: "মানুষের ওপর অত্যাচারের ইতিহাস তুলে ধরা হয়েছে কোন পঙ্ক্তিটিতে?", options: ["সূর্যকে হৃৎপিন্ডে ধরে রাখতে পারে না", "তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল", "সে দিগন্তের অধিকার থেকে বঞ্চিত হবে", "সে ঝড়ের আর্তনাদ শুনবে"], correct: 2 },
+  { id: 83, q: "'আমি কিংবদন্তির কথা বলছি' কবিতাটি কোন কাব্যগ্রন্থের অন্তর্গত?", options: ["আমি কিংবদন্তির কথা বলছি", "সাত নরীর হার", "কমলের চোখ", "বৃষ্টি ও সাহসী পুরুষের জন্য প্রার্থনা"], correct: 1 },
+  { id: 84, q: "ঐতিহ্য সচেতন শিকড় সন্ধানী মানুষের সর্বাঙ্গীন মুক্তির দৃপ্ত ঘোষণা ব্যক্ত হয়েছে কোন কবিতায়?", options: ["লোক-লোকান্তর", "রক্ত আমার অনাদি অস্থি", "আমি কিংবদন্তির কথা বলছি", "সাত নরীর হার"], correct: 3 },
+  { id: 85, q: "'আমি কিংবদন্তির কথা বলছি' কবিতাটি কোন ছন্দে রচিত?", options: ["অক্ষরবৃত্ত ছন্দে", "গদ্য ছন্দে", "মাত্রাবৃত্ত ছন্দে", "স্বরবৃত্ত ছন্দে"], correct: 2 },
+  { id: 86, q: "এই কবিতাটি কবির কোন কাব্যের অন্তর্গত?", options: ["কমলের চোখ", "সাত নরীর হার", "আমার সময়", "আমি কিংবদন্তির কথা বলছি"], correct: 4 },
+  { id: 87, q: "'আমি কিংবদন্তির কথা বলছি' কবিতাটির প্রেক্ষাপট কী?", options: ["সৌন্দর্য চেতনা", "কবিতা প্রেম", "বাঙালি সংস্কৃতির হাজার বছরের ইতিহাস", "বাঙালির অত্যাচারিত জীবনের ইতিহাস"], correct: 3 },
+  { id: 88, q: "'কিংবদন্তি' শব্দের সমার্থক শব্দ- (i. গুজব, ii. জনরব, iii. জনশ্রুতি)", options: ["i ও ii", "ii ও iii", "i ও iii", "i, ii ও iii"], correct: 2 },
+  { id: 89, q: "কবি তাঁর কবিতায় পূর্বপুরুষ বলতে বুঝিয়েছেন- (i. নিজের পূর্বজনদের, ii. নিজের অতীতকে, iii. নিজের ইতিহাসকে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 90, q: "পলিমাটির সৌরভ মনে করিয়ে দেয়- (i. নদীর কথা, ii. স্মৃতির কথা, iii. বিশ্বাসের কথা)", options: ["i ও ii", "ii ও iii", "i ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 91, q: "পূর্বপুরুষের মুখে কবি ও কবিতার শোনার অর্থ হলো- (i. সৃষ্টি ও স্রষ্টার কথা শোনা, ii. অতীত সমৃদ্ধির কথা শোনা, iii. অতীত ঐতিহ্যের কথা শোনা)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 92, q: "কবিতাকে সত্য শব্দ বলা হয়েছে। কারণ- (i. সত্যই কবিতা, ii. শব্দ সত্য বলে, iii. কবি সত্য বলে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 93, q: "কবিতা না শোনা ব্যক্তি আজন্ম ক্রীতদাস থাকবে কারণ- (i. আত্মার মুক্তি ঘটবে না, ii. সামাজিক মুক্তি ঘটবে না, iii. সত্য থেকে বঞ্চিত হবে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 94, q: "দিগন্তের অধিকার থেকে বঞ্চিত হওয়া বলতে বোঝায়- (i. জ্ঞান থেকে বঞ্চিত হওয়া, ii. নিজের ভূমি থেকে বঞ্চিত, iii. আপন উৎসমূল থেকে বঞ্চিত)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 95, q: "কবি মায়ের কথার মধ্য দিয়ে বলতে চেয়েছেন- (i. প্রকৃতির রূপকে, ii. আত্ম-অধিকারকে, iii. স্বদেশের রূপকে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 96, q: "সাঁতার না জানা মানুষও প্রবহমান নদীতে ভেসে থাকে। কারণ- (i. জলের ধর্ম ভাসিয়ে রাখা, ii. জলস্রোত ভাসিয়ে রাখে, iii. নদীতে জীবনের উৎপত্তি)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 97, q: "কবিতা না শোনা মানুষ মাছের সঙ্গে খেলা করতে পারে না। কারণ- (i. কল্পবিলাসী হতে পারে না, ii. সত্য জানতে পারে না, iii. আত্মোপলব্ধি করে না)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 98, q: "মায়ের কোলে শুয়ে গল্প শোনার বিষয়টি মনে করিয়ে দেয়- (i. নিজের শৈশব স্মৃতিকে, ii. নিজের আত্মস্মৃতিকে, iii. নিজের অতীত স্মৃতিকে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 99, q: "কবি বিচলিত স্নেহের কথা বলেছেন- (i. পূর্বজনদের স্নেহ মনে করে, ii. পূর্বজনদের ব্যর্থতা মনে করে, iii. পূর্বজনদের ভালোবাসা মনে করে)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 100, q: "গর্ভবতী বোনের মৃত্যুর কথা বলার কারণ- (i. স্বজন হারানোর বেদনা, ii. মৃত্যুকে কাছে থেকে দেখা, iii. নিজের মানবিকতাবোধ)", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 }
+]
+
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>

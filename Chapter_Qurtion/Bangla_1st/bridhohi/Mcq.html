@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বিদ্রোহী</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>বিদ্রোহী</h1>
+  <p>কাজী নজরুল ইসলাম — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData =[
+  { id: 1, q: "'বিদ্রোহী' কবিতায় কবি কার বুকের ক্রন্দন-শ্বাস?", options: ["বঞ্চিতের", "পরশুরামের", "বিধবা", "ইস্রাফিলের"], correct: 3 },
+  { id: 2, q: "'একহাতে বাঁকা বাঁশের বাঁশরী আর হাতে রণ-তূর্য' - এখানে কবি কাজী নজরুল ইসলামের কোন সত্তাটি প্রকাশ পেয়েছে?", options: ["প্রেম ও দ্রোহ", "বিদ্রোহী ও অত্যাচারিত", "বিদ্রোহী ও বংশীবাদক", "বিদ্রোহী ও বীরযোদ্ধা"], correct: 1 },
+  { id: 3, q: "জাতির জনকের মধ্যে 'বিদ্রোহী' কবিতার কোন দিকটি প্রতিফলিত? i. বিদ্রোহ ii. স্বদেশ প্রেম iii. নেতৃত্ব", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], correct: 4 },
+  { id: 4, q: "জাতির জনকের ক্ষেত্রে প্রকাশিত দিকটি কোন পঙ্ক্তিতে পাওয়া যায়?", options: ["আমি আপনারে ছাড়া করি না কাহারে কুর্ণিশ", "আমি পথিক কবির গভীর রাগিণী, বেণু-বীণে গান গাওয়া", "আমি রুষে উঠি যবে ছুটি মহাকাশ ছাপিয়া", "আমি চির-বিদ্রোহী বীর বিশ্ব ছাড়ায়ে উঠিয়াছি একা চির-উন্নত শির"], correct: 1 },
+  { id: 5, q: "কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", options: ["১৮৬১", "১৮৭৬", "১৮৯৯", "১৯০৯"], correct: 3 },
+  { id: 6, q: "বাংলাদেশের জাতীয় কবি কে?", options: ["রবীন্দ্রনাথ ঠাকুর", "কাজী নজরুল ইসলাম", "জীবনানন্দ দাশ", "জসীমউদ্দীন"], correct: 2 },
+  { id: 7, q: "কাজী নজরুল ইসলামের জন্মস্থান কোনটি?", options: ["ভারতের হুগলি", "ভারতের আসাম", "ভারতের মুর্শিদাবাদ", "ভারতের পশ্চিমবঙ্গ"], correct: 4 },
+  { id: 8, q: "কাজী নজরুল ইসলাম কত বছর বয়সে পিতাকে হারান?", options: ["ছয় বছর", "আট বছর", "সাত বছর", "দশ বছর"], correct: 2 },
+  { id: 9, q: "কবির পরিবার চরম দারিদ্র্যে পতিত হয় কেন?", options: ["কবির পিতার মৃত্যু হওয়ায়", "কবির মাতার মৃত্যু হওয়ায়", "কবির জমিজমা না থাকায়", "কবি বেকার থাকায়"], correct: 1 },
+  { id: 10, q: "কবি কখন নিম্ন প্রাইমারি পাশ করেন?", options: ["১৮৬১", "১৯১৬", "১৮৯৯", "১২০৯"], correct: 2 },
+  { id: 11, q: "কাজী নজরুল ইসলাম কোথায় শিক্ষকতা করেন?", options: ["গ্রামের পাঠশালায়", "গ্রামের মক্তবে", "গ্রামের কলেজে", "গ্রামের স্কুলে"], correct: 2 },
+  { id: 12, q: "বারো বছর বয়সে কবি কোথায় যোগ দেন?", options: ["চাকরিতে", "লেটোর দলে", "রুটির দোকানে", "সেনাবাহিনীতে"], correct: 2 },
+  { id: 13, q: "লেটোর দলে যোগ দিয়ে নজরুল দলের জন্য কী রচনা করেন?", options: ["নাটক", "কবিতা", "পালাগান", "উপন্যাস"], correct: 3 },
+  { id: 14, q: "কাজী নজরুল ইসলাম কোথায় যোগদানের মাধ্যমে সৃষ্টিশীল সত্তার অধিকারী হয়ে ওঠেন?", options: ["গ্রামের মক্তবে", "লেটোর দলে", "সেনাবাহিনীতে", "সাহিত্য পত্রিকায়"], correct: 2 },
+  { id: 15, q: "নজরুল কোন যুদ্ধের সময় সেনাবাহিনীতে যোগ দেন?", options: ["প্রথম বিশ্বযুদ্ধ", "দ্বিতীয় বিশ্বযুদ্ধ", "ভারত-পাকিস্তান যুদ্ধ", "মুক্তিযুদ্ধ"], correct: 1 },
+  { id: 16, q: "কাজী নজরুল ইসলাম কত সালে বাঙালি পল্টনে সৈনিক হিসেবে যোগদান করেন?", options: ["১৯১৭", "১৯১৬", "১৯৯৯", "১৯০৯"], correct: 1 },
+  { id: 17, q: "কবি বাঙালি পল্টনে সৈনিক হিসেবে যোগদান করার পরে কোন পদে উন্নীত হন?", options: ["নায়েক", "হাবিলদার", "ল্যান্সনায়েক", "লেফটেন্যান্ট"], correct: 2 },
+  { id: 18, q: "কত সালে বাঙালি পল্টন ভেঙে দেওয়া হয়?", options: ["১৯১৭", "১৯১৬", "১৯২০", "১৯০৯"], correct: 3 },
+  { id: 19, q: "বাঙালি পল্টন ভেঙে গেলে নজরুল কোথায় আসেন?", options: ["ঢাকায়", "ময়মনসিংহে", "কলকাতায়", "বীরভূমে"], correct: 3 },
+  { id: 20, q: "কখন কাজী নজরুল ইসলামের কবিখ্যাতি ছড়িয়ে পড়ে?", options: ["'বিদ্রোহী' কবিতা লেখার পর", "'বিদ্রোহী' কবিতা প্রকাশিত হওয়ার পর", "পত্রিকার সম্পাদক হওয়ার পর", "'অগ্নি-বীণা' কাব্যগ্রন্থ লেখার পর"], correct: 2 },
+  { id: 21, q: "'নবযুগ' কী?", options: ["নজরুল রচিত প্রবন্ধ গ্রন্থ", "নজরুল রচিত উপন্যাস গ্রন্থ", "নজরুল রচিত সম্পাদিত পত্রিকা", "নজরুল রচিত অনূদিত নাটক"], correct: 3 },
+  { id: 22, q: "কোনটি নজরুল রচিত কাব্য?", options: ["ব্যথার দান", "বিষের বাঁশি", "বাঁধনহারা", "রুদ্র-মঙ্গল"], correct: 2 },
+  { id: 23, q: "'সাম্যবাদী' কোন ধরনের সাহিত্যকর্ম?", options: ["উপন্যাস", "নাটক", "ভ্রমণকাহিনি", "কাব্যগ্রন্থ"], correct: 4 },
+  { id: 24, q: "কাজী নজরুল ইসলামকে 'পদ্মভূষণ' উপাধিতে ভূষিত করে কে?", options: ["ভারত সরকার", "বাংলাদেশ সরকার", "ব্রিটিশ সরকার", "ঢাকা বিশ্ববিদ্যালয়"], correct: 1 },
+  { id: 25, q: "কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে 'পদ্মভূষণ' উপাধিতে ভূষিত হন?", options: ["১৯৭০", "১৯৬০", "১৯২০", "১৯৮০"], correct: 2 },
+  { id: 26, q: "কাজী নজরুল ইসলাম নিচের কোন পুরস্কার ও সম্মাননায় ভূষিত হয়েছেন?", options: ["স্বাধীনতা পদক", "নোবেল পুরস্কার", "পুলিৎজার পুরস্কার", "জগত্তারিণী স্বর্ণপদক"], correct: 4 },
+  { id: 27, q: "কত সালে কাজী নজরুল ইসলামকে স্বাধীন বাংলাদেশের জাতীয় কবি হিসেবে স্বীকৃতি দেওয়া হয়?", options: ["১৯৭২", "১৯৬২", "১৯২২", "১৯৮৩"], correct: 1 },
+  { id: 28, q: "কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", options: ["১৯৭৬", "১৯৬০", "১৯২৬", "১৯৮০"], correct: 1 },
+  { id: 29, q: "'বিদ্রোহী' কবিতার প্রথম চরণ কোনটি?", options: ["বল উন্নত মম শির", "বিদ্রোহী রণক্লান্ত", "আমি দুর্বার", "বল বীর"], correct: 4 },
+  { id: 30, q: "কবির শির দেখে কী নতশির হয়ে যায়?", options: ["হিমালয় শিখর", "পৃথিবীর বৃক্ষরাজি", "পৃথিবীর মানুষ", "অত্যাচারী শাসককুল"], correct: 1 },
+  { id: 31, q: "'শির নেহারি' আমারি, নতশির ওই শিখর হিমাদ্রির!' - এখানে মূলত কী প্রকাশ পেয়েছে?", options: ["তীব্র আত্মবিশ্বাস", "চরম দুঃসাহস", "প্রবল অহংকার", "বিপুল প্রত্যাশা"], correct: 1 },
+  { id: 32, q: "কবি নিজেকে কীসের নটরাজ হিসেবে ঘোষণা করেছেন?", options: ["নিখিল পৃথ্বীর", "বিশ্ব বিধাতৃর", "মহা-প্রলয়ের", "শিখর হিমাদ্রির"], correct: 3 },
+  { id: 33, q: "কবি নিজেকে পৃথিবীর কী হিসেবে ঘোষণা করেছেন?", options: ["অভিশাপ", "আশীর্বাদ", "শান্তির দূত", "দীর্ঘশ্বাস"], correct: 2 },
+  { id: 34, q: "কবি সব ভেঙেচুরে চুরমার করেন কেন?", options: ["নতুনের আবাহনে", "তিনি অশান্ত বলে", "ক্ষমতা প্রদর্শনের জন্য", "তিনি অভিশপ্ত হওয়ায়"], correct: 1 },
+  { id: 35, q: "যত বন্ধন, যত নিয়ম কানুন শৃঙ্খলকে কবি কীভাবে অতিক্রম করেন?", options: ["দলে যান", "ভেঙে যান", "পিষে যান", "মেনে নেন"], correct: 1 },
+  { id: 36, q: "কবি কী মানেন না?", options: ["বাধাবিপত্তি", "শাসন-বারণ", "ধর্মীয় রীতিনীতি", "কোনো আইন"], correct: 4 },
+  { id: 37, q: "কবি নিজেকে কেমন ঝড় বলে উল্লেখ করেছেন?", options: ["ভয়ংকর", "এলোকেশে", "বিধ্বংসী", "বিদ্রোহী"], correct: 2 },
+  { id: 38, q: "কবি নিজেকে কার বিদ্রোহী-সুত বলে ঘোষণা করেছেন?", options: ["বিশ্ব-বিধাতার", "ভারত-মাতার", "জন্মভূমির", "স্বীয় ধর্মের"], correct: 1 },
+  { id: 39, q: "ইন্দ্রাণী-সুত কে?", options: ["দুর্বাসা", "ধূর্জটি", "জয়ন্ত", "শ্যাম"], correct: 3 },
+  { id: 40, q: "ইন্দ্রাণী-সুতের হাতে কী?", options: ["চাঁদ", "সূর্য", "তারা", "গ্রহ"], correct: 1 },
+  { id: 41, q: "কবির এক হাতে বাঁকা বাঁশের বাঁশরী, অন্য হাতে কী?", options: ["ইস্রাফিলের শিঙ্গা", "পরশুরামের কুঠার", "খড়গ-কৃপাণ", "রণ-তূর্য"], correct: 4 },
+  { id: 42, q: "'মম এক হাতে বাঁকা বাঁশের বাঁশরী আর হাতে রণ-তূর্য' - পঙ্ক্তিতে কী বোঝানো হয়েছে?", options: ["ভালোবাসা ও ঘৃণার যুগপৎ অবস্থান", "প্রেম ও দ্রোহের যুগপৎ অবস্থান", "নতুন ও পুরাতনের যুগপৎ অবস্থান", "ভালো ও মন্দের যুগপৎ অবস্থান"], correct: 2 },
+  { id: 43, q: "কবি নিজেকে বেদুইন বলেছেন কেন?", options: ["বেদুইন পরিবারে জন্মের আকাঙ্ক্ষায়", "বেদুইনরা যাযাবর বলে", "নিজেকে বেদুইনদের মতো যোদ্ধা মনে করায়", "বেদুইনদের ভালোবাসতেন বলে"], correct: 3 },
+  { id: 44, q: "কবি নিজেকে ছাড়া আর কাউকে কুর্নিশ করেন না কেন?", options: ["অহংকারী বলে", "শক্তিশালী বলে", "বিদ্রোহী বলে", "আত্মমর্যাদাবোধসম্পন্ন বলে"], correct: 4 },
+  { id: 45, q: "'বিদ্রোহী' কবিতার কোন চরণে কবির কোমল হৃদয়ের পরিচয় মেলে?", options: ["আমি ইন্দ্রাণী-সুত হাতে চাঁদ ভালে সূর্য", "আমি অবমানিতের মরম বেদনা", "আমি পরশুরামের কঠোর কুঠার", "আমি সেই দিন হব শান্ত"], correct: 2 },
+  { id: 46, q: "কবি কাকে ছাড়া আর কাউকে কুর্নিশ করেন না?", options: ["ঈশ্বরকে", "মাতা-পিতাকে", "মাতৃভূমিকে", "নিজেকে"], correct: 4 },
+  { id: 47, q: "কবি নিজেকে কার ডমরু ত্রিশূল বলেছেন?", options: ["পিণাক-পাণির", "ইস্রাফিলের", "ধর্মরাজের", "অফিয়াসের"], correct: 1 },
+  { id: 48, q: "কবি নিজেকে কার দণ্ড বলে অভিহিত করেছেন?", options: ["পিণাক-পাণির", "ইস্রাফিলের", "ধর্মরাজের", "অফিয়াসের"], correct: 3 },
+  { id: 49, q: "'বিদ্রোহী' কবিতায় কাকে ক্ষ্যাপা বলা হয়েছে?", options: ["দুর্বাসাকে", "অফিয়াসকে", "শিবকে", "ইস্রাফিলকে"], correct: 1 },
+  { id: 50, q: "নজরুল নিজেকে কার শিষ্য বলেছেন?", options: ["অফিয়াসের", "চেঙ্গিসের", "বিশ্বামিত্রের", "বলরামের"], correct: 3 }
+]
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>
