@@ -705,7 +705,7 @@ function render() {
         `).join('')}
       </div>
       <div class="explanation" id="exp-${item.id}">
-        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct ]}</strong>
       </div>
     `;
 
@@ -730,13 +730,13 @@ function handleAnswer(qid, chosenIdx) {
   answered++;
 
   const opts = document.querySelectorAll(`#opts-${qid} .opt`);
-  const isCorrect = chosenIdx === item.correct - 1;
+  const isCorrect = chosenIdx === item.correct ;
 
   // disable all options for this question
   opts.forEach(btn => {
     btn.disabled = true;
     const idx = parseInt(btn.dataset.idx);
-    if (idx === item.correct - 1) btn.classList.add('correct');
+    if (idx === item.correct ) btn.classList.add('correct');
   });
 
   if (!isCorrect) {
@@ -806,7 +806,7 @@ function masterReveal() {
       const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
       opts.forEach(btn => {
         btn.disabled = true;
-        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+        if (parseInt(btn.dataset.idx) === item.correct ) btn.classList.add('correct');
       });
       const icon = document.getElementById(`icon-${item.id}`);
       icon.textContent = '👁️';
