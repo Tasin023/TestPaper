@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,15 +28,15 @@ body{
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  padding-bottom: 120px;
+  padding-bottom: 140px; /* Increased to give breathing room for fixed dock */
 }
 
-/* KEYFRAMES FOR PRECISE VIBE ANIMATIONS */
+/* KEYFRAMES */
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.3}}
-@keyframes glowPulse{0%,100%{text-shadow:0 0 25px rgba(0,240,255,0.5),0 0 50px rgba(0,240,255,0.25)}50%{text-shadow:0 0 45px rgba(0,240,255,0.8),0 0 90px rgba(0,240,255,0.4)}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glowPulse{0%,100%{text-shadow:0 0 25px rgba(0,240,255,0.4),0 0 50px rgba(0,240,255,0.15)}50%{text-shadow:0 0 45px rgba(0,240,255,0.7),0 0 90px rgba(0,240,255,0.3)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 
 .a1{animation:fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both}
 .a2{animation:fadeUp 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both}
@@ -52,156 +52,140 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 2
 .logo-text span{color:var(--cyan);text-shadow:0 0 15px rgba(0,240,255,0.3);}
 .nav-right{display:flex;align-items:center;gap:12px;}
 .streak{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,83,29,0.3);border-radius:24px;padding:7px 15px;font-size:14px;font-weight:700;}
-.avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),#0055ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 15px rgba(0,240,255,0.35);}
+.avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),#0055ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 15px rgba(0,240,255,0.35);cursor:pointer;}
 
-/* HERO CONTEXT & GRAPHICS EXTRACTED FROM SOURCE IMAGE */
+/* HERO CONTAINER UPGRADE */
 .hero{
-  padding: 80px 24px 60px;
+  padding: 60px 24px;
   position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
-/* NATIVE ELEMENT DETAILED LAYER INJECTION */
+/* DECORATIVE MEMPHIS SHAPES */
 .memphis-pill-loop {
   position: absolute;
-  top: 12%; right: 10%;
-  width: 60px; height: 110px;
+  top: 8%; right: 8%;
+  width: 50px; height: 100px;
   border-radius: 40px;
-  border: 7px solid rgba(248,252,256,0.07);
+  border: 7px solid rgba(248,252,256,0.05);
   background: var(--orange);
-  box-shadow: -35px -20px 0 -5px var(--bg), -35px -20px 0 2px rgba(248,252,256,0.15);
+  box-shadow: -30px -20px 0 -5px var(--bg), -30px -20px 0 2px rgba(248,252,256,0.1);
   transform: rotate(15deg);
-  opacity: 0.75;
+  opacity: 0.6;
   z-index: 1;
-  animation: floatY 6s ease-in-out infinite;
+  animation: floatY 5s ease-in-out infinite;
 }
 .memphis-triangles {
   position: absolute;
-  bottom: 15%; right: 4%;
+  bottom: 10%; right: 5%;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  opacity: 0.65;
+  opacity: 0.5;
   z-index: 1;
 }
 .m-tri {
   width: 0; height: 0;
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
-  border-bottom: 28px solid var(--orange);
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 24px solid var(--orange);
 }
 .m-tri.wire {
   border-bottom-color: transparent;
   position: relative;
 }
 .m-tri.wire::after {
-  content: ''; position: absolute; top: 2px; left: -14px;
+  content: ''; position: absolute; top: 2px; left: -12px;
   width: 0; height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 24px solid var(--white);
-}
-.memphis-diamonds {
-  position: absolute;
-  top: 8%; left: 45%;
-  display: flex;
-  gap: 4px;
-  opacity: 0.5;
-}
-.m-dia {
-  width: 14px; height: 14px;
-  background: var(--orange);
-  transform: rotate(45deg);
-}
-.m-dia.outline {
-  background: transparent;
-  border: 2px solid var(--white);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid var(--white);
 }
 .memphis-wavy-grid {
   position: absolute;
-  top: 52%; right: 25%;
-  width: 140px; height: 40px;
+  top: 45%; right: 15%;
+  width: 120px; height: 40px;
   background-image: radial-gradient(circle at 100% 150%, transparent 24%, var(--cyan) 24%, var(--cyan) 28%, transparent 28%, transparent), radial-gradient(circle at 0% 150%, transparent 24%, var(--cyan) 24%, var(--cyan) 28%, transparent 28%, transparent);
   background-size: 24px 24px;
   background-position: 0 0, 12px 0;
-  opacity: 0.35;
+  opacity: 0.25;
   z-index: 1;
 }
-.memphis-crosses {
-  position: absolute;
-  bottom: 45%; left: 3%;
-  font-size: 24px;
-  color: var(--gray);
-  opacity: 0.25;
-  letter-spacing: 6px;
-  line-height: 1;
-}
 
-.hero-bg-glow{position:absolute;top:-100px;left:-100px;width:450px;height:450px;background:radial-gradient(circle,rgba(0,240,255,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-bg-glow{position:absolute;top:-50px;left:-50px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,240,255,0.06) 0%,transparent 70%);pointer-events:none;}
 
-/* MODERN TEXT FORMATTING ELEMENTS */
-.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,240,255,0.05);border:1px solid var(--border);border-radius:30px;padding:8px 18px;font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:0.15em;margin-bottom:28px;position:relative;z-index:2;}
+/* TYPOGRAPHY CHANGES */
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,240,255,0.05);border:1px solid var(--border);border-radius:30px;padding:8px 18px;font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:0.15em;margin-bottom:20px;width:fit-content;}
 .tag-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:dotPulse 1.4s ease-in-out infinite;}
 
 .hero-text-block { position: relative; z-index: 2; }
-.h-start{font-size: clamp(34px, 5.5vw, 52px); font-weight:800; color:var(--white); letter-spacing:-0.03em; line-height:1.05;}
-.h-typing{font-size: clamp(40px, 6.5vw, 64px); font-weight:900; color:var(--cyan); letter-spacing:-0.03em; line-height:1.05; min-height:75px; display:flex; align-items:center; gap:4px; animation:glowPulse 2s ease-in-out infinite;}
-.cursor{display:inline-block;width:4px;height:50px;background:var(--cyan);border-radius:2px;animation:blink 0.8s ease-in-out infinite;}
-.h-build{font-size: clamp(65px, 11vw, 105px); font-weight:900; color:transparent; -webkit-text-stroke:2px rgba(0,240,255,0.8); letter-spacing:0.02em; line-height:0.9;}
-.h-future{font-size:16px; font-weight:800; letter-spacing:0.4em; color:rgba(248,252,256,0.35); margin-bottom:12px; margin-left:4px;}
-.hero-desc{font-size:15px; color:var(--gray); line-height:1.8; margin:24px 0 36px; max-width: 580px; position:relative; z-index:2;}
-.hero-desc strong { color:var(--white); font-weight: 600; }
+.h-start{font-size: clamp(32px, 5vw, 48px); font-weight:800; color:var(--white); letter-spacing:-0.02em; line-height:1.1;}
+.h-typing{font-size: clamp(38px, 6vw, 60px); font-weight:900; color:var(--cyan); letter-spacing:-0.02em; min-height:70px; display:flex; align-items:center; gap:6px; animation:glowPulse 2s ease-in-out infinite;}
 
-.btn-wrap{position:relative; z-index:2;}
-.btn-primary{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--cyan),#0077ff);color:#060a13;font-size:15px;font-weight:800;padding:16px 32px;border-radius:16px;border:none;cursor:pointer;letter-spacing:0.02em;box-shadow:0 8px 30px rgba(0,240,255,0.4);transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);text-decoration:none;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,240,255,0.65);}
-.btn-arrow{background:rgba(0,0,0,0.12);border-radius:10px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:bold;}
+/* FIXED CURSOR: Matches the font line-height seamlessly */
+.cursor{display:inline-block;width:4px;height:0.8em;background:var(--cyan);border-radius:2px;animation:blink 0.8s ease-in-out infinite;}
+
+.h-build{font-size: clamp(60px, 10vw, 95px); font-weight:900; color:transparent; -webkit-text-stroke:2px rgba(0,240,255,0.7); letter-spacing:0.02em; line-height:0.95;}
+.h-future{font-size:14px; font-weight:800; letter-spacing:0.4em; color:rgba(248,252,256,0.35); margin-top:8px; margin-left:4px;}
+
+/* INJECTED HOME DESCRIPTION BLOCK */
+.hero-desc{font-size:15px; color:var(--gray); line-height:1.7; margin:20px 0 30px; max-width: 520px;}
+.hero-desc strong { color:var(--cyan); font-weight: 600; }
+
+.btn-primary{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--cyan),#0077ff);color:#060a13;font-size:15px;font-weight:800;padding:16px 32px;border-radius:16px;border:none;cursor:pointer;letter-spacing:0.02em;box-shadow:0 8px 30px rgba(0,240,255,0.3);transition:all 0.25s ease;text-decoration:none;width:fit-content;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,240,255,0.5);}
+.btn-arrow{background:rgba(0,0,0,0.12);border-radius:10px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;}
 
 /* STATS MATRIX GRID */
 .stats{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 20px;
-  padding: 0 24px 60px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0 24px 40px;
 }
 .stat{
-  background: linear-gradient(135deg, var(--card2), rgba(6,10,19,0.6));
-  border: 1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(135deg, var(--card2), rgba(6,10,19,0.4));
+  border: 1px solid rgba(255,255,255,0.03);
   border-radius: 20px;
-  padding: 24px 16px;
+  padding: 20px 12px;
   text-align: center;
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
-.stat-n{font-size:30px;font-weight:900;line-height:1;letter-spacing:-0.02em;}
-.stat-l{font-size:13px;color:var(--gray);margin-top:8px;font-weight:600;letter-spacing:0.05em;text-transform: uppercase;}
+.stat-n{font-size:26px;font-weight:900;line-height:1;}
+.stat-l{font-size:12px;color:var(--gray);margin-top:6px;font-weight:600;letter-spacing:0.05em;}
 
-/* DOCK STYLE NAVIGATION HUB */
-.bnav{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-  width:calc(100% - 32px);max-width:540px;
-  background:rgba(10,16,31,0.75);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius: 24px;
-  display:flex;padding:14px 8px;z-index:99;
-  backdrop-filter:blur(24px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+/* PRE-BUILT DOCK MARKUP (FINALLY VISIBLE!) */
+.bnav {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 32px); max-width: 480px;
+  background: rgba(10, 16, 31, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 20px;
+  display: flex; padding: 10px; z-index: 999;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
 }
-.bitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--gray);cursor:pointer;transition:all 0.2s ease;}
-.bitem.on{color:var(--cyan);transform:translateY(-2px);}
-.bitem .bi{font-size:24px;transition:transform 0.2s;}
-.bitem:hover .bi{transform:scale(1.15);}
+.bitem {
+  flex: 1; display: flex; flex-direction: column; align-items: center; 
+  gap: 4px; font-size: 11px; font-weight: 600; color: var(--gray); 
+  text-decoration: none; cursor: pointer; transition: all 0.2s ease;
+}
+.bitem.on { color: var(--cyan); }
+.bitem .bi { font-size: 20px; margin-bottom: 2px; }
+.bitem:hover { color: var(--white); }
 
-/* LUXURY SCREEN CONFIGURATIONS */
+/* TWO-COLUMN LAYOUT DESKTOP UPGRADE */
 @media (min-width: 768px) {
-  .hero { padding: 110px 48px 80px; }
+  .hero { 
+    grid-template-columns: 1.2fr 0.8fr; 
+    padding: 100px 48px 60px;
+    align-items: center;
+  }
   .stats {
-    padding: 0 48px 80px;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 850px;
+    padding: 0 48px 60px;
+    max-width: 650px;
   }
   nav { padding: 22px 48px; }
   .bnav { bottom: 32px; }
@@ -225,79 +209,105 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 2
   <div class="hero">
     <div class="hero-bg-glow"></div>
     
-    <div class="memphis-pill-loop"></div>
-    <div class="memphis-wavy-grid"></div>
-    <div class="memphis-crosses">+++<br>+++</div>
-    
-    <div class="memphis-triangles">
-      <div class="m-tri"></div>
-      <div class="m-tri wire"></div>
-      <div class="m-tri"></div>
-    </div>
-    
-    <div class="memphis-diamonds">
-      <div class="m-dia outline"></div>
-      <div class="m-dia"></div>
-      <div class="m-dia outline"></div>
-    </div>
+    <div class="hero-content flex-col">
+      <div class="tag a1">
+        <span class="tag-dot"></span>
+        START YOUR PREPARATION
+      </div>
 
-    <div class="tag a1">
-      <span class="tag-dot"></span>
-      START YOUR PREPARATION
-    </div>
+      <div class="hero-text-block a2">
+        <div class="h-start">START YOUR</div>
+        <div class="h-typing">
+          <span id="typed"></span>
+          <span class="cursor"></span>
+        </div>
+      </div>
 
-    <div class="hero-text-block a2">
-      <div class="h-start">START YOUR</div>
-      <div class="h-typing">
-        <span id="typed"></span>
-        <span class="cursor"></span>
+      <div class="hero-text-block a3">
+        <div class="h-build">BUILD</div>
+        <div class="h-future">YOUR FUTURE</div>
+      </div>
+
+      <p class="hero-desc a4">
+        আপনার প্রস্তুতিকে সহজ করতে আমরা নিয়ে এসেছি <strong>১২+ বিষয়ের</strong> ওপরে ৫০০ এর বেশি ইন্টারঅ্যাক্টিভ প্রশ্ন ব্যাংক। আজই শুরু করুন!
+      </p>
+
+      <div class="btn-wrap a5">
+        <a href="Working page/Dashboard.html" class="btn-primary">
+          START LEARNING <span class="btn-arrow">→</span>
+        </a>
       </div>
     </div>
 
-    <div class="hero-text-block a3">
-      <div class="h-build">BUILD</div>
-      <div class="h-future">YOUR FUTURE</div>
-    </div>
-
-    <div class="btn-wrap a5">
-      <a href="Working page/Dashboard.html" class="btn-primary">
-         START LEARNING
-        <span class="btn-arrow">→</span>
-      </a>
+    <div class="hero-graphic-space" style="position: relative; min-height: 200px;">
+      <div class="memphis-pill-loop"></div>
+      <div class="memphis-wavy-grid"></div>
+      <div class="memphis-triangles">
+        <div class="m-tri"></div>
+        <div class="m-tri wire"></div>
+      </div>
     </div>
   </div>
 
   <div class="stats a3">
     <div class="stat">
-      <div class="stat-n" style="color:#00f0ff;text-shadow:0 0 20px rgba(0,240,255,0.4)">12+</div>
+      <div class="stat-n" style="color:#00f0ff; text-shadow:0 0 20px rgba(0,240,255,0.3)">12+</div>
       <div class="stat-l">বিষয়</div>
     </div>
     <div class="stat">
-      <div class="stat-n" style="color:#b388ff;text-shadow:0 0 20px rgba(179,136,255,0.4)">500+</div>
+      <div class="stat-n" style="color:#b388ff; text-shadow:0 0 20px rgba(179,136,255,0.3)">500+</div>
       <div class="stat-l">প্রশ্ন</div>
     </div>
     <div class="stat">
-      <div class="stat-n" style="color:#00e676;text-shadow:0 0 20px rgba(0,230,118,0.4)">FREE</div>
+      <div class="stat-n" style="color:#00e676; text-shadow:0 0 20px rgba(0,230,118,0.3)">FREE</div>
       <div class="stat-l">বিনামূল্যে</div>
+    </div>
+  </div>
+
+  <div class="bnav a5">
+    <div class="bitem on" onclick="setNav(this)">
+      <span class="bi">🏠</span>
+      <span>হোম</span>
+    </div>
+    <div class="bitem" onclick="setNav(this)">
+      <span class="bi">📖</span>
+      <span>কোর্স</span>
+    </div>
+    <div class="bitem" onclick="setNav(this)">
+      <span class="bi">🏆</span>
+      <span>লিডারবোর্ড</span>
+    </div>
+    <div class="bitem" onclick="setNav(this)">
+      <span class="bi">⚙️</span>
+      <span>সেটিংস</span>
     </div>
   </div>
 </div>
 
 <script>
-// TYPING ARRAY MODULE
+// TYPING MODULE
 const words = ["LEARNING","GROWING","WINNING","BUILDING"];
 let wi=0,ci=0,del=false;
 const el = document.getElementById("typed");
+
 function type(){
   const w = words[wi];
-  if(!del && ci<=w.length){ el.textContent=w.slice(0,ci); ci++; setTimeout(type, ci===w.length?2000:70); }
-  else if(!del && ci>w.length){ del=true; setTimeout(type,2000); }
-  else if(del && ci>=0){ el.textContent=w.slice(0,ci); ci--; setTimeout(type,40); }
-  else { del=false; wi=(wi+1)%words.length; ci=0; setTimeout(type,300); }
+  if(!del && ci<=w.length){ 
+    el.textContent=w.slice(0,ci); ci++; setTimeout(type, ci===w.length?2000:70); 
+  }
+  else if(!del && ci>w.length){ 
+    del=true; setTimeout(type,2000); 
+  }
+  else if(del && ci>=0){ 
+    el.textContent=w.slice(0,ci); ci--; setTimeout(type,40); 
+  }
+  else { 
+    del=false; wi=(wi+1)%words.length; ci=0; setTimeout(type,300); 
+  }
 }
 type();
 
-// DOCK SELECTION HANDLING
+// NAV DOCK EVENT LISTENER
 function setNav(el){
   document.querySelectorAll('.bitem').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
