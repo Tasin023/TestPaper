@@ -1,317 +1,352 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduLearn — Premium Modern Hub</title>
+<title>EduLearn — Next-Gen Premium Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg:#060a13;--bg2:#0a101f;--card:rgba(17,24,39,0.7);--card2:#121b2c;
-  --cyan:#00f0ff;--orange:#ff531d;--gray:#8493a8;--white:#f8fafc;--border:rgba(0,240,255,0.12);
+  --bg: #030712;
+  --bg-surface: #0b1329;
+  --card-bg: rgba(17, 24, 39, 0.45);
+  --cyan: #00f0ff;
+  --purple: #bf55ec;
+  --orange: #ff531d;
+  --gray: #9ca3af;
+  --white: #f9fafb;
+  --border: rgba(0, 240, 255, 0.15);
+  --glow: rgba(0, 240, 255, 0.25);
 }
+
 body{
-  background:var(--bg);
-  color:var(--white);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow-x:hidden;
-  min-height:100vh;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* BACKGROUND GLOW EFFECTS */
+.glow-bg-1 {
+  position: absolute; top: -10%; left: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.glow-bg-2 {
+  position: absolute; top: 40%; right: -10%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(191, 85, 236, 0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
 
 /* APP CONTAINER */
 .app-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1260px;
   margin: 0 auto;
   position: relative;
-  padding-bottom: 140px; /* Increased to give breathing room for fixed dock */
+  padding: 0 24px 80px;
 }
 
-/* KEYFRAMES */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.3}}
-@keyframes glowPulse{0%,100%{text-shadow:0 0 25px rgba(0,240,255,0.4),0 0 50px rgba(0,240,255,0.15)}50%{text-shadow:0 0 45px rgba(0,240,255,0.7),0 0 90px rgba(0,240,255,0.3)}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); } 50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.45); } }
 
-.a1{animation:fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both}
-.a2{animation:fadeUp 0.6s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both}
-.a3{animation:fadeUp 0.6s 0.30s cubic-bezier(0.16, 1, 0.3, 1) both}
-.a4{animation:fadeUp 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both}
-.a5{animation:fadeUp 0.6s 0.60s cubic-bezier(0.16, 1, 0.3, 1) both}
+.animate-1 { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-2 { animation: fadeUp 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-3 { animation: fadeUp 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-4 { animation: fadeUp 0.6s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-/* NAV AREA */
-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:rgba(6,10,19,0.85);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99;backdrop-filter:blur(16px);}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--orange),#ffaa00);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 6px 20px rgba(255,83,29,0.35);}
-.logo-text{font-size:22px;font-weight:900;letter-spacing:-0.5px;}
-.logo-text span{color:var(--cyan);text-shadow:0 0 15px rgba(0,240,255,0.3);}
-.nav-right{display:flex;align-items:center;gap:12px;}
-.streak{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,83,29,0.3);border-radius:24px;padding:7px 15px;font-size:14px;font-weight:700;}
-.avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),#0055ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 15px rgba(0,240,255,0.35);cursor:pointer;}
+/* HEADER NAVIGATION */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative; z-index: 10;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 42px; height: 42px; background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; box-shadow: 0 8px 24px rgba(0, 240, 255, 0.25);
+}
+.logo-text { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.logo-text span { color: var(--cyan); }
 
-/* HERO CONTAINER UPGRADE */
-.hero{
-  padding: 60px 24px;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.streak {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255, 83, 29, 0.1); border: 1px solid rgba(255, 83, 29, 0.25);
+  border-radius: 30px; padding: 6px 16px; font-size: 14px; font-weight: 700; color: #ffaa00;
+}
+.avatar {
+  width: 40px; height: 40px; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer;
 }
 
-/* DECORATIVE MEMPHIS SHAPES */
-.memphis-pill-loop {
-  position: absolute;
-  top: 8%; right: 8%;
-  width: 50px; height: 100px;
-  border-radius: 40px;
-  border: 7px solid rgba(248,252,256,0.05);
-  background: var(--orange);
-  box-shadow: -30px -20px 0 -5px var(--bg), -30px -20px 0 2px rgba(248,252,256,0.1);
-  transform: rotate(15deg);
-  opacity: 0.6;
-  z-index: 1;
-  animation: floatY 5s ease-in-out infinite;
-}
-.memphis-triangles {
-  position: absolute;
-  bottom: 10%; right: 5%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  opacity: 0.5;
-  z-index: 1;
-}
-.m-tri {
-  width: 0; height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 24px solid var(--orange);
-}
-.m-tri.wire {
-  border-bottom-color: transparent;
-  position: relative;
-}
-.m-tri.wire::after {
-  content: ''; position: absolute; top: 2px; left: -12px;
-  width: 0; height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 20px solid var(--white);
-}
-.memphis-wavy-grid {
-  position: absolute;
-  top: 45%; right: 15%;
-  width: 120px; height: 40px;
-  background-image: radial-gradient(circle at 100% 150%, transparent 24%, var(--cyan) 24%, var(--cyan) 28%, transparent 28%, transparent), radial-gradient(circle at 0% 150%, transparent 24%, var(--cyan) 24%, var(--cyan) 28%, transparent 28%, transparent);
-  background-size: 24px 24px;
-  background-position: 0 0, 12px 0;
-  opacity: 0.25;
-  z-index: 1;
+/* HERO GRID SECTION */
+.hero-section {
+  display: grid; grid-template-columns: 1fr; gap: 48px;
+  padding: 60px 0; position: relative; z-index: 2;
 }
 
-.hero-bg-glow{position:absolute;top:-50px;left:-50px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,240,255,0.06) 0%,transparent 70%);pointer-events:none;}
-
-/* TYPOGRAPHY CHANGES */
-.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,240,255,0.05);border:1px solid var(--border);border-radius:30px;padding:8px 18px;font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:0.15em;margin-bottom:20px;width:fit-content;}
-.tag-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:dotPulse 1.4s ease-in-out infinite;}
-
-.hero-text-block { position: relative; z-index: 2; }
-.h-start{font-size: clamp(32px, 5vw, 48px); font-weight:800; color:var(--white); letter-spacing:-0.02em; line-height:1.1;}
-.h-typing{font-size: clamp(38px, 6vw, 60px); font-weight:900; color:var(--cyan); letter-spacing:-0.02em; min-height:70px; display:flex; align-items:center; gap:6px; animation:glowPulse 2s ease-in-out infinite;}
-
-/* FIXED CURSOR: Matches the font line-height seamlessly */
-.cursor{display:inline-block;width:4px;height:0.8em;background:var(--cyan);border-radius:2px;animation:blink 0.8s ease-in-out infinite;}
-
-.h-build{font-size: clamp(60px, 10vw, 95px); font-weight:900; color:transparent; -webkit-text-stroke:2px rgba(0,240,255,0.7); letter-spacing:0.02em; line-height:0.95;}
-.h-future{font-size:14px; font-weight:800; letter-spacing:0.4em; color:rgba(248,252,256,0.35); margin-top:8px; margin-left:4px;}
-
-/* INJECTED HOME DESCRIPTION BLOCK */
-.hero-desc{font-size:15px; color:var(--gray); line-height:1.7; margin:20px 0 30px; max-width: 520px;}
-.hero-desc strong { color:var(--cyan); font-weight: 600; }
-
-.btn-primary{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--cyan),#0077ff);color:#060a13;font-size:15px;font-weight:800;padding:16px 32px;border-radius:16px;border:none;cursor:pointer;letter-spacing:0.02em;box-shadow:0 8px 30px rgba(0,240,255,0.3);transition:all 0.25s ease;text-decoration:none;width:fit-content;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,240,255,0.5);}
-.btn-arrow{background:rgba(0,0,0,0.12);border-radius:10px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;}
-
-/* STATS MATRIX GRID */
-.stats{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 0 24px 40px;
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), rgba(191, 85, 236, 0.1));
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 8px 20px; font-size: 11px; font-weight: 700; color: var(--cyan);
+  letter-spacing: 0.15em; margin-bottom: 24px; text-transform: uppercase;
 }
-.stat{
-  background: linear-gradient(135deg, var(--card2), rgba(6,10,19,0.4));
-  border: 1px solid rgba(255,255,255,0.03);
-  border-radius: 20px;
-  padding: 20px 12px;
-  text-align: center;
+
+.h-start { font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: rgba(255, 255, 255, 0.9); letter-spacing: -0.02em; }
+.h-typing {
+  font-size: clamp(40px, 6vw, 68px); font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; min-height: 85px; display: flex; align-items: center; gap: 8px;
+}
+.h-typing span:first-child {
+  background: linear-gradient(to right, var(--cyan), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cursor { display: inline-block; width: 4px; height: 0.85em; background: var(--cyan); animation: blink 0.9s infinite; }
+
+.hero-desc { font-size: 16px; color: var(--gray); max-width: 540px; margin: 20px 0 36px; }
+.hero-desc strong { color: var(--white); }
+
+/* LUXURY HIGH-TECH BUTTON STYLE */
+.btn-container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.btn-glow-premium {
+  position: relative; display: inline-flex; align-items: center; gap: 14px;
+  background: rgba(0, 240, 255, 0.08); color: var(--white);
+  padding: 18px 38px; border-radius: 16px; font-size: 16px; font-weight: 700;
+  letter-spacing: 0.05em; text-decoration: none; border: 1px solid var(--cyan);
+  overflow: hidden; transition: all 0.3s ease; animation: pulseGlow 3s infinite;
+  backdrop-filter: blur(8px);
+}
+.btn-glow-premium::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: 0.5s;
+}
+.btn-glow-premium:hover {
+  background: var(--cyan); color: var(--bg); transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 240, 255, 0.5); font-weight: 800;
+}
+.btn-glow-premium:hover ::before { left: 100%; }
+.btn-glow-premium .arrow { font-size: 18px; transition: transform 0.2s; }
+.btn-glow-premium:hover .arrow { transform: translateX(5px); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; padding: 18px 28px; border-radius: 16px;
+  color: var(--gray); font-size: 16px; font-weight: 600; text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.08); background: transparent; transition: all 0.2s;
+}
+.btn-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.02); }
+
+/* STATS AREA COMPACT */
+.hero-stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; max-width: 500px;
+}
+.h-stat { border-left: 2px solid rgba(0, 240, 255, 0.3); padding-left: 16px; }
+.h-stat-num { font-size: 28px; font-weight: 800; color: var(--white); line-height: 1.2; }
+.h-stat-label { font-size: 12px; color: var(--gray); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* VISUAL FEATURE PANEL (RIGHT COLUMN) */
+.hero-visual {
+  position: relative; background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px;
+  padding: 32px; display: flex; flex-direction: column; justify-content: center;
+  backdrop-filter: blur(12px); box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+.visual-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; }
+.dot:nth-child(2) { background: #eab308; }
+.dot:nth-child(3) { background: #22c55e; }
+.visual-title { font-size: 13px; color: var(--gray); font-family: monospace; margin-left: auto; }
+
+.live-card {
+  background: rgba(10, 16, 31, 0.7); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px;
+  animation: floatY 6s ease-in-out infinite;
+}
+.live-badge {
+  background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyan);
+  color: var(--cyan); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px;
+}
+.live-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.live-info p { font-size: 13px; color: var(--gray); }
+
+/* INTERACTIVE FEATURES MATRIX DETAILS GRID */
+.section-headline { text-align: center; margin-top: 40px; margin-bottom: 40px; }
+.section-headline h3 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
+.section-headline p { color: var(--gray); font-size: 15px; margin-top: 6px; }
+
+.details-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+}
+.feature-card {
+  background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px; padding: 32px; transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
-.stat-n{font-size:26px;font-weight:900;line-height:1;}
-.stat-l{font-size:12px;color:var(--gray);margin-top:6px;font-weight:600;letter-spacing:0.05em;}
-
-/* PRE-BUILT DOCK MARKUP (FINALLY VISIBLE!) */
-.bnav {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  width: calc(100% - 32px); max-width: 480px;
-  background: rgba(10, 16, 31, 0.8);
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  border-radius: 20px;
-  display: flex; padding: 10px; z-index: 999;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+.feature-card:hover {
+  border-color: rgba(0, 240, 255, 0.25); transform: translateY(-5px);
+  background: rgba(17, 24, 39, 0.65);
 }
-.bitem {
-  flex: 1; display: flex; flex-direction: column; align-items: center; 
-  gap: 4px; font-size: 11px; font-weight: 600; color: var(--gray); 
-  text-decoration: none; cursor: pointer; transition: all 0.2s ease;
+.f-icon {
+  font-size: 28px; margin-bottom: 20px; width: 54px; height: 54px;
+  background: rgba(255, 255, 255, 0.03); border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.bitem.on { color: var(--cyan); }
-.bitem .bi { font-size: 20px; margin-bottom: 2px; }
-.bitem:hover { color: var(--white); }
+.feature-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.feature-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
 
-/* TWO-COLUMN LAYOUT DESKTOP UPGRADE */
-@media (min-width: 768px) {
-  .hero { 
-    grid-template-columns: 1.2fr 0.8fr; 
-    padding: 100px 48px 60px;
-    align-items: center;
-  }
-  .stats {
-    padding: 0 48px 60px;
-    max-width: 650px;
-  }
-  nav { padding: 22px 48px; }
-  .bnav { bottom: 32px; }
+/* RESPONSIVE LAYOUT MEDIA QUERY SETUP */
+@media (min-width: 992px) {
+  .hero-section { grid-template-columns: 1.1fr 0.9fr; gap: 64px; padding: 100px 0 80px; }
+  .hero-visual { min-height: 380px; }
 }
 </style>
 </head>
 <body>
 
+<div class="glow-bg-1"></div>
+<div class="glow-bg-2"></div>
+
 <div class="app-container">
-  <nav class="a1">
+  
+  <nav class="animate-1">
     <div class="logo">
-      <div class="logo-icon">📚</div>
+      <div class="logo-icon">🚀</div>
       <div class="logo-text">Edu<span>Learn</span></div>
     </div>
     <div class="nav-right">
-      <div class="streak">5 🔥</div>
+      <div class="streak">5 🔥 STREAK</div>
       <div class="avatar">👤</div>
     </div>
   </nav>
 
-  <div class="hero">
-    <div class="hero-bg-glow"></div>
-    
-    <div class="hero-content flex-col">
-      <div class="tag a1">
-        <span class="tag-dot"></span>
-        START YOUR PREPARATION
+  <div class="hero-section">
+    <div class="hero-left animate-2">
+      <div class="tag">
+        💡 Optimization Engine Connected
+      </div>
+      
+      <div class="h-start">EMBARK ON CRITICAL</div>
+      <div class="h-typing">
+        <span id="typed"></span>
+        <span class="cursor"></span>
       </div>
 
-      <div class="hero-text-block a2">
-        <div class="h-start">START YOUR</div>
-        <div class="h-typing">
-          <span id="typed"></span>
-          <span class="cursor"></span>
+      <p class="hero-desc">
+        Access an uncompromised learning stack loaded with over <strong>500+ interactive dynamic test frameworks</strong> across 12 discrete educational subjects. Designed to accelerate mental retention completely free.
+      </p>
+
+      <div class="btn-container">
+        <a href="Working page/Dashboard.html" class="btn-glow-premium">
+          START LEARNING NOW <span class="arrow">→</span>
+        </a>
+        <a href="#features" class="btn-secondary">Explore Modules</a>
+      </div>
+
+      <div class="hero-stats-row">
+        <div class="h-stat">
+          <div class="h-stat-num" style="color: var(--cyan);">12+</div>
+          <div class="h-stat-label">Subjects</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num" style="color: var(--purple);">500+</div>
+          <div class="h-stat-label">Questions</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num" style="color: #00e676;">FREE</div>
+          <div class="h-stat-label">Access</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual animate-3">
+      <div class="visual-header">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="visual-title">system_status: active</div>
+      </div>
+      
+      <div class="live-card">
+        <div class="live-badge">LIVE ACTIVITY</div>
+        <div class="live-info">
+          <h4>Analytical Engine Running</h4>
+          <p>Analyzing problem sets across 12 sub-sections.</p>
         </div>
       </div>
 
-      <div class="hero-text-block a3">
-        <div class="h-build">BUILD</div>
-        <div class="h-future">YOUR FUTURE</div>
-      </div>
-
-      <p class="hero-desc a4">
-        আপনার প্রস্তুতিকে সহজ করতে আমরা নিয়ে এসেছি <strong>১২+ বিষয়ের</strong> ওপরে ৫০০ এর বেশি ইন্টারঅ্যাক্টিভ প্রশ্ন ব্যাংক। আজই শুরু করুন!
-      </p>
-
-      <div class="btn-wrap a5">
-        <a href="Working page/Dashboard.html" class="btn-primary">
-          START LEARNING <span class="btn-arrow">→</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-graphic-space" style="position: relative; min-height: 200px;">
-      <div class="memphis-pill-loop"></div>
-      <div class="memphis-wavy-grid"></div>
-      <div class="memphis-triangles">
-        <div class="m-tri"></div>
-        <div class="m-tri wire"></div>
+      <div style="margin-top: 32px; font-size: 13px; color: var(--gray); font-family: monospace; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03);">
+        <span style="color: var(--cyan);">></span> load_module --profile="student_hub"<br>
+        <span style="color: #00e676;">[SUCCESS]</span> 500+ Question frameworks mapped.<br>
+        <span style="color: var(--purple);">></span> status: Ready for execution...
       </div>
     </div>
   </div>
 
-  <div class="stats a3">
-    <div class="stat">
-      <div class="stat-n" style="color:#00f0ff; text-shadow:0 0 20px rgba(0,240,255,0.3)">12+</div>
-      <div class="stat-l">বিষয়</div>
+  <div id="features" class="animate-4" style="margin-top: 60px;">
+    <div class="section-headline">
+      <h3>Core Learning Ecosystem Features</h3>
+      <p>Everything you need to master your curriculum built cleanly into a luxury interface</p>
     </div>
-    <div class="stat">
-      <div class="stat-n" style="color:#b388ff; text-shadow:0 0 20px rgba(179,136,255,0.3)">500+</div>
-      <div class="stat-l">প্রশ্ন</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n" style="color:#00e676; text-shadow:0 0 20px rgba(0,230,118,0.3)">FREE</div>
-      <div class="stat-l">বিনামূল্যে</div>
+
+    <div class="details-grid">
+      <div class="feature-card">
+        <div class="f-icon" style="color: var(--cyan);">🎯</div>
+        <h4>Targeted Topic Hubs</h4>
+        <p>Break up dense chapters into hyper-focused micro-topics. Study exactly what you need without sorting through filler text.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="f-icon" style="color: var(--purple);">⚡</div>
+        <h4>Instant Metric Analysis</h4>
+        <p>Get immediate grading, conceptual breakdowns, and comprehensive solution paths the second you submit your work.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="f-icon" style="color: var(--orange);">🛡️</div>
+        <h4>Zero Paywalls</h4>
+        <p>Get completely unrestricted premium access to our complete collection of mock parameters and testing sets indefinitely.</p>
+      </div>
     </div>
   </div>
 
-  <div class="bnav a5">
-    <div class="bitem on" onclick="setNav(this)">
-      <span class="bi">🏠</span>
-      <span>হোম</span>
-    </div>
-    <div class="bitem" onclick="setNav(this)">
-      <span class="bi">📖</span>
-      <span>কোর্স</span>
-    </div>
-    <div class="bitem" onclick="setNav(this)">
-      <span class="bi">🏆</span>
-      <span>লিডারবোর্ড</span>
-    </div>
-    <div class="bitem" onclick="setNav(this)">
-      <span class="bi">⚙️</span>
-      <span>সেটিংস</span>
-    </div>
-  </div>
 </div>
 
 <script>
-// TYPING MODULE
+// OPTIMIZED TEXT TYPING ENGINE MODULE
 const words = ["LEARNING","GROWING","WINNING","BUILDING"];
-let wi=0,ci=0,del=false;
+let wi=0, ci=0, del=false;
 const el = document.getElementById("typed");
 
 function type(){
   const w = words[wi];
   if(!del && ci<=w.length){ 
-    el.textContent=w.slice(0,ci); ci++; setTimeout(type, ci===w.length?2000:70); 
+    el.textContent = w.slice(0,ci); ci++; setTimeout(type, ci===w.length ? 2000 : 70); 
   }
   else if(!del && ci>w.length){ 
-    del=true; setTimeout(type,2000); 
+    del = true; setTimeout(type, 1800); 
   }
   else if(del && ci>=0){ 
-    el.textContent=w.slice(0,ci); ci--; setTimeout(type,40); 
+    el.textContent = w.slice(0,ci); ci--; setTimeout(type, 35); 
   }
   else { 
-    del=false; wi=(wi+1)%words.length; ci=0; setTimeout(type,300); 
+    del = false; wi = (wi+1)%words.length; ci = 0; setTimeout(type, 200); 
   }
 }
-type();
-
-// NAV DOCK EVENT LISTENER
-function setNav(el){
-  document.querySelectorAll('.bitem').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-}
+document.addEventListener("DOMContentLoaded", type);
 </script>
 </body>
 </html>
