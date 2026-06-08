@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasin Saimon — Suggestion Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: rgba(22, 22, 34, 0.4);
+  --surface-hover: rgba(30, 30, 46, 0.6);
+  --surface2: #141420;
+  --border: rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --text: #f1f1f6;
+  --muted: #62627a;
+  --accent: #3b82f6;
+
+  --gold-bg: rgba(253, 224, 71, 0.03);
+  --gold-border: rgba(234, 179, 8, 0.3);
+  --gold-border-hover: rgba(234, 179, 8, 0.6);
+  --gold-icon-bg: rgba(234, 179, 8, 0.1);
+  --gold-text: #fef08a;
+  --gold-sub: #ca8a04;
+
+  --done-overlay: rgba(10, 10, 15, 0.85);
+  --neon-cyan: #06b6d4;
+  --neon-green: #10b981;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO SECTION ── */
+.hero-container {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  padding: 80px 40px 60px;
+}
+.hero-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+.hero-left h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #fff 30%, var(--muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-left p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-top: 15px;
+}
+.legend {
+  display: flex;
+  gap: 20px;
+  background: rgba(255,255,255,0.02);
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+.legend-swatch {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.swatch-gold { background: #eab308; box-shadow: 0 0 8px #eab308; }
+.swatch-normal { background: var(--muted); }
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 10, 15, 0.8);
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(20px);
+}
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.topbar-stats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.stat-item { display:flex; align-items:center; gap:6px; }
+.stat-val { color: #fff; font-weight: 500; }
+.stat-lbl { color: var(--muted); }
+
+.progress-ring-wrap { position: relative; width: 36px; height: 36px; }
+.progress-ring-wrap svg { transform: rotate(-90deg); }
+.progress-ring-bg { fill: none; stroke: var(--border); stroke-width: 2.5; }
+.progress-ring-fill {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s ease;
+}
+.ring-pct {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+/* ── SUBJECT NAV ── */
+.subject-nav {
+  display: flex;
+  gap: 6px;
+  padding: 12px 40px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky; top: 69px; z-index: 190;
+}
+.subject-nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.nav-btn:hover, .nav-btn.active {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+  border-color: var(--border);
+}
+
+/* ── PAGE LAYOUT ── */
+.page { max-width: 1200px; margin: 0 auto; padding: 60px 40px 140px; }
+.subject-section { margin-bottom: 80px; scroll-margin-top: 160px; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.section-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  color: var(--muted);
+  opacity: 0.4;
+}
+.section-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.section-paper-tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-left: 10px;
+}
+.tag-1st { color: var(--neon-cyan); background: rgba(6, 182, 212, 0.06); border: 1px solid rgba(6, 182, 212, 0.15); }
+.tag-2nd { color: var(--neon-green); background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.15); }
+
+/* ── VERTICAL GROUP STRUCTURE ── */
+.sub-group { position: relative; margin-bottom: 40px; }
+.vertical-label {
+  position: absolute;
+  left: -40px;
+  top: 20px;
+  transform: rotate(-90deg);
+  transform-origin: left top;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  opacity: 0.3;
+  white-space: nowrap;
+}
+.group-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* ── BASE CARD ── */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.25s, background-color 0.25s, transform 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+/* GOLD CARD */
+.card.gold {
+  background: var(--gold-bg);
+  border-color: var(--gold-border);
+}
+.card.gold .card-title { color: var(--gold-text); }
+.card.gold .card-sub { color: var(--gold-sub); opacity: 0.8; }
+.card.gold .icon-wrap { background: var(--gold-icon-bg); border-color: rgba(234, 179, 8, 0.2); }
+.card.gold:hover { border-color: var(--gold-border-hover); }
+
+/* CARD INNER DETAILS */
+.icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.card:hover .icon-wrap { transform: scale(1.05); }
+
+.card-info { flex: 1; min-width: 0; }
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+}
+.card-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marks-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.card.gold .marks-badge {
+  background: rgba(234, 179, 8, 0.1);
+  color: #fde047;
+  border-color: rgba(234, 179, 8, 0.2);
+}
+
+/* DONE STATE */
+.card.done { opacity: 0.25; }
+.card.done .card-title { text-decoration: line-through; }
+.card.done::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--done-overlay); pointer-events: none;
+}
+.card.done .done-stamp { display: flex !important; }
+
+.done-stamp {
+  display: none; position: absolute; inset: 0;
+  align-items: center; justify-content: center; z-index: 2;
+}
+.stamp-inner {
+  border: 1px solid var(--neon-green);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+  animation: stampIn 0.2s ease-out forwards;
+}
+@keyframes stampIn {
+  0% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── SYSTEM DIVIDER ── */
+.paper-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 20px;
+}
+.paper-divider-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.paper-divider-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ── TIPS & FOOTER STATS ── */
+.tip-box {
+  grid-column: 1 / -1;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.01);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.tip-box strong { color: var(--text); font-weight: 500; }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 16px 40px;
+  background: rgba(10, 10, 15, 0.85);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  z-index: 150;
+}
+.progress-track { flex: 1; height: 2px; background: var(--border); overflow: hidden; }
+.progress-fill { height: 100%; background: var(--text); transition: width 0.4s ease; width: 0%; }
+.bottom-nums { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+.bottom-nums span { color: var(--text); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .hero-grid { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .page { padding: 40px 20px 120px; }
+  .topbar { padding: 16px 20px; }
+  .subject-nav { padding: 12px 20px; top: 64px; }
+  .vertical-label { display: none; }
+  .sub-group { padding-left: 0 !important; }
+}
+
+/* ENTRY ANIMATIONS */
+.card-grid .card { opacity: 0; animation: cardFadeIn 0.35s cubic-bezier(0.215, 0.610, 0.355, 1) forwards; }
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-container">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <h1>Tasin Saimon</h1>
+      <p>HSC Suggestion Portal &bull; Track Progress</p>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch swatch-gold"></div> Critical Priority</div>
+      <div class="legend-item"><div class="legend-swatch swatch-normal"></div> Standard Chapter</div>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-title">Overview</div>
+  <div class="topbar-stats">
+    <div class="stat-item"><span class="stat-val" id="doneNum">0</span><span class="stat-lbl">completed</span></div>
+    <div class="stat-item"><span class="stat-val" id="totalNum">0</span><span class="stat-lbl">items</span></div>
+    <div class="progress-ring-wrap">
+      <svg width="36" height="36" viewBox="0 0 40 40">
+        <circle class="progress-ring-bg" cx="20" cy="20" r="17.5"/>
+        <circle class="progress-ring-fill" id="ringFill" cx="20" cy="20" r="17.5"/>
+      </svg>
+      <div class="ring-pct" id="ringPct">0%</div>
+    </div>
+  </div>
+</div>
+
+<nav class="subject-nav">
+  <a class="nav-btn" href="#bangla1">Bangla 1st</a>
+  <a class="nav-btn" href="#bangla2">Bangla 2nd</a>
+  <a class="nav-btn" href="#civics">Civics</a>
+  <a class="nav-btn" href="#islamic">Islamic History</a>
+  <a class="nav-btn" href="#social">Social Work</a>
+  <a class="nav-btn" href="#logic">Logic</a>
+</nav>
+
+<div class="page">
+
+<div class="subject-section" id="bangla1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-name">Bangla 1st Paper</h2>
+    <span class="section-paper-tag tag-1st">গদ্য ও পদ্য</span>
+  </div>
+
+  <div class="sub-group" style="padding-left:40px;">
+    <div class="vertical-label">PROSE</div>
+    <div class="group-title">গল্প</div>
+    <div class="card-grid">
+      <div class="card gold" onclick="toggle(this, event)" data-key="golop-aporichita">
+        <div class="icon-wrap">👩</div>
+        <div class="card-info">
+          <div class="card-title">অপরিচিতা</div>
+          <div class="card-sub">রবীন্দ্রনাথ ঠাকুর</div>
+        </div>
+        <span class="marks-badge">V. IMP</span>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card gold" onclick="toggle(this, event)" data-key="golop-bilashi">
+        <div class="icon-wrap">🧑</div>
+        <div class="card-info">
+          <div class="card-title">বিলাসী</div>
+          <div class="card-sub">শরৎচন্দ্র চট্টোপাধ্যায়</div>
+        </div>
+        <span class="marks-badge">V. IMP</span>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="golop-ardhanghi">
+        <div class="icon-wrap">👩‍❤️‍👨</div>
+        <div class="card-info">
+          <div class="card-title">অর্দ্ধাঙ্গী</div>
+          <div class="card-sub">রোকেয়া সাখাওয়াত হোসেন</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="golop-jibon-brikhkho">
+        <div class="icon-wrap">🌳</div>
+        <div class="card-info">
+          <div class="card-title">জীবন ও বৃক্ষ</div>
+          <div class="card-sub">মোতাহের হোসেন চৌধুরী</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="golop-mashipishi">
+        <div class="icon-wrap">👥</div>
+        <div class="card-info">
+          <div class="card-title">মাসি-পিসি</div>
+          <div class="card-sub">মানিক বন্দ্যোপাধ্যায়</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="golop-raincoat">
+        <div class="icon-wrap">🧥</div>
+        <div class="card-info">
+          <div class="card-title">রেইনকোট</div>
+          <div class="card-sub">আখতারুজ্জামান ইলিয়াস</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="golop-necklace">
+        <div class="icon-wrap">💎</div>
+        <div class="card-info">
+          <div class="card-title">নেকলেস</div>
+          <div class="card-sub">গী দ্য মোপাসাঁ</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-group" style="padding-left:40px; margin-top:36px;">
+    <div class="vertical-label">POETRY</div>
+    <div class="group-title">কবিতা</div>
+    <div class="card-grid">
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-bibhishan">
+        <div class="icon-wrap">🛡️</div>
+        <div class="card-info">
+          <div class="card-title">বিভীষণের প্রতি মেঘনাদ</div>
+          <div class="card-sub">মাইকেল মধুসূদন দত্ত</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-sonar-tori">
+        <div class="icon-wrap">⛵</div>
+        <div class="card-info">
+          <div class="card-title">সোনার তরী</div>
+          <div class="card-sub">রবীন্দ্রনাথ ঠাকুর</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-protidon">
+        <div class="icon-wrap">🤝</div>
+        <div class="card-info">
+          <div class="card-title">প্রতিদান</div>
+          <div class="card-sub">জসীমউদ্দীন</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card gold" onclick="toggle(this, event)" data-key="kobita-bidrohi">
+        <div class="icon-wrap">🔥</div>
+        <div class="card-info">
+          <div class="card-title">বিদ্রোহী</div>
+          <div class="card-sub">কাজী নজরুল ইসলাম</div>
+        </div>
+        <span class="marks-badge">★★★</span>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-tahare">
+        <div class="icon-wrap">🌙</div>
+        <div class="card-info">
+          <div class="card-title">তাহারেই পড়ে মনে</div>
+          <div class="card-sub">সুফিয়া কামাল</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-feb1969">
+        <div class="icon-wrap">🚨</div>
+        <div class="card-info">
+          <div class="card-title">ফেব্রুয়ারি ১৯৬৯</div>
+          <div class="card-sub">শামসুর রাহমান</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-18-bochor">
+        <div class="icon-wrap">⚡</div>
+        <div class="card-info">
+          <div class="card-title">আঠারো বছর বয়স</div>
+          <div class="card-sub">সুকান্ত ভট্টাচার্য</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+      <div class="card" onclick="toggle(this, event)" data-key="kobita-kingbodontir">
+        <div class="icon-wrap">💬</div>
+        <div class="card-info">
+          <div class="card-title">আমি কিংবদন্তির কথা বলছি</div>
+          <div class="card-sub">আবু জাফর ওবায়দুল্লাহ</div>
+        </div>
+        <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subject-section" id="bangla2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-name">Bangla 2nd Paper</h2>
+    <span class="section-paper-tag tag-2nd">ব্যাকরণ ও রচনা</span>
+  </div>
+
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-uchh-o-e">
+      <div class="icon-wrap">🔤</div>
+      <div class="card-info">
+        <div class="card-title">উচ্চারণ — 'অ' ও 'এ' ধ্বনির নিয়ম</div>
+        <div class="card-sub">উচ্চারণের নিয়ম · ৫ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-uchh-bm">
+      <div class="icon-wrap">📢</div>
+      <div class="card-info">
+        <div class="card-title">ব-ফলা, ম-ফলা ও য-ফলার উচ্চারণ</div>
+        <div class="card-sub">উচ্চারণের নিয়ম</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-banan-tatsom">
+      <div class="icon-wrap">✍️</div>
+      <div class="card-info">
+        <div class="card-title">প্রমিত বানান — তৎসম ও অতৎসম</div>
+        <div class="card-sub">বানানের নিয়ম · ৫ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-banan-notwo">
+      <div class="icon-wrap">📝</div>
+      <div class="card-info">
+        <div class="card-title">ণত্ব ও ষত্ব বিধান</div>
+        <div class="card-sub">বানানের নিয়ম</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-shobdoshrenee">
+      <div class="icon-wrap">📚</div>
+      <div class="card-info">
+        <div class="card-title">ব্যাকরণিক শব্দশ্রেণী — সংজ্ঞা ও শ্রেণীবিভাগ</div>
+        <div class="card-sub">শব্দশ্রেণী · ৫ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-bisheshyo">
+      <div class="icon-wrap">🏷️</div>
+      <div class="card-info">
+        <div class="card-title">विशेष্য, সর্বনাম ও যোজক শব্দ</div>
+        <div class="card-sub">শব্দশ্রেণী</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-uposorgo">
+      <div class="icon-wrap">🔗</div>
+      <div class="card-info">
+        <div class="card-title">"উপসর্গের অর্থবাচকতা নেই কিন্তু অর্থদ্যোতকতা আছে"</div>
+        <div class="card-sub">শব্দ গঠন — উপসর্গ · সব বোর্ডে নিশ্চিত</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-samas">
+      <div class="icon-wrap">🧩</div>
+      <div class="card-info">
+        <div class="card-title">সমাস নির্ণয়</div>
+        <div class="card-sub">দ্বন্দ, বহুব্রীহি, তৎপুরুষ, অব্যয়ীভাব, নিত্য</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-bakyo-gun">
+      <div class="icon-wrap">📐</div>
+      <div class="card-info">
+        <div class="card-title">সার্থক বাক্যের গুণাবলী</div>
+        <div class="card-sub">আকাঙ্ক্ষা, আসক্তি, যোগ্যতা · ৫ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-bakyo-goton">
+      <div class="icon-wrap">🔀</div>
+      <div class="card-info">
+        <div class="card-title">গঠনগতভাবে বাক্যের শ্রেণীবিভাগ</div>
+        <div class="card-sub">সরল, জটিল ও যৌগিক বাক্য</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-paribhashik">
+      <div class="icon-wrap">🌐</div>
+      <div class="card-info">
+        <div class="card-title">পারিভাষিক শব্দ</div>
+        <div class="card-sub">Acting, Ballot, Cabinet... · ১০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-protibedon">
+      <div class="icon-wrap">📰</div>
+      <div class="card-info">
+        <div class="card-title">প্রতিবেদন</div>
+        <div class="card-sub">দ্রব্যমূল্য, সড়ক দুর্ঘটনা, যানজট · ১০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-dinlipi-july">
+      <div class="icon-wrap">📓</div>
+      <div class="card-info">
+        <div class="card-title">দিনলিপি — জুলাই গণঅভ্যুত্থান</div>
+        <div class="card-sub">দিনলিপি ও প্রতিবেদন</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-dinlipi-gen">
+      <div class="icon-wrap">🗓️</div>
+      <div class="card-info">
+        <div class="card-title">দিনলিপি — কলেজ / ভ্রমণ / নববর্ষ</div>
+        <div class="card-sub">দিনলিপি ও প্রতিবেদন</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-obedon">
+      <div class="icon-wrap">📋</div>
+      <div class="card-info">
+        <div class="card-title">আবেদনপত্র</div>
+        <div class="card-sub">নিয়োগ, বিনা বেতন, শিক্ষা সফর · ১০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-email">
+      <div class="icon-wrap">📧</div>
+      <div class="card-info">
+        <div class="card-title">ইমেইল</div>
+        <div class="card-sub">বন্ধু / পিতাকে · পত্রলিখন</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-bhabsomprosoron">
+      <div class="icon-wrap">💡</div>
+      <div class="card-info">
+        <div class="card-title">ভাবসম্প্রসারণ</div>
+        <div class="card-sub">পরিশ্রম সৌভাগ্যের প্রসূতি / কীর্তিমানের মৃত্যু নেই · ১০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-sarangsha">
+      <div class="icon-wrap">✂️</div>
+      <div class="card-info">
+        <div class="card-title">সারাংশ / সারমর্ম</div>
+        <div class="card-sub">সারাংশ ও ভাবসম্প্রসারণ</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-songalop">
+      <div class="icon-wrap">💬</div>
+      <div class="card-info">
+        <div class="card-title">সংলাপ</div>
+        <div class="card-sub">মাদকাসক্তি, ফেসবুক, বাল্যবিবাহ · ১০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card" onclick="toggle(this, event)" data-key="b2-golop-choto">
+      <div class="icon-wrap">📖</div>
+      <div class="card-info">
+        <div class="card-title">ক্ষুদে গল্প</div>
+        <div class="card-sub">বিপদে বন্ধু, সততার পুরস্কার, একতাই বল</div>
+      </div>
+      <span class="marks-badge">★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-robchona-july">
+      <div class="icon-wrap">🖊️</div>
+      <div class="card-info">
+        <div class="card-title">প্রবন্ধ — জুলাই গণঅভ্যুত্থান / মুক্তিযুদ্ধ</div>
+        <div class="card-sub">প্রবন্ধ রচনা · ২০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="card gold" onclick="toggle(this, event)" data-key="b2-robchona-biggan">
+      <div class="icon-wrap">🔬</div>
+      <div class="card-info">
+        <div class="card-title">প্রবন্ধ — মানব কল্যাণে বিজ্ঞান / পরিবেশ দূষণ</div>
+        <div class="card-sub">প্রবন্ধ রচনা · ২০ নম্বর</div>
+      </div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+
+    <div class="tip-box">💡 <strong>প্রবন্ধ টিপস:</strong> ১৮+ নম্বরের জন্য ১৫–২০টি পয়েন্ট ও প্রাসঙ্গিক উদ্ধৃতি (Quotes) ব্যবহার করুন।</div>
+  </div>
+</div>
+
+<div class="subject-section" id="civics">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-name">Civics & Good Governance</h2>
+    <span class="section-paper-tag tag-1st">পৌরনীতি ও সুশাসন</span>
+  </div>
+
+  <div class="group-title">1st Paper</div>
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ1-ch1">
+      <div class="icon-wrap">🏛️</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">পৌরনীতি ও সুশাসন পরিচিতি</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ1-ch3">
+      <div class="icon-wrap">⚖️</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">মূল্যবোধ, আইন, স্বাধীনতা ও সাম্য</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ1-ch5">
+      <div class="icon-wrap">🤲</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">অধিকার, कर्तव्य এবং মানবাধিকার</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ1-ch6">
+      <div class="icon-wrap">🗳️</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">রাজনৈতিক দল, নেতৃত্ব ও সুশাসন</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ1-ch7">
+      <div class="icon-wrap">🏗️</div>
+      <div class="card-info"><div class="card-title">সপ্তম অধ্যায়</div><div class="card-sub">সরকার কাঠামো</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ1-ch9">
+      <div class="icon-wrap">🏢</div>
+      <div class="card-info"><div class="card-title">নবম অধ্যায়</div><div class="card-sub">জনসেবা ও আমলাতন্ত্র</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ1-ch10">
+      <div class="icon-wrap">🇧🇩</div>
+      <div class="card-info"><div class="card-title">দশম অধ্যায়</div><div class="card-sub">দেশপ্রেম ও জাতীয়তা</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+
+  <div class="paper-divider"><div class="paper-divider-label">2nd Paper</div><div class="paper-divider-line"></div></div>
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ2-ch1">
+      <div class="icon-wrap">🏴</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">ব্রিটিশ ভারতে প্রতিনিধিত্বশীল সরকার ও ভারত বিভাগ</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ2-ch2">
+      <div class="icon-wrap">🕊️</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">পাকিস্তান থেকে বাংলাদেশ (১৯৪৭–১৯৭১)</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ2-ch3">
+      <div class="icon-wrap">⭐</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">রাজনৈতিক ব্যক্তিত্ব: বাংলাদেশের স্বাধীনতা লাভ</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ2-ch5">
+      <div class="icon-wrap">📜</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">বাংলাদেশের সরকার ও প্রশাসনিক কাঠামো</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="civ2-ch6">
+      <div class="icon-wrap">🏘️</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">স্থানীয় সরকার</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ2-ch7">
+      <div class="icon-wrap">🏛️</div>
+      <div class="card-info"><div class="card-title">সপ্তম অধ্যায়</div><div class="card-sub">সাংবিধানিক প্রতিষ্ঠান</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="civ2-ch10">
+      <div class="icon-wrap">🙋</div>
+      <div class="card-info"><div class="card-title">দশম অধ্যায়</div><div class="card-sub">নাগরিক সমস্যা ও আমাদের করণীয়</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subject-section" id="islamic">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-name">Islamic History</h2>
+    <span class="section-paper-tag tag-1st">ইসলামের ইতিহাস</span>
+  </div>
+
+  <div class="group-title">1st Paper — আরব ও ইসলাম</div>
+  <div class="card-grid">
+    <div class="card" onclick="toggle(this, event)" data-key="isl1-ch1">
+      <div class="icon-wrap">🌅</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">প্রাক-ইসলামি আরব</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl1-ch2">
+      <div class="icon-wrap">☪️</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">হযরত মুহাম্মদ (স.)</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl1-ch3">
+      <div class="icon-wrap">👑</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">খুলাফায়ে রাশেদিন</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl1-ch4">
+      <div class="icon-wrap">🏰</div>
+      <div class="card-info"><div class="card-title">চতুর্থ অধ্যায়</div><div class="card-sub">উমাইয়া খিলাফত</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="isl1-ch5">
+      <div class="icon-wrap">📿</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">আব্বাসীয় খিলাফত</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="isl1-ch6">
+      <div class="icon-wrap">🌍</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">স্পেনে উমাইয়া ও উত্তর আফ্রিকায় ফাতিমীয়</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+
+  <div class="paper-divider"><div class="paper-divider-label">2nd Paper — ভারতে ইসলাম</div><div class="paper-divider-line"></div></div>
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl2-ch1">
+      <div class="icon-wrap">⚔️</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">ভারতে মুসলিম শাসন প্রতিষ্ঠা</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl2-ch2">
+      <div class="icon-wrap">🗼</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">দিল্লি সালতানাত</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="isl2-ch3">
+      <div class="icon-wrap">🕌</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub"><b>মুঘল শাসন</b></div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="isl2-ch4">
+      <div class="icon-wrap">🌾</div>
+      <div class="card-info"><div class="card-title">চতুর্থ অধ্যায়</div><div class="card-sub">বাংলায় মুঘল শাসন</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="isl2-ch5">
+      <div class="icon-wrap">🏞️</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">বাংলার ইতিহাস</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="isl2-ch6">
+      <div class="icon-wrap">🇧🇩</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">স্বাধীন সার্বভৌম বাংলাদেশের অভ্যুদয়</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subject-section" id="social">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-name">Social Work</h2>
+    <span class="section-paper-tag tag-1st">সমাজকর্ম</span>
+  </div>
+
+  <div class="group-title">1st Paper</div>
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw1-ch2">
+      <div class="icon-wrap">📜</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">সমাজকর্ম পেশার ঐতিহাসিক পটভূমি</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw1-ch3">
+      <div class="icon-wrap">🤝</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">সমাজকর্মের মূল্যবোধ ও নীতিমালা</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="sw1-ch4">
+      <div class="icon-wrap">🔗</div>
+      <div class="card-info"><div class="card-title">চতুর্থ অধ্যায়</div><div class="card-sub">সমাজকর্মের সাথে সমাজবিজ্ঞান ও অন্যান্য বিজ্ঞানের সম্পর্ক</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="sw1-ch5">
+      <div class="icon-wrap">🧱</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">সমাজকর্মের উপাদানসমূহ</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw1-ch6">
+      <div class="icon-wrap">⚙️</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">সমাজকর্মের পদ্ধতিসমূহ</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+
+  <div class="paper-divider"><div class="paper-divider-label">2nd Paper</div><div class="paper-divider-line"></div></div>
+  <div class="card-grid">
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw2-ch1">
+      <div class="icon-wrap">🏠</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">বাংলাদেশে মৌলিক মানবিক চাহিদা</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw2-ch2">
+      <div class="icon-wrap">🌿</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">সমাজকর্মের শাখা</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="sw2-ch3">
+      <div class="icon-wrap">🔧</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">সামাজিক সমস্যা সমাধানে সমাজকর্মের অনুশীলন</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="sw2-ch4">
+      <div class="icon-wrap">🏛️</div>
+      <div class="card-info"><div class="card-title">চতুর্থ অধ্যায়</div><div class="card-sub">সামাজিক প্রতিষ্ঠান ও সংস্থা</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="sw2-ch5">
+      <div class="icon-wrap">⚖️</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">সামাজিক আইন ও সমাজকর্ম</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="sw2-ch6">
+      <div class="icon-wrap">🏗️</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">সরকারি সামাজিক উন্নয়ন কার্যক্রম</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subject-section" id="logic">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-name">Logic</h2>
+    <span class="section-paper-tag tag-1st">যুক্তিবিদ্যা</span>
+  </div>
+
+  <div class="group-title">1st Paper</div>
+  <div class="card-grid">
+    <div class="card" onclick="toggle(this, event)" data-key="lg1-ch1">
+      <div class="icon-wrap">🧠</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">যুক্তিবিদ্যা পরিচিতি</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg1-ch3">
+      <div class="icon-wrap">🔩</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">যুক্তির উপাদান</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg1-ch6">
+      <div class="icon-wrap">⬇️</div>
+      <div class="card-info"><div class="card-title">ষষ্ঠ অধ্যায়</div><div class="card-sub">অবরোহ অনুমান</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg1-ch7">
+      <div class="icon-wrap">⬆️</div>
+      <div class="card-info"><div class="card-title">সপ্তম অধ্যায়</div><div class="card-sub">आरোহ অনুমান ও আরোহ অনুমানের ভিত্তি</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+
+  <div class="paper-divider"><div class="paper-divider-label">2nd Paper</div><div class="paper-divider-line"></div></div>
+  <div class="card-grid">
+    <div class="card" onclick="toggle(this, event)" data-key="lg2-ch1">
+      <div class="icon-wrap">🏷️</div>
+      <div class="card-info"><div class="card-title">প্রথম অধ্যায়</div><div class="card-sub">যৌক্তিক সংজ্ঞা</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg2-ch2">
+      <div class="icon-wrap">📊</div>
+      <div class="card-info"><div class="card-title">দ্বিতীয় অধ্যায়</div><div class="card-sub">যৌক্তিক বিভাগ</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg2-ch3">
+      <div class="icon-wrap">🌿</div>
+      <div class="card-info"><div class="card-title">তৃতীয় অধ্যায়</div><div class="card-sub">আরোহের প্রকারভেদ</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card gold" onclick="toggle(this, event)" data-key="lg2-ch5">
+      <div class="icon-wrap">🔬</div>
+      <div class="card-info"><div class="card-title">পঞ্চম অধ্যায়</div><div class="card-sub">কার্যকারণ সম্বন্ধ প্রমাণ পদ্ধতি</div></div>
+      <span class="marks-badge">★★★</span>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+    <div class="card" onclick="toggle(this, event)" data-key="lg2-ch8">
+      <div class="icon-wrap">🎲</div>
+      <div class="card-info"><div class="card-title">অষ্টম অধ্যায়</div><div class="card-sub">সম্ভাবনা</div></div>
+      <div class="done-stamp"><div class="stamp-inner">DONE</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="bottom-bar">
+  <div class="bottom-nums"><span id="bottomDone">0</span> / <span id="bottomTotal">0</span></div>
+  <div class="progress-track"><div class="progress-fill" id="bottomFill"></div></div>
+  <div class="bottom-nums"><span id="bottomPct">0%</span></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'tasin_cards_v2';
+const CIRCUMFERENCE = 2 * Math.PI * 17.5;
+
+function getCards() { return document.querySelectorAll('.card[data-key]'); }
+
+function updateStats() {
+  const cards = getCards();
+  const done = document.querySelectorAll('.card.done').length;
+  const total = cards.length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  document.getElementById('doneNum').textContent = done;
+  document.getElementById('totalNum').textContent = total;
+  document.getElementById('ringPct').textContent = pct + '%';
+  document.getElementById('bottomDone').textContent = done;
+  document.getElementById('bottomTotal').textContent = total;
+  document.getElementById('bottomPct').textContent = pct + '% complete';
+  document.getElementById('bottomFill').style.width = pct + '%';
+
+  const offset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
+  document.getElementById('ringFill').style.strokeDashoffset = offset;
+  document.getElementById('ringFill').style.strokeDasharray = CIRCUMFERENCE;
+}
+
+function saveState() {
+  const state = {};
+  getCards().forEach(c => { state[c.dataset.key] = c.classList.contains('done'); });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    getCards().forEach(c => {
+      if (state[c.dataset.key]) c.classList.add('done');
+    });
+  } catch(e) {}
+}
+
+/* Updated toggle function with click coordinates mapping for localized explosion */
+function toggle(el, event) {
+  const stamp = el.querySelector('.stamp-inner');
+  
+  if (!el.classList.contains('done')) {
+    el.classList.add('done');
+    if (stamp) {
+      stamp.style.animation = 'none';
+      requestAnimationFrame(() => { stamp.style.animation = ''; });
+    }
+    
+    // CONFETTI BURST LOGIC
+    if (typeof confetti === 'function' && event) {
+      // Calculate where the click happened relative to viewport width/height
+      const xRatio = event.clientX / window.innerWidth;
+      const yRatio = event.clientY / window.innerHeight;
+      
+      // Fire precise visual burst
+      confetti({
+        particleCount: 70,
+        spread: 60,
+        origin: { x: xRatio, y: yRatio },
+        colors: el.classList.contains('gold') ? ['#fde047', '#ca8a04', '#ffffff', '#eab308'] : ['#10b981', '#06b6d4', '#3b82f6', '#ffffff'],
+        disableForReducedMotion: true
+      });
+    }
+  } else {
+    el.classList.remove('done');
+  }
+  saveState();
+  updateStats();
+}
+
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(btn.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+const sections = ['bangla1','bangla2','civics','islamic','social','logic'];
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 220) cur = id;
+  });
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('href') === '#' + cur);
+  });
+});
+
+document.querySelectorAll('.card-grid .card').forEach((c, i) => {
+  c.style.animationDelay = (i * 0.02) + 's';
+});
+
+loadState();
+updateStats();
+</script>
+</body>
+</html>
