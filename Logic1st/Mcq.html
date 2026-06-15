@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমি কিংবদন্তির কথা বলছি</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12;
+    --surface: #0f1521;
+    --surface2: #161e2e;
+    --border: rgba(255,255,255,0.07);
+    --primary: #38bdf8;
+    --primary-dim: rgba(56,189,248,0.12);
+    --success: #34d399;
+    --success-dim: rgba(52,211,153,0.12);
+    --danger: #f87171;
+    --danger-dim: rgba(248,113,113,0.12);
+    --warning: #fbbf24;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --text-mid: #94a3b8;
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(52,211,153,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-dim);
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  /* ── STICKY STATS BAR ── */
+  .stats-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    margin: 20px auto 0;
+    width: calc(100% - 32px);
+    max-width: 760px;
+    background: rgba(15,21,33,0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .stats-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .stat-dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .stat-dot.red   { background: var(--danger);  box-shadow: 0 0 6px var(--danger); }
+
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-width: 22px;
+    transition: color 0.3s;
+  }
+  .stat-val.green { color: var(--success); }
+  .stat-val.red   { color: var(--danger); }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* progress pill */
+  .progress-wrap {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .btn-reveal {
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-reveal:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+
+  .btn-reveal:disabled {
+    background: var(--surface2);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* lock badge */
+  .lock-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--danger);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .lock-badge.visible { display: flex; }
+
+  /* ── QUIZ FEED ── */
+  .quiz-feed {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Q CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    background: var(--primary-dim);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+
+  .q-status-icon {
+    margin-left: auto;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card.answered .q-status-icon { opacity: 1; }
+
+  .q-text {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.18s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: rgba(56,189,248,0.4);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+
+  .opt:disabled { cursor: not-allowed; }
+
+  /* ripple */
+  .opt .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transform: scale(0);
+    animation: ripple 0.5s linear;
+    pointer-events: none;
+  }
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* correct / wrong states */
+  .opt.correct {
+    background: var(--success-dim) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    transform: none !important;
+  }
+
+  .opt.wrong {
+    background: var(--danger-dim) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    transform: none !important;
+  }
+
+  /* pulse on correct */
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+  .opt.correct { animation: pulse-green 0.6s ease; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .explanation.visible { display: block; }
+
+  /* ── SCROLL TO TOP ── */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 20px;
+    z-index: 200;
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: #04111f;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(56,189,248,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+  }
+
+  #scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #scroll-top:hover { transform: translateY(-2px); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 0;
+    padding: 0 16px;
+  }
+
+  .result-banner.visible { display: block; }
+
+  .result-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .result-inner h2 {
+    font-family: 'Tiro Bangla', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    margin: 12px 0;
+  }
+
+  .result-pct {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .stats-bar {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap { max-width: none; width: 100%; order: 3; }
+
+    .btn-reveal { font-size: 0.78rem; padding: 8px 14px; }
+
+    .stat-label { display: none; }
+
+    .q-text { font-size: 1rem; }
+  }
+
+  /* ── COUNTER ANIMATION ── */
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.3s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<style>
+    .back-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-5px);
+        border-color: #00d2ff;
+    }
+
+    .btn-back i {
+        color: #00d2ff;
+    }
+</style>
+
+<body>
+
+<!-- BACK BUTTON -->
+<div class="back-nav">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-chevron-left"></i> ফিরে যান
+    </button>
+</div>
+<section class="hero">
+  <span class="badge">বাংলা প্রথম পত্র</span>
+  <h1>আমি কিংবদন্তির কথা বলছি</h1>
+  <p>আবু জাফর ওবায়দুল্লাহ — MCQ Practice</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stats-left">
+    <div class="stat">
+      <span class="stat-dot green"></span>
+      <span class="stat-val green" id="correct-count">0</span>
+      <span class="stat-label">সঠিক</span>
+    </div>
+    <div class="stat">
+      <span class="stat-dot red"></span>
+      <span class="stat-val red" id="wrong-count">0</span>
+      <span class="stat-label">ভুল</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-text" id="progress-text">0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <span class="lock-badge" id="lock-badge">🔒 LOCKED</span>
+  <button class="btn-reveal" id="reveal-btn" onclick="masterReveal()">সব উত্তর দেখো</button>
+</div>
+
+<!-- RESULT BANNER (shown after reveal) -->
+<div class="result-banner" id="result-banner">
+  <div class="result-inner">
+    <h2>🎓 ফলাফল</h2>
+    <div class="result-score" id="result-score">0</div>
+    <div class="result-pct" id="result-pct"></div>
+  </div>
+</div>
+
+<!-- QUIZ FEED -->
+<div class="quiz-feed" id="quiz-feed"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+        const mcqData =[
+  {
+    "id": 1,
+    "q": "'Logic' শব্দের উৎপত্তি কোন গ্রিক শব্দ থেকে?",
+    "options": ["Logos", "Logia", "Logica", "Loges"],
+    "correct": 2
+  },
+  {
+    "id": 2,
+    "q": "'Logos' শব্দের অর্থ কী?",
+    "options": ["বিজ্ঞান", "চিন্তা বা ভাষা", "অনুমান", "সত্যতা"],
+    "correct": 1
+  },
+  {
+    "id": 3,
+    "q": "যুক্তিবিদ্যার জনক কে?",
+    "options": ["প্লেটো", "সক্রেটিস", "অ্যারিস্টটল", "জে. এস. মিল"],
+    "correct": 2
+  },
+  {
+    "id": 4,
+    "q": "অ্যারিস্টটলের যুক্তিবিদ্যাবিষয়ক গ্রন্থসমষ্টিকে কী বলা হয়?",
+    "options": ["অর্গানন (Organon)", "প্রিন্সিপিয়া", "মেটাফিজিক্স", "লজিকা"],
+    "correct": 0
+  },
+  {
+    "id": 5,
+    "q": "'যুক্তিবিদ্যা হলো চিন্তার নিয়মাবলী সম্পর্কিত বিজ্ঞান' – সংজ্ঞাটি কে দিয়েছেন?",
+    "options": ["জোসেফ", "থমসন", "হোয়েটলি", "হ্যামিল্টন"],
+    "correct": 3
+  },
+  {
+    "id": 6,
+    "q": "যুক্তিবিদ্যাকে 'বিজ্ঞানের বিজ্ঞান এবং কলার কলা' বলেছেন কে?",
+    "options": ["ওয়েভলি", "অলড্রিচ", "অলড্রিচ ও সেন্ট থমাস", "মিল"],
+    "correct": 2
+  },
+  {
+    "id": 7,
+    "q": "আদর্শনিষ্ঠ বিজ্ঞান হিসেবে যুক্তিবিদ্যার পরম আদর্শ কোনটি?",
+    "options": ["সুন্দর", "মঙ্গল", "সত্য", "ন্যায"],
+    "correct": 2
+  },
+  {
+    "id": 8,
+    "q": "যুক্তিবিদ্যা কোন ধরনের বিজ্ঞান?",
+    "options": ["বস্তুনিষ্ঠ বিজ্ঞান", "আদর্শনিষ্ঠ বিজ্ঞান", "প্রাকৃতিক বিজ্ঞান", "সমাজবিজ্ঞান"],
+    "correct": 1
+  },
+  {
+    "id": 9,
+    "q": "যুক্তিবিদ্যার মূল আলোচ্য বিষয় কোনটি?",
+    "options": ["পদ", "বাক্য", "অনুমান", "বিধেয়"],
+    "correct": 2
+  },
+  {
+    "id": 10,
+    "q": "যুক্তিবিদ্যাকে একটি 'কলা' বা 'শিল্প' বলার কারণ কী?",
+    "options": ["এটি সৌন্দর্য সৃষ্টি করে", "এটি সত্য অর্জনের নিয়মগুলো বাস্তবে প্রয়োগ করতে শেখায়", "এটি কাল্পনিক", "এটি বিনোদন দেয়"],
+    "correct": 1
+  },
+  {
+    "id": 11,
+    "q": "যুক্তিবিদ্যার আদর্শ কেমন প্রকৃতির?",
+    "options": ["বস্তুগত", "রূপগত", "বস্তুগত ও রূপগত উভয়ই", "কাল্পনিক"],
+    "correct": 2
+  },
+  {
+    "id": 12,
+    "q": "জোসেফ-এর মতে যুক্তিবিদ্যা কী?",
+    "options": ["একটি কলা", "একটি বিজ্ঞান", "বিজ্ঞান ও কলা উভয়ই", "কেবল অনুমান"],
+    "correct": 1
+  },
+  {
+    "id": 13,
+    "q": "যুক্তিবিদ্যা মানুষের কোন মানসিক প্রক্রিয়াকে নিয়ন্ত্রণ করে?",
+    "options": ["আবেগ", "ইচ্ছা", "চিন্তন", "স্মৃতি"],
+    "correct": 2
+  },
+  {
+    "id": 14,
+    "q": "অনুমানের ভাষায় প্রকাশিত রূপকে কী বলে?",
+    "options": ["শব্দ", "পদ", "যুক্তিবার্ত", "অনুমান বাক্য"],
+    "correct": 2
+  },
+  {
+    "id": 15,
+    "q": "যুক্তিবিদ্যা কোন দিকটি নিয়ে আলোচনা করে না?",
+    "options": ["যুক্তিপদ্ধতির বৈধতা", "ভ্রান্তির অপনোদন", "অতীন্দ্রিয় সত্তার স্বরূপ", "সত্যের অনুসন্ধান"],
+    "correct": 2
+  },
+  {
+    "id": 16,
+    "q": "অবরোহ যুক্তিবিদ্যার মূল লক্ষ্য কী?",
+    "options": ["বস্তুগত সত্যতা", "রূপগত সত্যতা", "প্রাকৃতিক সত্যতা", "নৈতিক সত্যতা"],
+    "correct": 1
+  },
+  {
+    "id": 17,
+    "q": "আরোহ যুক্তিবিদ্যার মূল লক্ষ্য কী?",
+    "options": ["কেবল রূপগত সত্যতা", "কেবল আকারগত সত্যতা", "আকারগত ও বস্তুগত উভয় সত্যতা", "অনুমান বর্ধন করা"],
+    "correct": 2
+  },
+  {
+    "id": 18,
+    "q": "নিচের কোনটি যুক্তিবিদ্যার প্রাচীনতম শাখা?",
+    "options": ["প্রতীকী যুক্তিবিদ্যা", "গাণিতিক যুক্তিবিদ্যা", "ঐতিহ্যবাহী/সনাতনী যুক্তিবিদ্যা", "অবয়বহীন যুক্তিবিদ্যা"],
+    "correct": 2
+  },
+  {
+    "id": 19,
+    "q": "যুক্তিবিদ্যা কোন দুটি বিষয়ের সমন্বয়?",
+    "options": ["তত্ত্ব ও উপাত্ত", "জ্ঞান ও বিশ্বাস", "বিজ্ঞান ও কলা", "সমাজ ও সংস্কৃতি"],
+    "correct": 2
+  },
+  {
+    "id": 20,
+    "q": "মানুষের চিন্তার মৌলিক নিয়ম কয়টি?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 2
+  },
+  {
+    "id": 21,
+    "q": "'ক হয় ক' — এটি যুক্তিবিদ্যার কোন মৌলিক নিয়ম?",
+    "options": ["আত্মবিরোধ নিয়ম", "অভেদ নিয়ম", "মধ্যবর্তীবিহীন নিয়ম", "পর্যাপ্ত হেতু নিয়ম"],
+    "correct": 1
+  },
+  {
+    "id": 22,
+    "q": "কোনো বস্তু একই সাথে সাদা ও কালো হতে পারে না — এটি কোন নিয়ম?",
+    "options": ["অভেদ নিয়ম", "মধ্যবর্তীবিহীন নিয়ম", "আত্মবিরোধ নিয়ম", "হেতু নিয়ম"],
+    "correct": 2
+  },
+  {
+    "id": 23,
+    "q": "একটি বস্তু হয় সাদা হবে না হয় সাদা হবে না — এটি কোন নিয়ম?",
+    "options": ["মধ্যবর্জিত নিয়ম", "অভেদ নিয়ম", "বিরোধ নিয়ম", "পর্যাপ্ত কারণ নিয়ম"],
+    "correct": 0
+  },
+  {
+    "id": 24,
+    "q": "যুক্তিবিদ্যার উৎপত্তি কোথায়?",
+    "options": ["প্রাচীন মিশরে", "প্রাচীন গ্রিসে", "প্রাচীন ভারতে", "প্রাচীন রোমে"],
+    "correct": 1
+  },
+  {
+    "id": 25,
+    "q": "মধ্যযুগীয় যুক্তিবিদ্যার একজন বিখ্যাত দার্শনিক কে?",
+    "options": ["আল ফারাবি", "ডেকার্ট", "কান্ট", "মিল"],
+    "correct": 0
+  },
+  {
+    "id": 26,
+    "q": "আধুনিক যুক্তিবিদ্যার সূচনা কার হাত ধরে হয়?",
+    "options": ["অ্যারিস্টটল", "ফ্রান্সিস বেকন", "জন স্টুয়ার্ট মিল", "বার্ট্রান্ড রাসেল"],
+    "correct": 1
+  },
+  {
+    "id": 27,
+    "q": "'Novum Organum' গ্রন্থটির রচয়িতা কে?",
+    "options": ["অ্যারিস্টটল", "ফ্রান্সিস বেকন", "জোসেফ", "কোপি"],
+    "correct": 1
+  },
+  {
+    "id": 28,
+    "q": "আই. এম. কোপি যুক্তিবিদ্যাকে কী বলেছেন?",
+    "options": ["চিন্তার বিজ্ঞান", "বৈধ যুক্তি থেকে অবৈধ যুক্তির পার্থক্য করার পদ্ধতি ও নিয়মাবলী", "ভাষা বিজ্ঞান", "সত্যের বিজ্ঞান"],
+    "correct": 1
+  },
+  {
+    "id": 29,
+    "q": "যুক্তিবিদ্যার পরিসরের অন্তর্ভুক্ত কোনটি?",
+    "options": ["পদ ও শব্দ", "সংজ্ঞা ও বিভাগ", "অনুমান ও ব্যাখ্যা", "সব কয়টি"],
+    "correct": 3
+  },
+  {
+    "id": 30,
+    "q": "যুক্তিবিদ্যাকে 'কলা' হিসেবে অস্বীকার করেছেন কে?",
+    "options": ["মিল", "অলড্রিচ", "হ্যামিল্টন ও মনসেল", "হোয়েটলি"],
+    "correct": 2
+  },
+  {
+    "id": 31,
+    "q": "উদ্দীপকে যুক্তিবিদ্যার কোন রূপটি ফুটে উঠেছে (সিয়াম — বাস্তব দীক্ষা)?",
+    "options": ["বিজ্ঞান রূপ", "কলা রূপ", "তাত্ত্বিক রূপ", "কাল্পনিক রূপ"],
+    "correct": 1
+  },
+  {
+    "id": 32,
+    "q": "জে. এস. মিলের মতে যুক্তিবিদ্যা হলো —",
+    "options": ["বিজ্ঞান ও কলা উভয়ই", "কেবল বিজ্ঞান", "কেবল কলা", "না বিজ্ঞান না কলা"],
+    "correct": 0
+  },
+  {
+    "id": 33,
+    "q": "যুক্তিবিদ্যা পাঠের প্রধান উপযোগিতা কী?",
+    "options": ["স্মৃতিশক্তি বাড়ানো", "কুসংস্কার দূর করা ও কুযুক্তি পরিহার করা", "অর্থ উপার্জন", "সাহিত্য রচনা"],
+    "correct": 1
+  },
+  {
+    "id": 34,
+    "q": "যুক্তিবিদ্যা কোন ধরনের মানসিক চিন্তা নিয়ে কাজ করে?",
+    "options": ["অনিয়ন্ত্রিত চিন্তা", "কল্পনাপ্রসূত চিন্তা", "উদ্দেশ্যমূলক বা অনুমিত চিন্তা", "সংবেদনশীল চিন্তা"],
+    "correct": 2
+  },
+  {
+    "id": 35,
+    "q": "যুক্তিবিদ্যায় 'সত্য' কয় প্রকার?",
+    "options": ["১ প্রকার", "২ প্রকার", "৩ প্রকার", "৪ প্রকার"],
+    "correct": 1
+  },
+  {
+    "id": 36,
+    "q": "যুক্তিবিদ্যার সাথে ঘনিষ্ঠ সম্পর্কিত বিষয় কোনটি?",
+    "options": ["পদার্থবিদ্যা", "দর্শন", "রসায়ন", "উদ্ভিদবিদ্যা"],
+    "correct": 1
+  },
+  {
+    "id": 37,
+    "q": "'An Introduction to Logic' গ্রন্থটি কার লেখা?",
+    "options": ["কোপি", "জোসেফ", "মিল", "বেকন"],
+    "correct": 1
+  },
+  {
+    "id": 38,
+    "q": "যুক্তিবিদ্যা কোন বিজ্ঞান নয়?",
+    "options": ["আদর্শনিষ্ঠ", "বর্ণনামূলক বা বস্তুনিষ্ঠ", "চিন্তামূলক", "নিয়মনিষ্ঠ"],
+    "correct": 1
+  },
+  {
+    "id": 39,
+    "q": "অনুমানের অবয়ব বা উপাদানকে কী বলা হয়?",
+    "options": ["পদ", "বাক্য", "যুক্তি বাক্য", "সংযোজক"],
+    "correct": 2
+  },
+  {
+    "id": 40,
+    "q": "যুক্তিবিদ্যার মূল লক্ষ্য কী দূর করা?",
+    "options": ["সত্য", "ভ্রান্তি বা ভুল", "জ্ঞান", "সংশয়"],
+    "correct": 1
+  },
+  {
+    "id": 41,
+    "q": "দর্শন ও যুক্তিবিদ্যার মধ্যে সম্পর্ক কেমন?",
+    "options": ["বৈরী", "আংশিক", "অঙ্গাঙ্গী বা গভীর", "কোনো সম্পর্ক নেই"],
+    "correct": 2
+  },
+  {
+    "id": 42,
+    "q": "দর্শনের মূল শাখা কয়টি?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 1
+  },
+  {
+    "id": 43,
+    "q": "যুক্তিবিদ্যা দর্শনের কোন শাখার অন্তর্ভুক্ত?",
+    "options": ["জ্ঞানবিদ্যা", "অধিবিদ্যা", "মূল্যবিদ্যা", "সমাজবিদ্যা"],
+    "correct": 2
+  },
+  {
+    "id": 44,
+    "q": "দর্শনের আলোচ্য বিষয় কোনটি?",
+    "options": ["কেবল মানুষের চিন্তা", "জগত ও জীবনের সামগ্রিক রহস্য", "কেবল যুক্তি", "সংখ্যা ও প্রতীক"],
+    "correct": 1
+  },
+  {
+    "id": 45,
+    "q": "নীতিবিদ্যার (Ethics) মূল আদর্শ কোনটি?",
+    "options": ["সত্য", "সুন্দর", "পরম কল্যাণ বা সৎ", "যুক্তি"],
+    "correct": 2
+  },
+  {
+    "id": 46,
+    "q": "যুক্তিবিদ্যা ও নীতিবিদ্যা উভয়ই কোন ধরনের বিজ্ঞান?",
+    "options": ["বস্তুনিষ্ঠ বিজ্ঞান", "আদর্শনিষ্ঠ বিজ্ঞান", "প্রাকৃতিক বিজ্ঞান", "ব্যবহারিক বিজ্ঞান"],
+    "correct": 1
+  },
+  {
+    "id": 47,
+    "q": "নীতিবিদ্যা মানুষের কোন ধরনের আচরণ নিয়ে আলোচনা করে?",
+    "options": ["অনৈচ্ছিক ক্রিয়া", "ঐচ্ছিক আচরণ ও এর নৈতিক মূল্য", "জৈবিক প্রক্রিয়া", "অবচেতন মনের চিন্তা"],
+    "correct": 1
+  },
+  {
+    "id": 48,
+    "q": "নন্দনতত্ত্বের (Aesthetics) প্রধান আলোচ্য বিষয় কী?",
+    "options": ["যুক্তি", "সৌন্দর্য", "কল্যাণ", "ঈশ্বর"],
+    "correct": 1
+  },
+  {
+    "id": 49,
+    "q": "যুক্তিবিদ্যা, নীতিবিদ্যা ও নন্দনতত্ত্বকে একত্রে কী বলা হয়?",
+    "options": ["সমাজবিজ্ঞান", "মূল্যবিদ্যা (Normative Science)", "প্রাকৃতিক বিজ্ঞান", "বিশুদ্ধ বিজ্ঞান"],
+    "correct": 1
+  },
+  {
+    "id": 50,
+    "q": "মানুষের মানসিক প্রক্রিয়ার বিজ্ঞানসম্মত আলোচনা করে কোনটি?",
+    "options": ["যুক্তিবিদ্যা", "মনোবিজ্ঞান (Psychology)", "দর্শন", "সমাজবিজ্ঞান"],
+    "correct": 1
+  },
+  {
+    "id": 51,
+    "q": "মনোবিজ্ঞান কোন ধরনের বিজ্ঞান?",
+    "options": ["আদর্শনিষ্ঠ", "বর্ণনামূলক বা বস্তুনিষ্ঠ", "কাল্পনিক", "গাণিতিক"],
+    "correct": 1
+  },
+  {
+    "id": 52,
+    "q": "যুক্তিবিদ্যা ও মনোবিজ্ঞানের মধ্যে মূল পার্থক্য কোথায়?",
+    "options": ["একটি মন অন্যটি দেহ নিয়ে", "মনোবিজ্ঞান বর্ণনামূলক কিন্তু যুক্তিবিদ্যা আদর্শনিষ্ঠ", "যুক্তিবিদ্যা ব্যাপক মনোবিজ্ঞান সীমিত", "কোনো পার্থক্য নেই"],
+    "correct": 1
+  },
+  {
+    "id": 53,
+    "q": "গণিত ও যুক্তিবিদ্যার মধ্যে সাধারণ মিল কোথায়?",
+    "options": ["উভয়ই আকারগত বা প্রতীকী বিজ্ঞান", "উভয়ই পরীক্ষাগারে কাজ করে", "উভয়ই আবেগ নিয়ন্ত্রণ করে", "উভয়ই সমাজভিত্তিক"],
+    "correct": 0
+  },
+  {
+    "id": 54,
+    "q": "গাণিতিক বা প্রতীকী যুক্তিবিদ্যার সূচনা করেন কে?",
+    "options": ["অ্যারিস্টটল", "জন স্টুয়ার্ট মিল", "জর্জ বুল ও গটলোব ফ্রেগে", "ফ্রান্সিস বেকন"],
+    "correct": 2
+  },
+  {
+    "id": 55,
+    "q": "যুক্তিবিদ্যায় প্রতীকের ব্যবহার প্রথম কে শুরু করেন?",
+    "options": ["অ্যারিস্টটল", "বুল", "রাসেল", "লাইবনিজ"],
+    "correct": 0
+  },
+  {
+    "id": 56,
+    "q": "ল্যাটিন 'Terminus' শব্দ থেকে কোন বাংলা শব্দের উৎপত্তি?",
+    "options": ["বাক্য", "শব্দ", "পদ", "সংযোজক"],
+    "correct": 2
+  },
+  {
+    "id": 57,
+    "q": "'Terminus' শব্দের অর্থ কী?",
+    "options": ["চিন্তা", "সীমা বা প্রান্ত", "প্রকাশ", "অর্থযুক্ত বাক্য"],
+    "correct": 1
+  },
+  {
+    "id": 58,
+    "q": "যুক্তিবিদ্যায় 'পদ' বলতে কী বোঝায়?",
+    "options": ["যেকোনো শব্দ", "যা যুক্তিবাক্যের উদ্দেশ্য বা বিধেয় হিসেবে ব্যবহৃত হতে পারে", "ব্যাকরণের বিভক্তিযুক্ত শব্দ", "ক্রিয়াপদ"],
+    "correct": 1
+  },
+  {
+    "id": 59,
+    "q": "নিচের কোনটি একটি পদ?",
+    "options": ["এবং", "হায় হায়", "মানুষ", "ধীরে ধীরে"],
+    "correct": 2
+  },
+  {
+    "id": 60,
+    "q": "শব্দ প্রধানত কত প্রকার?",
+    "options": ["২ প্রকার", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"],
+    "correct": 1
+  },
+  {
+    "id": 61,
+    "q": "যে শব্দ অন্য কোনো শব্দের সাহায্য ছাড়াই নিজে নিজে কোনো যুক্তিবাক্যের উদ্দেশ্য বা বিধেয় হতে পারে তাকে কী বলে?",
+    "options": ["পদযোগ্য শব্দ (Categorematic)", "সহ-পদযোগ্য শব্দ (Syncategorematic)", "পদঅযোগ্য শব্দ (Acategorematic)", "যৌগিক শব্দ"],
+    "correct": 0
+  },
+  {
+    "id": 62,
+    "q": "নিচের কোনটি পদযোগ্য শব্দের উদাহরণ?",
+    "options": ["অথবা", "বই", "ছি ছি", "কিন্তু"],
+    "correct": 1
+  },
+  {
+    "id": 63,
+    "q": "যে শব্দ নিজে নিজে পদের যোগ্যতা অর্জন করতে পারে না, কিন্তু অন্য পদের সাথে যুক্ত হয়ে উদ্দেশ্য বা বিধেয় হতে পারে তাকে কী বলে?",
+    "options": ["পদযোগ্য शब्द", "সহ-পদযোগ্য শব্দ", "পদঅযোগ্য শব্দ", "মিশ্র শব্দ"],
+    "correct": 1
+  },
+  {
+    "id": 64,
+    "q": "নিচের কোনটি সহ-পদযোগ্য শব্দ?",
+    "options": ["কলম", "এবং", "আকাশ", "বাঃ"],
+    "correct": 1
+  },
+  {
+    "id": 65,
+    "q": "যে শব্দ কখনই কোনো যুক্তিবাক্যের উদ্দেশ্য বা বিধেয় হতে পারে তাকে কী বলে?",
+    "options": ["পদযোগ্য शब्द", "সহ-পদযোগ্য শব্দ", "পদনিরপেক্ষ শব্দ", "পদঅযোগ্য শব্দ"],
+    "correct": 3
+  },
+  {
+    "id": 66,
+    "q": "নিচের কোনটি পদঅযোগ্য শব্দের উদাহরণ?",
+    "options": ["খাতা", "খুব", "উঃ বা হায় হায়", "সুন্দর"],
+    "correct": 2
+  },
+  {
+    "id": 67,
+    "q": "একটি পদের কয়টি দিক থাকে?",
+    "options": ["১টি", "২টি", "৩টি", "৪টি"],
+    "correct": 1
+  },
+  {
+    "id": 68,
+    "q": "পদের সংখ্যার দিক বা পরিমাণের দিককে কী বলা হয়?",
+    "options": ["ব্যক্ত্যর্থ (Denotation)", "জাত্যর্থ (Connotation)", "গুণ", "উপলক্ষণ"],
+    "correct": 0
+  },
+  {
+    "id": 69,
+    "q": "পদের গুণের দিক বা আবশ্যিক বৈশিষ্ট্যের দিককে কী বলা হয়?",
+    "options": ["ব্যক্ত্যর্থ", "জাত্যর্থ", "বিধেয়", "লক্ষণ"],
+    "correct": 1
+  },
+  {
+    "id": 70,
+    "q": "মানুষ পদের জাত্যর্থ কোনটি?",
+    "options": ["ক্ষুধা ও তৃষ্ণা", "জীববৃত্তি ও বুদ্ধিবৃত্তি", "মরণশীলতা", "আকার ও রূপ"],
+    "correct": 1
+  },
+  {
+    "id": 71,
+    "q": "মানুষ পদের ব্যক্ত্যর্থ কোনটি?",
+    "options": ["সকল মানুষ", "মানুষের সততা", "মানুষের মরণশীলতা", "মানুষের বুদ্ধিমত্তা"],
+    "correct": 0
+  },
+  {
+    "id": 72,
+    "q": "ব্যক্ত্যর্থ ও জাত্যর্থের সম্পর্ক কেমন?",
+    "options": ["সমানুপাতিক", "বিপরীতমুখী বা হ্রাস-বৃদ্ধির সম্পর্ক", "কোনো সম্পর্ক নেই", "অপরিবর্তনীয়"],
+    "correct": 1
+  },
+  {
+    "id": 73,
+    "q": "যদি ব্যক্ত্যর্থ বাড়ে, তবে জাত্যর্থ —",
+    "options": ["বাড়ে", "কমে", "একই থাকে", "দ্বিগুণ হয়"],
+    "correct": 1
+  },
+  {
+    "id": 74,
+    "q": "যদি জাত্যর্থ বাড়ে, তবে ব্যক্ত্যর্থ —",
+    "options": ["বাড়ে", "কমে", "স্থির থাকে", "শূন্য হয়"],
+    "correct": 1
+  },
+  {
+    "id": 75,
+    "q": "কেবল ব্যক্ত্যর্থ আছে কিন্তু জাত্যর্থ নেই কোন পদের?",
+    "options": ["সাধারণ পদ", "বিশিষ্ট নামবাচক পদ (যেমন: ঢাকা, রহিম)", "গুণবাচক পদ", "যৌগিক পদ"],
+    "correct": 1
+  },
+  {
+    "id": 76,
+    "q": "কেবল জাত্যর্থ আছে কিন্তু ব্যক্ত্যর্থ নেই কোন পদের?",
+    "options": ["বস্তুবাচক পদ", "গুণবাচক পদ (যেমন: সততা, শুভ্রতা)", "জাতিবাচক পদ", "বিশিষ্ট পদ"],
+    "correct": 1
+  },
+  {
+    "id": 77,
+    "q": "যে পদের ব্যক্ত্যর্থ ও জাত্যর্থ উভয়ই বিদ্যমান তাকে কী বলে?",
+    "options": ["জাত্যর্থক পদ (Connotative term)", "অজাত্যর্থক পদ (Non-connotative)", "সরল পদ", "জটিল পদ"],
+    "correct": 0
+  },
+  {
+    "id": 78,
+    "q": "নিচের কোনটি জাত্যর্থক পদ?",
+    "options": ["রহিম", "সততা", "মানুষ", "ঢাকা"],
+    "correct": 2
+  },
+  {
+    "id": 79,
+    "q": "শব্দ ও পদের মধ্যে প্রধান পার্থক্য কী?",
+    "options": ["সব শব্দই পদ কিন্তু সব পদ শব্দ নয়", "সব পদই শব্দ কিন্তু সব শব্দ পদ নয়", "উভয়ের মধ্যে কোনো পার্থক্য নেই", "শব্দ বড়, পদ ছোট"],
+    "correct": 1
+  },
+  {
+    "id": 80,
+    "q": "একটি যুক্তিবাক্যে পদের অবস্থান কোথায় থাকে?",
+    "options": ["কেবল শুরুতে", "কেবল শেষে", "উদ্দেশ্য ও বিধেয় হিসেবে", "মাঝখানে সংযোজক হিসেবে"],
+    "correct": 2
+  },
+  {
+    "id": 81,
+    "q": "উদ্দীপকে 'সজীব' কোন শ্রেণির শব্দের অন্তর্গত (যা নিজে একা বসতে পারে না)?",
+    "options": ["পদযোগ্য", "সহ-পদযোগ্য", "পদঅযোগ্য", "অব্যয়"],
+    "correct": 1
+  },
+  {
+    "id": 82,
+    "q": "যুক্তিবাক্য কাকে বলে?",
+    "options": ["যেকোনো ব্যাকরণগত বাক্যকে", "দুটি পদের মধ্যে কোনো সম্পর্কের স্বীকৃতি বা অস্বীকৃতিমূলক বিবৃতি", "আবেগ প্রকাশকারী বাক্য", "প্রশ্নবোধক বাক্য"],
+    "correct": 1
+  },
+  {
+    "id": 83,
+    "q": "একটি আদর্শ যুক্তিবাক্যের কয়টি অংশ থাকে?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 1
+  },
+  {
+    "id": 84,
+    "q": "যুক্তিবাক্যের তিনটি অংশ কী কী?",
+    "options": ["কর্তা, কর্ম, ক্রিয়া", "উদ্দেশ্য, বিধেয়, সংযোজক", "আশ্রয়বাক্য, সিদ্ধান্ত, হেতুপদ", "শব্দ, পদ, বাক্য"],
+    "correct": 1
+  },
+  {
+    "id": 85,
+    "q": "যুক্তিবাক্যে যার সম্পর্কে কিছু বলা হয় তাকে কী বলে?",
+    "options": ["বিধেয়", "সংযোজক", "উদ্দেশ্য (Subject)", "লক্ষণ"],
+    "correct": 2
+  },
+  {
+    "id": 86,
+    "q": "উদ্দেশ্য সম্পর্কে যা কিছু বলা হয় তাকে কী বলে?",
+    "options": ["উদ্দেশ্য", "সংযোজক", "বিধেয় (Predicate)", "পদ"],
+    "correct": 2
+  },
+  {
+    "id": 87,
+    "q": "উদ্দেশ্য ও বিধেয়ের মধ্যকার সম্বন্ধ স্থাপনকারী চিহ্নকে কী বলে?",
+    "options": ["ক্রিয়া", "সংযোজক (Copula)", "অব্যয়", "পদ"],
+    "correct": 1
+  },
+  {
+    "id": 88,
+    "q": "যুক্তিবাক্যে সংযোজকটি সবসময় কোন কালের হতে হয়?",
+    "options": ["অতীত কাল", "বর্তমান কাল", "ভবিষ্যৎ কাল", "যেকোনো কাল"],
+    "correct": 1
+  },
+  {
+    "id": 89,
+    "q": "নিচের কোনটি যুক্তিবাক্যের সঠিক আকার?",
+    "options": ["মানুষ মরণশীল", "মানুষ হয় মরণশীল", "রহিম ভালো ছাত্র", "ফুলটি সুন্দর"],
+    "correct": 1
+  },
+  {
+    "id": 90,
+    "q": "গঠন বা গুণের দিক থেকে যুক্তিবাক্য কত প্রকার?",
+    "options": ["২ প্রকার (সদর্থক ও নর্থক)", "৩ প্রকার", "৪ প্রকার", "৫ প্রকার"],
+    "correct": 0
+  },
+  {
+    "id": 91,
+    "q": "পরিমাণের দিক থেকে যুক্তিবাক্য কত প্রকার?",
+    "options": ["৩ প্রকার", "২ প্রকার (সার্বিক ও বিশেষ)", "৪ প্রকার", "৫ প্রকার"],
+    "correct": 1
+  },
+  {
+    "id": 92,
+    "q": "গুণ ও পরিমাণের যৌথ ভিত্তিতে যুক্তিবাক্য কত প্রকার?",
+    "options": ["২ প্রকার", "৩ প্রকার", "৪ প্রকার (A, E, I, O)", "৬ প্রকার"],
+    "correct": 2
+  },
+  {
+    "id": 93,
+    "q": "'সার্বিক সদর্থক' যুক্তিবাক্যকে কোন প্রতীক দ্বারা প্রকাশ করা হয়?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 0
+  },
+  {
+    "id": 94,
+    "q": "'সার্বিক নর্থক' যুক্তিবাক্য কোনটি?",
+    "options": ["A যুক্তিবাক্য", "E যুক্তিবাক্য", "I যুক্তিবাক্য", "O যুক্তিবাক্য"],
+    "correct": 1
+  },
+  {
+    "id": 95,
+    "q": "'विशेष সদর্থক' যুক্তিবাক্যের প্রতীক কোনটি?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 2
+  },
+  {
+    "id": 96,
+    "q": "'বিশেষ নর্থক' যুক্তিবাক্যকে প্রকাশ করা হয় কোন অক্ষর দিয়ে?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 3
+  },
+  {
+    "id": 97,
+    "q": "\"সব মানুষ হয় মরণশীল\" — এটি কোন ধরনের যুক্তিবাক্য?",
+    "options": ["A যুক্তিবাক্য", "E যুক্তিবাক্য", "I যুক্তিবাক্য", "O যুক্তিবাক্য"],
+    "correct": 0
+  },
+  {
+    "id": 98,
+    "q": "\"কোনো মানুষ নয় অমর\" — এটি কোন যুক্তিবাক্যের উদাহরণ?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 1
+  },
+  {
+    "id": 99,
+    "q": "\"কিছু ছাত্র হয় মেধাবী\" — এটি কোন যুক্তিবাক্য?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 2
+  },
+  {
+    "id": 100,
+    "q": "\"কিছু ফুল নয় লাল\" — এটি কোন যুক্তিবাক্যের উদাহরণ?",
+    "options": ["A", "E", "I", "O"],
+    "correct": 3
+  },
+  {
+    "id": 101,
+    "q": "যুক্তিবাক্যে পদের 'ব্যাপ্যতা' (Distribution of Terms) বলতে কী বোঝায়?",
+    "options": ["পদের আংশিক ব্যক্ত্যর্থ গ্রহণ", "পদের সমগ্র ব্যক্ত্যর্থ বা পরিমাণের পূর্ণ প্রকাশ", "পদের গুণের প্রকাশ", "পদের পরিবর্তন"],
+    "correct": 1
+  },
+  {
+    "id": 102,
+    "q": "A যুক্তিবাক্যে কোন পদটি ব্যাপ্য হয়?",
+    "options": ["উদ্দেশ্য পদ", "বিধেয় পদ", "উভয় পদ", "কোনোটিই নয়"],
+    "correct": 0
+  },
+  {
+    "id": 103,
+    "q": "E যুক্তিবাক্যে কোন কোন পদ ব্যাপ্য হয়?",
+    "options": ["কেবল উদ্দেশ্য পদ", "কেবল বিধেয় পদ", "উদ্দেশ্য ও বিধেয় উভয় পদই", "কোনো পদই ব্যাপ্য নয়"],
+    "correct": 2
+  },
+  {
+    "id": 104,
+    "q": "I যুক্তিবাক্যে কোন পদটি ব্যাপ্য?",
+    "options": ["উদ্দেশ্য পদ", "বিধেয় পদ", "উভয় পদ", "কোনো পদই ব্যাপ্য নয় (উভয়ই অব্যাপ্য)"],
+    "correct": 3
+  },
+  {
+    "id": 105,
+    "q": "O যুক্তিবাক্যে কোন পদটি ব্যাপ্য হয়?",
+    "options": ["উদ্দেশ্য পদ", "বিধেয় পদ", "উভয় পদ", "কোনো পদই নয়"],
+    "correct": 1
+  },
+  {
+    "id": 106,
+    "q": "নর্থক (E, O) যুক্তিবাক্যের কোন পদটি সবসময় ব্যাপ্য হয়?",
+    "options": ["উদ্দেশ্য পদ", "বিধেয় পদ", "সংযোজক", "কোনোটিই নয়"],
+    "correct": 1
+  },
+  {
+    "id": 107,
+    "q": "সার্বিক (A, E) যুক্তিবাক্যের কোন পদটি সবসময় ব্যাপ্য হয়?",
+    "options": ["উদ্দেশ্য পদ", "বিধেয় পদ", "উভয় পদ", "আংশিক পদ"],
+    "correct": 0
+  },
+  {
+    "id": 108,
+    "q": "অ্যারিস্টটলের মতে বিধেয়ক (Predicables) কত প্রকার?",
+    "options": ["৩ প্রকার", "৪ প্রকার", "৫ প্রকার", "৬ প্রকার"],
+    "correct": 1
+  },
+  {
+    "id": 109,
+    "q": "যুক্তিবিদ পোরফিরি (Porphyry) এর মতে বিধেয়ক কত প্রকার?",
+    "options": ["৩ প্রকার", "৪ প্রকার", "৫ প্রকার", "৬ প্রকার"],
+    "correct": 2
+  },
+  {
+    "id": 110,
+    "q": "বিধেয়ক প্রধানত কার মধ্যে সম্পর্ক নির্দেশ করে?",
+    "options": ["দুটি বাক্যের", "উদ্দেশ্য ও বিধেয় পদের মধ্যকার সম্পর্ক", "দুটি পদের ব্যক্ত্যর্থ", "যুক্তির অবয়ব"],
+    "correct": 1
+  },
+  {
+    "id": 111,
+    "q": "নিচের কোনটি পোরফিরি প্রদত্ত বিধেয়কের প্রকারভেদ নয়?",
+    "options": ["জাতি ও উপজাতি", "লক্ষণ বা বিভেদক লক্ষণ", "উপলক্ষণ ও অবান্তর লক্ষণ", "সংজ্ঞা"],
+    "correct": 3
+  },
+  {
+    "id": 112,
+    "q": "যে পদটি তার চেয়ে উচ্চতর কোনো শ্রেণির অন্তর্ভুক্ত তাকে কী বলে?",
+    "options": ["জাতি (Genus)", "উপজাতি (Species)", "লক্ষণ", "অবান্তর লক্ষণ"],
+    "correct": 1
+  },
+  {
+    "id": 113,
+    "q": "যে গুণটি একটি উপজাতিকে তার সমগোত্রীয় অন্যান্য উপজাতি থেকে পৃথক করে তাকে কী বলে?",
+    "options": ["জাত্যর্থ", "বিভেদক লক্ষণ বা লক্ষণ (Differentia)", "উপলক্ষণ", "অবান্তর লক্ষণ"],
+    "correct": 1
+  },
+  {
+    "id": 114,
+    "q": "মানুষ পদের বিভেদক লক্ষণ কোনটি?",
+    "options": ["জীববৃত্তি", "বুদ্ধিবৃত্তি", "মরণশীলতা", "ক্ষুধা"],
+    "correct": 1
+  },
+  {
+    "id": 115,
+    "q": "যে গুণ জাত্যর্থের অংশ নয়, কিন্তু জাত্যর্থ থেকে অনিবার্যভাবে নিঃসৃত হয় তাকে কী বলে?",
+    "options": ["লক্ষণ", "উপলক্ষণ (Property)", "অবান্তর লক্ষণ", "উপজাতি"],
+    "correct": 1
+  },
+  {
+    "id": 116,
+    "q": "মানুষের 'মরণশীলতা' গুণটি কী ধরনের বিধেয়ক?",
+    "options": ["লক্ষণ", "উপলক্ষণ", "অবান্তর লক্ষণ", "জাতি"],
+    "correct": 1
+  },
+  {
+    "id": 117,
+    "q": "যে গুণ জাত্যর্থের অংশ নয় এবং জাত্যর্থ থেকে নিঃসৃতও হয় না তাকে কী বলে?",
+    "options": ["লক্ষণ", "উপলক্ষণ", "অবান্তর লক্ষণ (Accident)", "উপজাতি"],
+    "correct": 2
+  },
+  {
+    "id": 118,
+    "q": "মানুষের গায়ের রং, পোশাক বা জন্মস্থান কোন ধরনের লক্ষণের উদাহরণ?",
+    "options": ["বিভেদক লক্ষণ", "উপলক্ষণ", "অবান্তর লক্ষণ", "জাতিগত লক্ষণ"],
+    "correct": 2
+  },
+  {
+    "id": 119,
+    "q": "কোন যুক্তিবাক্যে বিধেয়ক থাকে না?",
+    "options": ["A বাক্যে", "E বাক্যে", "বিশিষ্ট নামবাচক উদ্দেশ্যবিশিষ্ট যুক্তিবাক্যে", "বিশেষ যুক্তিবাক্যে"],
+    "correct": 2
+  },
+  {
+    "id": 120,
+    "q": "পরম জাতি (Summum Genus) কাকে বলে?",
+    "options": ["যার উপরে আর কোনো জাতি নেই", "যার নিচে কোনো উপজাতি নেই", "মানুষ জাতিকে", "জীব শ্রেণিকে"],
+    "correct": 0
+  },
+  {
+    "id": 121,
+    "q": "তম উপজাতি (Infima Species) কাকে বলে?",
+    "options": ["যার উপরে কোনো জাতি নেই", "যার নিচে আর কোনো উপজাতি বা ক্ষুদ্রতর শ্রেণি নেই", "সর্বোচ্চ শ্রেণি", "মানুষ"],
+    "correct": 1
+  },
+  {
+    "id": 122,
+    "q": "যুক্তিবিদ্যায় 'অবয়ব' বা 'যুক্তি' মূলত কী দিয়ে গঠিত হয়?",
+    "options": ["শব্দ", "পদ", "যুক্তিবাক্য বা বচন (Propositions)", "সংযোজক"],
+    "correct": 2
+  },
+  {
+    "id": 123,
+    "q": "যুক্তির অবয়ব কয়টি?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 1
+  },
+  {
+    "id": 124,
+    "q": "সহানুমানের (Syllogism) তিনটি যুক্তিবাক্য কী কী?",
+    "options": ["উদ্দেশ্য, বিধেয় ও সংযোজক", "প্রধান আশ্রয়বাক্য, অপ্রধান আশ্রয়বাক্য ও সিদ্ধান্ত", "A, E, I বচন", "পূর্বগ ও অনুগ"],
+    "correct": 1
+  },
+  {
+    "id": 125,
+    "q": "সহানুমানে কয়টি পদ থাকে?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 1
+  },
+  {
+    "id": 126,
+    "q": "সহানুমানের তিনটি পদ কী কী?",
+    "options": ["উদ্দেশ্য, বিধেয় ও সংযোজক", "প্রধান পদ, অপ্রধান পদ ও মধ্যপদ (হেতুপদ)", "জাতি, উপজাতি ও লক্ষণ", "সরল, জটিল ও মিশ্র পদ"],
+    "correct": 1
+  },
+  {
+    "id": 127,
+    "q": "সিদ্ধান্তের বিধেয় পদকে কী বলা হয়?",
+    "options": ["অপ্রধান পদ (Minor term)", "প্রধান পদ (Major term)", "হেতুপদ (Middle term)", "বিধেয়ক"],
+    "correct": 1
+  },
+  {
+    "id": 128,
+    "q": "সিদ্ধান্তের উদ্দেশ্য পদকে কী বলা হয়?",
+    "options": ["প্রধান পদ", "অপ্রধান পদ", "হেতুপদ", "উদ্দেশ্য পদ"],
+    "correct": 1
+  },
+  {
+    "id": 129,
+    "q": "যে পদটি উভয় আশ্রয়বাক্যে থাকে কিন্তু সিদ্ধান্তে থাকে না তাকে কী বলে?",
+    "options": ["প্রধান পদ", "অপ্রধান পদ", "হেতুপদ বা মধ্যপদ", "লক্ষণ পদ"],
+    "correct": 2
+  },
+  {
+    "id": 130,
+    "q": "সহানুমানে হেতুপদের প্রধান কাজ কী?",
+    "options": ["সিদ্ধান্তকে ভুল প্রমাণ করা", "প্রধান ও অপ্রধান পদের মধ্যে সম্বন্ধ স্থাপন করা", "নতুন বাক্য তৈরি করা", "বাক্যের গুণ পরিবর্তন করা"],
+    "correct": 1
+  },
+  {
+    "id": 131,
+    "q": "অবরোহ অনুমানের সিদ্ধান্তটি আশ্রয়বাক্য থেকে কেমন হয়?",
+    "options": ["বেশি ব্যাপক হয়", "কম ব্যাপক বা সমান ব্যাপক হয়", "সম্পূর্ণ ভিন্ন হয়", "সবসময় মিথ্যা হয়"],
+    "correct": 1
+  },
+  {
+    "id": 132,
+    "q": "আরোহ অনুমানের সিদ্ধান্তটি সবসময় কেমন হয়?",
+    "options": ["আশ্রয়বাক্যের সমান হয়", "আশ্রয়বাক্য থেকে বেশি ব্যাপক হয়", "আকারগতভাবে সত্য হয়", "আংশিক সত্য হয়"],
+    "correct": 1
+  },
+  {
+    "id": 133,
+    "q": "সহানুমানের বৈধতার মৌলিক নিয়ম কয়টি?",
+    "options": ["৫টি", "৮টি", "১০টি", "১২টি"],
+    "correct": 2
+  },
+  {
+    "id": 134,
+    "q": "সহানুমানে হেতুপদকে অন্তত কয়বার ব্যাপ্য হতে হয়?",
+    "options": ["একবারও নয়", "অন্তত একবার", "দুইবার", "সবসময়"],
+    "correct": 1
+  },
+  {
+    "id": 135,
+    "q": "আশ্রয়বাক্যে অব্যাপ্য পদকে সিদ্ধান্তে ব্যাপ্য করলে কোন ধরনের অনুপপত্তি (Fallacy) ঘটে?",
+    "options": ["চারিপদ ঘটিত অনুপপত্তি", "অব্যাপ্য হেতুপদ অনুপপত্তি", "অবৈধ প্রধান বা অবৈধ অপ্রধান পদ অনুপপত্তি", "নর্থক আশ্রয়বাক্য অনুপপত্তি"],
+    "correct": 2
+  },
+  {
+    "id": 136,
+    "q": "দুটি নর্থক আশ্রয়বাক্য থেকে কী সিদ্ধান্ত পাওয়া যায়?",
+    "options": ["সদর্থক সিদ্ধান্ত", "নর্থক সিদ্ধান্ত", "কোনো বৈধ সিদ্ধান্ত পাওয়া যায় can", "সার্বিক সিদ্ধান্ত"],
+    "correct": 2
+  },
+  {
+    "id": 137,
+    "q": "সহানুমানের একটি আশ্রয়বাক্য বিশেষ বা নর্থক হলে সিদ্ধান্তটি কেমন হবে?",
+    "options": ["সার্বিক হবে", "বিশেষ বা নর্থক হবে", "উভয়ই হবে", "কোনো সিদ্ধান্ত আসবে না"],
+    "correct": 1
+  },
+  {
+    "id": 138,
+    "q": "সহানুমানের সংস্থান (Figure) কাকে বলে?",
+    "options": ["পদের আকারকে", "আশ্রয়বাক্যে হেতুপদের অবস্থান অনুযায়ী সহানুমানের যে আকার হয়", "যুক্তির সংখ্যাকে", "সিদ্ধান্তের গঠনকে"],
+    "correct": 1
+  },
+  {
+    "id": 139,
+    "q": "সহানুমানের সংস্থান মোট কত প্রকার বা কয়টি?",
+    "options": ["২টি", "৩টি", "৪টি", "৫টি"],
+    "correct": 2
+  },
+  {
+    "id": 140,
+    "q": "সহানুমানের প্রথম সংস্থানে হেতুপদের অবস্থান কোথায় থাকে?",
+    "options": ["প্রধান আশ্রয়বাক্যের উদ্দেশ্য এবং অপ্রধান আশ্রয়বাক্যের বিধেয়", "উভয় আশ্রয়বাক্যের বিধেয়", "উভয় আশ্রয়বাক্যের উদ্দেশ্য", "প্রধানের বিধেয় ও অপ্রধানের উদ্দেশ্য"],
+    "correct": 0
+  },
+  {
+    "id": 141,
+    "q": "সহানুমানের বৈধ মূর্তির (Valid Moods) মোট সংখ্যা কত?",
+    "options": ["১৬টি", "১৯টি", "২৪টি", "৬৪টি"],
+    "correct": 1
+  },
+  {
+    "id": 142,
+    "q": "'Barbara' কোন সংস্থানের একটি বৈধ মূর্তি?",
+    "options": ["প্রথম সংস্থান", "দ্বিতীয় সংস্থান", "তৃতীয় সংস্থান", "চতুর্থ সংস্থান"],
+    "correct": 0
+  },
+  {
+    "id": 143,
+    "q": "মিশ্র সহানুমানের একটি প্রকারভেদ কোনটি?",
+    "options": ["প্রাকল্পিক-নিরপেক্ষ সহানুমান (Hypothetical-Categorical)", "বিশুদ্ধ অবরোহ", "বৈজ্ঞানিক আরোহ", "সাধারণ অনুমান"],
+    "correct": 0
+  },
+  {
+    "id": 144,
+    "q": "প্রাকল্পিক যুক্তিবাক্যের কয়টি অংশ থাকে?",
+    "options": ["২টি (পূর্বগ ও অনুগ)", "৩টি", "৪টি", "৫টি"],
+    "correct": 0
+  },
+  {
+    "id": 145,
+    "q": "প্রাকল্পিক বচনের শর্তযুক্ত প্রথম অংশকে কী বলা হয়?",
+    "options": ["অনুগ (Consequent)", "পূর্বগ (Antecedent)", "হেতু", "সিদ্ধান্ত"],
+    "correct": 1
+  },
+  {
+    "id": 146,
+    "q": "প্রাকল্পিক বচনের দ্বিতীয় অংশ বা ফলাফলকে কী বলা হয়?",
+    "options": ["পূর্বগ", "অনুগ", "আশ্রয়", "পদ"],
+    "correct": 1
+  },
+  {
+    "id": 147,
+    "q": "আরোহ অনুমানের ভিত্তি কয়টি ও কী কী?",
+    "options": ["২টি (আকারগত ও বস্তুগত)", "৩টি (পদ, বাক্য ও যুক্তি)", "৪টি", "৫টি"],
+    "correct": 0
+  },
+  {
+    "id": 148,
+    "q": "অনুমান যখন ভাষায় প্রকাশিত হয় তখন তাকে কী বলে?",
+    "options": ["শব্দ", "পদ", "যুক্তি (Argument)", "প্রাকল্পিক"],
+    "correct": 2
+  },
+  {
+    "id": 149,
+    "q": "যুক্তি বা অনুমানের অংশ দুটি কী কী?",
+    "options": ["উদ্দেশ্য ও বিধেয়", "আশ্রয়বাক্য (Premise) ও সিদ্ধান্ত (Conclusion)", "পূর্বগ ও অনুগ", "ব্যক্ত্যর্থ ও জাত্যর্থ"],
+    "correct": 1
+  },
+  {
+    "id": 150,
+    "q": "যুক্তিবিদ্যার মূল কাজ হলো কোন যুক্তি থেকে কোন যুক্তিকে পৃথক করা?",
+    "options": ["কঠিন থেকে সহজ", "বৈধ যুক্তি থেকে অবৈধ যুক্তি", "বড় থেকে ছোট", "সত্য থেকে মিথ্যা"],
+    "correct": 1
+  }
+
+]
+
+
+let correctCount = 0;
+let wrongCount   = 0;
+let answered     = 0;
+let locked       = false;
+const total      = mcqData.length;
+const userAnswers = {}; // id → chosen index
+
+// ─── RENDER ───
+function render() {
+  const feed = document.getElementById('quiz-feed');
+  feed.innerHTML = '';
+
+  mcqData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${item.id}`;
+    card.style.animationDelay = `${Math.min(idx * 30, 400)}ms`;
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="q-num">প্রশ্ন ${item.id}</span>
+        <span class="q-status-icon" id="icon-${item.id}"></span>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options" id="opts-${item.id}">
+        ${item.options.map((opt, i) => `
+          <button class="opt" data-qid="${item.id}" data-idx="${i}" onclick="handleAnswer(${item.id}, ${i})">
+            <span style="color:var(--text-dim);margin-right:8px;font-size:0.8rem;">${String.fromCharCode(65+i)}.</span>${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${item.id}">
+        ✅ সঠিক উত্তর: <strong>${item.options[item.correct - 1]}</strong>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
+
+  updateProgress();
+}
+
+// ─── HANDLE ANSWER ───
+function handleAnswer(qid, chosenIdx) {
+  if (locked) return;
+
+  const item = mcqData.find(q => q.id === qid);
+  if (!item) return;
+
+  // already answered this question?
+  const wasAnswered = userAnswers[qid] !== undefined;
+  if (wasAnswered) return;
+
+  userAnswers[qid] = chosenIdx;
+  answered++;
+
+  const opts = document.querySelectorAll(`#opts-${qid} .opt`);
+  const isCorrect = chosenIdx === item.correct - 1;
+
+  // disable all options for this question
+  opts.forEach(btn => {
+    btn.disabled = true;
+    const idx = parseInt(btn.dataset.idx);
+    if (idx === item.correct - 1) btn.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    opts[chosenIdx].classList.add('wrong');
+  }
+
+  // ripple effect
+  addRipple(opts[chosenIdx]);
+
+  // status icon
+  const icon = document.getElementById(`icon-${qid}`);
+  icon.textContent = isCorrect ? '✅' : '❌';
+  document.getElementById(`card-${qid}`).classList.add('answered');
+
+  // update counters
+  if (isCorrect) {
+    correctCount++;
+    animateCount('correct-count', correctCount, 'green');
+  } else {
+    wrongCount++;
+    animateCount('wrong-count', wrongCount, 'red');
+  }
+
+  updateProgress();
+}
+
+// ─── RIPPLE ───
+function addRipple(btn) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+  r.style.cssText = `width:${size}px;height:${size}px;left:0;top:0;margin-left:${btn.offsetWidth/2 - size/2}px;margin-top:${btn.offsetHeight/2 - size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCount(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('pop');
+  void el.offsetWidth; // reflow
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(answered/total)*100}%`;
+}
+
+// ─── MASTER REVEAL ───
+function masterReveal() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById('reveal-btn');
+  btn.disabled = true;
+
+  const lockBadge = document.getElementById('lock-badge');
+  lockBadge.classList.add('visible');
+
+  // reveal all unanswered
+  mcqData.forEach(item => {
+    if (userAnswers[item.id] === undefined) {
+      const opts = document.querySelectorAll(`#opts-${item.id} .opt`);
+      opts.forEach(btn => {
+        btn.disabled = true;
+        if (parseInt(btn.dataset.idx) === item.correct - 1 ) btn.classList.add('correct');
+      });
+      const icon = document.getElementById(`icon-${item.id}`);
+      icon.textContent = '👁️';
+      document.getElementById(`card-${item.id}`).classList.add('answered');
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    } else {
+      document.getElementById(`exp-${item.id}`).classList.add('visible');
+    }
+  });
+
+  // show result banner
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('result-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('result-pct').textContent = `${pct}% সঠিক`;
+  const banner = document.getElementById('result-banner');
+  banner.classList.add('visible');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── SCROLL TO TOP ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>
