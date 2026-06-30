@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>বিলাসী — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · গল্প · TASIN SAIMON</span>
+  <h1>বিলাসী</h1>
+  <p class="byline">শরৎচন্দ্র চট্টোপাধ্যায়</p>
+  <p class="desc">মৃত্যুঞ্জয় ও বিলাসীর আত্মত্যাগ, তৎকালীন রক্ষণশীল সমাজব্যবস্থা এবং কুসংস্কারের বিরুদ্ধে মানবিক প্রেমের এক অনন্য আখ্যান — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>১০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৩</b><span>মূল চরিত্র</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/১০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        গ্রামের দরিদ্র ঘরের ছেলে সোবহান উচ্চবর্ণের এক ধনী পরিবারের মেয়েকে ভালোবেসে বিয়ে করায় সমাজপতিরা ক্ষুব্ধ হয়ে ওঠে। তারা সোবহানের পরিবারকে একঘরে করে দেয় এবং নানাভাবে মানসিক নির্যাতন চালায়। কিন্তু সমস্ত বাধা-বিপত্তি উপেক্ষা করে সোবহান ও তার স্ত্রী একে অপরের প্রতি বিশ্বস্ত থাকে এবং নিজেদের পরিশ্রমের মাধ্যমে এক নতুন সংসার গড়ে তোলে। সমাজের সংকীর্ণতা তাদের ভালোবাসাকে স্পর্শ করতে পারেনি।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'বিলাসী' গল্পটি প্রথম কোন পত্রিকায় প্রকাশিত হয়? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>শরৎচন্দ্র চট্টোপাধ্যায়ের 'বিলাসী' গল্পটি প্রথম <b>'ভারতী'</b> পত্রিকায় প্রকাশিত হয়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">"অতিকায় হস্তী লোপ পাইয়াছে কিন্তু তেলাপোকা টিকিয়া আছে"— উক্তিটি ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>উক্তিটির মাধ্যমে তৎকালীন সমাজব্যবস্থায় ছাত্রদের দীর্ঘ পথ হেঁটে স্কুলে যাওয়ার কষ্ট ও প্রতিকূল পরিবেশে টিকে থাকার বাস্তবতাকে বোঝানো হয়েছে।</p>
+            <p>লেখক তৎকালীন সময়ে চার-ক্রোশ পথ হেঁটে স্কুলে যাওয়ার কঠিন বাস্তবতার বর্ণনা দিতে গিয়ে এই ব্যঙ্গাত্মক তুলনাটি করেছেন। বড় বড় ও শক্তিশালী প্রাণীরা প্রতিকূলতায় বিলুপ্ত হয়ে গেলেও সাধারণ ও ক্ষুদ্র তেলাপোকারা টিকে থাকে। ঠিক তেমনি, এত কষ্টের পড়াশোনার ধকল সহ্য করে যারা টিকে থাকে, তারা অতি সাধারণ মানের হলেও একসময় সমাজের অংশ হিসেবে নিজেদের টিকিয়ে রাখে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের সমাজপতিদের মানসিকতা 'বিলাসী' গল্পের কোন দিকটিকে নির্দেশ করে? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের সমাজপতিদের অমানবিক মানসিকতা 'বিলাসী' গল্পের রক্ষণশীল হিন্দু সমাজের জাতপ্রথা ও নিষ্ঠুর সমাজ শাসনের দিকটিকে নির্দেশ করে।</span>
+            <p>'বিলাসী' গল্পে দেখা যায়, কায়স্থ বংশের ছেলে মৃত্যুঞ্জয় সাপুড়ের মেয়ে বিলাসীকে ভালোবেসে বিয়ে করায় গ্রামের সমাজপতি খুড়ো এবং অন্যান্যরা তীব্র ক্ষোভ প্রকাশ করে। তারা মৃত্যুঞ্জয়ের বাড়িতে চড়াও হয়ে তাকে মারধর করে এবং বিলাসীকে চরম অপমান করে গ্রাম থেকে তাড়িয়ে দেয়। সমাজের তথাকথিত জাত রক্ষার্থে তারা অত্যন্ত নিষ্ঠুর আচরণ করে।</p>
+            <p>উদ্দীপকের সোবহান ও তার স্ত্রীর ক্ষেত্রেও একই ঘটনা ঘটেছে, যেখানে ভিন্ন সামাজিক মর্যাদার কারণে সমাজপতিরা তাদের একঘরে করে মানসিক নির্যাতন চালায়। এই সংকীর্ণ ও নিষ্ঠুর আচরণ 'বিলাসী' গল্পের খুড়ো ও সমাজপতিদের অমানবিকতার সমান্তরাল।</p>
+            <p>সুতরাং বলা যায়, উদ্দীপকটি 'বিলাসী' গল্পের জাত্যভিমান ও সামাজিক নিষ্ঠুরতার বাস্তব রূপকে ফুটিয়ে তুলেছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপক ও 'বিলাসী' গল্প উভয়ের মূল সুরই হলো সমস্ত প্রতিকূলতার বিরুদ্ধে প্রেমের শাশ্বত জয়।"— মন্তব্যটির সার্থকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি সম্পূর্ণ যথার্থ।</span>
+            <p>'বিলাসী' গল্পে মৃত্যুঞ্জয় ও বিলাসীর প্রেম ছিল সামাজিক ও ধর্মীয় ভেদাভেদের ঊর্ধ্বে। বিলাসী নিজের জীবনের ঝুঁকি নিয়ে মরণাপন্ন মৃত্যুঞ্জয়কে সেবা দিয়ে সুস্থ করে তোলে। পরবর্তীতে সমাজ তাদের মেনে না নিয়ে নির্যাতন করলেও তারা নিজেদের ভালোবাসা থেকে বিচ্যুত হয়নি। সাপুড়ে জীবন বেছে নিয়ে তারা পরম সুখে দিন কাটিয়েছে, যা প্রমাণ করে তাদের প্রেমের গভীরতা ও আত্মমর্যাদা।</p>
+            <p>উদ্দীপকেও সোবহান ও তার স্ত্রী সমাজের নির্মম বাধা ও একঘরে করার সিদ্ধান্তকে তোয়াক্কা না করে একে অপরের প্রতি বিশ্বস্ত থেকেছে এবং কঠোর পরিশ্রমের মাধ্যমে নতুন সংসার গড়ে তুলেছে। সমাজের কোনো সংকীর্ণতাই তাদের আত্মিক বন্ধন ভাঙতে পারেনি।</p>
+            <p>উভয় প্রেক্ষাপটেই দেখা যায় যে, সমাজ ও চারপাশের মানুষের তৈরি করা কৃত্রিম দেয়াল ও নিষ্ঠুরতা শেষ পর্যন্ত সত্যিকারের ভালোবাসার কাছে হেরে যায়। বিলাসীর আত্মত্যাগ এবং উদ্দীপকের দম্পতির সংগ্রাম একই শাশ্বত সত্যকে প্রতিষ্ঠা করে।</p>
+            <p>অতএব, সমস্ত সামাজিক প্রতিকূলতা ও কুসংস্কারের বিরুদ্ধে ভালোবাসার এই অনন্য জয় উদযাপিত হওয়াই মন্তব্যটিকে সার্থক করে তোলে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">TASIN SAIMON</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ১০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+const DATA = [
+{n:1, q:"'বিলাসী' গল্পে মৃত্যুঞ্জয় কোন শ্রেণিতে পড়ত?", opts:["অষ্টম শ্রেণি","নবম শ্রেণি","দশম শ্রেণি","এন্ট্রান্স স্কুল"], correct:3},
+{n:2, q:"মৃত্যুঞ্জয়ের বাগানের আয়তন কত ছিল?", opts:["বিঘা দশেক","বিঘা পনেরো","বিঘা বিশেক","বিঘা পঁচিশ"], correct:2},
+{n:3, q:"মৃত্যুঞ্জয়কে কে সেবা করে সুস্থ করে তুলেছিল?", opts:["ন্যাড়া","খুড়ো","বিলাসী","গ্রামের কবিরাজ"], correct:2},
+{n:4, q:"'বিলাসী' গল্পে বিলাসী কোন সম্প্রদায়ের মেয়ে ছিল?", opts:["কায়স্থ","বৈদ্য","সাপুড়ে (বেদে)","চণ্ডাল"], correct:2},
+{n:5, q:"মৃত্যুঞ্জয়ের দূর সম্পর্কের আত্মীয় বা খুড়োর মূল উদ্দেশ্য কী ছিল?", opts:["মৃত্যুঞ্জয়কে সুস্থ করা","বাগানের অংশ দখল করা","বিলাসীকে সাহায্য করা","সমাজ সংস্কার"], correct:1},
+{n:6, q:"বিলাসী ও মৃত্যুঞ্জয় জীবিকা নির্বাহের জন্য কোন পেশা বেছে নিয়েছিল?", opts:["কৃষিকাজ","ব্যবসা","সাপ ধরা ও খেলা দেখানো","চাকরি"], correct:2},
+{n:7, q:"মৃত্যুঞ্জয় শেষ পর্যন্ত কীভাবে মারা যায়?", opts:["কলেরা রোগে","খুড়োর লাঠির আঘাতে","সাপের কামড়ে","অনাহারে"], correct:2},
+{n:8, q:"মৃত্যুঞ্জয়ের মৃত্যুর পর বিলাসী কী করেছিল?", opts:[" বাপের বাড়ি চলে যায়","অন্য গ্রামে আশ্রয় নেয়","আত্মহত্যা করে","সংসার ধর্ম পালন করে"], correct:2},
+{n:9, q:"'বিলাসী' গল্পের কথক বা ন্যারেটর কে?", opts:["শরৎচন্দ্র","মৃত্যুঞ্জয়","ন্যাড়া","খুড়ো"], correct:2},
+{n:10, q:"'বিলাসী' গল্পের মূল উপজীব্য বিষয় কোনটি?", opts:["সাপুড়েদের জীবনসংগ্রাম","তৎকালীন বাঙালি সমাজের সংকীর্ণতা ও কুসংস্কার","পল্লী প্রকৃতির রূপ বর্ণনা","পড়াশোনার কঠিন নিয়ম"], correct:1},
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

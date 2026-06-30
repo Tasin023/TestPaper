@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>জীবন ও বৃক্ষ — পাঠ পরিক্রমা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(40px, 8vw, 80px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:24px;
+    margin-bottom:18px;
+    box-shadow:0 6px 16px rgba(0,0,0,0.15);
+    border:1px solid var(--paper-line);
+  }
+  .qtext{
+    font-size:17px;
+    font-weight:600;
+    margin:0 0 16px;
+  }
+  .options{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  @media(min-width:600px){
+    .options{grid-template-columns:1fr 1fr;}
+  }
+  .opt{
+    background:rgba(0,0,0,0.03);
+    border:1px solid var(--paper-line);
+    padding:12px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    transition:all 0.2s ease;
+    display:flex;
+    align-items:center;
+  }
+  .opt:hover{background:var(--paper-dim);border-color:var(--brass);}
+  .opt.correct{background:rgba(62,107,76,0.15)!important;border-color:var(--green)!important;color:var(--green);font-weight:600;}
+  .opt.wrong{background:rgba(155,59,59,0.12)!important;border-color:var(--red)!important;color:var(--red);}
+
+  .subq{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    margin-bottom:20px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  }
+  .subq-head{
+    padding:18px 24px;
+    background:var(--paper-dim);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    user-select:none;
+  }
+  .subq-title{font-size:16.5px;font-weight:600;margin:0;}
+  .subq-toggle{font-size:14px;color:var(--maroon);font-weight:600;}
+  .subq-body{
+    padding:24px;
+    display:none;
+    border-top:1px solid var(--paper-line);
+  }
+  .subq.open .subq-body{display:block;}
+  .cq-ans{
+    background:rgba(0,0,0,0.02);
+    border-left:3px solid var(--maroon);
+    padding:14px 18px;
+    margin-top:12px;
+    font-size:15px;
+    border-radius:0 6px 6px 0;
+  }
+  .cq-label{font-weight:600;color:var(--maroon-deep);margin-bottom:4px;display:block;}
+
+  .hidden{display:none!important;}
+  #emptyState{
+    text-align:center;
+    padding:40px;
+    color:var(--text-on-ink-dim);
+    font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="ribbon"></div>
+  <div class="eyebrow">সাহিত্য পাঠ — একাদশ-দ্বাদশ শ্রেণি</div>
+  <h1>জীবন ও বৃক্ষ</h1>
+  <div class="byline">মোতাহের হোসেন চৌধুরী</div>
+  <div class="desc">বৃক্ষের বিকাশ ও সার্থকতা মানবজীবনের প্রকৃত মনুষ্যত্ব অর্জনের শ্রেষ্ঠ প্রতীক। নীরব সাধনা ও পরোপকারের মহৎ বার্তা নিয়ে সাজানো এই পাঠ পরিক্রমা।</div>
+  <div class="stat-row">
+    <div class="stat-pill"><b>১১২টি</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>১টি</b><span>সৃজনশীল মডেল</span></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <input type="search" id="search" placeholder="প্রশ্ন বা কিওয়ার্ড দিয়ে খুঁজুন..." />
+  <div class="score-badge">সঠিক উত্তর: <b id="score">০</b> / ১১২</div>
+  <button class="reset-btn" id="resetBtn">পুনরায় শুরু</button>
+</div>
+
+<div class="shell">
+
+  <div class="section-head" id="sec-cq">
+    <div class="num">১</div>
+    <h2>সৃজনশীল প্রশ্ন ও উত্তর (CQ)</h2>
+  </div>
+  
+  <div class="passage">
+    <span class="tag">উদ্দীপক</span>
+    তমাল মেধাবী। দেশের স্বনামধন্য মেডিকেল কলেজ থেকে ডাক্তারি পাশ করে ফিরে যান নিজ গ্রামে। প্রতিষ্ঠা করেন দাতব্য চিকিৎসালয়। শহরে প্র্যাকটিস করে অনেক টাকা রোজগারের পরিবর্তে নিজ গ্রামের সাধারণ মানুষের সেবাকে তিনি ব্রত হিসেবে গ্রহণ করলেন।
+  </div>
+
+  <div class="subq">
+    <div class="subq-head" data-toggle>
+      <h3 class="subq-title">ক. মোতাহের হোসেন চৌধুরী কাকে মনুষ্যত্বের প্রতীক করতে চেয়েছেন?</h3>
+      <span class="subq-toggle">উত্তর দেখুন</span>
+    </div>
+    <div class="subq-body">
+      <div class="cq-ans">
+        <span class="cq-label">উত্তর:</span>
+        মোতাহের হোসেন চৌধুরী বৃক্ষকে মনুষ্যত্বের প্রতীক করতে চেয়েছেন।
+      </div>
+    </div>
+  </div>
+
+  <div class="subq">
+    <div class="subq-head" data-toggle>
+      <h3 class="subq-title">খ. 'প্রকৃতির যে ধর্ম মানুষের সে ধর্ম'- উক্তিটি দ্বারা কী বোঝানো হয়েছে?</h3>
+      <span class="subq-toggle">উত্তর দেখুন</span>
+    </div>
+    <div class="subq-body">
+      <div class="cq-ans">
+        <span class="cq-label">উত্তর:</span>
+        উক্তিটি দ্বারা বোঝানো হয়েছে যে, প্রকৃতির মূল বৈশিষ্ট্য হলো নীরব বিকাশ ও সার্থকতা এবং মানবজীবনেরও আদর্শ হওয়া উচিত পরোপকার, সহনশীলতা ও আত্মিক বিকাশ সাধনের মাধ্যমে নিজেকে সার্থক করে তোলা।
+      </div>
+    </div>
+  </div>
+
+  <div class="subq">
+    <div class="subq-head" data-toggle>
+      <h3 class="subq-title">গ. উদ্দীপকের তমালের সাথে 'জীবন ও বৃক্ষ' প্রবন্ধের কার সাদৃশ্য আছে? ব্যাখ্যা করো।</h3>
+      <span class="subq-toggle">উত্তর দেখুন</span>
+    </div>
+    <div class="subq-body">
+      <div class="cq-ans">
+        <span class="cq-label">উত্তর:</span>
+        উদ্দীপকের তমালের সাথে 'জীবন ও বৃক্ষ' প্রবন্ধের 'বৃক্ষ'-এর সাদৃশ্য রয়েছে। প্রবন্ধ অনুসারে বৃক্ষ মাটি থেকে রস শোষণ করে নিজেকে বড় করে তোলে এবং ফুল ও ফলে সুশোভিত হয়ে তা মানবসমাজ ও প্রকৃতির কল্যাণে বিলিয়ে দেয়। তমালও তেমনি নিজেকে সুশিক্ষিত ও মেধাবী ডাক্তার হিসেবে গড়ে তুলেছেন এবং পরবর্তীতে শহরে বিপুল অর্থ উপার্জনের মোহ ত্যাগ করে নিজের সর্বস্ব দিয়ে গ্রামের সাধারণ মানুষের সেবাকে ব্রত হিসেবে গ্রহণ করেছেন। নিজের প্রাপ্তিকে অন্যের কল্যাণে উৎসর্গ করার এই মহান ব্রতের কারণেই তমালের জীবনচর্যা বৃক্ষের আদর্শকে প্রতিফলিত করে।
+      </div>
+    </div>
+  </div>
+
+  <div class="subq">
+    <div class="subq-head" data-toggle>
+      <h3 class="subq-title">ঘ. "উদ্দীপকের ভাবার্থ 'জীবন ও বৃক্ষ' প্রবন্ধের মূল সুরকে ধারণ করে" — উক্তিটির যথার্থতা মূল্যায়ন করো।</h3>
+      <span class="subq-toggle">উত্তর দেখুন</span>
+    </div>
+    <div class="subq-body">
+      <div class="cq-ans">
+        <span class="cq-label">উত্তর:</span>
+        উক্তিটি সম্পূর্ণ যথার্থ। 'জীবন ও বৃক্ষ' প্রবন্ধের মূল বক্তব্য হলো— মানুষের জীবনের সার্থকতা কেবল বেঁচে থাকা বা স্থূলভাবে খেয়ে-পরে টিকে থাকার মধ্যে নয়, বরং নিজের আত্মিক বিকাশ ঘটিয়ে সমাজ ও মানবতার কল্যাণে উৎসর্গ করার মধ্যে। উদ্দীপকের তমাল বিপুল টাকা উপার্জনের হাতছানি উপেক্ষা করে গ্রামীণ জনপদের চিকিৎসাবঞ্চিত মানুষের সেবায় আত্মনিবেদনের যে দৃষ্টান্ত স্থাপন করেছেন, তা প্রবন্ধের মূল দর্শন অর্থাৎ "যা তার প্রাপ্তি, তাই তার দান"— এই সত্যকে প্রমাণ করে। বৃক্ষের মতোই তমাল নিজের জীবনের সার্থকতা খুঁজে পেয়েছেন সেবাদানের মাঝে, যা এই প্রবন্ধের মূল শিক্ষাকেই সার্থকভাবে ধারণ করে।
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section-head" id="sec-mcq">
+    <div class="num">২</div>
+    <h2>বহুনির্বাচনি প্রশ্ন (MCQ)</h2>
+  </div>
+  <p class="section-sub">সঠিক অপশনটিতে ক্লিক করে আপনার উত্তর যাচাই করুন।</p>
+
+  <div id="mcqList">
+    
+    <div class="qcard" data-search="১ মোতাহের হোসেন চৌধুরী কাকে মনুষ্যত্বের প্রতীক করতে চেয়েছেন">
+      <p class="qtext">১. মোতাহের হোসেন চৌধুরী কাকে মনুষ্যত্বের প্রতীক করতে চেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীকে</div>
+        <div class="opt" data-correct="true">খ. বৃক্ষকে</div>
+        <div class="opt" data-correct="false">গ. ধর্মকে</div>
+        <div class="opt" data-correct="false">ঘ. আত্মাকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২ প্রকৃতির যে ধর্ম মানুষের সে ধর্ম উক্তিটি দ্বারা কী বোঝানো হয়েছে">
+      <p class="qtext">২. 'প্রকৃতির যে ধর্ম মানুষের সে ধর্ম'- উক্তিটি দ্বারা কী বোঝানো হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. পরোপকারিতা</div>
+        <div class="opt" data-correct="false">খ. সহনশীলতা</div>
+        <div class="opt" data-correct="false">গ. উদারতা</div>
+        <div class="opt" data-correct="true">ঘ. সংবেদনশীলতা</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <strong>নিচের উদ্দীপকটি পড়ে ৩ ও ৪ নম্বর প্রশ্নের উত্তর দাও:</strong><br>
+      তমাল মেধাবী। দেশের স্বনামধন্য মেডিকেল কলেজ থেকে ডাক্তারি পাশ করে ফিরে যান নিজ গ্রামে। প্রতিষ্ঠা করেন দাতব্য চিকিৎসালয়। শহরে প্র্যাকটিস করে অনেক টাকা রোজগারের পরিবর্তে নিজ গ্রামের সাধারণ মানুষের সেবাকে তিনি ব্রত হিসেবে গ্রহণ করলেন।
+    </div>
+
+    <div class="qcard" data-search="৩ উদ্দীপকের তমালের সাথে জীবন ও বৃক্ষ প্রবন্ধের কার সাদৃশ্য আছে">
+      <p class="qtext">৩. উদ্দীপকের তমালের সাথে 'জীবন ও বৃক্ষ' প্রবন্ধের কার সাদৃশ্য আছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বৃক্ষের</div>
+        <div class="opt" data-correct="false">খ. জীবনের</div>
+        <div class="opt" data-correct="false">গ. লেখকের</div>
+        <div class="opt" data-correct="false">ঘ. নদীর</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪ উদ্দীপকের ভাবার্থ নিচের কোন বাক্যে প্রকাশ পেয়েছে">
+      <p class="qtext">৪. উদ্দীপকের ভাবার্থ নিচের কোন বাক্যে প্রকাশ পেয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বৃদ্ধি কেবল দৈহিক নয়, আত্মিকও</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষ যে কেবল বৃদ্ধির ইশারা তা নয়, প্রশান্তিরও ইঙ্গিত</div>
+        <div class="opt" data-correct="true">গ. যা তার প্রাপ্তি তাই তার দান</div>
+        <div class="opt" data-correct="false">ঘ. নীরব ভাষায় বৃক্ষ আমাদের সার্থকতার গান শোনায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫ গোপন ও নীরব সাধনা কার মধ্যে অভিব্যক্ত">
+      <p class="qtext">৫. গোপন ও নীরব সাধনা কার মধ্যে অভিব্যক্ত?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বৃক্ষে</div>
+        <div class="opt" data-correct="false">খ. নদীতে</div>
+        <div class="opt" data-correct="false">গ. মানুষে</div>
+        <div class="opt" data-correct="false">ঘ. ফুলে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে পরিপূর্ণ">
+      <p class="qtext">৬. স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে কী পরিপূর্ণ?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. জগৎ</div>
+        <div class="opt" data-correct="true">খ. সংসার</div>
+        <div class="opt" data-correct="false">গ. সমাজ</div>
+        <div class="opt" data-correct="false">ঘ. দেশ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭ জীবন ও বৃক্ষ প্রবন্ধের স্রষ্টার উপভোগ্য কী">
+      <p class="qtext">৭. 'জীবন ও বৃক্ষ' প্রবন্ধের স্রষ্টার উপভোগ্য কী?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. মানবপ্রেম</div>
+        <div class="opt" data-correct="false">খ. সৃজনশীল ব্যক্তি</div>
+        <div class="opt" data-correct="true">গ. প্রেম ও সৌন্দর্য</div>
+        <div class="opt" data-correct="false">ঘ. আত্মারূপ ফল</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮ কোন বৃদ্ধি মানুষকে অন্য প্রাণী থেকে আলাদা করেছে">
+      <p class="qtext">৮. 'জীবন ও বৃক্ষ' প্রবন্ধে কোন বৃদ্ধি মানুষকে অন্য প্রাণী থেকে আলাদা করেছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সৃষ্টিশীল</div>
+        <div class="opt" data-correct="false">খ. সাধনালব্ধ</div>
+        <div class="opt" data-correct="false">গ. পরিপূর্ণ</div>
+        <div class="opt" data-correct="true">ঘ. আত্মিক</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯ সজীবতা ও সার্থকতা জীবন্ত দৃষ্টান্ত হিসেবে কীসের উল্লেখ">
+      <p class="qtext">৯. 'জীবন ও বৃক্ষ' প্রবন্ধে 'সজীবতা ও সার্থকতা'র জীবন্ত দৃষ্টান্ত হিসেবে কীসের উল্লেখ রয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. ফলের</div>
+        <div class="opt" data-correct="false">খ. ফুলের</div>
+        <div class="opt" data-correct="true">গ. বৃক্ষের</div>
+        <div class="opt" data-correct="false">ঘ. নদীর</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১০ মোতাহের হোসেন চৌধুরী বৃক্ষের জীবনের কোন দুটি জিনিস উপলব্ধি করার পক্ষপাতী">
+      <p class="qtext">১০. মোতাহের হোসেন চৌধুরী বৃক্ষের জীবনের কোন দুটি জিনিস উপলব্ধি করার পক্ষপাতী?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. সার্থকতা ও সজীবতা</div>
+        <div class="opt" data-correct="false">খ. গতি ও প্রকৃতি</div>
+        <div class="opt" data-correct="false">গ. গতি ও বিকাশ</div>
+        <div class="opt" data-correct="false">ঘ. ধৈর্য ও নীরবতা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১১ বৃক্ষ বৃদ্ধি ছাড়াও আর কীসের ইঙ্গিত বহন করে">
+      <p class="qtext">১১. বৃক্ষ বৃদ্ধি ছাড়াও আর কীসের ইঙ্গিত বহন করে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নির্মোহের</div>
+        <div class="opt" data-correct="false">খ. মাধুর্যের</div>
+        <div class="opt" data-correct="true">গ. প্রশান্তির</div>
+        <div class="opt" data-correct="false">ঘ. সরলতার</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১২ যারা প্রেম ও সৌন্দর্যের স্পর্শ লাভ করেনি তাদের একমাত্র দেবতা কে">
+      <p class="qtext">১২. 'জীবন ও বৃক্ষ' প্রবন্ধের বক্তব্য অনুযায়ী যারা প্রেম ও সৌন্দর্যের স্পর্শ লাভ করেনি তাদের একমাত্র দেবতা কে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নিষ্ঠুরতা</div>
+        <div class="opt" data-correct="false">খ. অহংকার</div>
+        <div class="opt" data-correct="true">গ. স্থূলবুদ্ধি</div>
+        <div class="opt" data-correct="false">ঘ. বিকৃতি</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৩ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে কোনটি পরিপূর্ণ">
+      <p class="qtext">১৩. স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে কোনটি পরিপূর্ণ?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. জগৎ</div>
+        <div class="opt" data-correct="false">খ. সমাজ</div>
+        <div class="opt" data-correct="true">গ. সংসার</div>
+        <div class="opt" data-correct="false">ঘ. দেশ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৪ নীরব ভাষায় বৃক্ষ আমাদের কীসের গান শোনায়">
+      <p class="qtext">১৪. নীরব ভাষায় বৃক্ষ আমাদের কীসের গান শোনায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সাম্যের</div>
+        <div class="opt" data-correct="true">খ. সার্থকতার</div>
+        <div class="opt" data-correct="false">গ. শান্তির</div>
+        <div class="opt" data-correct="false">ঘ. প্রীতির</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৫ বুদ্ধির মুক্তি আন্দোলনের সাথে কোন নামটি যুক্ত">
+      <p class="qtext">১৫. 'বুদ্ধির মুক্তি' আন্দোলনের সাথে কোন নামটি যুক্ত?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. মোতাহের হোসেন চৌধুরী</div>
+        <div class="opt" data-correct="false">খ. মুহম্মদ জাফর ইকবাল</div>
+        <div class="opt" data-correct="false">গ. আনিসুজ্জামান</div>
+        <div class="opt" data-correct="false">ঘ. আখতারুজ্জামান ইলিয়াস</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৬ বৃক্ষের পানে তাকিয়ে আমরা লাভবান হতে পারি কীভাবে">
+      <p class="qtext">১৬. 'বৃক্ষের পানে তাকিয়ে আমরা লাভবান হতে পারি'- কীভাবে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বৃক্ষকে অনুসরণ ও অনুকরণ করে</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষের মতো পরোপকারী হয়ে</div>
+        <div class="opt" data-correct="false">গ. প্রতিদিন বৃক্ষের বৃদ্ধি দেখে</div>
+        <div class="opt" data-correct="false">ঘ. বৃক্ষের ফুল-ফল ভোগ করে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৭ আত্মাকে মধুর ও পুষ্ট করে গড়ে তুলতে প্রয়োজন">
+      <p class="qtext">১৭. আত্মাকে মধুর ও পুষ্ট করে গড়ে তুলতে প্রয়োজন— i. বিচিত্র অভিজ্ঞতা ii. প্রচুর প্রেম iii. গভীর অনুভূতি। নিচের কোনটি সঠিক?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. i ও ii</div>
+        <div class="opt" data-correct="false">খ. i ও iii</div>
+        <div class="opt" data-correct="false">গ. ii ও iii</div>
+        <div class="opt" data-correct="true">ঘ. i, ii ও iii</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৮ জীবন ও বৃক্ষ প্রবন্ধ অনুসারে আত্মার পরিপুষ্টির জন্য প্রয়োজন">
+      <p class="qtext">১৮. 'জীবন ও বৃক্ষ' প্রবন্ধ অনুসারে আত্মার পরিপুষ্টির জন্য প্রয়োজন— i. বিচিত্র অভিজ্ঞতা ii. উচ্চশিক্ষা iii. গভীর সহানুভূতি। নিচের কোনটি সঠিক?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. i ও ii</div>
+        <div class="opt" data-correct="true">খ. i ও iii</div>
+        <div class="opt" data-correct="false">গ. ii ও iii</div>
+        <div class="opt" data-correct="false">ঘ. i, ii ও iii</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১৯ বৃক্ষের অঙ্কুরিত হওয়া থেকে ফলবান হওয়া পর্যন্ত সেখানে কেবলই">
+      <p class="qtext">১৯. বৃক্ষের অঙ্কুরিত হওয়া থেকে ফলবান হওয়া পর্যন্ত সেখানে কেবলই—</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নির্মাণের ইতিহাস</div>
+        <div class="opt" data-correct="false">খ. প্রতিষ্ঠার ইতিহাস</div>
+        <div class="opt" data-correct="false">গ. ক্রন্দনের ইতিহাস</div>
+        <div class="opt" data-correct="true">ঘ. বৃদ্ধির ইতিহাস</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২০ বৃক্ষের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি সহজ হয় কারণ">
+      <p class="qtext">২০. বৃক্ষের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি সহজ হয়, কারণ—</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বৃক্ষ হলো সার্থকতার প্রতীক</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষের দানে কোনো স্বার্থ নেই</div>
+        <div class="opt" data-correct="false">গ. বৃক্ষ থেকে নানা ঔষধ তৈরি হয়</div>
+        <div class="opt" data-correct="false">ঘ. বৃক্ষ নদীর মতোই বহমান</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২১ জীবন ও বৃক্ষ প্রবন্ধ অনুযায়ী মানুষের মর্যাদা কীসে">
+      <p class="qtext">২১. 'জীবন ও বৃক্ষ' প্রবন্ধ অনুযায়ী মানুষের মর্যাদা কীসে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. পরোপকারে</div>
+        <div class="opt" data-correct="true">খ. আত্মা তৈরির সক্ষমতায়</div>
+        <div class="opt" data-correct="false">গ. आत्मবৃদ্ধির ক্ষমতায়</div>
+        <div class="opt" data-correct="false">ঘ. আত্মোপলব্ধির ক্ষমতায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২২ নিচের কোনটিতে রবীন্দ্রনাথ ঠাকুরের সাহিত্যকর্মের উল্লেখ করা হয়েছে">
+      <p class="qtext">২২. নিচের কোনটিতে রবীন্দ্রনাথ ঠাকুরের সাহিত্যকর্মের উল্লেখ করা হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বিড়াল</div>
+        <div class="opt" data-correct="false">খ. চাষার দুক্ষু</div>
+        <div class="opt" data-correct="false">গ. আমার পথ</div>
+        <div class="opt" data-correct="true">ঘ. জীবন ও বৃক্ষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২৩ জীবন ও বৃক্ষ প্রবন্ধে রবীন্দ্রনাথ ঠাকুর নদীকে কীসের প্রতীক করতে চেয়েছেন">
+      <p class="qtext">২৩. 'জীবন ও বৃক্ষ' প্রবন্ধে রবীন্দ্রনাথ ঠাকুর নদীকে কীসের প্রতীক করতে চেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. মনুষ্যত্বের</div>
+        <div class="opt" data-correct="true">খ. গতির</div>
+        <div class="opt" data-correct="false">গ. সৌন্দর্যের</div>
+        <div class="opt" data-correct="false">ঘ. সার্থকতার</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২৪ জীবন ও বৃক্ষ প্রবন্ধে তপোবনপ্রেমিক রবীন্দ্রনাথ বলতে যা বোঝানো হয়েছে">
+      <p class="qtext">২৪. 'জীবন ও বৃক্ষ' প্রবন্ধে 'তপোবনপ্রেমিক রবীন্দ্রনাথ' বলতে যা বোঝানো হয়েছে—</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. অরণ্য ও বৃক্ষের বন্দনা</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষের বেদনা উপলব্ধি</div>
+        <div class="opt" data-correct="false">গ. নদী ও বৃক্ষের তুলনা</div>
+        <div class="opt" data-correct="false">ঘ. জীবনের গুঢ়ার্থ সন্ধান</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২৫ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে সংসার পরিপূর্ণ তাদের কাজ">
+      <p class="qtext">২৫. 'স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে সংসার পরিপূর্ণ।' তাদের কাজ— i. ভালো কাজে সহায়তা করা ii. ভালো কাজে অন্তরায় সৃষ্টি করা iii. অপরের নিন্দা রটানো। নিচের কোনটি সঠিক?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. i ও ii</div>
+        <div class="opt" data-correct="false">খ. i ও iii</div>
+        <div class="opt" data-correct="true">গ. ii ও iii</div>
+        <div class="opt" data-correct="false">ঘ. i, ii ও iii</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <strong>নিচের উদ্দীপকটি পড়ে ২৬ ও ২৭ নম্বর প্রশ্নের উত্তর দাও:</strong><br>
+      "নদী কভু পান নাহি করে নিজ জল<br>
+      তরুগণ নাহি খায় নিজ নিজ ফল<br>
+      গাভী কভু নাহি করে নিজ দুগ্ধ পান<br>
+      কাষ্ঠ দগ্ধ হয়ে করে পরে অন্ন দান<br>
+      সাধুর ঐশ্বর্য শুধু পরহিত তরে।"
+    </div>
+
+    <div class="qcard" data-search="২৬ উদ্দীপকটি জীবন ও বৃক্ষ প্রবন্ধের কোন দিকটির ইঙ্গিত করে">
+      <p class="qtext">২৬. উদ্দীপকটি 'জীবন ও বৃক্ষ' প্রবন্ধের কোন দিকটির ইঙ্গিত করে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. ত্যাগের</div>
+        <div class="opt" data-correct="false">খ. স্বার্থচিন্তার</div>
+        <div class="opt" data-correct="false">গ. অহংকারর</div>
+        <div class="opt" data-correct="false">ঘ. ভোগের</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২৭ উদ্দীপক ও জীবন ও বৃক্ষ প্রবন্ধের বৈসাদৃশ্য হলো">
+      <p class="qtext">২৭. উদ্দীপক ও 'জীবন ও বৃক্ষ' প্রবন্ধের বৈসাদৃশ্য হলো— i. অপরের অনিষ্ট সাধনে ii. সেবাদানে iii. স্বার্থপরতায়। নিচের কোনটি সঠিক?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. i ও ii</div>
+        <div class="opt" data-correct="true">খ. i ও iii</div>
+        <div class="opt" data-correct="false">গ. ii ও iii</div>
+        <div class="opt" data-correct="false">ঘ. i, ii ও iii</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <strong>নিচের উদ্দীপকটি পড় এবং ২৮ ও ২৯ নম্বর প্রশ্নের উত্তর দাও:</strong><br>
+      স্কুলশিক্ষক আবির জ্ঞানচর্চার মাধ্যমে নিজেকে যেমন সমৃদ্ধ করেছেন, তেমনি আলোকিত করেছেন শিক্ষার্থীদের।
+    </div>
+
+    <div class="qcard" data-search="২৮ উদ্দীপকের আবিরের জ্ঞানচর্চার মাধ্যমে নিজেকে সমৃদ্ধ করার সাথে জীবন ও বৃক্ষ প্রবন্ধের কোন বিষয়ের মিল রয়েছে">
+      <p class="qtext">২৮. উদ্দীপকের আবিরের জ্ঞানচর্চার মাধ্যমে নিজেকে সমৃদ্ধ করার সাথে 'জীবন ও বৃক্ষ' প্রবন্ধের কোন বিষয়ের মিল রয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীর সাগরে পতিত হওয়া</div>
+        <div class="opt" data-correct="false">খ. দৈহিক বিকাশ ঘটানো</div>
+        <div class="opt" data-correct="false">গ. মনুষ্যত্বের বেদনা উপলব্ধি</div>
+        <div class="opt" data-correct="true">ঘ. বৃক্ষের ফুলে-ফলে পরিপূর্ণ হওয়া</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="২৯ উদ্দীপকের ভাবের প্রতিফলন ঘটেছে জীবন ও বৃক্ষ প্রবন্ধের কোন ভূমিকায়">
+      <p class="qtext">২৯. উদ্দীপকের ভাবের প্রতিফলন ঘটেছে 'জীবন ও বৃক্ষ' প্রবন্ধের কোন ভূমিকায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. পরোপকারিতায়</div>
+        <div class="opt" data-correct="true">খ. প্রাপ্তি ও দানে</div>
+        <div class="opt" data-correct="false">গ. আত্মনিবেদনে</div>
+        <div class="opt" data-correct="false">ঘ. বিকাশ সাধনে</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <strong>নিচের উদ্দীপকটি পড়ে ৩০ ও ৩১ নম্বর প্রশ্নের উত্তর দাও:</strong><br>
+      স্কুলশিক্ষক দীপকবাবু জ্ঞানচর্চা করে নিজেকে সমৃদ্ধ করে তুলেছেন। অপরদিকে সে জ্ঞান শিক্ষার্থীর মাঝে বিলিয়ে দিয়ে আলোকিত করছেন তাদের জীবন।
+    </div>
+
+    <div class="qcard" data-search="৩০ স্কুলশিক্ষক দীপকবাবুর জ্ঞানচর্চা জীবন ও বৃক্ষ প্রবন্ধের কোন বিষয়ের ইঙ্গিত বহন করে">
+      <p class="qtext">৩০. স্কুলশিক্ষক দীপকবাবুর জ্ঞানচর্চা 'জীবন ও বৃক্ষ' প্রবন্ধের কোন বিষয়ের ইঙ্গিত বহন করে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. দৈহিক বিকাশ ঘটানো</div>
+        <div class="opt" data-correct="false">খ. মানবাত্মার পরিপুষ্টি সাধন করা</div>
+        <div class="opt" data-correct="false">গ. নদীর সাগরে পতিত হওয়া</div>
+        <div class="opt" data-correct="true">ঘ. বৃক্ষের ফুলে-ফলে পরিপূর্ণ হওয়া</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩১ উদ্দীপকের ভাবের প্রতিফলন জীবন ও বৃক্ষ প্রবন্ধের কোন ভূমিকায় দেখা যায়">
+      <p class="qtext">৩১. উদ্দীপকের ভাবের প্রতিফলন 'জীবন ও বৃক্ষ' প্রবন্ধের কোন ভূমিকায় দেখা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. আত্মনিবেদনে</div>
+        <div class="opt" data-correct="false">খ. সহিষ্ণুতায়</div>
+        <div class="opt" data-correct="false">গ. পরোপকারিতায়</div>
+        <div class="opt" data-correct="true">ঘ. প্রাপ্তি ও দানে</div>
+      </div>
+    </div>
+
+    <div class="passage">
+      <strong>নিচের উদ্দীপকটি পড়ে ৩২ নম্বর প্রশ্নের উত্তর দাও:</strong><br>
+      ছাত্র: বৃক্ষ থেকে আমরা কী শিখতে পারি? শিক্ষক: বৃক্ষ মানুষের পরম বন্ধু ও শিক্ষক। মাটি ফুঁড়ে নিজের জন্ম থেকে ফুলে-ফলে বিকশিত হওয়া পর্যন্ত সে মানুষকে শিক্ষা দিয়ে থাকে।
+    </div>
+
+    <div class="qcard" data-search="৩২ উদ্দীপকের উত্তিতে জীবন ও বৃক্ষ প্রবন্ধের নিচের কোন চরণটির অধিকতর মিল পাওয়া যায়">
+      <p class="qtext">৩২. উদ্দীপকের উত্তিতে 'জীবন ও বৃক্ষ' প্রবন্ধের নিচের কোন চরণটির অধিকতর মিল পাওয়া যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বৃক্ষের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি সহজ হয়</div>
+        <div class="opt" data-correct="false">খ. যা তার প্রাপ্তি তাই তার দান</div>
+        <div class="opt" data-correct="true">গ. বৃক্ষের অঙ্কুরিত হওয়া থেকে ফলবান হওয়া পর্যন্ত সেখানে কেবলই বৃদ্ধির ইতিহাস</div>
+        <div class="opt" data-correct="false">ঘ. নীরব ভাষায় বৃক্ষ আমাদের সার্থকতার গান গেয়ে শোনায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৩ মোতাহের হোসেন চৌধুরী কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন">
+      <p class="qtext">৩৩. মোতাহের হোসেন চৌধুরী কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. ১৯০১ খ্রিষ্টাব্দে</div>
+        <div class="opt" data-correct="false">খ. ১৯০২ খ্রিষ্টাব্দে</div>
+        <div class="opt" data-correct="true">গ. ১৯MD৩ খ্রিষ্টাব্দে</div>
+        <div class="opt" data-correct="false">ঘ. ১৯০৪ খ্রিষ্টাব্দে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৪ বুদ্ধির মুক্তি আন্দোলনের অন্যতম কাণ্ডারি ছিলেন কে">
+      <p class="qtext">৩৪. বুদ্ধির মুক্তি আন্দোলনের অন্যতম কাণ্ডারি ছিলেন কে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বঙ্কিমচন্দ্র চট্টোপাধ্যায়</div>
+        <div class="opt" data-correct="false">খ. শরৎচন্দ্র চট্টোপাধ্যায়</div>
+        <div class="opt" data-correct="false">গ. বিভূতিভূষণ বন্দ্যোপাধ্যায়</div>
+        <div class="opt" data-correct="true">ঘ. মোতাহের হোসেন চৌধুরী</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৫ মোতাহের হোসেন চৌধুরী বিশেষভাবে স্মরণীয় কোন আন্দোলনের জন্য">
+      <p class="qtext">৩৫. মোতাহের হোসেন চৌধুরী বিশেষভাবে স্মরণীয় কোন আন্দোলনের জন্য?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বুদ্ধির মুক্তি আন্দোলন</div>
+        <div class="opt" data-correct="false">খ. স্বদেশি আন্দোলন</div>
+        <div class="opt" data-correct="false">গ. ব্রিটিশবিরোধী আন্দোলন</div>
+        <div class="opt" data-correct="false">ঘ. ফরায়েজি আন্দোলন</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৬ সাহিত্য অঙ্গনে ও বাস্তব জীবনে মোতাহের হোসেন চৌধুরীর মধ্যে কোন বিষয়টি প্রতিফলিত হয়েছে">
+      <p class="qtext">৩৬. সাহিত্য অঙ্গনে ও বাস্তব জীবনে মোতাহের হোসেন চৌধুরীর মধ্যে কোন বিষয়টি প্রতিফলিত হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. মুক্তবুদ্ধি চেতনা</div>
+        <div class="opt" data-correct="false">খ. বিদ্রোহী চেতনা</div>
+        <div class="opt" data-correct="false">গ. প্রতিবাদী চেতনা</div>
+        <div class="opt" data-correct="false">ঘ. আধ্যাত্মিক চেতনা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৭ মোতাহের হোসেন চৌধুরী কোন লেখকের সহযোগী ছিলেন">
+      <p class="qtext">৩৭. মোতাহের হোসেন চৌধুরী কোন লেখকের সহযোগী ছিলেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. আবুল ফজল</div>
+        <div class="opt" data-correct="false">খ. সুকান্ত ভট্টাচার্য</div>
+        <div class="opt" data-correct="false">গ. শওকত ওসমান</div>
+        <div class="opt" data-correct="false">ঘ. আহসান হাবীব</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৮ মোতাহের হোসেন চৌধুরীর লেখনীতে কোন বিষয়টি প্রকাশ পেয়েছে">
+      <p class="qtext">৩৮. মোতাহের হোসেন চৌধুরীর লেখনীতে কোন বিষয়টি প্রকাশ পেয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বিদ্রোহী মনোভাব</div>
+        <div class="opt" data-correct="false">খ. অসাম্প্রদায়িকতা</div>
+        <div class="opt" data-correct="false">গ. প্রকৃতির বৈচিত্র্য</div>
+        <div class="opt" data-correct="true">ঘ. মননশীল চিন্তা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৩৯ সংস্কৃতি কথা গ্রন্থটি কে লিখেছেন">
+      <p class="qtext">৩৯. 'সংস্কৃতি কথা' গ্রন্থটি কে লিখেছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. মুহম্মদ জাফর ইকবাল</div>
+        <div class="opt" data-correct="false">খ. কাজী নজরুল ইসলাম</div>
+        <div class="opt" data-correct="false">গ. কাজী মোতাহের হোসেন</div>
+        <div class="opt" data-correct="true">ঘ. মোতাহের হোসেন চৌধুরী</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪০ Civilization গ্রন্থ অবলম্বনে রচিত মোতাহের হোসেন চৌধুরীর গ্রন্থ কোনটি">
+      <p class="qtext">৪০. 'Civilization' গ্রন্থ অবলম্বনে রচিত মোতাহের হোসেন চৌধুরীর গ্রন্থ কোনটি?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সুখ</div>
+        <div class="opt" data-correct="true">খ. সভ্যতা</div>
+        <div class="opt" data-correct="false">গ. সংস্কৃতি কথা</div>
+        <div class="opt" data-correct="false">ঘ. জীবন ও বৃক্ষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪১ Conquest of Happiness গ্রন্থের রচয়িতা কে">
+      <p class="qtext">৪১. 'Conquest of Happiness' গ্রন্থের রচয়িতা কে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বারট্রান্ড রাসেল</div>
+        <div class="opt" data-correct="false">ख. জিওফ্রে চসার</div>
+        <div class="opt" data-correct="false">গ. ডগলাস অ্যাগমস</div>
+        <div class="opt" data-correct="false">ঘ. উইলিয়াম মরিস</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪২ বারট্রান্ড রাসেলের গ্রন্থ অবলম্বনে মোতাহের হোসেন চৌধুরী রচিত গ্রন্থটির নাম কী">
+      <p class="qtext">৪২. বারট্রান্ড রাসেলের গ্রন্থ অবলম্বনে মোতাহের হোসেন চৌধুরী রচিত গ্রন্থটির নাম কী?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. সুখ</div>
+        <div class="opt" data-correct="false">খ. সভ্যতা</div>
+        <div class="opt" data-correct="false">গ. সংস্কৃতি কথা</div>
+        <div class="opt" data-correct="false">ঘ. আমাদের দৈন্য</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৩ কোন প্রতিষ্ঠান মোতাহের হোসেন চৌধুরীর প্রকাশিত ও অপ্রকাশিত সমস্ত লেখা রচনাবলি আকারে প্রকাশ করেছে">
+      <p class="qtext">৪৩. কোন প্রতিষ্ঠান মোতাহের হোসেন চৌধুরীর প্রকাশিত ও অপ্রকাশিত সমস্ত লেখা রচনাবলি আকারে প্রকাশ করেছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. বাংলা একাডেমি</div>
+        <div class="opt" data-correct="false">খ. এশিয়াটিক সোসাইটি</div>
+        <div class="opt" data-correct="false">গ. শিল্পকলা একাডেমি</div>
+        <div class="opt" data-correct="false">ঘ. ঢাকা বিশ্ববিদ্যালয় প্রকাশনা সংস্থা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৪ মোতাহের হোসেন চৌধুরী কত তারিখে মৃত্যুবরণ করেন">
+      <p class="qtext">৪৪. মোতাহের হোসেন চৌধুরী কত তারিখে মৃত্যুবরণ করেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. ১৯৫৬ সালের ১৭ সেপ্টেম্বর</div>
+        <div class="opt" data-correct="true">খ. ১৯৫৬ সালের ১৮ সেপ্টেম্বর</div>
+        <div class="opt" data-correct="false">গ. ১৯৫৬ সালের ১৯ সেপ্টেম্বর</div>
+        <div class="opt" data-correct="false">ঘ. ১৯৫৬ সালের ২০ সেপ্টেম্বর</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৫ জীবন ও বৃক্ষ প্রবন্ধে স্থূলবুদ্ধি বলতে কাকে বোঝানো হয়েছে">
+      <p class="qtext">৪৫. 'জীবন ও বৃক্ষ' প্রবন্ধে 'স্থূলবুদ্ধি' বলতে কাকে বোঝানো হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বুদ্ধিপ্রতিবন্ধীকে</div>
+        <div class="opt" data-correct="false">খ. অর্ধশিক্ষিতকে</div>
+        <div class="opt" data-correct="true">গ. সূক্ষ্মজ্ঞানের অভাবীকে</div>
+        <div class="opt" data-correct="false">ঘ. অনুদার মানুষকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৬ রফিক সাহেব তাঁর পরিবার নিয়ে অহংকার করেন আবার মাঝে মাঝে আন্তরিকতাশূন্য মানবপ্রেমের কথাও বলেন">
+      <p class="qtext">৪৬. রফিক সাহেব তাঁর পরিবার নিয়ে অহংকার করেন আবার মাঝে মাঝে আন্তরিকতাশূন্য মানবপ্রেমের কথাও বলেন। 'জীবন ও বৃক্ষ' প্রবন্ধের আলোকে রফিক সাহেবকে কী বলা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. স্থূলবুদ্ধিসম্পন্ন মানুষ</div>
+        <div class="opt" data-correct="false">খ. উদারচিত্ত মানুষ</div>
+        <div class="opt" data-correct="false">গ. সূক্ষ্মবুদ্ধিসম্পন্ন মানুষ</div>
+        <div class="opt" data-correct="false">ঘ. মনুষ্যত্ববোধসম্পন্ন মানুষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৭ আমাদের জগৎ সংসারের মানুষগুলো কেমন">
+      <p class="qtext">৪৭. আমাদের জগৎ সংসারের মানুষগুলো কেমন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নিরীহ</div>
+        <div class="opt" data-correct="false">খ. চালাক</div>
+        <div class="opt" data-correct="true">গ. জবরদস্তিপ্রিয়</div>
+        <div class="opt" data-correct="false">ঘ. বোকা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৮ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষেরা মাঝে মাঝে কীসের কথা বলে">
+      <p class="qtext">৪৮. স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষেরা মাঝে মাঝে কীসের কথা বলে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. আত্মার</div>
+        <div class="opt" data-correct="true">খ. মানবপ্রেমের</div>
+        <div class="opt" data-correct="false">গ. প্রেরণার</div>
+        <div class="opt" data-correct="false">ঘ. সম্ভাবনার</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৪৯ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে সংসার পরিপূর্ণ উক্তিটিতে প্রাবন্ধিক স্বল্পপ্রাণ বলতে কী ধরনের মানুষকে বুঝিয়েছেন">
+      <p class="qtext">৪৯. 'স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষে সংসার পরিপূর্ণ'- উক্তিটিতে প্রাবন্ধিক 'স্বল্পপ্রাণ' বলতে কী ধরনের মানুষকে বুঝিয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. যারা ক্ষুদ্রমনা</div>
+        <div class="opt" data-correct="false">খ. যারা প্রাণহীন</div>
+        <div class="opt" data-correct="false">গ. যারা স্বল্পায়ু</div>
+        <div class="opt" data-correct="false">ঘ. যারা পরশ্রীকাতর</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫০ জসিম সবসময় গায়ের জোরে কাজ হাসিলের চেষ্টা করে জীবন ও বৃক্ষ প্রবন্ধের আলোকে জসিমকে কী বলা যায়">
+      <p class="qtext">৫০. জসিম সবসময় গায়ের জোরে কাজ হাসিলের চেষ্টা করে। 'জীবন ও বৃক্ষ' প্রবন্ধের আলোকে জসিমকে কী বলা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. স্বল্পপ্রাণ মানুষ</div>
+        <div class="opt" data-correct="false">খ. বিবেকহীন মানুষ</div>
+        <div class="opt" data-correct="false">গ. সূক্ষ্মবুদ্ধিহীন মানুষ</div>
+        <div class="opt" data-correct="true">ঘ. জবরদস্তিপ্রিয় মানুষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫১ নিজের নাক কেটে পরের যাত্রা ভঙ্গ করার লোকের অভাব নেই সমাজে জীবন ও বৃক্ষ প্রবন্ধানুসারে এ লোকদের কী বলা যায়">
+      <p class="qtext">৫১. 'নিজের নাক কেটে পরের যাত্রা ভঙ্গ করার লোকের অভাব নেই সমাজে।' 'জীবন ও বৃক্ষ' প্রবন্ধানুসারে এ লোকদের কী বলা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নিগ্রহকারী</div>
+        <div class="opt" data-correct="false">খ. ক্ষমতালোভী</div>
+        <div class="opt" data-correct="false">গ. দাম্ভিক</div>
+        <div class="opt" data-correct="true">ঘ. জবরদস্তিপ্রিয়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫২ অপরের সার্থকতার পথে অন্তরায় সৃষ্টি করা কার কাজ">
+      <p class="qtext">৫２. অপরের সার্থকতার পথে অন্তরায় সৃষ্টি করা কার কাজ?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. দস্যুপ্রবৃত্তির মানুষের</div>
+        <div class="opt" data-correct="false">খ. দাঙ্গাবাজ মানুষের</div>
+        <div class="opt" data-correct="true">গ. জবরদস্তিপ্রিয় মানুষের</div>
+        <div class="opt" data-correct="false">ঘ. আগ্রাসী চরিত্রের মানুষের</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৩ জীবন ও বৃক্ষ প্রবন্ধানুসারে অহংকার কোন শ্রেণির মানুষের দেবতা">
+      <p class="qtext">৫৩. 'জীবন ও বৃক্ষ' প্রবন্ধানুসারে অহংকার কোন শ্রেণির মানুষের দেবতা?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. নিষ্ঠুর ও বিকৃতবুদ্ধি</div>
+        <div class="opt" data-correct="false">খ. শান্ত ও অসহায়</div>
+        <div class="opt" data-correct="false">গ. গরিব ও গৃহহীন</div>
+        <div class="opt" data-correct="false">ঘ. অলস ও অকর্মণ্য</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৪ মোতাহের হোসেন চৌধুরীর মতে এ সংসারে কয় শ্রেণির মানুষ লক্ষণীয়">
+      <p class="qtext">৫৪. মোতাহের হোসেন চৌধুরীর মতে এ সংসারে কয় শ্রেণির মানুষ লক্ষণীয়?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. ২</div>
+        <div class="opt" data-correct="false">খ. ৩</div>
+        <div class="opt" data-correct="false">গ. ৪</div>
+        <div class="opt" data-correct="false">ঘ. ৫</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৫ লিমা অন্যের ভালো দেখলে তার ক্ষতি করার চেষ্টা করে জীবন ও বৃক্ষ রচনা অনুসারে তার একমাত্র দেবতা কোনটি">
+      <p class="qtext">৫৫. লিমা অন্যের ভালো দেখলে তার ক্ষতি করার চেষ্টা করে। 'জীবন ও বৃক্ষ' রচনা অনুসারে তার একমাত্র দেবতা কোনটি?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বিক্ষোভ</div>
+        <div class="opt" data-correct="true">খ. অহংকার</div>
+        <div class="opt" data-correct="false">গ. আনন্দ</div>
+        <div class="opt" data-correct="false">ঘ. বিনয়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৬ মোতাহের হোসেন চৌধুরীর মতে স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষের একমাত্র দেবতা হলো">
+      <p class="qtext">৫৬. মোতাহের হোসেন চৌধুরীর মতে স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষের একমাত্র দেবতা হলো—</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. অহংকার</div>
+        <div class="opt" data-correct="false">খ. স্বার্থপরতা</div>
+        <div class="opt" data-correct="false">গ. পরিপক্কতা</div>
+        <div class="opt" data-correct="false">ঘ. বেদনা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৭ জীবন ও বৃক্ষ প্রবন্ধে প্রাবন্ধিক কয় ধরনের অহंকারের কথা বলেছেন">
+      <p class="qtext">৫৭. 'জীবন ও বৃক্ষ' প্রবন্ধে প্রাবন্ধিক কয় ধরনের অহংকারের কথা বলেছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. ৪</div>
+        <div class="opt" data-correct="true">খ. ২</div>
+        <div class="opt" data-correct="false">গ. ৩</div>
+        <div class="opt" data-correct="false">ঘ. ৫</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৮ জীবন ও বৃক্ষ প্রবন্ধে নিশান শব্দটি কী অর্থে ব্যবহৃত হয়েছে">
+      <p class="qtext">৫৮. 'জীবন ও বৃক্ষ' প্রবন্ধে 'নিশান' শব্দটি কী অর্থে ব্যবহৃত হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. চিহ্ন</div>
+        <div class="opt" data-correct="true">খ. পতাকা</div>
+        <div class="opt" data-correct="false">গ. লক্ষ্য</div>
+        <div class="opt" data-correct="false">ঘ. পরিচয়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৫৯ স্থূলবুদ্ধির মানুষদের মানবপ্রেমের কথায় নেশা ধরে না কেন">
+      <p class="qtext">৫৯. স্থূলবুদ্ধির মানুষদের মানবপ্রেমের কথায় নেশা ধরে না কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. তারা অতিমাত্রায় অহংকারী বলে</div>
+        <div class="opt" data-correct="false">খ. তারা লোভী, হীন ও স্বার্থপর বলে</div>
+        <div class="opt" data-correct="true">গ. তাদের নিজেদের মধ্যে মানবপ্রেম নেই বলে</div>
+        <div class="opt" data-correct="false">ঘ. তাদের মুখে মানবপ্রেমের কথা মানায় না বলে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬০ জীবন ও বৃক্ষ প্রবন্ধে আন্তরিকতাশূন্য ও উপলব্ধিহীন বুলি বলতে লেখক কাদের কথাকে বুঝিয়েছেন">
+      <p class="qtext">৬০. 'জীবন ও বৃক্ষ' প্রবন্ধে 'আন্তরিকতাশূন্য ও উপলব্ধিহীন বুলি' বলতে লেখক কাদের কথাকে বুঝিয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. স্বল্পপ্রাণ</div>
+        <div class="opt" data-correct="false">খ. গভীরচিত্ত</div>
+        <div class="opt" data-correct="false">গ. সূক্ষ্মবুদ্ধি</div>
+        <div class="opt" data-correct="false">ঘ. উদার হৃদয়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬১ স্বল্পপ্রাণ স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষের স্থানে কেমন মানুষ আনতে হবে">
+      <p class="qtext">৬১. স্বল্পপ্রাণ, স্থূলবুদ্ধি ও জবরদস্তিপ্রিয় মানুষের স্থানে কেমন মানুষ আনতে হবে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. শিক্ষিত</div>
+        <div class="opt" data-correct="false">খ. বুদ্ধিজীবী</div>
+        <div class="opt" data-correct="false">গ. শ্রমজীবী</div>
+        <div class="opt" data-correct="true">ঘ. বড়ো মানুষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬২ জীবন ও বৃক্ষ প্রবন্ধে লেখক বড়ো মানুষ বলতে বুঝিয়েছেন যে বড়ো হয়েছে">
+      <p class="qtext">৬২. 'জীবন ও বৃক্ষ' প্রবন্ধে লেখক বড়ো মানুষ বলতে বুঝিয়েছেন যে বড়ো হয়েছে—</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. জ্ঞানে</div>
+        <div class="opt" data-correct="false">খ. চিন্তায়</div>
+        <div class="opt" data-correct="true">গ. মনে</div>
+        <div class="opt" data-correct="false">ঘ. চেতনায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৩ যাঁর হৃদয় উদার তাঁর কাছে জীবনের কোন জিনিসটি বড়ো">
+      <p class="qtext">৬৩. যাঁর হৃদয় উদার তাঁর কাছে জীবনের কোন জিনিসটি বড়ো?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সার্থকতা</div>
+        <div class="opt" data-correct="false">খ. গতি</div>
+        <div class="opt" data-correct="true">গ. বিকাশ</div>
+        <div class="opt" data-correct="false">ঘ. সমৃদ্ধি</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৪ সূক্ষ্মবুদ্ধি উদার হৃদয় ও গভীরচিত্ত ব্যক্তিদের কাছে কোন জিনিসটি জীবনের জন্য গুরুত্বপূর্ণ">
+      <p class="qtext">৬৪. সূক্ষ্মবুদ্ধি, উদার হৃদয় ও গভীরচিত্ত ব্যক্তিদের কাছে কোন জিনিসটি জীবনের জন্য গুরুত্বপূর্ণ?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সার্থকতা</div>
+        <div class="opt" data-correct="true">খ. বিকাশ</div>
+        <div class="opt" data-correct="false">গ. অহংকার</div>
+        <div class="opt" data-correct="false">ঘ. আত্মমর্যাদা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৫ রোমানের ধারণা তিনবেলা পেটপুরে খেতে পেলে আর ঠিকঠাক মতো ঘুমাতে পারলেই জীবন সার্থক হয় জীবন ও বৃক্ষ রচনা অবলম্বনে রোমান সম্পর্কে কোনটি ঠিক">
+      <p class="qtext">৬৫. রোমানের ধারণা, তিনবেলা পেটপুরে খেতে পেলে আর ঠিকঠাক মতো ঘুমাতে পারলেই জীবন সার্থক হয়। 'জীবন ও বৃক্ষ' রচনা অবলম্বনে রোমান সম্পর্কে কোনটি ঠিক?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. জীবনের সঠিক অর্থ বুঝতে পেরেছে</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষের জীবনাদর্শ অনুসরণ করছে</div>
+        <div class="opt" data-correct="true">গ. টিকে থাকাকেই জীবনের সার্থকতা ভেবেছে</div>
+        <div class="opt" data-correct="false">ঘ. অপরের সার্থকতার পথে বাধা সৃষ্টি করেছে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৬ জীবন ও বৃক্ষ প্রবন্ধে প্রাবন্ধিক মানুষের কোন দিকটির প্রতি গুরুত্ব দিয়েছেন">
+      <p class="qtext">৬৬. 'জীবন ও বৃক্ষ' প্রবন্ধে প্রাবন্ধিক মানুষের কোন দিকটির প্রতি গুরুত্ব দিয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সাধনা</div>
+        <div class="opt" data-correct="true">খ. বিকাশ সাধন</div>
+        <div class="opt" data-correct="false">গ. কর্মমুখিতা</div>
+        <div class="opt" data-correct="false">ঘ. সৌন্দর্যপ্রীতি</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৭ জীবন ও বৃক্ষ প্রবন্ধে বড়ো মানুষদের কাছে জীবনাদর্শের প্রতীক কী">
+      <p class="qtext">৬৭. 'জীবন ও বৃক্ষ' প্রবন্ধে বড়ো মানুষদের কাছে জীবনাদর্শের প্রতীক কী?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নিষ্প্রাণ বৃক্ষ</div>
+        <div class="opt" data-correct="true">খ. সজীব বৃক্ষ</div>
+        <div class="opt" data-correct="false">গ. ফুলশোভিত বৃক্ষ</div>
+        <div class="opt" data-correct="false">ঘ. শাখা-প্রশাখাযুক্ত বৃক্ষ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৮ গাছ তার বৃদ্ধি ও বিকাশের মাধ্যমে মানবজাতিকে শিক্ষা প্রদান করে এ বিষয়টি তোমার পঠিত কোন রচনাকে নির্দেশ করে">
+      <p class="qtext">৬৮. গাছ তার বৃদ্ধি ও বিকাশের মাধ্যমে মানবজাতিকে শিক্ষা প্রদান করে। এ বিষয়টি তোমার পঠিত কোন রচনাকে নির্দেশ করে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. আমার পথ</div>
+        <div class="opt" data-correct="false">খ. চাষার দুক্ষু</div>
+        <div class="opt" data-correct="true">গ. জীবন ও বৃক্ষ</div>
+        <div class="opt" data-correct="false">ঘ. জাদুঘরে কেন যাব</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৬৯ বৃক্ষের জীবনের কোন দুটি জিনিস উপলব্ধি করার পক্ষপাতী">
+      <p class="qtext">৬৯. বৃক্ষের জীবনের কোন দুটি জিনিস উপলব্ধি করার পক্ষপাতী?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. স্থির ও মৌনতা</div>
+        <div class="opt" data-correct="true">খ. সার্থকতা ও সজীবতা</div>
+        <div class="opt" data-correct="false">গ. গতি ও প্রকৃতি</div>
+        <div class="opt" data-correct="false">ঘ. গতি ও বিকাশ</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭০ প্রাবন্ধিকের মতে কীসের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি করা সহজ হয়">
+      <p class="qtext">৭০. প্রাবন্ধিকের মতে, কীসের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি করা সহজ হয়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সমুদ্রের</div>
+        <div class="opt" data-correct="true">খ. বৃক্ষের</div>
+        <div class="opt" data-correct="false">গ. আকাশের</div>
+        <div class="opt" data-correct="false">ঘ. নদীর</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭১ জীবন ও বৃক্ষ প্রবন্ধে বৃক্ষের মাধ্যমে লেখক আমাদের কী বোঝাতে চেয়েছেন">
+      <p class="qtext">৭১. 'জীবন ও বৃক্ষ' প্রবন্ধে বৃক্ষের মাধ্যমে লেখক আমাদের কী বোঝাতে চেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. জীবনের তাৎপর্য</div>
+        <div class="opt" data-correct="false">খ. জীবনের প্রত্যাশা</div>
+        <div class="opt" data-correct="false">গ. জীবনের পরিণতি</div>
+        <div class="opt" data-correct="false">ঘ. জীবনের স্থবিরতা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭২ এই লভিনু সঙ্গ তব সুন্দর হে সুন্দর মোতাহের হোসেন চৌধুরীর মতে এই লাভের ব্যাপারটিকে কোন শব্দে প্রকাশ করা যায়">
+      <p class="qtext">৭২. 'এই লভিনু সঙ্গ তব, সুন্দর হে সুন্দর।' মোতাহের হোসেন চৌধুরীর মতে, এই লাভের ব্যাপারটিকে কোন শব্দে প্রকাশ করা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. অর্জন</div>
+        <div class="opt" data-correct="true">খ. প্রাপ্তি</div>
+        <div class="opt" data-correct="false">গ. অনুভব</div>
+        <div class="opt" data-correct="false">ঘ. নিদর্শন</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৩ প্রাবন্ধিক মোতাহের হোসেন চৌধুরী জীবনের সমতুল্য বিবেচনা করেছেন কোনটিকে">
+      <p class="qtext">৭৩. প্রাবন্ধিক মোতাহের হোসেন চৌধুরী জীবনের সমতুল্য বিবেচনা করেছেন কোনটিকে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. প্রকৃতিকে</div>
+        <div class="opt" data-correct="false">খ. পাহাড়কে</div>
+        <div class="opt" data-correct="true">গ. বৃক্ষকে</div>
+        <div class="opt" data-correct="false">ঘ. নদীকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৪ বৃষ্ণে দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি সহজ হয় কীভাবে">
+      <p class="qtext">৭৪. বৃষ্ণের দিকে তাকালে জীবনের তাৎপর্য উপলব্ধি সহজ হয়, কীভাবে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. পরার্থপরতার দৃষ্টান্ত আছে</div>
+        <div class="opt" data-correct="false">খ. নিজের বিবর্তন দৃশ্যমান</div>
+        <div class="opt" data-correct="true">গ. জীবনপ্রবাহের চিত্র আছে</div>
+        <div class="opt" data-correct="false">ঘ. সৃষ্টির বেদনা অনুভব করা যায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৫ বৃক্ষের দিকে তাকালে জীবনের কোনটি সহজ হয়">
+      <p class="qtext">৭৫. বৃক্ষের দিকে তাকালে জীবনের কোনটি সহজ হয়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সৌন্দর্য উপলব্ধি</div>
+        <div class="opt" data-correct="false">খ. বিকাশ অনুধাবন</div>
+        <div class="opt" data-correct="true">গ. তাৎপর্য উপলব্ধি</div>
+        <div class="opt" data-correct="false">ঘ. লক্ষ্য ও উদ্দেশ্য অনুধাবন</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৬ অভিজিৎ রায় প্রকৃতির দিকে তাকিয়ে জীবনের তাৎপর্য উপলব্ধি করেন উদ্ধৃত অংশটুকু তোমার পাঠ্যবইয়ের কোন রচনাকে নির্দেশ করছে">
+      <p class="qtext">৭৬. অভিজিৎ রায় প্রকৃতির দিকে তাকিয়ে জীবনের তাৎপর্য উপলব্ধি করেন। উদ্ধৃত অংশটুকু তোমার পাঠ্যবইয়ের কোন রচনাকে নির্দেশ করছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. আহ্বান</div>
+        <div class="opt" data-correct="true">খ. জীবন ও বৃক্ষ</div>
+        <div class="opt" data-correct="false">গ. আমার পথ</div>
+        <div class="opt" data-correct="false">ঘ. চাষার দুক্ষু</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৭ নিজেকে মোটাসোটা করে তোলাতেই কার কাজের সমাপ্তি নয়">
+      <p class="qtext">৭৭. নিজেকে মোটাসোটা করে তোলাতেই কার কাজের সমাপ্তি নয়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বীজের</div>
+        <div class="opt" data-correct="true">খ. বৃক্ষের</div>
+        <div class="opt" data-correct="false">গ. কুঁড়ির</div>
+        <div class="opt" data-correct="false">ঘ. ফলের</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৮ ফুল ফোটালে ফল ধরালে বৃক্ষের জীবনে কী আসে">
+      <p class="qtext">৭৮. ফুল ফোটালে, ফল ধরালে বৃক্ষের জীবনে কী আসে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. সম্পূর্ণতা</div>
+        <div class="opt" data-correct="false">খ. অভিজ্ঞতা</div>
+        <div class="opt" data-correct="false">গ. বিলাসিতা</div>
+        <div class="opt" data-correct="false">ঘ. আত্মতৃপ্তি</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৭৯ বৃক্ষের জীবন অসম্পূর্ণ হয়ে যায় কখন">
+      <p class="qtext">৭৯. বৃক্ষের জীবন অসম্পূর্ণ হয়ে যায় কখন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. অন্যের উপকারে নিজেকে নিয়োজিত করতে না পারলে</div>
+        <div class="opt" data-correct="true">খ. মাটির রস টেনে নিজেকে মোটাসোটা করতে না পারলে</div>
+        <div class="opt" data-correct="false">গ. সবুজপাতায় নিজেকে পরিপূর্ণ করতে না পারলে</div>
+        <div class="opt" data-correct="false">ঘ. ফলবান হওয়াকে দৃশ্যমান করতে না পারলে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮০ মানুষের প্রতি সমাজের অন্যতম কাজ কোনটি">
+      <p class="qtext">৮০. মানুষের প্রতি সমাজের অন্যতম কাজ কোনটি?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. প্রেম ও সৌন্দর্যের স্পর্শ লাভ করানো</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষকে জীবনাদর্শ হিসেবে উপস্থাপন</div>
+        <div class="opt" data-correct="true">গ. বিকশিত জীবনের প্রতি আগ্রহ জাগানো</div>
+        <div class="opt" data-correct="false">ঘ. ধীরস্থির জীবনের প্রতি আগ্রহ জাগানো</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮১ নিজের ঘরের কাছেই যে সার্থকতার প্রতীক রয়েছে সে সম্বন্দ্বে আমরা সচেতন হতে পারতাম এখানে সার্থকতার প্রতীক বলতে কোনটিকে বোঝানো হয়েছে">
+      <p class="qtext">৮১. 'নিজের ঘরের কাছেই যে সার্থকতার প্রতীক রয়েছে, সে সম্বন্দ্বে আমরা সচেতন হতে পারতাম।'- এখানে সার্থকতার প্রতীক বলতে কোনটিকে বোঝানো হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীকে</div>
+        <div class="opt" data-correct="true">খ. বৃক্ষকে</div>
+        <div class="opt" data-correct="false">গ. পাখিকে</div>
+        <div class="opt" data-correct="false">ঘ. ফুলকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮২ মোতাহের হোসেন চৌধুরী মানবজীবনে কাকে সার্থকতার প্রতীক করতে চেয়েছেন">
+      <p class="qtext">৮২. মোতাহের হোসেন চৌধুরী মানবজীবনে কাকে সার্থকতার প্রতীক করতে চেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীকে</div>
+        <div class="opt" data-correct="false">খ. ধর্মকে</div>
+        <div class="opt" data-correct="false">গ. আত্মাকে</div>
+        <div class="opt" data-correct="true">ঘ. বৃক্ষকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৩ কোন যুক্তিতে ফুল ফোটা ও নদীর গতিকে একসঙ্গে তুলনা করা যায়">
+      <p class="qtext">৮৩. কোন যুক্তিতে ফুল ফোটা ও নদীর গতিকে একসঙ্গে তুলনা করা যায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. উভয়ের মধ্যে উত্তরণ চেষ্টা আছে</div>
+        <div class="opt" data-correct="false">খ. তাল ও লয়ে উভয়ই সমান্তরাল</div>
+        <div class="opt" data-correct="false">গ. উভয়ই প্রাকৃতিক নিয়মের অধীন</div>
+        <div class="opt" data-correct="false">ঘ. উভয়েরই শেষ আছে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৪ মোতাহের হোসেন চৌধুরী মনুষ্যত্বের সাদৃশ্য খুঁজে পেয়েছেন">
+      <p class="qtext">৮৪. মোতাহের হোসেন চৌধুরী মনুষ্যত্বের সাদৃশ্য খুঁজে পেয়েছেন—</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীর সঙ্গে</div>
+        <div class="opt" data-correct="true">খ. নদীর গতির মধ্যে</div>
+        <div class="opt" data-correct="false">গ. বৃক্ষের ফুল ফোটার মধ্যে</div>
+        <div class="opt" data-correct="false">ঘ. বৃক্ষের ফুল ফোটানোর মধ্যে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৫ রবীন্দ্রনাথের মতে মনুষ্যত্বের বেদনা উপলব্ধি হয়">
+      <p class="qtext">৮৫. রবীন্দ্রনাথের মতে মনুষ্যত্বের বেদনা উপলব্ধ হয়?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বৃক্ষের অঙ্কুরিত হওয়ায়</div>
+        <div class="opt" data-correct="false">খ. বৃক্ষের ফুল ফোটানোয়</div>
+        <div class="opt" data-correct="true">গ. নদীর গতিতে</div>
+        <div class="opt" data-correct="false">ঘ. নদীর বন্ধ্যাদশায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৬ ফুলের ফোটা কেমন">
+      <p class="qtext">৮৬. ফুলের ফোটা কেমন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নৈসর্গিক</div>
+        <div class="opt" data-correct="false">খ. শৈল্পিক</div>
+        <div class="opt" data-correct="true">গ. সহজ</div>
+        <div class="opt" data-correct="false">ঘ. জটিল</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৭ নদীর গতিপথ কঠিন কেন">
+      <p class="qtext">৮৭. নদীর গতিপথ কঠিন কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. সে নীরব সাধনায় অবিচল থাকে বলে</div>
+        <div class="opt" data-correct="false">খ. সে সহজে লক্ষ্যে পৌঁছাতে পারে না বলে</div>
+        <div class="opt" data-correct="true">গ. তাকে বাধা ডিঙানোর দুঃখ পেতে হয় বলে</div>
+        <div class="opt" data-correct="false">ঘ. তাকে নানা বাঁক অতিক্রম করতে হয় বলে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৮ মোতাহের হোসেন চৌধুরী বৃক্ষের সাথে মানুষের তুলনা করেছেন কেন">
+      <p class="qtext">৮৮. মোতাহের হোসেন চৌধুরী বৃক্ষের সাথে মানুষের তুলনা করেছেন কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. পরিণতির কথা বিবেচনা করে</div>
+        <div class="opt" data-correct="false">খ. জীবন সাধনায় সাম্যের কারণে</div>
+        <div class="opt" data-correct="false">গ. আত্মরক্ষায় অপারগতার কারণে</div>
+        <div class="opt" data-correct="false">ঘ. অরণ্যের উপর নির্ভরতার কারণে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৮৯ মোতাহের হোসেন চৌধুরীর মতে নদীর গতি ও মনুষ্যত্বের মধ্যে সাদৃশ্য কোথায়">
+      <p class="qtext">৮৯. মোতাহের হোসেন চৌধুরীর মতে, নদীর গতি ও মনুষ্যত্বের মধ্যে সাদৃশ্য কোথায়?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. গতিময়তায়</div>
+        <div class="opt" data-correct="false">খ. পরিণতিতে</div>
+        <div class="opt" data-correct="false">গ. চলমানতায়</div>
+        <div class="opt" data-correct="false">ঘ. সৃষ্টিশীলতায়</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯০ মোতাহের হোসেন চৌধুরীর মতে কীসের দিকে তাকালে রবীন্দ্রনাথ ভালো করতেন">
+      <p class="qtext">৯০. মোতাহের হোসেন চৌধুরীর মতে, কীসের দিকে তাকালে রবীন্দ্রনাথ ভালো করতেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীর গতিপথের দিকে</div>
+        <div class="opt" data-correct="false">খ. প্রকৃতির সৌন্দর্যের দিকে</div>
+        <div class="opt" data-correct="false">গ. আকাশের বিশালতার দিকে</div>
+        <div class="opt" data-correct="true">ঘ. বৃক্ষের ফুল ফোটানোর দিকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯১ মোতাহের হোসেন চৌধুরী রবীন্দ্রনাথকে কোন অর্থে তপোবন প্রেমিক বলেছেন">
+      <p class="qtext">৯১. মোতাহের হোসেন চৌধুরী রবীন্দ্রনাথকে কোন অর্থে 'তপোবন প্রেমিক' বলেছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. প্রকৃতিপ্রেমিক</div>
+        <div class="opt" data-correct="false">খ. সৌন্দর্যপূজারি</div>
+        <div class="opt" data-correct="false">গ. অরণ্যচারী</div>
+        <div class="opt" data-correct="false">ঘ. বৃক্ষপ্রেমিক</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯২ জীবন ও বৃক্ষ প্রবন্ধে কাকে তপোবন প্রেমিক বলা হয়েছে">
+      <p class="qtext">৯২. 'জীবন ও বৃক্ষ' প্রবন্ধে কাকে তপোবন প্রেমিক বলা হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. রবীন্দ্রনাথ ঠাকুরকে</div>
+        <div class="opt" data-correct="false">খ. প্রমথ চৌধুরীকে</div>
+        <div class="opt" data-correct="false">গ. কাজী নজরুল ইসলামকে</div>
+        <div class="opt" data-correct="false">ঘ. মোতাহের হোসেন চৌধুরীকে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৩ মোতাহের হোসেন চৌধুরী রবীন্দ্রনাথকে তপোবন প্রেমিক বলেছেন কেন">
+      <p class="qtext">৯৩. মোতাহের হোসেন চৌধুরী রবীন্দ্রনাথকে 'তপোবন প্রেমিক' বলেছেন কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. তাঁর অনেক সৃষ্টিকর্ম বৃক্ষ প্রতীকী</div>
+        <div class="opt" data-correct="false">খ. তিনি সাধুর মতো তপস্যা করতেন</div>
+        <div class="opt" data-correct="false">গ. তাপসদের তিনি সমর্থন করতেন</div>
+        <div class="opt" data-correct="true">ঘ. প্রকৃতির পূজারি ছিলেন তিনি</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৪ রবীন্দ্রনাথ কীসের মধ্যে মনুষ্যত্বের সাদৃশ্য দেখতে পেয়েছেন">
+      <p class="qtext">৯৪. রবীন্দ্রনাথ কীসের মধ্যে মনুষ্যত্বের সাদৃশ্য দেখতে পেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. নদীর গতির মধ্যে</div>
+        <div class="opt" data-correct="false">খ. নদীর সৌন্দর্যের মধ্যে</div>
+        <div class="opt" data-correct="false">গ. বৃক্ষের বৃদ্ধির মধ্যে</div>
+        <div class="opt" data-correct="false">ঘ. বৃক্ষের স্থিরতার মধ্যে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৫ মোতাহের হোসেন চৌধুরীর মতে নদীর গতির মধ্যে কে মনুষ্যত্বের সাদৃশ্য দেখতে পেয়েছেন">
+      <p class="qtext">৯৫. মোতাহের হোসেন চৌধুরীর মতে নদীর গতির মধ্যে কে মনুষ্যত্বের সাদৃশ্য দেখতে পেয়েছেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. বঙ্কিমচন্দ্র চট্টোপাধ্যায়</div>
+        <div class="opt" data-correct="true">খ. রবীন্দ্রনাথ ঠাকুর</div>
+        <div class="opt" data-correct="false">গ. বিভূতিভূষণ বন্দ্যোপাধ্যায়</div>
+        <div class="opt" data-correct="false">ঘ. কাজী নজরুল ইসলাম</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৬ মোতাহের হোসেন চৌধুরী চর্মচক্ষুকে বড়ো করে দেখার পক্ষপাতী নন কেন">
+      <p class="qtext">৯৬. মোতাহের হোসেন চৌধুরী 'চর্মচক্ষু'কে বড়ো করে দেখার পক্ষপাতী নন কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. কতা অদূরে দেখতে পায় না</div>
+        <div class="opt" data-correct="false">খ. তাঁর দেখাটা মেকী এবং অপূর্ণ</div>
+        <div class="opt" data-correct="false">গ. চর্মচোখে দেখা যথার্থ দেখা নয়</div>
+        <div class="opt" data-correct="true">ঘ. চর্মচক্ষু অন্তর্নিহিত কিছু দেখতে পায় না</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৭ চর্মচক্ষুকে বড়ো না করে কল্পনা ও অনুভূতির চক্ষুকে বড়ো করে তুললে বৃক্ষের বেদনাও সহজে উপলব্ধি করা যায় এখানে চর্মচক্ষু বলতে কী বোঝানো হয়েছে">
+      <p class="qtext">৯৭. 'চর্মচক্ষুকে বড়ো না করে কল্পনা ও অনুভূতির চক্ষুকে বড়ো করে তুললে বৃক্ষের বেদনাও সহজে উপলব্ধি করা যায়।' এখানে 'চর্মচক্ষু' বলতে কী বোঝানো হয়েছে?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. স্থূলতা</div>
+        <div class="opt" data-correct="false">খ. সজীবতা</div>
+        <div class="opt" data-correct="false">গ. সূক্ষ্মতা</div>
+        <div class="opt" data-correct="false">ঘ. জীর্ণতা</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="৯৮ রফিক জীবনকে বৃক্ষের সঙ্গে তুলনা করলেও তার ভাই শফিক জীবনকে তুলনা করে নদীর সাথে জীবন ও বৃক্ষ প্রবন্ধে শফিক এর অনুরূপ মত ধারণকারী ব্যক্তিত্ব কে">
+      <p class="qtext">৯৮. রফিক জীবনকে বৃক্ষের সঙ্গে তুলনা করলেও তার ভাই শফিক জীবনকে তুলনা করে নদীর সাথে। 'জীবন ও বৃক্ষ' প্রবন্ধে শফিক-এর অনুরূপ মত ধারণকারী ব্যক্তিত্ব কে?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. মোতাহের হোসেন চৌধুরী</div>
+        <div class="opt" data-correct="true">খ. রবীন্দ্রনাথ ঠাকুর</div>
+        <div class="opt" data-correct="false">গ. কাজী নজরুল ইসলাম</div>
+        <div class="opt" data-correct="false">ঘ. প্রমথ চৌধুরী</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১১১ সত্যানুরাগী রহমান সাহেব দীর্ঘদিনের গভীর সাধনায় নিজেকে সত্যবাদী হিসেবে প্রতিষ্ঠিত করতে পেরেছেন মোতাহের হোসেন চৌধুরীর মতে এ রকম সাধনা আমরা কীসের মাঝে দেখতে পাই">
+      <p class="qtext">১১১. সত্যানুরাগী রহমান সাহেব দীর্ঘদিনের গভীর সাধনায় নিজেকে সত্যবাদী হিসেবে প্রতিষ্ঠিত করতে পেরেছেন। মোতাহের হোসেন চৌধুরীর মতে, এ রকম সাধনা আমরা কীসের মাঝে দেখতে পাই?</p>
+      <div class="options">
+        <div class="opt" data-correct="false">ক. নদীর মাঝে</div>
+        <div class="opt" data-correct="false">খ. মেঘের মাঝে</div>
+        <div class="opt" data-correct="true">গ. বৃক্ষের মাঝে</div>
+        <div class="opt" data-correct="false">ঘ. পর্বতের মাঝে</div>
+      </div>
+    </div>
+
+    <div class="qcard" data-search="১১২ নদীর সার্থকতার ছবি সহজে উপলব্ধি করা যায় না কেন">
+      <p class="qtext">১১২. নদীর সার্থকতার ছবি সহজে উপলব্ধি করা যায় না কেন?</p>
+      <div class="options">
+        <div class="opt" data-correct="true">ক. নদীর গতিময়তার জন্য</div>
+        <div class="opt" data-correct="false">খ. নদী সৃজনশীল নয় বলে</div>
+        <div class="opt" data-correct="false">গ. নদীর সৃষ্টিশীলতার জন্য</div>
+        <div class="opt" data-correct="false">ঘ. নদী নীরব</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি!</div>
+
+</div>
+
+<script>
+  let score = 0;
+  const answered = new Set();
+  const totalQuestions = 112;
+
+  document.querySelectorAll('.opt').forEach((option, idx) => {
+    option.addEventListener('click', function() {
+      const card = this.closest('.qcard');
+      const cardIdx = Array.from(document.querySelectorAll('.qcard')).indexOf(card);
+      
+      if(answered.has(cardIdx)) return;
+
+      const isCorrect = this.getAttribute('data-correct') === 'true';
+      
+      if(isCorrect) {
+        this.classList.add('correct');
+        score++;
+        document.getElementById('score').textContent = score;
+      } else {
+        this.classList.add('wrong');
+        card.querySelectorAll('.opt').forEach(opt => {
+          if(opt.getAttribute('data-correct') === 'true') {
+            opt.classList.add('correct');
+          }
+        });
+      }
+      answered.add(cardIdx);
+    });
+  });
+
+  function resetAll(){
+    score = 0;
+    document.getElementById('score').textContent = '০';
+    answered.clear();
+    document.querySelectorAll('.opt').forEach(opt => {
+      opt.classList.remove('correct', 'wrong');
+    });
+    document.getElementById('search').value = '';
+    filterQuestions('');
+  }
+
+  function filterQuestions(term){
+    term = term.trim().toLowerCase();
+    const cards = document.querySelectorAll('#mcqList .qcard');
+    const passages = document.querySelectorAll('#mcqList .passage');
+    let anyVisible = false;
+    
+    cards.forEach(c => {
+      const match = !term || c.dataset.search.includes(term);
+      c.classList.toggle('hidden', !match);
+      if(match) anyVisible = true;
+    });
+    
+    passages.forEach(p => {
+      let el = p.nextElementSibling;
+      let show = false;
+      while(el && !el.classList.contains('passage')){
+        if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+        el = el.nextElementSibling;
+      }
+      p.style.display = (!term || show) ? '' : 'none';
+    });
+    
+    document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+  }
+
+  document.getElementById('search').addEventListener('input', e => filterQuestions(e.target.value));
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+  document.querySelectorAll('[data-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      const subq = head.closest('.subq');
+      const isOpen = subq.classList.contains('open');
+      subq.classList.toggle('open', !isOpen);
+      head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকান' : 'উত্তর দেখুন';
+    });
+  });
+</script>
+
+</body>
+</html>

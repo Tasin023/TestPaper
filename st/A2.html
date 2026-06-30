@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>কপিলদাস মুর্মুর শেষ কাজ — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(42px, 9vw, 80px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · ছোটোগল্প · FAHAD'S TUTORIAL</span>
+  <h1>কপিলদাস মুর্মুর শেষ কাজ</h1>
+  <p class="byline">মানিক বন্দ্যোপাধ্যায়</p>
+  <p class="desc">সাঁওতালদের সমাজজীবন, শোষণ-বঞ্চনার ইতিহাস এবং অধিকার আদায়ের লড়াইয়ের ওপর ভিত্তি করে রচিত গল্পটির পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়, পড়ো এবং নিজেই যাচাই করো।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৪০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৪</b><span>মূল অনুষঙ্গ</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৪০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        সিধুরাম একজন অশীতিপর বৃদ্ধ। আজকাল অনেকটাই নির্জীব ভাব নিয়ে বাড়ির সামনে ছোট্ট মাচায় বসে থাকেন তিনি। ভিতরবাড়িতে তাঁর নাতি-নাতনিরা হইহুল্লোড় করে, ছেলের বউরা কখনো কথা কাটাকাটি করে, কৃষক খেতে কাজ করে। এসব কিছুতেই তাঁর মন নেই। অথচ এককালে তিনি ছিলেন দুর্বার ও দুরন্ত। শিকার ছিল তাদের ঐতিহ্য। তির-বন্দুক, বর্শা এসব নিয়েই যেন দিন কাটত। শিকার উৎসবের আগে তির, ধনুক, বর্শা, বল্লম, কুড়াল সব ঘষেমেজে শান দিত। মেয়েরা বিভিন্ন রকম শুকনো খাবার তৈরি করত।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'পুশনা পরব' অর্থ কী? <i>(ज्ञानमूलक)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'পুশনা পরব' অর্থ <b>বিশেষ পুজোর আয়োজন</b>।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">কপিলদাস অনেকক্ষণ ধরে লোকটার নড়াচড়ার ভঙ্গিটা লক্ষ করেন কেন? <i>(अनुधावनमूलक)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>কপিলদাস বস্তির দিকে হাত তুলে দেখানো লোকটাকে চেনার চেষ্টা করার জন্য অনেকক্ষণ ধরে তার নড়াচড়ার ভঙ্গিটা লক্ষ করেন।</p>
+            <p>কপিলদাস দেখেন, কয়েকজন লোক টাঙনের উঁচু পাড়ে দাঁড়িয়ে বস্তির দিকে হাত তুলে কী যেন দেখাচ্ছে। পরিষ্কার জামাকাপড় পরা লোকটাকে তিনি চিনতে চেষ্টা করেন। একসময় তিনি চিনতে পারেন ওই লোকটি ম্যানেজার মহাজন। কপিলদাসের মনে পড়ে কয়েকদিন আগেও এখানে বস্তির দিকে হাত তুলে কী যেন বলাবলি করছিল তারা। তিনি ভাবেন, এইসময় ওদের এখানে কী কাজ থাকতে পারে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের সিধুরামের নির্জীব ভাব 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের কোন দিকটিকে প্রতিনিধিত্ব করে? ব্যাখ্যা করো। <i>(प्रयोगमूलক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">সিধুরামের নির্জীব ভাব কপিলদাসের বুড়ো বয়সেরই প্রতিনিধিত্বকারী।</span>
+            <p>'কপিলদাস মুর্মুর শেষ কাজ' গল্পে কপিলদাস একজন সাঁওতাল বৃদ্ধ। বয়সের ভারে ঝিমিয়ে পড়া, সকলের কাছে নিতান্তই অপ্রয়োজনীয় কপিলদাস উদাস ভঙ্গিতে নদীর তীরে বসে থাকেন। রোদের দিকে পিঠ মেলে ঝিমোতে থাকেন। শীতের টাঙনে যেমন শান্তভাব, নদীর স্রোতে যেমন কাঁপন নেই কপিলদাসও তেমনি শান্ত আর নির্জীব হয়ে বসে থাকেন। গা-ছাড়া একটা পরিতৃপ্ত ভাব যেন তাঁকে পেয়ে বসেছে। কোনোকিছুতেই তাঁর আগ্রহ নেই। ছাগল সবজি খেত নষ্ট করছে, সোনামুখী আর সিলভী ঝগড়া করছে, বাচ্চারা হইহই করছে—এসব কিছুই তাঁর কাছে অর্থহীন।</p>
+            <p>উদ্দীপকের সিধুরামও অশীতিপর বৃদ্ধ। অনেকটা নির্জীব ভাব নিয়ে বাড়ির সামনের ছোট্ট মাচায় বসে থাকেন তিনি। ভিতরবাড়ির হইহুল্লোড়, চারপাশের কোনোকিছুই যেন তাঁর মনোযোগ আকর্ষণ করে না। গল্পের কপিলদাসও অনেকটা ঝিমিয়ে পড়েছে। দুজনেই বয়সের কারণে নির্জীব ও প্রাণচাঞ্চল্যহীন। চারদিকের সাজানো এই সংসারে তাঁদের যেন কোনো আগ্রহ নেই। বয়স যেন তাদের সব শখ, আহ্লাদ ও আগ্রহকে কেড়ে নিয়েছে। সুতরাং উদ্দীপকের সিধুরাম গল্পের কপিলদাসেরই উপযুক্ত প্রতিনিধি।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">'শিকার ছিল তাদের ঐতিহ্য' — উদ্দীপক ও 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের আলোকে মন্তব্যটি বিশ্লেষণ করো। <i>(उच्चतर दक्षता)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপক ও 'কপিলদাস মুর্মুর শেষ কাজ' গল্পে শিকারের ঐতিহ্য-সংস্কৃতি প্রকাশিত হওয়ায় প্রশ্নোক্ত মন্তব্যটি যথার্থ।</span>
+            <p>'কপিলদাস মুর্মুর শেষ কাজ' গল্পে সাঁওতালদের সমাজ জীবন বা শিকারের চিত্রটি ফুটে উঠেছে। ভূমি নিয়ে তাদের ইতিহাস যেমনি উজ্জ্বল তেমনি শিকার করা তাদের জীবনের বড়ো একটি অংশ। সাঁওতাল কিশোর ছেলের সবচেয়ে বেশি আকর্ষণ শিকারে। ছোটোবেলা থেকেই তির-ধনুক চালানোতে তারা দক্ষ। কপিলদাস কিশোর বয়সে অনেক শিকারে গিয়েছিলেন। এখনো তাঁর ঘর খুঁজলে তিরের ডোঙা পাওয়া যাবে। আর তাঁর শিকারে সঙ্গ দিত তার কালো রঙের কুকুর। মূলত, সাঁওতাল কিশোর ছেলেরা কিশোর বয়স থেকেই তির-ধনুক চালায় এবং বন্যপ্রাণী শিকার করে তাদের মাংসের চাহিদা পূরণ করে।</p>
+            <p>উদ্দীপকের সিধুরামও কিশোর বয়সে ছিল দুর্বার ও দুরন্ত। শিকারে ছিল তাদের ঐতিহ্য। তির-ধনুক, বর্শা, বল্লম, কুড়াল সব ঘষেমেজে শান দিত শিকারে যাওয়ার আগে। শিকারে খাবার নিয়ে যাওয়ার জন্য মেয়েরা শুকনো খাবার তৈরি করে দিত। গল্পে কপিলদাসের কিশোর বয়সের শিকারের কথা বর্ণিত হয়েছে যেখানে তাঁর তির নিখুঁত নিশানায় বিধত। সাঁওতালদের এটি বিশেষ দক্ষতা। শিশুকাল থেকেই প্রকৃতির কোলে বেড়ে ওঠা এসব শিশুর প্রধান আগ্রহের জিনিস হলো শিকার। আর এই শিকারই তাদের ঐতিহ্য। উদ্দীপকের সিধুরামও সাঁওতাল সম্প্রদায়ের লোক। তাদের সবচেয়ে বড়ো উৎসবের মধ্যে একটি হলো শিকার উৎসব। তাই আলোচ্য মন্তব্যটি সম্পূর্ণ সার্থক ও যথার্থ।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৪০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// data: {n, passage(optional tag+text), q, opts:[4], correct: 0-3}
+const DATA = [
+{n:1, q:"'তোর কিছু ফম থাকে না' কথাটি কার?", opts:["সলিমউদ্দিন","জয়হরি","মোহন কিস্কু","দীনেশ কিস্কু"], correct:1},
+{n:2, q:"'পিঙ্গল আকাশ' কী?", opts:["গ্রন্থ","নাটক","ছোটোগল্প","কবিতা"], correct:2},
+{n:3, q:"জমিদার ও কৃষকদের মধ্যে মধ্যসত্বভোগী শ্রেণিকে কী বলা হয়?", opts:["আধিয়ার","জোতদার","জমিদার","ব্রিটিশ"], correct:1},
+{n:4, q:"সংসারের নিরবচ্ছিন্ন স্রোতে—\ni. কাঁপন নেই\nii. উত্তেজনা নেই\niii. চিৎকার নেই\nনিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:5, q:"ছাগল ঢুকে সবজিখেত তছনছ করলে সোনামুখী কার সঙ্গে ঝগড়া বাঁধাবে?", opts:["কপিলদাস","সিলভী","বিন্নী","বিন্দা"], correct:3},
+{n:6, q:"'কুশিয়ার খেত' শব্দের অর্থ কী?", opts:["ধানখেত","পাটখেত","আখখেত","সুপারিখেত"], correct:2},
+{n:7, passageTag:"উদ্দীপক", passage:"চাকমারা পার্বত্য চট্টগ্রামে বাস করে। তারা মূলত পাহাড়ে জুম চাষ করে জীবনধারণ করে। তাদের নিজস্ব ভাষা রয়েছে। পাহাড়ের কোলে বেড়ে ওঠা চাকমারা যুগে যুগে শোষণ-অন্যায়ের বিরুদ্ধে প্রতিবাদ করেছে। (৭ ও ৮ নং প্রশ্নের জন্য)", q:"উদ্দীপকের চাকমাদের সাথে সাঁওতালদের মিল রয়েছে যেসব ক্ষেত্রে—\ni. চাষাবাদে\nii. পরিশ্রমী জীবনযাপনে\niii. অন্যায়ের প্রতিবাদে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:8, q:"চাকমাদের নিজস্ব ভাষা 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের কোন দিককে প্রতিনিধিত্ব করে?", opts:["পুশনা পরব","নান্দনিক শব্দযোজনা","সাঁওতালি কথনভঙ্গি","যথোপযুক্ত প্রেক্ষাপট"], correct:2},
+{n:9, passageTag:"উদ্দীপক", passage:"২০২৪ সালের স্বৈরাচার পতনের আন্দোলনে জয়পুরহাট সরকারি কলেজের একজন সমন্বয়ক বিশাল। বিশাল ও তার বন্ধুদের বিদ্রোহী চেতনা দেখে বিশালের দাদা আলাউদ্দিনের মুক্তিযুদ্ধের সময়ের কথা মনে পড়ে যায়। তিনিও নতুন প্রজন্মের উৎসাহে এই আন্দোলনে যোগ দেন। (৯ ও ১০ নং প্রশ্নের জন্য)", q:"আলাউদ্দিনের সাথে কপিলদাসের সাদৃশ্য হলো—\ni. নতুন প্রজন্মের কাছ থেকে উৎসাহ প্রাপ্তি\nii. ভূমি দখলের দুশ্চিন্তা\niii. বৃদ্ধ বয়সে সংগ্রামে অংশগ্রহণ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:10, q:"উদ্দীপকের স্বৈরাচারের বৈশিষ্ট্য গল্পে কীভাবে ফুটে উঠেছে?", opts:["মহাজনের কর্মকান্ডের মাধ্যমে","মোড়লের সিদ্ধান্তের মাধ্যমে","সাঁওতালদের বিদ্রোহের মাধ্যমে","কপিলদাসের স্মৃতিকাতরতার মাধ্যমে"], correct:0},
+{n:11, q:"'কপিলদাস মুর্মুর শেষ কাজ' গল্পে কী প্রকাশিত হয়েছে?", opts:["এক বৃদ্ধার কাহিনি","সাঁওতালদের গৌরবোজ্জ্বল ইতিহাস","বস্তি উজাড়ের কাহিনি","ব্রিটিশ शासन"], correct:1},
+{n:12, passageTag:"উদ্দীপক", passage:"উই চং মারমা পার্বত্য চট্টগ্রামের একজন আদিবাসী। সে সারাদিন চাষাবাদের কাজ করে অন্যের জমিতে। কিন্তু জমির মালিক উই চং মারমাকে তার ন্যায্য ফসলের ভাগ দেয় না। শোষণের মধ্য দিয়ে বয়ে চলে তার কঠোর সংগ্রামী জীবন। (১২ ও ১৩ নং প্রশ্নের জন্য)", q:"উই চং মারমার সাথে 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের সাঁওতালদের সাদৃশ্য হলো—\ni. সংগ্রামী জীবনযাপন\nii. শোষণের শিকার হওয়ার ক্ষেত্রে\niii. অন্যায়ের বিরুদ্ধে সশস্ত্র প্রতিবাদে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:13, q:"জমির মালিক 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের কোন চরিত্রের প্রতিনিধি?", opts:["কপিলদাস","মহাজন","বিনোদ মিস্ত্রি","মোড়ল"], correct:1},
+{n:14, q:"বিক্রয়ের জন্য প্রদর্শিত দ্রব্যকে কী বলা হয়?", opts:["পসরা","মাদল","বাজার","পালকি"], correct:0},
+{n:15, passageTag:"উদ্দীপক", passage:"১০ বছরের আলিয়া প্রতিদিন তার নানাভাইয়ের কাছে গল্প শোনে, একদিন আলিয়াকে সুন্দরবনে হরিণ শিকারের গল্প বলতে গিয়ে নানাভাই রহমত আলী ছেলেবেলায় তার পোষা বিড়াল চুকুর কথা মনে করে স্মৃতিকাতর হয়ে পড়েন। (১৫ ও ১৬ নং প্রশ্নের জন্য)", q:"উদ্দীপকে 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের যে দিকটি ফুটে উঠেছে—\ni. স্মৃতিকাতরতা\nii. শিশুদেরকে গল্প শোনানো\niii. পোষা প্রাণীর প্রতি ভালোবাসা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:16, q:"'চুকু' গল্পের কোন চরিত্রের প্রতিনিধি?", opts:["বাঘ","শিয়াল","কালো কুকুর","সাদা বক"], correct:2},
+{n:17, passageTag:"উদ্দীপক", passage:"আবুল কাশেমের বয়স ৮০ বছর। অবসরপ্রাপ্ত স্কুল শিক্ষক আবুল কাশেম বহু গরিব ছাত্রছাত্রীকে নানানভাবে সাহায্য করেছেন। কিন্তু এখন তারা কেউই তাঁর খোঁজ রাখে না। এমনকি নিজের বাড়িতেও ছেলে ও ছেলের বউ তাঁকে নিতান্তই বোঝা মনে করে। তাদের এ আচরণে কষ্ট পেয়ে তিনি একদিন বাড়ি ছেড়ে চলে যান। (১৭ ও ১৮ নং প্রশ্নের জন্য)", q:"উদ্দীপকের সাথে 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের ভাবগত মিলের কারণ হলো—\ni. ছেলের অবহেলা\nii. কাছের মানুষদের বঞ্চনা\niii. বসতভিটা ত্যাগ করা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:18, q:"আবুল কাশেমের সাথে গল্পের কোন চরিত্রের মিল রয়েছে?", opts:["মহিন্দর","কপিলদাস মুর্মু","দীনদাস","বিন্নী"], correct:1},
+{n:19, q:"কপিলদাসকে কে দাদা বলে ডেকে ওঠে?", opts:["মহিন্দর","বিন্নী","মহিন্দরের ছেলে","ভায়া মাঝি"], correct:3},
+{n:20, passageTag:"উদ্দীপক", passage:"মীর নিসার আলী তিতুমীর ছিলেন ব্রিটিশবিরোধী আন্দোলনের এক মহানায়ক। তৎকালীন ব্রিটিশ বাহিনী তিতুমীরের কাছে বেশ কয়েকবার পরাজিত হয়। তিতুমীর শুধু দেশীয় অস্ত্র নিয়ে ৮৩ হাজার কৃষক সৈন্যের দ্বারা আধুনিক যুদ্ধাস্ত্রে সজ্জিত বিশাল ব্রিটিশ বাহিনী প্রতিহত করেন। (২০ ও ২২ নং প্রশ্নের জন্য)", q:"উদ্দীপকের সাথে 'কপিলদাস মুর্মুর শেষ কাজ' গল্পের সাদৃশ্যপূর্ণ দিক হলো—\ni. স্বেচ্ছাচারিতা\nii. অন্যায়ের প্রতিবাদ\niii. একতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:21, q:"শওকত আলীর সাহিত্য ভাবনার মূল প্রবণতা ছিল—\ni. জীবনকে নিবিড়ভাবে অবলোকন করা\nii. বিচিত্র জীবনপ্রবাহকে শিল্পাবয়ব প্রদান\niii. সাহিত্যকে উৎকৃষ্ট করা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:22, q:"'কপিলদাস মুর্মুর শেষ কাজ' গল্পে উদ্দীপকের কৃষক সৈন্যদের প্রতিনিধি কারা?", opts:["মহাজনরা","সাঁওতালরা","মোড়লরা","পাদ্রিরা"], correct:1},
+{n:23, q:"সলিমউদ্দিনের বিরক্ত হওয়ার কারণ—\ni. কপিলদাস কথা শুনতে পারছিল না\nii. কপিলদাস কথা বুঝতে পারছিল না\niii. কপিলদাসের কিছু মনে থাকে না", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:24, q:"কপিলদাস উঠোনে সভা হতে দেখে অবাক হওয়ার কারণ—\ni. কেউ গালাগাল দিচ্ছে না বলে\nii. কারো মধ্যে রাগ নেই বলে\niii. কারো মধ্যে জ্বালা নেই বলে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:25, q:"মেয়েরা হ্যাঁ হ্যাঁ করে হেসে ওঠে কেন?", opts:["বুড়োর কাণ্ড দেখে","সাঁওতালদের নাচ দেখে","মহিন্দরের কাণ্ড দেখে","বাচ্চাদের কাণ্ড দেখে"], correct:0},
+{n:26, q:"কপিলদাস শীতের রোদে পিঠ দিয়ে আরামে ঝিমোতে পারে কেন?", opts:["গা-ছাড়া পরিতৃপ্ত ভাবের জন্য","বিষাদময়তার জন্য","স্মৃতিমন্থনের জন্য","স্থবিরতার জন্য"], correct:0},
+{n:27, q:"শওকত আলীর রচনায় প্রতিফলন ঘটেছে—\ni. নৃতত্ত্ব\nii. ইতিহাস ও বিজ্ঞান\niii. ইতিহাস ও সমাজবিজ্ঞান", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:28, q:"শিবোনাথ মোড়ল কী ছিল?", opts:["गुणिन","চিকিৎসক","বিচারক","গুরু"], correct:0},
+{n:29, passageTag:"উদ্দীপক", passage:"মাহমুদা নামের এক অসহায় বিধবা বহু বছর ধরে সরকারি খাস জমিতে বসবাস করে আসছেন। ভূমিহীনতা সূত্রে মাহমুদা ও অন্যান্যরা সরকারের কাছ থেকে খাস জমি বন্দোবস্ত নিতে চান। কিন্তু স্থানীয় প্রভাবশালী মৎস্য ঘের মালিকেরা ওই জমি তাদের নামে বন্দোবস্ত নিয়ে নতুন মৎস্য ঘের বানাতে চান। 'হয় জমি নয় জীবন'- এই প্রত্যয় বুকে নিয়ে মাহমুদারা এর বিরুদ্ধে সোচ্চার প্রতিরোধ গড়ে তোলেন। (২৯ ও ৩০ নং প্রশ্নের জন্য)", q:"উদ্দীপকের মাহমুদা কপিলদাস মুর্মুর সাথে সাদৃশ্যপূর্ণ হওয়ার কারণ, তার—\ni. সাহসিকতা\nii. সংগ্রামশীলতা\niii. অধিকার সচেতনতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:30, q:"সাদৃশ্যপূর্ণ দিকটির চূড়ান্ত রূপ 'কপিলদাস মুর্মুর শেষ কাজ' গল্পে কোন বাক্যের মধ্য দিয়ে প্রকাশ পেয়েছে?", opts:["সবই একটার সঙ্গে আরেকটা শেষ পর্যন্ত মেলানো","ম্যানুয়েল পাদ্রিকে টাঙনের জলে ধাক্কা মেরে ফেলে দিয়েছিল","মহাজনের ধান খামার বাড়ি থেকেই কিষানদের বিলিয়ে দিলি","বুড়ো দু-হাতে তীর-ধনুক নিয়ে সামনের অন্ধকারের দিকে চলতে থাকে"], correct:3},
+{n:31, q:"'কপিলদাস মুর্মুর শেষ কাজ' রচনার শিল্পসাফল্যকে বহুগুণ বর্ধিত করেছে—\ni. সাঁওতালি কথনভঙ্গি\nii. শব্দযোজনা\niii. যথোপযুক্ত প্রেক্ষাপট সৃজন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:32, q:"কপিলদাস আত্মত্যাগী সংগ্রামে ঝাঁপিয়ে পড়ে কারণ—\ni. জাতিসত্তার অস্তিত্ব রক্ষায়\nii. লড়াইয়ের কোনো বয়স নেই\niii. শেষ লড়াইয়ের জন্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:33, q:"কপিলদাস ধনুকটা হাতে নিয়ে—\ni. তিরটা ধনুকের ছিলায় বসিয়ে তাক করে\nii. নিশানা করে অন্ধকারের দিকে\niii. তির ছেড়ে দেয় না", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:34, q:"সমাবেশে কে হাত নেড়ে নেড়ে কথা বলছে?", opts:["দীনদাস","মহিন্দর","মেয়েরা","ম্যানেজার"], correct:1},
+{n:35, q:"কোথায় একসময় বাঘ ছিল?", opts:["প্রাণনগরের জঙ্গলে","সাঁওতাল বস্তিতে","ধানখেতে","গ্রামে"], correct:0},
+{n:36, q:"কে ট্রাক্টর ট্রায়ালের জন্য চালু করে রেখেছে?", opts:["বিনোদ মিস্ত্রি","নগেন","মহিন্দর","কপিলদাস"], correct:0},
+{n:37, q:"রাখাল তার বাঁশিতে কী সুর বাজিয়ে যাচ্ছে?", opts:["বিষাদের","মধুর","প্রণয়ের","বুনো সুর"], correct:3},
+{n:38, q:"ছাগল ঢুকে সবজিখেত তছনছ করলে সোনামুখী কার সঙ্গে ঝগড়া বাঁধাবে?", opts:["কপিলদাস","সিলভী","বিন্নী","বিন্দা"], correct:3},
+{n:39, q:"কপিলদাস কখন তুমুল নাচ জুড়েছিল?", opts:["বর্ষাকালে","চৈত্রসংক্রান্তিতে","পুশনা পরবে","নববর্ষে"], correct:2},
+{n:40, q:"কপিলদাস কাকে টাঙনের পানিতে ধাক্কা মেরেছিলেন?", opts:["মানুয়েল পাদ্রিকে","মহাজনকে","জয়হরিকে","সলিমউদ্দিনকে"], correct:0}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> can  — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(32px, 7vw, 64px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+    margin-bottom:32px;
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · প্রবন্ধ · Tasin Saimon</span>
+  <h1>নব্য লেখক</h1>
+  <p class="byline">বঙ্কিমচন্দ্র চট্টোপাধ্যায়</p>
+  <p class="desc">নবীন লেখকদের সাহিত্য সাধনা, রচনার আদর্শ, সত্য ও নিষ্ঠা বজায় রাখার দিকনির্দেশনা সংবলিত কালজয়ী প্রবন্ধের পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০২</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>১</b><span>মূল প্রাবন্ধিক</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক — ১</span>
+        মানবপ্রেমী, মানবতার কবি লালন ফকির জাতি-ধর্ম-বর্ণ নির্বিশেষে মানবমুক্তির সংগ্রামে দীর্ঘ জীবনে গানের সাধনা করে গেছেন। প্রচলিত সমাজের বিরুদ্ধে তাঁর বিদ্রোহ ছিল মানবতার অধিকার প্রতিষ্ঠার গভীর দায়িত্ববোধ থেকে। এ কারণেই এই মহান সাধক মানুষের অন্তরে চিরস্মরণীয় হয়ে আছেন।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">লেখকের মতে, সত্য ও ধর্ম ব্যতীত অন্য উদ্দেশ্যে লেখনী ধারণ কী?</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>লেখকের মতে, সত্য ও ধর্ম ব্যতীত অন্য উদ্দেশ্যে লেখনী ধারণ করা <b>মহাপাপ</b> এবং তা একেবারে পরিহার্য।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">সাহিত্য রচনার প্রকৃত উদ্দেশ্য কী? ব্যাখ্যা করো।</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের মতে, সাহিত্য রচনার প্রকৃত উদ্দেশ্য হওয়া উচিত মানবকল্যাণ বা মানুষের মঙ্গল সাধন এবং সত্য ও ধর্মের পক্ষাবলম্বন করা।</p>
+            <p>প্রাবন্ধিক মনে করেন, কেবল যশ লাভ বা অর্থ উপার্জনের উদ্দেশ্যে সাহিত্য রচনা করা উচিত নয়। যদি কোনো লেখক মানুষের হিতসাধন বা সমাজকে সুন্দর করার মানসিকতা নিয়ে লেখেন, তবেই তাঁর সাহিত্য সার্থকতা লাভ করে। সত্য ও ন্যায়ের বাণী প্রচারের মাধ্যমে মানুষের মনকে জাগ্রত করাই সাহিত্যের আসল লক্ষ্য।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনায় বর্ণিত সাহিত্য রচনার কোন উদ্দেশ্যের প্রতিফলন উদ্দীপকে ঘটেছে? ব্যাখ্যা করো।</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনায় বর্ণিত সাহিত্য রচনার মূল উদ্দেশ্য তথা 'মানবকল্যাণ ও সত্য-ধর্মের প্রতিষ্ঠা'-র প্রতিফলন উদ্দীপকে ঘটেছে।</span>
+            <p>আলোচ্য প্রবন্ধে বঙ্কিমচন্দ্র চট্টোপাধ্যায় নবীন লেখকদের প্রতি আহ্বান জানিয়েছেন যেন তাঁরা অর্থ বা খ্যাতির মোহে অন্ধ না হয়ে সমাজ ও মানুষের মঙ্গলের জন্য লেখনী ধারণ করেন। সাহিত্য হবে সত্য ও ন্যায়ের ধারক, যা মানব-হিতকর কাজে নিয়োজিত থাকবে।</p>
+            <p>উদ্দীপকের লালন ফকিরের জীবন দর্শনও ছিল মানবমুখী। তিনি জাত-পাত ও ধর্মের ভেদাভেদ ভুলে দীর্ঘকাল ধরে গানের মাধ্যমে মানবমুক্তির বাণী প্রচার করেছেন। সমাজের কুসংস্কারের বিরুদ্ধে তাঁর এই গান বা সাহিত্যচর্চা কোনো ব্যক্তিগত স্বার্থের জন্য ছিল না, বরং তা ছিল মানবতার অধিকার প্রতিষ্ঠার জন্য। প্রাবন্ধিক বঙ্কিমচন্দ্র যে নিঃস্বার্থ মানব-মঙ্গলের কথা বলেছেন, লালন ফকিরের সাধনায় ঠিক সেই উদ্দেশ্যই প্রতিফলিত হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">'সাহিত্য রচনার ক্ষেত্রে লালন ফকিরের आदर्श অনুসরণীয়।' প্রবন্ধের আলোকে বিশ্লেষণ করো।</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি সম্পূর্ণ যথার্থ ও সার্থক।</span>
+            <p>বঙ্কিমচন্দ্র চট্টোপাধ্যায় তাঁর প্রবন্ধে আদর্শ সাহিত্যের কতগুলো শর্ত ও নিয়মাবলি তুলে ধরেছেন। তাঁর মতে, সাহিত্যের প্রধানতম উদ্দেশ্য হলো সত্য ও ধর্মের জয়গান এবং মানুষের কল্যাণ করা। যা কিছু লোকরঞ্জন বা স্বার্থপরতা দোষে দুষ্ট, তা প্রকৃত সাহিত্য হতে পারে না।</p>
+            <p>উদ্দীপকে আমরা দেখতে পাই, লালন ফকির তাঁর দীর্ঘ জীবনে গান বা সাহিত্যকে কেবল বিনোদন বা আত্মপ্রচারের মাধ্যম হিসেবে ব্যবহার করেননি। তিনি প্রচলিত সমাজের অন্যায় ও বৈষম্যের বিরুদ্ধে দাঁড়িয়েছেন এবং মানুষের মুক্তি ও অধিকার প্রতিষ্ঠাকে নিজের দায়িত্ব মনে করেছেন। তাঁর সাহিত্যে কোনো কৃত্রিমতা বা লোকদেখানো লোকরঞ্জন-প্রবৃত্তি ছিল না, ছিল নিখাদ সত্য ও মানবপ্রেম।</p>
+            <p>বঙ্কিমচন্দ্র যে নিষ্কাম ও কল্যাণময় সাহিত্য সৃষ্টির তাগিদ দিয়েছেন, লালন ফকিরের সৃষ্টিশীলতা তারই বাস্তব উদাহরণ। তিনি কোনো স্বার্থের বশবর্তী না হয়ে সত্যের পথে চলেছেন দেখেই আজ মানুষের অন্তরে চিরস্মরণীয় হয়ে আছেন। অতএব, প্রবন্ধের আলোকে বলা যায় যে, একজন আদর্শ লেখক বা সাহিত্যিক হতে গেলে লালন ফকিরের এই নিঃস্বার্থ মানবতাবাদী আদর্শ সত্যিই অনুসরণীয়।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক — ২</span>
+        পয়লা বৈশাখের ক্রোড়পত্রে ছাপানোর জন্য প্রকাশকের জরুরি তাগাদায় একটি প্রবন্ধ লেখে আশিক। কিন্তু লেখাটি নিজের মনঃপূত না হওয়ায় পরে একসময় ছাপাতে চায় সে। আশিকের এমন মনোভাবের কথা জানতে পেরে প্রকাশক বলেন, পয়লা বৈশাখের সংখ্যায় লেখা ছাপালে বহু লোক তাকে চিনবে। তাছাড়া টাকাও বেশি পাওয়া যাবে। তাঁর কথায় আশিক লেখাটি ছাপাতে রাজি হয়।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">কোথায় এখন অনেকে টাকার জন্য লেখে এবং লেখাও ভালো হয়?</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের মতে, বর্তমানে <b>ইউরোপে</b> অনেকে টাকার জন্য লেখে এবং লেখাও ভালো হয়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">বঙ্কিমচন্দ্র লেখাকে কিছুকাল ফেলে রাখতে বলেছেন কেন?</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>লেখার ভুল-ত্রুটি সংশোধন ও গুণগত মান বৃদ্ধির জন্য বঙ্কিমচন্দ্র চট্টোপাধ্যায় কোনো রচনা লেখার পর তা সাথে সাথে না ছাপিয়ে কিছুকাল ফেলে রাখতে বলেছেন।</p>
+            <p>কোনো লেখা শেষ করার অব্যবহিত পরেই লেখকের নিজের কাছে সেটি খুব চমৎকার মনে হতে পারে। কিন্তু লেখাটি কিছুদিন ফেলে রেখে পরে পুনরায় পাঠ করলে তার ভেতরের অসমঞ্জসতা, ভুল বা দুর্বলতাগুলো সহজে ধরা পড়ে। তখন তা সংশোধন করলে লেখার মান অনেক উন্নত হয়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">আশিকের প্রথম সিদ্ধান্তটি 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার কোন প্রসঙ্গকে ইঙ্গিত করে? ব্যাখ্যা করো।</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">আশিকের প্রথম সিদ্ধান্তটি 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' প্রবন্ধে বর্ণিত "যাহা লিখিবেন, তাহা হঠাৎ ছাপাইবেন না" বা রচনা প্রকাশের ক্ষেত্রে ধৈর্য ধারণের প্রসঙ্গকে ইঙ্গিত করে।</span>
+            <p>প্রবন্ধে বঙ্কিমচন্দ্র নবীন লেখকদের পরামর্শ দিয়েছেন যে, লেখা সম্পন্ন হওয়ার সাথে সাথেই তা প্রকাশ করা উচিত নয়। কিছুকাল রেখে দিলে নিজের লেখার ভুলগুলো নিজে সংশোধন করা যায়, যা সাহিত্যের মান রক্ষায় অত্যন্ত জরুরি।</p>
+            <p>উদ্দীপকের আশিক প্রকাশকের জরুরি তাগাদায় তড়িঘড়ি করে একটি প্রবন্ধ লিখলেও, তা নিজের কাছে সম্পূর্ণ নিখুঁত বা মনঃপূত মনে হয়নি। তাই সে তাড়াহুড়ো না করে লেখাটি পরে একসময় ভালো করে দেখে প্রকাশ করার সিদ্ধান্ত নেয়। আশিকের এই প্রথম ভাবনাটি বঙ্কিমচন্দ্রের উপদেশের সাথে হুবহু মিলে যায়, যেখানে তাৎক্ষণিক সস্তা জনপ্রিয়তার চেয়ে সৃষ্টির গুণগত মানকে বড় করে দেখা হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">আশিকের চূড়ান্ত সিদ্ধান্তটি তার লেখকসত্তা বিকাশে কেমন প্রভাব ফেলবে বলে তুমি মনে করো? বিশ্লেষণী মতামত দাও।</span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">আশিকের চূড়ান্ত সিদ্ধান্তটি তার মৌলিক লেখকসত্তা বিকাশের ক্ষেত্রে চরম নেতিবাচক ও ক্ষতিকর প্রভাব ফেলবে বলে আমি মনে করি।</span>
+            <p>বঙ্কিমচন্দ্রের মতে, অর্থলাভ বা যশের (খ্যাতির) উদ্দেশ্যে লিখতে গেলে লেখকের মধ্যে 'লোকরঞ্জন-প্রবৃত্তি' প্রবল হয়ে ওঠে। তখন লেখক সত্য প্রকাশ না করে পাঠকদের সস্তা আবেগকে প্রাধান্য দেয় এবং লেখার মান ধরে রাখতে পারে না। ফলস্বরূপ, তাঁর স্থায়ী সাহিত্যিক হয়ে ওঠার পথ বন্ধ হয়ে যায়।</p>
+            <p>উদ্দীপকের আশিক প্রথমে দায়িত্বশীল পরিচয় দিলেও শেষ পর্যন্ত প্রকাশকের প্রলোভনে প্রলুব্ধ হয়। বেশি টাকা পাওয়া এবং বহু মানুষ তাকে চিনবে— এই সস্তা যশ ও অর্থের লোভে পড়ে সে নিজের অপরিপক্ব ও অসমাপ্ত লেখাটিই বৈশাখী সংখ্যায় ছাপাতে রাজি হয়ে যায়। এটি তার চিন্তার দুর্বলতা এবং প্রলোভনের কাছে আত্মসমর্পণকে নির্দেশ করে।</p>
+            <p>এই ধরনের মানসিকতা একজন নব্য লেখকের সৃজনশীলতা ও মননশীলতাকে ধ্বংস করে দেয়। সাময়িক লাভ হলেও চিরন্তন বা মানসম্মত সাহিত্য তৈরিতে সে ব্যর্থ হবে। সুতরাং, বঙ্কিমচন্দ্রের প্রবন্ধের আলোকে বলা যায়, আশিকের এই চূড়ান্ত সিদ্ধান্ত তাকে একজন খাঁটি বা আদর্শ লেখক হওয়ার পরিবর্তে সস্তা সাময়িক লেখক হিসেবেই আটকে রাখবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// data: {n, passage(optional tag+text), q, opts:[4], correct: 0-3}
+const DATA = [
+{n:1, q:"'বাংলা' শব্দের পরিবর্তনের সঠিক ধারা কোনটি?", opts:["বাঙ্গালা-বাঙলা-বাংলা","বাঙ্গলা-বাঙলা-বাংলা","বাঙ্গালা-বাঙালা-বাংলা","বাঙ্গলা-বাঙ্গালা-বাংলা"], correct:0},
+{n:2, passageTag:"উদ্দীপক", passage:"\"আপনারে যে ভেঙেচুরে গড়তে চায় পরের ছাঁচে, অলীক, ফাঁকি, মেকি সে জন, নামটা তার কদিন বাঁচে।\" (২ ও ৩ নং প্রশ্নের জন্য)", q:"কবিতাংশের ভাব 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' প্রবন্ধের লেখকের যে নিবেদনের সাথে সাদৃশ্যপূর্ণ তা হলো— i. পরানুকরণে নিরুৎসাহিতা  ii. অন্য লেখকদের অনুকৃতি  iii. স্বকীয়তায় সচেষ্ট থাকা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:3, q:"উক্ত নিবেদন রক্ষিত হলে নিচের কোনটি ঘটতো বলে প্রাবন্ধিক মনে করেন?", opts:["লেখক স্বাতন্ত্র বৈশিষ্ট্যে সমুজ্জ্বল হতেন","বাংলা সাহিত্যের ভাণ্ডার সমৃদ্ধ হতো","অলংকার প্রয়োগ যথার্থ হতো","রচনার পারিপাট্য বজায় থাকতো"], correct:1},
+{n:4, q:"বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের কী হিসেবে খ্যাতি ছিল?", opts:["জনদরদি শাসক","যোগ্য বিচারক","ডেপুটি কালেক্টর","পরোপকারী জমিদার"], correct:2},
+{n:5, q:"বঙ্কিমচন্দ্রের গ্রন্থ সংখ্যা কতটি?", opts:["৩২","৩৪","৫৪","৬৪"], opts:["৩৪","৫৪","৬৪","৩২টি (বা ৩৪টি)"], correct:1}, // বঙ্কিমচন্দ্রের মোট গ্রন্থ ৩৪টি
+{n:6, q:"বঙ্কিমচন্দ্র চট্টোপাধ্যায় রচিত ইংরেজি উপন্যাসটির নাম কী?", opts:["Rajmohan's Wife","Sultana's Dream","Civilization","Conquest of Happiness"], correct:0},
+{n:7, q:"প্রবন্ধ অনুসারে কোথায় অনেকে টাকার জন্য লেখে এবং টাকাও পায়?", opts:["এশিয়ায়","আফ্রিকায়","ইউরোপে","অস্ট্রেলিয়ায়"], correct:2},
+{n:8, q:"অর্থের উদ্দেশ্যে লিখতে গেলে আমাদের কোন প্রবৃত্তি প্রবল হয়ে ওঠে?", opts:["চুরি করার প্রবৃত্তি","হিংসাত্মক প্রবৃত্তি","স্বার্থসাধন প্রবৃত্তি","লোকরঞ্জন-প্রবৃত্তি"], correct:3},
+{n:9, q:"বঙ্কিমচন্দ্রের মতে, সাহিত্য রচনার উদ্দেশ্য কোনটি?", opts:["মানবকল্যাণ","যশলাভ","লোকরঞ্জন","অর্থলাভ"], correct:0},
+{n:10, q:"বাঁধন নিজের প্রতিপত্তি বাড়ানোর জন্য স্থানীয় দুর্নীতিবাজ নেতার পক্ষাবলম্বন করে প্রবন্ধ লিখল। 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা অনুসারে সে কোন শ্রেণির লোকদের সমতুল্য?", opts:["বাড়িওয়ালা","কাবুলিওয়ালা","ফেরিওয়ালা","যাত্রাওয়ালা"], correct:3},
+{n:11, q:"'সুতরাং তাহা একেবারে পরিহার্য'— কোনটি?", opts:["লোকরঞ্জনের প্রবৃত্তি","লেখাকে সরল করে তোলার চেষ্টা","সব প্রমাণ লেখায় সংযুক্তকরণ","মানবকল্যাণ ব্যতীত ভিন্ন উদ্দেশ্যে সাহিত্য রচনা"], correct:3},
+{n:12, passageTag:"উদ্দীপক", passage:"রুমকি লেখা শেষ হওয়ার সঙ্গে সঙ্গে পরীক্ষার খাতা জমা দেয় না। হাতে অন্তত পাঁচ মিনিট সময় রেখে লেখা শেষ করে এবং পুরো খাতায় একবার চোখ বুলিয়ে দেখে সব ঠিকঠাক আছে কি না।", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার কোন উক্তিটি অনুচ্ছেদের ক্ষেত্রে প্রযোজ্য?", opts:["যশের জন্য লিখিবেন না","যাহা লিখিবেন, তাহা হঠাৎ ছাপাইবেন না","বিদ্যা প্রকাশের চেষ্টা করিবেন না","কাহারও অনুকরণ করিও না"], correct:1},
+{n:13, passageTag:"উদ্দীপক", passage:"প্রিয়ন্তী উড়োজাহাজ তৈরির জন্য সরঞ্জাম প্রস্তুত করা শুরু করে। প্রায় তিন বছর পর সে গবেষণায় সফল হয় এবং একটি চালকবিহীন ছোটো উড়োজাহাজ ওড়াতে সক্ষম হয়।", q:"প্রিয়ন্তী 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার কোন চরিত্রের বিপরীত?", opts:["সাময়িক লেখক","অস্থির পাঠক","নব্য লেখক","সুচিন্তিত সুবোধ লেখক"], correct:0},
+{n:14, passageTag:"উদ্দীপক", passage:"বিভিন্ন উপলক্ষ্যে আকাশকে অল্প সময়ে প্রবন্ধ লিখে পত্রিকা অফিসে ছাপাতে হয়। সময় স্বল্পতার কারণে সে নিজের লেখাটি দু-একবারের বেশি পড়ে দেখতে পারে না।", q:"বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের মতে, আকাশের লেখা প্রবন্ধগুলোকে কী বলা যায়?", opts:["অপসাহিত্য","সাময়িক সাহিত্য","বিকৃত সাহিত্য","চিরন্তন সাহিত্য"], correct:1},
+{n:15, q:"রচনায় অলংকার বা ব্যঙ্গ প্রয়োগের পরিমিতি নির্ভর করে কীসের উপর?", opts:["লেখকের মুনশিয়ানার উপর","পাঠকের বোধগম্যতার উপর","প্রকাশকের চাহিদার উপর","বিদ্যা প্রকাশের দক্ষতার উপর"], correct:0},
+{n:16, q:"পত্রিকায় একটি লেখা পড়ে সোবহান সাহেব খুব বিরক্ত হলেন। অপ্রয়োজনীয় নানা বিশেষণে তা ভরপুর। এছাড়াও তাঁর মনে হলো যেন কাতুকুতু দিয়ে জোর করে হাসানোর চেষ্টা করেছেন লেখক। 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা অনুসারে লেখাটিতে কোনটি লক্ষণীয়?", opts:["যশ লাভের জন্য লেখার চেষ্টা","বিদেশি রচনার অনুকরণ","বিদ্যা প্রকাশের চেষ্টা","ব্যঙ্গ ও অলংকারের অপপ্রয়োগ"], correct:3},
+{n:17, q:"'ব্যাধিই সংক্রামক, স্বাস্থ্য নহে'— 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার কোন কথাটির ক্ষেত্রে উক্তিটি প্রযোজ্য?", opts:["সকল অলংকারের শ্রেষ্ঠ অলংকার সরলতা","विद्या প্রকাশের চেষ্টা করিবেন না","অনুকরণে দোষগুলি অনুকৃত হয়, গুণগুলি হয় না","ঘটাকার জন্য লিখিবেন না"], correct:2},
+{n:18, q:"সাহিত্যে অনুকরণের ফলে— i. দোষগুলি অনুকৃত হয়  ii. গুণগুলি অনুকৃত হয় না  iii. সাহিত্যের প্রসার ঘটে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:19, q:"মামুন একটি প্রবন্ধ রচনার পরদিনই পত্রিকায় ছাপাতে চাইলে প্রকাশক বললেন আরও কয়েকদিন রেখে প্রবন্ধটি অনেক বার পড়ো। এরপর নিয়ে এসো। প্রকাশকের পরামর্শ মানলে মামুন যেভাবে উপকৃত হবে— i. ভুল-ত্রুটি শুধরে নেওয়ার সুযোগ পাবে  ii. তুলনামূলক বেশি সম্মানি পাবে  iii. প্রবন্ধটির মান বৃদ্ধি করতে পারবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:20, q:"ভালো লেখক হতে গেলে পরিত্যাগ করতে হবে— i. অনুকরণপ্রিয়তা  ii. যশ লাভের চেষ্টা  iii. বস্তুনিষ্ঠতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:21, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনায় নিহিত রয়েছে— i. মাতৃভাষার প্রতি অনুরাগ  ii. আদর্শ লেখক হওয়ার অনুপ্রেরণা  iii. সৃজনশীলতা ও মননশীলতার সমৃদ্ধি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:22, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনায় লেখকের कामना— i. বাংলা সাহিত্যের উন্নতি  ii. সৃজনশীলতার উৎকর্ষ  iii. লেখক হিসেবে যশপ্রাপ্তি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:23, passageTag:"উদ্দীপক", passage:"শাওন লেখালেখি করে অনেক খ্যাতিমান ও ধনী হতে চায়। এ কারণে প্রায়ই সে সমাজের প্রভাবশালীদের তোষামোদ করে প্রবন্ধ রচনা করে। (২৩ ও ২৪ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা অনুসারে শাওনের কোন বৈশিষ্ট্য বিদ্যমান?", opts:["বিদ্যা প্রকাশের চেষ্টা","অনুকরণপ্রিয়তা","লোকরঞ্জন-প্রবৃত্তি","অলংকারের অপপ্রয়োগ"], correct:2},
+{n:24, q:"শাওনের প্রতি বঙ্কিমচন্দ্রের পরামর্শ হলো— i. টাকার জন্য লিখিবেন না  ii. বিদ্যা প্রকাশের চেষ্টা করিবেন না  iii. যশের জন্য লিখিবেন না", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:25, passageTag:"উদ্দীপক", passage:"মাত্র একুশ বছর বয়সে মৃত্যুবরণ করলেও সুকান্ত ভট্টাচার্যের লেখনী বিশেষ আলোড়ন তুলতে সক্ষম হয়েছিল। তাঁর কবিতায় ধনিকশ্রেণির অন্যায়, শোষণ ও বঞ্চনার বিরুদ্ধে তীব্র প্রতিবাদ লক্ষ করা যায়। (২৫ ও ২৬ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' অনুসারে সুকান্ত ভট্টাচার্যের লেখাকে কী বলা হয়?", opts:["সাময়িক সাহিত্য","লোকরঞ্জনের হাতিয়ার","মানব-মঙ্গলসূচক","সৌন্দর্য সৃষ্টির উপযোগী"], correct:2},
+{n:26, q:"সুকান্ত ভট্টাচার্যকে সার্থক লেখক বলা যায়। কেননা, তাঁর লেখা— i. সত্য ও ধর্মের সহায়ক  ii. সাহিত্যের উদ্দেশ্য সাধন করে  iii. মানুষের কথা বলে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:27, passageTag:"উদ্দীপক", passage:"সমাজপতিদের কাছে খাতির লাভের বাসনায় রোমান তাদের প্রশংসা করে প্রবন্ধ রচনা করে। তাদের অন্যায় ও দুর্নীতি আড়াল করার সর্বোচ্চ চেষ্টা করে সে। (২৭–২৯ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা অনুসারে রোমানকে কাদের সঙ্গে তুলনা করা যায়?", opts:["রিকশাওয়ালা","যাত্রাওয়ালা","ফেরিওয়ালা","কাবুলিওয়ালা"], correct:1},
+{n:28, q:"এরূপ তুলনার কারণ— i. ব্যক্তিগত স্বার্থে সাহিত্য রচনা  ii. মানুষের অনিষ্ট সাধনে সাহিত্য রচনা  iii. সাহিত্য রচনার মূল উদ্দেশ্য থেকে বিচ্যুতি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:29, q:"রোমানের প্রচেষ্টাকে প্রবন্ধ অনুসারে বলা যায়— i. মহাপাপ  ii. মানব-হিতকর  iii. একেবারে পরিহার্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:30, passageTag:"উদ্দীপক", passage:"ইদ উপলক্ষ্যে একটি প্রবন্ধ রচনার পর সালমান ঠিক করল লেখাটি এবারের ইদে নয় বরং পরের ইদে ছাপাবে। পত্রিকার প্রকাশক তাকে লেখাটি জমা দেওয়ার জন্য বারবার তাগাদা দিতে লাগলেন। (৩০ ও ৩১ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' অনুযায়ী প্রকাশকের কথা মানলে সালমানের লেখাটি কী হিসেবে গণ্য হবে?", opts:["অনিষ্টকর সাহিত্য","সাময়িক সাহিত্য","অনুকরণ সাহিত্য","শ্রেষ্ঠ সাহিত্য"], correct:1},
+{n:31, q:"নিজের সিদ্ধান্তে অটল থাকলে সালমানের যে উপকার হবে— i. লেখার ভুল-ত্রুটি সংশোধনের সুযোগ পাবে  ii. লেখক হিসেবে নিজের উৎকর্ষ সাধিত হবে  iii. অধিক সম্মানিপ্রাপ্তি নিশ্চিত হবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:32, passageTag:"উদ্দীপক", passage:"প্রিয় এক সাহিত্যিকের রচনায় নানা বিদেশি শব্দের ব্যবহার দেখে কামাল নিজের লেখায় বিভিন্ন ভাষার শব্দ ও উদ্ধৃতি ব্যবহার শুরু করল। (৩২ ও ৩৩ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' অনুসারে কামালের রচনা পাঠকের পক্ষে কেমন হবে?", opts:["সরল","বিরক্তিকর","অপরিহার্য","হানিকর"], correct:1},
+{n:33, q:"কামালের রচনা যে সব দোষে দুষ্ট হতে পারে— i. অনুকরণপ্রিয়তা  ii. বিদ্যা প্রকাশের চেষ্টা  iii. অলংকারের অপপ্রয়োগ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:34, passageTag:"উদ্দীপক", passage:"পরের মুখে শেখা বুলি পাখির মতো কেন বলিস? পরের ভঙ্গি নকল করে নটের মতো কেন চলিস? (৩৪ ও ৩৫ নং প্রশ্নের জন্য)", q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা অনুসারে উদ্দীপকে নব্য লেখকদের কোন ত্রুটির প্রতি ইঙ্গিত করা হয়েছে?", opts:["অলংকারের অপপ্রয়োগ","আমার বক্তব্য উপস্থাপন","স্বার্থসিদ্ধির প্রচেষ্টা","পরানুকরণের অভ্যাস"], correct:3},
+{n:35, q:"উক্ত দিকটি অবশ্যই পরিত্যাজ্য, কেননা এতে— i. গুণের তুলনায় দোষগুলোই বেশি আয়ত্ত হয়  ii. লেখকের বিদ্যা প্রকাশের সুযোগ সীমিত হয়  iii. নিজের লেখকসত্তার বিকাশ বাধাপ্রাপ্ত হয়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:36, passageTag:"উদ্দীপক", passage:"'প্রাঞ্জলতা' রচনার বড়ো গুণ। তুমি যাহা লিখিলে লোকে পড়িবামাত্র যেন তাহা বুঝিতে পারে। যাহা লিখিলে, লোকে যদি তাহা না বুঝিতে পারিল, তবে লেখা বৃথা। (৩৬ ও ৩৭ নং প্রশ্নের জন্য)", q:"উদ্দীপকে 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার উল্লিখিত কোন প্রসঙ্গের উপস্থাপন লক্ষণীয়?", opts:["রচনার স্বকীয়তা","রচনার বস্তুনিষ্ঠতা","রচনার সরলতা","রচনার চিরন্তনতা"], correct:2},
+{n:37, q:"উক্ত দিকটি নিশ্চিত করা অত্যন্ত জরুরি, কেননা এতে— i. পাঠকের পক্ষে হৃদয়ঙ্গম করা সহজ হয়  ii. লেখক-পাঠকের মধ্যকার যোগাযোগ সহজ হয়  iii. পাঠকের কাছে লেখকের গ্রহণযোগ্যতা বৃদ্ধি পায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:38, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা পড়লে কী জানা যাবে?", opts:["প্রাঞ্জল রচনা লেখার উপায়","আদর্শ লেখক হওয়ার উপায়","লেখায় সৌন্দর্য সৃষ্টির উপায়","লিখে অর্থ উপার্জনের উপায়"], correct:1},
+{n:39, passageTag:"উদ্দীপক", passage:"লেখালেখি বিষয়ে স্টিফেন কিং বলেন— i. টিভি বন্ধ করে বই নিয়ে বসো। সৃজনশীলতার জন্য টিভি হলো বিষস্বরূপ। ii. পাণ্ডিত্যের ভান করবে না। অযথা গুরুগম্ভীর শব্দ ও জটিল বাক্য ব্যবহার করে অন্যকে চমকিত করার চেষ্টা কোনো কাজের বিষয় নয়। (৩৯ ও ৪০ নং প্রশ্নের জন্য)", q:"উদ্দীপকের দ্বিতীয় পরামর্শটি বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের কোন পরামর্শের অনুরূপ?", opts:["স্বার্থতাড়িত লেখা পরিহার বাঞ্ছনীয়","বিদ্যা জাহিরের প্রবণতা নিন্দনীয়","অনুকরণবৃত্তি দূষণীয়","নীতি-নৈতিকতা বিরোধী লেখা বর্জনীয়"], correct:1},
+{n:40, q:"উদ্দীপক ও 'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' প্রবন্ধে উল্লিখিত পরামর্শসমূহ মেনে চললে— i. নবীন লেখকরা উপকৃত হবে  ii. পাঠকসমাজ লাভবান হবে  iii. সৃজনশীলতার চর্চা সমৃদ্ধ হবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:41, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনা কোন ক্ষেত্রে সহায়ক হবে?", opts:["চলিত ভাষার চর্চায়","মননশীলতা ও সৃজনশীলতার চর্চায়","বিদেশি সাহিত্য চর্চায়","অনুকরণবৃত্তি চর্চায়"], correct:1},
+{n:42, q:"বঙ্কিমচন্দ্রের মতে, লেখার ক্ষেত্রে কোনটি দূষণীয়?", opts:["লেখায় সৌন্দর্য সৃষ্টির প্রচেষ্টা","লেখার সৌষ্ঠব বৃদ্ধি","লেখা তাৎক্ষণিকভাবে না ছাপানো","অনুকরণের প্রবণতা"], correct:3},
+{n:43, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনার লক্ষণীয় বিষয় কোনটি?", opts:["বিদেশি সাহিত্যের অনুকরণ","দুর্বোধ্য শব্দের ব্যবহার","চিন্তার মৌলিকত্ব","লোকরঞ্জন-প্রবৃত্তি"], correct:2},
+{n:44, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনাটি বঙ্কিমচন্দ্রের কোন গ্রন্থের অন্তর্ভুক্ত?", opts:["লোকরহস্য","কৃষ্ণচরিত্র","কমলাকান্তের দপ্তর","বিবিধ প্রবন্ধ"], correct:3},
+{n:45, q:"'বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন' রচনাটি প্রথম কোন পত্রিকায় প্রকাশিত হয়?", opts:["সবুজপত্র","বঙ্গদর্শন","প্রচার","সন্দেশ"], correct:1},
+{n:46, q:"ধর্মবিরুদ্ধ বলতে কী বোঝায়?", opts:["স্বার্থের বিরোধী","নীতি-নৈতিকতার বিরোধী","সরলতার বিরোধী","অনুকরণের বিরোধী"], correct:1},
+{n:47, q:"বঙ্কিমচন্দ্র চট্টোপাধ্যায় কোনটিকে 'বাঙ্গালার ভরসা' বলেছেন?", opts:["বাংলার সাহিত্য","বাংলার প্রকৃতি","বাংলার কৃষি","বাংলার মানুষ"], correct:0},
+{n:48, q:"সকল অলংকারের শ্রেষ্ঠ অলংকার কোনটি?", opts:["রীতি","জটিলতা","সরলতা","মাধুর্য"], correct:2},
+{n:49, q:"বঙ্কিমচন্দ্র কারো লেখার অনুকরণ করতে নিষেধ করেছেন কেন?", opts:["অনুকরণে গুণগুলো অনুকৃত হয়","অনুকরণে दोषগুলো অনুকৃত হয়","অনুকরণে বিদ্যা প্রকাশ পায়","অনুকরণে অনধিকার চর্চা ঘটে"], correct:1},
+{n:50, q:"রচনায় অলংকার প্রয়োগ বা রসিকতার ব্যাপারে বঙ্কিমচন্দ্রের মত কী?", opts:["এটি নিতান্তই অপ্রয়োজনীয়","জোরপূর্বক ব্যবহার বর্জনীয়","যত বেশি সম্ভব করা উচিত","লেখকের ইচ্ছার উপর নির্ভর করে"], correct:1}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

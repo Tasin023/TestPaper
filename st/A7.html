@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>নেকলেস — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · গল্প · TASIN SAIMON</span>
+  <h1>নেকলেস</h1>
+  <p class="byline">গী দ্য মোপাসাঁ</p>
+  <p class="desc">মাতিলদা লোইসেলের উচ্চাকাঙ্ক্ষা, একটি ধার করা নেকলেস এবং জীবনের কঠিন বাস্তবতার গল্প — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়, পড়ো এবং নিজেই যাচাই করো।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>১০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৩</b><span>মূল চরিত্র</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/১০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        বিনয়ী ও বাস্তববাদী নারী রেবেকা। নিজের অল্প আয়ের স্বামীর সীমাবদ্ধতা ও সংসারের সমস্যাগুলো সে হাসিমুখে গ্রহণ করেছে। বিলাসী জীবনের কৃত্রিম রঙিন স্বপ্ন না দেখে বাস্তবতাকে মেনে নিয়েই সে সুখী হতে চায়। বিপরীতে, তার এক প্রতিবেশী বান্ধবী নিজের আর্থিক সামর্থ্যের অতীত বিলাসিতার অন্ধ মোহে পড়ে একটি সামাজিক অনুষ্ঠানে যাওয়ার জন্য অনেক ঋণ করে দামী গহনা কেনে এবং পরবর্তীকালে সেই ঋণের বোঝা টানতে গিয়ে নিজের জীবনের সব সুখ ও শান্তি চিরতরে হারিয়ে ফেলে।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">ফরাসি ভাষায় 'নেকলেস' গল্পের শুদ্ধ বানান কোনটি? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>ফরাসি ভাষায় 'নেকলেস' গল্পের শুদ্ধ বানান হলো <b>La Parure</b>।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">"ভাবিয়া করিও কাজ, করিয়া ভাবিও না"— উক্তিটি 'নেকলেস' গল্পের আলোকে ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>উক্তিটির মাধ্যমে কোনো কাজের সুদূরপ্রসারী ফলাফল চিন্তা না করে কেবল সাময়িক মোহের বশে সিদ্ধান্ত নেওয়ার নেতিবাচক পরিণতিকে নির্দেশ করা হয়েছে।</p>
+            <p>'নেকলেস' গল্পের মূল চরিত্র মাতিলদা (মাদাম লোইসেল) বল নাচের অনুষ্ঠানে নিজের আভিজাত্য ফুটিয়ে তোলার জন্য কোনো পরিণতির কথা না ভেবে বান্ধবী মাদাম ফোরস্টিয়ারের কাছ থেকে একটি হিরের নেকলেস ধার নেয়। কিন্তু সেটি হারিয়ে ফেলার পর তার ক্ষতিপূরণ দিতে গিয়ে তাকে ও তার স্বামীকে দীর্ঘ ১০ বছর হাড়ভাঙা খাটুনি খাটতে হয় এবং চরম দারিদ্র্য বরণ করতে হয়। সামান্য ভুলের চরম মূল্য দেওয়ার এই অনুশোচনাই উক্তিটির মূল ভাব।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের রেবেকার প্রতিবেশী বান্ধবীর জীবনের বিপর্যয় 'নেকলেস' গল্পের কোন দিকটিকে নির্দেশ করে? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের রেবেকার প্রতিবেশী বান্ধবীর জীবনের বিপর্যয় 'নেকলেস' গল্পের মূল চরিত্র মাতিলদার উচ্চাকাঙ্ক্ষা, বিলাসিতার মোহ এবং পরিণামদর্শিতার অভাবকে নির্দেশ করে।</span>
+            <p>'নেকলেস' গল্পে দেখা যায়, মাতিলদা সুন্দরী ও তরুণী হলেও এক সাধারণ কেরানি পরিবারে জন্ম ও বিয়ের কারণে নিজের অর্থনৈতিক অবস্থান নিয়ে অসন্তুষ্ট ছিল। বল নাচের আমন্ত্রণে সে নিজেকে ধনী প্রমাণের জন্য বান্ধবীর গহনা ধার করে এবং তা হারিয়ে ফেলে। সেই হারের মূল্য চুকাতে গিয়ে সে নিজের সর্বস্ব হারিয়ে দীর্ঘস্থায়ী সংকটে পড়ে।</p>
+            <p>উদ্দীপকের প্রতিবেশী বান্ধবীও তার সামর্থ্যের বাইরে গিয়ে সামাজিক অনুষ্ঠানে আভিজাত্য দেখাতে ঋণ করে দামী গহনা কেনে। ফলশ্রুতিতে ঋণের ভারে তার জীবনের সব সুখ-শান্তি নষ্ট হয়ে যায়। এই ঘটনাটি মাতিলদার কৃত্রিম বিলাসিতার অন্ধ মোহের সমান্তরাল বাস্তব রূপ।</p>
+            <p>সুতরাং, উদ্দীপকের বান্ধবীর চরম বিপর্যয় মূলত মাতিলদার ভোগবিলাসের মোহ এবং তার করুণ জীবন-বাস্তবতার দিকটিকেই ফুটিয়ে তোলে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"মাদাম লোইসেলের বিষাদময় অভিজ্ঞতায় মূলত উদ্দীপকের রেবেকার জীবনসত্যেরই স্বীকৃতি মেলে"— মন্তব্যটির সার্থকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপক ও 'নেকলেস' গল্পের প্রেক্ষাপট বিবেচনায় মন্তব্যটি সম্পূর্ণ যথার্থ ও অর্থবহ।</span>
+            <p>'নেকলেস' গল্পের শুরু থেকে মাতিলদা তার বাস্তব অবস্থান মেনে নিতে না পেরে কেবলই কাল্পনিক ও অমূলক ধনৈশ্বর্যের মোহে আচ্ছন্ন থাকত। কিন্তু একটি রাতের কৃত্রিম জৌলুস তাকে ও তার স্বামীকে দীর্ঘ ১০ বছরের চরম দারিদ্র্য ও কষ্টের জীবনে নিক্ষেপ করে। এই ১০ বছরের কঠিন সংগ্রাম ও হাড়ভাঙা খাটুনি শেষে মাতিলদা যখন বুঝতে পারে বাস্তব জীবন কত কঠিন, ততদিনে তার যৌবন ও রূপ বিলীন হয়ে গেছে। অবাস্তব কল্পনাবিলাস কীভাবে জীবন ধ্বংস করে, মাতিলদার বিষাদময় পরিণতি তারই প্রমাণ।</p>
+            <p>অন্যদিকে উদ্দীপকের রেবেকা শুরু থেকেই অত্যন্ত বাস্তববাদী। সে অল্প আয়ের স্বামীর বৈষয়িক সীমাবদ্ধতা ও সংসারের সমস্যাগুলোকে হাসিমুখে গ্রহণ করে সুখী হয়েছে। সে এটি উপলব্ধি করেছে যে, কৃত্রিম উচ্চাকাঙ্ক্ষার চেয়ে নিজের বাস্তব পরিধিতে সন্তুষ্ট থাকাই প্রকৃত মঙ্গলের কারণ।</p>
+            <p>মাতিলদা যদি রেবেকার মতো আগে থেকেই জীবনসত্যকে মেনে নিত, তবে তাকে এই চরম মূল্য দিতে হতো না। ১০ বছর দারিদ্র্যের কষাঘাত সহ্য করার পর মাতিলদা যে কঠিন পাঠ শেখে, তা রেবেকার জীবনদর্শনেরই প্রতিফলন। অর্থাৎ, জীবনের আসল সুখ লুকিয়ে আছে বাস্তবতাকে মেনে নেওয়ার মাঝে — এই চিরন্তন সত্যটিই উভয় ক্ষেত্রে প্রমাণিত হয়েছে।</p>
+            <p>অতএব, বলা যায় যে মাদাম লোইসেলের জীবনের করুণ অভিজ্ঞতার শিক্ষা মূলত রেবেকার জীবনসত্যের পরম ও বাস্তব স্বীকৃতি।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">TASIN SAIMON</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ১০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+const DATA = [
+  {n:1, q:"ফ্রান্সে পুরুষদের সম্মানার্থে কী বলে সম্বোধন করা হয়?", opts:["মাদাম","মসিয়ে","ম্যাডোনা","জেনি"], correct:1},
+  {n:2, q:"মাদাম লোইসেলের স্বামী সন্ধ্যাবেলায় অতিরিক্ত কাজের অংশ হিসেবে কী করতেন?", opts:["স্ত্রীর কাজে সাহায্য","নৈশ বিদ্যালয়ে শিক্ষকতা","অন্য অফিসে দাপ্তরিক কাজ","কয়েকজন ব্যবসায়ীর হিসাবের খাতা ঠিক করা"], correct:3},
+  {n:3, q:"'নেকলেস' গল্পের মূল চরিত্র মাতিলদার ঘরটি কে তৈরি করেছিল?", opts:["খর্বকায় ব্রেটন","খর্বকায় জিম","স্থূল হার্মিতেই","স্থূল ডেন"], correct:0},
+  {n:4, q:"মাতিলদা বল নাচের অনুষ্ঠানে যাওয়ার জন্য তার বান্ধবীর কাছ থেকে কী ধার করেছিল?", opts:["রেশমি শাড়ি","হিরের নেকলেস","সোনার ব্রেসলেট","দামি ফ্রক"], correct:1},
+  {n:5, q:"মাদাম লোইসেলের ধনবান বান্ধবীর নাম কী ছিল?", opts:["মাদাম ফোরস্টিয়ার","মাদাম রেমপন্ন","ক্যাথরিন","আইরিন"], correct:0},
+  {n:6, q:"হারিয়ে যাওয়া নেকলেসটির ক্ষতিপূরণ দিতে লোইসেল দম্পতিকে কত বছর কঠোর পরিশ্রম করতে হয়েছিল?", opts:["পাঁচ বছর","সাত বছর","দশ বছর","বারো বছর"], correct:2},
+  {n:7, q:"'নেকলেস' গল্পে মাতিলদার শারীরিক ও বাহ্যিক অবস্থার দ্রুত পতন ঘটার মূল কারণ কী ছিল?", opts:["শারীরিক অসুস্থতা","মানসিক প্রতিহিংসা","কঠোর পরিশ্রম ও দারিদ্র্য","বার্ধক্যজনিত রোগ"], correct:250},
+  {n:8, q:"গল্পের শেষে মাদাম ফোরস্টিয়ারের আসল হিরের নেকলেসটির মূল্য সর্বোচ্চ কত ছিল?", opts:["তিনশো ফ্রাঙ্ক","পাঁচশত ফ্রাঙ্ক","চল্লিশ হাজার ফ্রাঙ্ক","ছত্রিশ হাজার ফ্রাঙ্ক"], correct:1},
+  {n:9, q:"'নেকলেস' গল্পের মূল প্রতিপাদ্য বিষয় বা প্রতিফলিত দিক কোনটি?", opts:["গভীর জীবনবোধের অভাব ও বিলাসিতার মোহ","নারীদের কর্মসংস্থান","তৎকালীন ফ্রান্সের শাসনব্যবস্থা","পারিবারিক কলহ"], correct:0},
+  {n:10, q:"'গরিবের ঘোড়ারোগ' প্রবাদটি 'নেকলেস' গল্পের কোন চরিত্রের ক্ষেত্রে সবচেয়ে বেশি প্রযোজ্য?", opts:["মাদাম ফোরস্টিয়ার","মি. লোইসেল","জর্জ রেমপন্ন","মাতিলদা (মাদাম লোইসেল)"], correct:3}
+];
+
+// Correct index adjustment for proper functionality
+DATA[6].correct = 2; // Fixed array bounds fallback
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>অপরিচিতা — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · গল্প · TASIN SAIMON</span>
+  <h1>অপরিচিতা</h1>
+  <p class="byline">রবীন্দ্রনাথ ঠাকুর</p>
+  <p class="desc">কল্যাণী, অনুপম, মামা ও শম্ভুনাথকে ঘিরে যৌতুকপ্রথা ও আত্মমর্যাদার এই গল্পটির পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়, পড়ো এবং নিজেই যাচাই করো।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৪</b><span>মূল চরিত্র</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        অতুলনীয় মাতৃস্নেহের উত্তাপে সন্তানের পরিপুষ্টি, তাহারই আধিক্যে সে অসহায় হইয়া পড়ে। মাতৃস্নেহের প্রাবল্যে মানুষ আপনাকে হারাইয়া আপন শক্তির মর্যাদা বুঝিতে পারে না। নিয়ত মাতৃস্নেহের অন্তরালে অবস্থান করিয়া আত্মশক্তির সন্ধান সে পায় না — দুর্বল অসহায় পক্ষীশাবকের মতো চিরদিন স্নেহাতিশয্যে আপনাকে সে একান্ত নির্ভরশীল মনে করে। ক্রমে জননীর পরম সম্পদ সন্তান অলস, ভীরু, দুর্বল ও পরনির্ভরশীল হইয়া মনুষ্যত্ব বিকাশের পথ হইতে দূরে সরিয়া যায়।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">রবীন্দ্রনাথের সর্বশেষ গল্পের নাম কী? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>রবীন্দ্রনাথ ঠাকুরের সর্বশেষ গল্পের নাম <b>'মুসলমানীর গল্প'</b>।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'একে তো বরের হাট মহার্ঘ, তাহার পরে ধনুক-ভাঙা পণ।'— ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>পনেরো বছর বয়সেও কল্যাণীর বিয়ে না হওয়ার কারণ নির্দেশ করা হয়েছে উক্তিটির মাধ্যমে।</p>
+            <p>কল্যাণীর বয়স পনেরো, যা তৎকালীন সমাজব্যবস্থায় বিয়ের যোগ্য কন্যার জন্য অনেকটাই বেশি। মোটা টাকা পণ দিতে হয় বলে সুপাত্র মেলাই ভার। তবে এ ব্যাপারে কল্যাণীর বাবা চিন্তিত নন — বয়স যতই হোক, উপযুক্ত পাত্র ছাড়া কন্যার বিয়ে না দিতে তিনি দৃঢ়প্রতিজ্ঞ। তখনকার সমাজে কন্যার পিতার এরূপ মনোভাবের প্রকাশ সাধারণত দেখা যেত না।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকে বর্ণিত সন্তানের সঙ্গে 'অপরিচিতা' গল্পের কোন চরিত্রটি সাদৃশ্যপূর্ণ? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকে বর্ণিত সন্তানের সঙ্গে 'অপরিচিতা' গল্পের অনুপম চরিত্রটি সাদৃশ্যপূর্ণ।</span>
+            <p>'অপরিচিতা' গল্পের অনুপম মায়ের অতি আদরে বড় হয়েছে। ফলে সমাজ-সংসারের বিচিত্র কাজে তার অংশগ্রহণের সুযোগ হয়নি। তা ছাড়া সংসারের অভিভাবক অনুপমের মামা। মামা ও মায়ের অধিক স্নেহে লালিতপালিত হওয়ায় অনুপম বাস্তবজীবনের সঙ্গে তাল মিলিয়ে চলতে শেখেনি।</p>
+            <p>উদ্দীপকে অতিরিক্ত মাতৃস্নেহের নেতিবাচক দিক প্রকাশ পেয়েছে। অতিরিক্ত মাতৃস্নেহে সন্তান তার প্রাণশক্তি হারিয়ে ফেলে, তার স্বাধীনভাবে বেড়ে ওঠার পথ ক্রমশ বন্ধ হয়ে যায়। সন্তান ভীরু, দুর্বল ও পরনির্ভরশীল হয়ে বেঁচে থাকে — যেমনটি দেখা যায় আলোচ্য গল্পের অনুপম চরিত্রে। উচ্চশিক্ষা লাভ করলেও সে ব্যক্তিত্বরহিত ও পরিবারতন্ত্রের কাছে অসহায় পুতুলমাত্র।</p>
+            <p>সুতরাং বলা যায়, চরিত্রগত দিক থেকে উদ্দীপকে বর্ণিত সন্তানের চারিত্রিক বৈশিষ্ট্য 'অপরিচিতা' গল্পের অনুপম ধারণ করেছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপকের ইতিবাচক মর্মার্থ উপলব্ধির মানসিকতাই 'অপরিচিতা' গল্পে অনুপমের পরিবর্তিত জীবনভাবনার উপায় হিসেবে কাজ করেছে।"— মন্তব্যটির সার্থকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি যথার্থ।</span>
+            <p>'অপরিচিতা' গল্পের অনুপম বাবা-মায়ের একমাত্র সন্তান। বাবার মৃত্যুর পর মা ও মামার অতি স্নেহে সে বেড়ে ওঠে। ফলে এমএ পাস করলেও তার মাঝে বয়সের পরিপক্বতা তৈরি হয় না। মায়ের মাত্রাতিরিক্ত আদর এবং মামার অতিরিক্ত দায়িত্বশীলতা অনুপমকে পরনির্ভরশীল ব্যক্তিতে পরিণত করে। ব্যক্তিজীবনে এই পরনির্ভরতা ও ভীরুতার কারণে বিয়ের আসর থেকে অপমানিত হয়ে ফিরে আসতে হয় তাকে।</p>
+            <p>উদ্দীপকে অতুলনীয় মাতৃস্নেহের আধিক্যের ফলাফল সম্পর্কে আলোকপাত করা হয়েছে। এখানে তুলে ধরা হয়েছে, কীভাবে একজন মানুষ অতি-স্নেহে অলস, ভীরু, দুর্বল ও পরনির্ভরশীল হয়ে পড়ে — আর এ ধরনের মানুষ মনুষ্যত্ব বিকাশের পথ থেকে অনেক দূরে চলে যায়; যেমনটি আমরা দেখতে পাই আলোচ্য গল্পের অনুপম চরিত্রে। যদিও শেষ পর্যন্ত তার পরিবর্তন আসে।</p>
+            <p>উদ্দীপকে বর্ণিত ঘটনার প্রেক্ষাপট ইতিবাচকভাবে অনুধাবন করার ফলে অনুপমের জীবনে একসময় পরিবর্তন আসে। সে উপলব্ধি করে, কল্যাণীকে পেতে হলে তাকেও মেরুদণ্ড সোজা করতে হবে; ন্যায়-অন্যায় বিবেচনা করে পথ চলতে হবে। ভীরু ও কাপুরুষ হয়ে থাকলে তাকে পদে পদে বঞ্চিত হতে হবে। মা ও মামার অন্যায় আচরণের ফলে একদিন যে কল্যাণীকে পেয়েও সে হারিয়েছে, এবার তাকে আর হারাতে চায় না।</p>
+            <p>সুতরাং দেখা যায়, উদ্দীপকের ইতিবাচক মর্মার্থ উপলব্ধির মানসিকতাই 'অপরিচিতা' গল্পে অনুপমের পরিবর্তিত জীবনভাবনার উপায় হিসেবে কাজ করেছে — মন্তব্যটি যথার্থ।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">TASIN SAIMON</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// data: {n, passage(optional tag+text), q, opts:[4], correct: 0-3}
+const DATA = [
+{n:1, q:"'আমার জীবনটা না দৈর্ঘ্যের হিসাবে বড়, না গুণের হিসাবে।'— উক্তিতে অনুপমের কোন বৈশিষ্ট্য প্রকাশ পেয়েছে?", opts:["সংসারে অনভিজ্ঞ ও অনুপযুক্ত","সংসার পরিচালনায় অদক্ষ","বিয়ের পক্ষে অনুপযুক্ত","মামার ওপর নির্ভরশীল"], correct:0},
+{n:2, q:"নকুল না এলে বন্ধুদের আড্ডা কখনোই জমে না। নকুলের সাথে 'অপরিচিতা' গল্পের কার মিল আছে?", opts:["হরিশের","শম্ভুনাথের","বিনুদাদার","অনুপমের"], correct:0},
+{n:3, q:"'শিল্পীর চেয়ে দোহারের গলা চড়া।'— 'অপরিচিতা' গল্পের কোন চরিত্রের সাথে দোহারকে তুলনা করা যায়?", opts:["হরিশ","শম্ভুনাথ","মামা","বিনু"], correct:2},
+{n:4, passageTag:"উদ্দীপক", passage:"যৌতুক প্রতিরোধে পুরুষকে অর্থলোভ ত্যাগ করে মানবিক ও উদার হতে হবে। নারীশিক্ষার ব্যাপক প্রসার এ ক্ষেত্রে সহায়ক ভূমিকা পালন করতে পারে। (৪ ও ৫ নং প্রশ্নের জন্য)", q:"উদ্দীপকের নারীশিক্ষা প্রসারের সাথে 'অপরিচিতা' গল্পের কোন চরিত্রটির কর্মকাণ্ড সম্পর্কযুক্ত?", opts:["অনুপম","মামা","কল্যাণী","শম্ভুনাথ"], correct:2},
+{n:5, q:"'অর্থলোভ ত্যাগ করে মানবিক ও উদার হতে হবে'— উদ্দীপকের এ বক্তব্য 'অপরিচিতা' গল্পের কোন চরিত্রের ক্ষেত্রে উপদেশমূলক?", opts:["মামা","হরিশ","কল্যাণী","অনুপম"], correct:0},
+{n:6, q:"রবীন্দ্রনাথের 'অপরিচিতা' গল্পের মূলসুর হলো— i. দৃঢ়চেতা নারী ব্যক্তিত্বের জাগরণ  ii. প্রচলিত শিক্ষার অসারতা  iii. পুরুষতন্ত্রের অমানবিকতার স্ফুরণ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:7, q:"'অপরিচিতা' গল্পে কল্যাণীর মাঝে কোনটি দেখা যায়?", opts:["দেশাত্মবোধ","প্রকৃতিপ্রেম","ধর্মনিষ্ঠা","রাজনীতি সচেতনতা"], correct:0},
+{n:8, q:"'পণপ্রথা সমাজের অভিশাপ। অতিরিক্ত লোভের বশে মানুষ তার মর্যাদা হারায়, অনেক সময় ক্ষতির সম্মুখীন হয়।'— এই বক্তব্য তোমার পঠিত কোন গল্পের ভাবার্থ বহন করে?", opts:["অপরিচিতা","নেকলেস","মাসি-পিসি","আহ্বান"], correct:0},
+{n:9, q:"রবীন্দ্রনাথ ঠাকুরের 'অপরিচিতা' মূলত কী জাতীয় রচনা?", opts:["গবেষণামূলক","নকশাজাতীয়","উদ্দেশ্যমূলক","শিক্ষামূলক"], correct:3},
+{n:10, q:"'অপরিচিতা' গল্পে কল্যাণীর মাঝে কোনটি দেখা যায়?", opts:["দেশ চেতনায় দৃঢ় ব্যক্তিত্বের জাগরণ","যৌতুক প্রথার বিরুদ্ধে সচেতন প্রয়াস","সামাজিক প্রথার বিরুদ্ধে অবস্থান","ব্যক্তিগত জেদের প্রাধান্য বিস্তার"], correct:0},
+{n:11, passageTag:"উদ্দীপক", passage:"রিয়ার স্বামী যৌতুকের জন্য প্রতিদিন তাকে মানসিক নির্যাতন করে। সে স্বামীকে বোঝানোর চেষ্টা করে, স্বামী কিছুতেই বুঝতে চায় না। তাই সে স্বামীকে তালাক দিয়ে গ্রামের স্কুলে শিক্ষকতা করে। (১১ ও ১২ নং প্রশ্নের জন্য)", q:"রিয়ার সাথে কার তুলনা করা যায়?", opts:["কল্যাণীর","মাতিলদা","বিলাসীর","আহ্লাদির"], correct:0},
+{n:12, q:"এ তুলনার যৌক্তিক কারণ হিসেবে বিবেচ্য— i. প্রতিবাদী মানসিকতা  ii. পেশাগত জীবন  iii. বৈবাহিক অবস্থা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:13, passageTag:"উদ্দীপক", passage:"দুই বছর আগে প্রতাপের সাথে কবিতার বিয়ে ভেঙে যায়, কবিতার বাবা প্রতাপের বাবার চাহিদা মেটাতে ব্যর্থ হওয়ায়। পরবর্তী সময়ে প্রতাপ নিজের ভুল বুঝতে পেরে পুনরায় বিয়ের প্রস্তাব দিলে কবিতা সেটা সাদরে গ্রহণ করে। (১৩ ও ১৪ নং প্রশ্নের জন্য)", q:"উদ্দীপকের কবিতার সঙ্গে 'অপরিচিতা' গল্পের কল্যাণীর অমিল হলো— i. চারিত্রিক দৃঢ়তায়  ii. ব্যক্তিত্ববোধে  iii. সৌন্দর্যবোধে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:14, q:"উদ্দীপকে এবং 'অপরিচিতা' গল্পে কোন সামাজিক অনুষঙ্গটি প্রকাশ পেয়েছে?", opts:["বিবাহ বিচ্ছেদ","পুনর্মিলন","যৌতুকপ্রথা","ব্যক্তিত্ববোধ"], correct:2},
+{n:15, passageTag:"উদ্দীপক", passage:"বড়ো বাড়িতে করিম শেখের আত্মীয়তা হতে পারে না, ওদের বসতে দেওয়ার মতো ব্যবস্থাই তার নেই। (১৫ ও ১৬ নং প্রশ্নের জন্য)", q:"উদ্দীপকের করিম শেখের অবস্থা 'অপরিচিতা' গল্পে কার মতো?", opts:["অনুপমের","হরিশের","বিনু দাদার","শম্ভুনাথের"], correct:3},
+{n:16, q:"উদ্দীপকের মতোই 'অপরিচিতা' গল্পে দেখানো হয়েছে— i. উঁচু-নিচুর প্রভেদ  ii. উপনিবেশবাদের ভয়াবহতা  iii. ধনতান্ত্রিক সমাজব্যবস্থার স্বরূপ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:17, q:"'যৌতুক না পেয়ে অপুর মা-বাবা তার স্ত্রী হৈমন্তীর উপর অত্যাচার করলেও অপু পাথরের মতো নির্বাক থাকে।'— এখানে অপু ও অনুপমের মধ্যে সাদৃশ্য— i. ব্যক্তিত্বহীনতা  ii. পরিবারের কাছে সমর্পিত  iii. সাক্ষীগোপালতুল্য নীরবতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:18, q:"নিচের যে বাক্যে ছোটোগল্পের ইঙ্গিতময় পরিসমাপ্তির পরিচয় আছে— i. শুনিয়া মা এবং আমি উভয়েই চমকিয়া উঠিলাম  ii. কিন্তু আমি আশা ছাড়িতে পারিলাম না  iii. এখনও আশা ছাড়ি নাই", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:19, q:"শম্ভুনাথ সম্পর্কে অনুপমের মামার সম্ভাব্য ধারণা— i. তেজ কম  ii. আর্থিক দীনতা  iii. সমাজে সম্মানিত", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:20, q:"'হাজেরা নামের এক নারী চল্লিশটি পথশিশুকে আশ্রয় দিয়ে লালনপালন করে চলেছেন।'— হাজেরাকে কল্যাণীর সঙ্গে কোন দিক থেকে তুলনা করা যায়?", opts:["দেশপ্রেম","কুমারীব্রত","সেবাপরায়ণতা","সহিষ্ণুতা"], correct:2},
+{n:21, q:"তালাকপ্রাপ্তা রহিমা বাপের বাড়িতে ফিরে এসে দর্জির কাজ শুরু করে। রহিমার সঙ্গে কল্যাণীর মিল কোথায়?", opts:["কর্মদক্ষতায়","হীনম্মন্যতায়","আত্মপ্রত্যয়ে","বুদ্ধিমত্তায়"], correct:2},
+{n:22, q:"কল্যাণীর শেষ পর্যন্ত বিয়েতে রাজি না হওয়ার কারণ হিসেবে কোনটি বিবেচনার যোগ্য?", opts:["দেশপ্রেম","ঘৃণা","প্রতিশোধ","ধিক্কার"], correct:3},
+{n:23, q:"'তুমি অনেক যত্ন করে আমায় দুঃখ দিতে চেয়েছ, দিতে পারোনি; কী তার জবাব দেবে যদি বলি আমিই কি হেরেছি, তুমিও কি একটুও হারোনি?'— কথাটি 'অপরিচিতা' গল্পের কার মনের কথা বলে বিবেচিত হতে পারে?", opts:["অনুপমের","মামার","কল্যাণীর","মায়ের"], correct:2},
+{n:24, q:"'যারে হাত দিয়ে মালা দিতে পারোনি কেন মিছে মনে রাখো তারে?'— 'অপরিচিতা' গল্পে এ উপদেশবাণী কার জন্য প্রযোজ্য?", opts:["অনুপমের","মামার","কল্যাণীর","শম্ভুনাথের"], correct:0},
+{n:25, q:"'যেখানে থাকি না কেন যতই দূরে তুমিতো রইবে মোর হৃদয় জুড়ে।'— 'অপরিচিতা' গল্পে এ কথা কার ক্ষেত্রে প্রযোজ্য?", opts:["শম্ভুনাথের","কল্যাণীর","মামার","অনুপমের"], correct:3},
+{n:26, q:"'কমলকুমার বিয়ের আসর থেকে বিয়ে না করে চলে আসতে বাধ্য হয়।'— 'অপরিচিতা' গল্পের কার সাথে কমলকুমারের মিল রয়েছে?", opts:["হরিশের","অনুপমের","বিনুদাদার","শম্ভুনাথের"], correct:1},
+{n:27, q:"পরিবারের কেউ তন্ময়ের মতামতের কোনো মূল্যায়ন করে না। এখানে তন্ময়ের সাথে কোন চরিত্রের মিল রয়েছে?", opts:["কল্যাণী","অনুপম","বিনুদা","শম্ভুনাথ"], correct:1},
+{n:28, q:"'যৌতুকের কারণে বাবা বিয়ে ভেঙে দিতে চাইলে বাধা দেয় অর্ণব।'— অর্ণবের সাথে 'অপরিচিতা' গল্পের কার বৈসাদৃশ্য রয়েছে?", opts:["কল্যাণীর","বিনুদাদার","অনুপমের","হরিশের"], correct:2},
+{n:29, q:"কমলবাবু অত্যন্ত বুদ্ধিমান ব্যক্তি বলে বাড়ির সব কাজেই তাঁর ডাক পড়ে, কোনো কিছুতেই তাঁকে ঠকানো যায় না। কমলবাবু 'অপরিচিতা' গল্পের কোন চরিত্রের সঙ্গে তুলনীয়?", opts:["বিনু","কল্যাণী","শম্ভুনাথ","মামা"], correct:3},
+{n:30, q:"'অপরিচিতা' গল্পে অনুপমের অবকাশের সঙ্গে তুলনা করা হয়েছিল—", opts:["মরীচিকার","মরুভূমির","নদীর","স্রোতের"], correct:1},
+{n:31, q:"যোগ্য ছেলে হলেও যৌতুকলোভী হওয়ায় বিয়ে ভেঙে দিলো কণার বাবা। কণার বাবার কোন বৈশিষ্ট্যটি শম্ভুনাথের মাঝে বিদ্যমান?", opts:["অহংকার","আত্মমর্যাদা","অহমিকা","আত্মগৌরব"], correct:1},
+{n:32, q:"'অপরিচিতা' গল্পের সর্বাধিক আত্মমর্যাদাবোধসম্পন্ন ব্যক্তি হিসেবে কাকে বিবেচনা করা যায়?", opts:["শম্ভুনাথকে","মামাকে","কল্যাণীকে","মাকে"], correct:0},
+{n:33, q:"কল্যাণীর বাবা বিয়ের কত দিন আগে অনুপমকে আশীর্বাদ করে যান?", opts:["তিন দিন","সাত দিন","পাঁচ দিন","নয় দিন"], correct:1},
+{n:34, q:"মামুন রসিকতা করে সকলকে আনন্দ দেয়। এখানে মামুন 'অপরিচিতা' গল্পের কোন চরিত্রের প্রতিনিধিত্ব করেছে?", opts:["বিনু","হরিশ","অনুপম","মামা"], correct:1},
+{n:35, q:"'শিমুলের বাবা ছেলের বউকে পদানত করে রাখার বাসনায় ধনী পরিবারের কন্যা চান না।'— 'অপরিচিতা' গল্পে শিমুলের বাবার সাথে তুলনীয় চরিত্র কোনটি?", opts:["হরিশ","অনুপম","শম্ভুনাথ","মামা"], correct:3},
+{n:36, q:"অনুপমের ব্যক্তিত্বহীনতা বোঝাতে লেখক কোন শব্দটি ব্যবহার করেছেন?", opts:["শিমুল ফুল","ফল্গু নদী","মাকাল ফল","রঙিন ছবি"], correct:2},
+{n:37, q:"'অপরিচিতা' গল্প প্রথম গ্রন্থভুক্ত হয় কোথায়?", opts:["গল্পগুচ্ছে","গল্পসপ্তকে","সবুজপত্রে","শেষের কবিতায়"], correct:1},
+{n:38, q:"'ফল্গুর বালির মতো তিনি আমাদের সমস্ত সংসারটাকে নিজের অন্তরের মধ্যে শুষিয়া লইয়াছেন।'— এই 'ফল্গু' নদীর বৈশিষ্ট্য কী?", opts:["অন্তঃসলিলা","জোয়ার-ভাটাহীন","খরস্রোতা","দ্বীপবেষ্টিত"], correct:0},
+{n:39, q:"'অপরিচিতা' গল্পটি পড়ে আমাদের যে ভাবনার উদয় হয়— i. সমাজের সংস্কার আবশ্যক  ii. দৃষ্টিভঙ্গির উন্নয়ন জরুরি  iii. ব্যক্তিত্ববোধের জাগরণ দরকার", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:40, q:"'অপরিচিতা' গল্পে কল্যাণীর মেয়েদের শিক্ষার ব্রত গ্রহণ করার কারণ— i. বিবাহ ভঙ্গ  ii. নারীর প্রতি মমত্ববোধ  iii. মাতৃভূমির প্রতি ভালোবাসা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:41, q:"'আমার ভাগ্যে প্রজাপতির সঙ্গে পঞ্চশরের কোনো বিরোধ নেই'— এ কথা বলতে বোঝানো হয়েছে অনুপমের—", opts:["রুচিশীলতাকে","দেবতার কুদৃষ্টিকে","ভাগ্যের সুপ্রসন্নতাকে","স্বার্থহীন ভালোবাসাকে"], correct:2},
+{n:42, q:"'অপরিচিতা' গল্পের বিশেষ দিক কোনটি?", opts:["নারীর সঠিক মূল্যায়ন","নারীশিক্ষার প্রসার","পুরুষতন্ত্রের অসারতা","নারীর ব্যক্তিত্বের জাগরণ"], correct:3},
+{n:43, q:"'অপরিচিতা' গল্পে লেখক মূলত কী প্রকাশ করতে চেয়েছেন?", opts:["শিক্ষার গুরুত্ব","বাল্যবিবাহ রোধ","কুসংস্কার দূরীকরণ","তৎকালীন যৌতুকপ্রথা"], correct:3},
+{n:44, q:"'অপরিচিতা' গল্পটি প্রথম প্রকাশিত হয় কোন পত্রিকায়?", opts:["প্রগতি","সবুজপত্র","পরিচয়","শিখা"], correct:1},
+{n:45, q:"'প্রদোষ' এর প্রতিশব্দ কী?", opts:["সকাল","রাত","সন্ধ্যা","বিকাল"], correct:2},
+{n:46, q:"শানাই, ঢোল ও কাঁসি— এই তিন প্রকার বাদ্যযন্ত্রে সৃষ্ট ঐকতান বাদনকে কী বলে?", opts:["কনসার্ট","ত্রিতাল","পঞ্চশর","রোশনচৌকি"], correct:3},
+{n:47, q:"'ফল্গু' বলতে কী বোঝানো হয়েছে?", opts:["ভারতের গয়া অঞ্চলের অন্তঃসলিলা নদী","পাকিস্তানের সিন্ধু প্রদেশের জলধারা বিশেষ","বরফে ঢাকা রাশিয়ার হ্রদ","মিশরের মাঝ দিয়ে বয়ে চলা অববাহিকা"], correct:0},
+{n:48, passageTag:"উদ্দীপক", passage:"ঘরেতে এলো না সে তো, মনে তার নিত্য আসা যাওয়া, পরনে ঢাকাই শাড়ি, কপালে সিঁদুর। (৪৮–৫০ নং প্রশ্নের জন্য)", q:"উদ্দীপকের 'সে' 'অপরিচিতা' গল্পের যে চরিত্রের প্রতিনিধিত্ব করে, তার কারণ উভয়েরই— i. পরিণাম এক  ii. নায়কের কল্পনা  iii. যৌতুকপ্রথার বলি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:49, q:"উদ্দীপকের 'সে' 'অপরিচিতা' গল্পের কোন চরিত্রের প্রতিনিধিত্ব করে?", opts:["অনুপম","মামা","কল্যাণী","হরিশ"], correct:2},
+{n:50, q:"উদ্দীপকের 'সে' 'অপরিচিতা' গল্পের যে চরিত্রের প্রতিনিধিত্ব করে তার কারণ উভয়েরই— i. পরিণাম এক  ii. নায়কের কল্পনা  iii. যৌতুকপ্রথার বলি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    // show passage if any sibling question until next passage is visible
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

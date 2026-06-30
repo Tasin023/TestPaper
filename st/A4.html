@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>গন্তব্য কাবুল — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · ভ্রমণকাহিনি · FAHAD'S TUTORIAL</span>
+  <h1>গন্তব্য Kabul</h1>
+  <p class="byline">সৈয়দ মুজতবা আলী</p>
+  <p class="desc">কাবুল ভ্রমণের বিচিত্র অভিজ্ঞতা, বিভিন্ন স্থানের প্রাকৃতিক সৌন্দর্য, জীবনযাত্রা, আতিথেয়তা ও রসবোধের পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়, পড়ো এবং নিজেই যাচাই করো।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৫</b><span>মূল অনুষঙ্গ</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        মিতু বিদেশে গিয়ে পরিচিত হয় একজন আফ্রিকান মহিলার সঙ্গে। মহিলা অত্যন্ত ভালো ও আন্তরিক। পরিচয় থেকে আলাপ। অতঃপর খুব ভালো বন্ধু হয়ে যায় উভয়েই। একদিন দুপুরে খাওয়ার সময় হলে আফ্রিকান মহিলা তার ব্যাগ খুলে কিছু খাবার বের করেন। মায়ের হাতের রান্না করা বলে মিতুকে খেতে বলায় মিতু তার আহ্বানে সাড়া দিয়ে সানন্দে আফ্রিকান মহিলার খাবার গ্রহণ করে।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">বুড়ো বয়সেও মাঝে মাঝে বায়োস্কোপে যায় কে? <i>(ज्ञानমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>বুড়ো বয়সেও মাঝে মাঝে বায়োস্কোপে যায় <b>সর্দারজি</b>।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">কোন বিষয়ে লেখকের ঈষৎ উদ্বেগ রয়েছে? বুঝিয়ে লেখো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>পেশোয়ার স্টেশনে লেখকের বন্ধুর বন্ধু তাকে চিনবে কি না সেই বিষয়ে তাঁর কিছুটা উদ্বেগ ছিল।</p>
+            <p>পেশোয়ার যাওয়ার পথে সর্দারজির সাথে লেখকের আলাপ হয়। সর্দারজি লেখকের কাছে জানতে চান, পেশোয়ারে লেখক কাউকে চেনে কি না। সর্দারজির প্রশ্নের উত্তরে লেখক জানান, তাঁর বন্ধুর বন্ধু স্টেশনে আসবে তাকে নিতে। কিন্তু লেখক আগে কখনো তাকে দেখেনি। লেখককে স্টেশনে নিতে আসা লোকটি তাঁকে চিনতে পারবে কি না, সেই বিষয়ে সংশয় প্রকাশ করতেই প্রশ্নোক্ত উদ্বেগের সৃষ্টি হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের আফ্রিকান মহিলার সাথে 'গন্তব্য Kabul' রচনার কোন চরিত্রের সাদৃশ্য রয়েছে? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের আফ্রিকান মহিলার সাথে 'গন্তব্য Kabul' রচনার ফিরিঙ্গি চরিত্রের সাদৃশ্য রয়েছে।</span>
+            <p>'গন্তব্য Kabul' রচনায় দেখা যায়, একজন ফিরিঙ্গি-সহযাত্রীর সাথে লেখকের আলাপ-পরিচয় হয়। কথা বলার মধ্যে সন্ধ্যা হতে না হতেই ফিরিঙ্গি ভদ্রলোকটি প্রকাণ্ড এক চুবড়ি খুলে নানা পদের খাবার বের করে। লেখককে বলে এগুলো তার ফিয়াসে যত্ন করে ডিনারের জন্য বানিয়ে দিয়েছে।</p>
+            <p>উদ্দীপকেও দেখতে পাই, বিদেশে গিয়ে মিতুর একজন আফ্রিকান মহিলার সাথে পরিচয় ঘটে। মহিলা অনেক আন্তরিক। আলাপচারিতার মাধ্যমে দুজনের মধ্যে খুব ভালো বন্ধুত্ব গড়ে ওঠে। একদিন দুপুরে খাওয়ার সময় হয়ে এলে আফ্রিকান মহিলা ব্যাগ থেকে কিছু খাবার বের করে তার মায়ের হাতের রান্না বলে দাবি করে। আনন্দ চিত্তে মিতু তার দেওয়া খাবার গ্রহণ করে। আফ্রিকান মহিলার এই আচরণের সাথে আলোচ্য ভ্রমণকাহিনির ফিরিঙ্গির আতিথেয়তার সাদৃশ্য রয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপকটি 'গন্তব্য Kabul' রচনার খন্ডাংশ মাত্র।" উদ্দীপক ও 'গন্তব্য Kabul' রচনার আলোকে তোমার মতামত দাও। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">"উদ্দীপকটি 'গন্তব্য Kabul' ভ্রমণকাহিনির খন্ডাংশ মাত্র।"- উক্তিটি যথার্থ।</span>
+            <p>'গন্তব্য Kabul' একটি ভ্রমণকাহিনি। এখানে লেখক তাঁর কাবুল ভ্রমণের অনেক অভিজ্ঞতা ও বিভিন্ন স্থানে যাওয়ার ছোটো ছোটো ঘটনা সুনিপুণভাবে তুলে ধরেছেন। যেখানে স্থান পেয়েছে বিভিন্ন জায়গার প্রাকৃতিক সৌন্দর্য, জীবনযাত্রা, খাদ্যাভ্যাস, কৃষ্টিকালচারসহ নানা অনুষঙ্গ। যার মধ্যে একটি হলো লেখকের সাথে ফিরিঙ্গির পরিচয় ও তার আন্তরিক আতিথেয়তা।</p>
+            <p>উদ্দীপকে লক্ষ করা যায়, বিদেশে মিতুর সাথে পরিচয় ঘটে এক আফ্রিকান মহিলার। পরিচয় থেকে আলাপের একপর্যায়ে দুপুরে খাওয়ার সময় হলে তিনি ব্যাগ থেকে কিছু খাবার বের করেন। মিতুকে খেতে আমন্ত্রণ করে বলেন- এগুলো আমার মায়ের হাতের রান্না করা খাবার। মিতু সেই মহিলার আন্তরিকতায় মুগ্ধ হয়ে আতিথেয়তা গ্রহণ করে।</p>
+            <p>উদ্দীপকে আমরা কেবল একজন বিদেশিনির সাথে মিতুর আলাপ ও তার আতিথেয়তার বিষয়টি লক্ষ করি। কিন্তু 'গন্তব্য Kabul' রচনার বিষয়বস্তু আরও ব্যাপক ও বিস্তৃত। সেখানে সামগ্রিক ভ্রমণ অভিজ্ঞতা, পথচলতি বিচিত্র মানুষ এবং ভৌগোলিক পরিবেশের নিখুঁত চিত্র রয়েছে। সুতরাং বলা যায়, উদ্দীপকটি আলোচ্য রচনার কেবল একটি বিশেষ দিকের ইঙ্গিতবাহী খন্ডাংশ মাত্র।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// data: {n, passage(optional tag+text), q, opts:[4], correct: 0-3}
+const DATA = [
+  {n:1, q:"জাকারিয়া স্ট্রিট কেন বিখ্যাত?", opts:["ফুলের জন্য","বইয়ের জন্য","মিষ্টির জন্য","হোটেলের জন্য"], correct:3},
+  {n:2, q:"'ফিয়াসে' কী?", opts:["বোন","ভালোবাসার নারী","খালা","মা"], correct:1},
+  {n:3, passageTag:"উদ্দীপক", passage:"রংপুর থেকে কুড়িগ্রামের দূরত্ব পঞ্চাশ মাইল। প্রত্যন্ত অঞ্চলের ধরলা চরে আন্তর্জাতিক এনজিও 'সেভ দ্য চিলড্রেন' এর শাখা। সামনে যেতেই মন ভরে গেল এনজিওর শৈল্পিক ডিজাইন দেখে। যার এক পাশে কলকল করে বয়ে চলেছে ধরলা নদী। অন্য পাশে বিস্তীর্ণ বাদামের খেত যেন সৌন্দর্যের অপার আধার হয়ে দোল খাচ্ছে। (৩ ও ৪ নং প্রশ্নের জন্য)", q:"উদ্দীপকের কুড়িগ্রাম শহরটি 'গন্তব্য Kabul' রচনার কোন জায়গাকে নির্দেশ করে?", opts:["জালালাবাদ","সরাই","দক্কাদুর্গ","লাহোর"], correct:2},
+  {n:4, q:"'গন্তব্য Kabul'-এর দক্কাদুর্গ ও উদ্দীপকের মিল রয়েছে— i. বহতা নদীর দিক থেকে ii. সৌন্দর্যের দিক থেকে iii. ডেকোরেশনের দিক থেকে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:5, passageTag:"উদ্দীপক", passage:"শাহেদ ছুটি কাটাতে বান্দরবান যান। সেখানে যে কদিন থাকবেন সেই কদিনের জন্য একটি গাড়ি রিজার্ভ করেন। যেন নীলগিরি, নীলাচলসহ সব জায়গা ঘুরে দেখতে পারেন। যাওয়ার পরদিন সকালে তিনি গাড়ি নিয়ে বের হন নীলগিরির উদ্দেশে। গন্তব্যে পৌছানোর আগেই গাড়ির ইঞ্জিনে সমস্যা দেখা দেয়। ড্রাইভার অনেক খুঁজে একজন মেকানিক এনে গাড়ি সারিয়ে তোলে। তারপর যাত্রা শুরু করে। (৫ ও ৬ নং প্রশ্নের জন্য)", q:"উদ্দীপকে শাহেদের বান্দরবানে যাওয়ার সাথে 'গন্তব্য Kabul' রচনার কোন ঘটনার সাযুজ্য রয়েছে?", opts:["সরাই যাওয়ার","জালালাবাদ যাওয়ার","লাহোর যাওয়ার","লান্ডিকোটাল যাওয়ার"], correct:1},
+  {n:6, q:"উদ্দীপক ও 'গন্তব্য Kabul' উভয় স্থানে যাত্রাপথে বিঘ্ন ঘটে কেন?", opts:["ড্রাইভার অসুস্থ হওয়ায়","গাড়ি খারাপ হওয়ায়","রাস্তা খারাপ হওয়ায়","অচেনা জায়গা হওয়ায়"], correct:1},
+  {n:7, passageTag:"উদ্দীপক", passage:"রাজু তার কয়েকজন সহকর্মীর সাথে অফিস ট্যুরে থাইল্যান্ড গিয়েছে। তাকে অভ্যর্থনা জানাতে তার থাই বন্ধু কুং ওয়ান এয়ারপোর্টে এসেছিল। দুজনের মধ্যে যখন দেখা হয়, একে অপরের সাথে কোলাকুলি করে এবং স্নিগ্ধ হাসি দিয়ে সংবর্ধনা জানায়। (৭ ও ৮ নং প্রশ্নের জন্য)", q:"উদ্দীপকের রাজুর সাথে 'গন্তব্য Kabul' রচনার কার মিল রয়েছে?", opts:["শেখ আহমদ আলী","শিখ সর্দারজির","লেখকের","বেতার কর্তার"], correct:2},
+  {n:8, q:"উভয় অভ্যর্থনাকারীর মধ্যে রয়েছে— i. আন্তরিকতা ii. সৌজন্যবোধ iii. অহংকার", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:9, passageTag:"উদ্দীপক", passage:"আজাহার সাহেব একজন সত্তর বছর বয়সি বৃদ্ধ। কিন্তু তিনি মনের দিক থেকে এখনো তরুণ ও রসিক। তার দুই নাতি ও তিন নাতনিকে তিনি খুব ভালোবাসেন। মাঝে মাঝে তাদেরকে সাথে নিয়ে বড়ো প্রজেক্টরে সিনেমা দেখেন। পার্কে ঘুরতে যান। এভাবে তিনি এ প্রজন্মের ছেলেমেয়েদের চিন্তা-চেতনা বোঝার চেষ্টা করেন। (৯ ও ১০ নং প্রশ্নের জন্য)", q:"উদ্দীপকের আজাহার সাহেব 'গন্তব্য Kabul' রচনায় কার প্রতিনিধিত্ব করেন?", opts:["সর্দারজির","পাঠানের","হ্যাজি ম্যাননের","কাবুলির"], correct:0},
+  {n:10, q:"উদ্দীপকের আজাহার সাহেবের কর্মকান্ডের সাথে 'গন্তব্য Kabul' রচনায় ফুটে ওঠা দিকটি হলো— i. আনন্দে বাঁচা ii. নতুন প্রজন্মের মন বোঝা iii. জীবনকে উপভোগ করা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:11, q:"'আশেপাশে নদী বা ঝরনা নেই বলে ধোয়ামোছার জন্য জলের বাজে খরচার কথাও ওঠে না'— বাক্যটির মধ্যে যে বিষয়টি নিহিত— i. প্রশংসা ii. তিরস্কার iii. নিন্দা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:12, q:"'আপনি তো ওদের জানমালের জিম্মাদার নন'— বেতার কর্তার এ উক্তির মধ্য দিয়ে যে বিষয়টি প্রকাশিত— i. রসিকতা ii. নিন্দা iii. কৌতুক", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:13, q:"'গোয়িং ফার'— বাক্যটি সম্পর্কে নিচের যে উক্তিগুলো প্রযোজ্য— i. এটি একটি ইংরেজি বাক্য ii. এর মধ্য দিয়ে বিলিতি কায়দার প্রকাশ পায় iii. এর মাধ্যমে রাজকীয় ভাব প্রকাশ পায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:14, q:"'গন্তব্য Kabul'-এর শিরোনাম আর যা হতে পারত— i. আফগানিস্তান যাত্রা ii. Kabul যাত্রা iii. Kabুলের পথে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:15, q:"'গন্তব্য Kabul' ভ্রমণকাহিনি পাঠে পরিচয় ঘটে লেখকের— i. জীবনবোধের সাথে ii. সাহিত্য ভান্ডারের সাথে iii. নিজস্ব শিল্প-বৈশিষ্ট্যের সাথে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:16, q:"লেখক বিদগ্ধ পান্ডিত্যের মনন ও নিষ্ঠার চোখে দেখেন— i. মানুষ ii. জনপদ iii. ঘটনা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:17, q:"বুখারা বিখ্যাত— i. সংস্কৃতিচর্চার জন্য ii. ব্যবসা-বাণিজ্যের জন্য iii. আতিথেয়তার জন্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:18, q:"দিল্লি হলো— i. ভারতের রাজধানী ii. ভারতের অন্যতম প্রাচীন শহর iii. পৃথিবীর দ্বিতীয় বৃহত্তম জনবহুল শহর", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:19, q:"Kabul নদীতে ডুবলে ঠান্ডা হবে— i. দিল ii. জান iii. কলিজা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:20, q:"কোমরবন্ধের নিচে চলেছে— i. গাঁজা ii. আফিং iii. কোকেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:21, q:"পণ্যবাহিনীর লোকদের হাতে ছিল— i. বন্দুক ii. লাঠি iii. বর্শা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:22, q:"হিন্দুস্তানের বিরিয়ানি পোলাওয়ের জৌলুস বাড়ায়— i. কিসমিস ii. পেস্তা বাদাম iii. আলুবুখারা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:23, q:"কাবুলী ব্যবসায়ীরা কিনে নিয়ে যায়— i. গ্রামোফোন ii. ঝাড়-লণ্ঠন iii. সিগারেট", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:24, q:"আফগান সরকারের কর্মচারী ছিলেন— i. হিংসুটে ii. বন্ধুবৎসল iii. বিপন্নের সহায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:25, q:"লেখককে টাঙায় বসালেন— i. খানিকটা কোলে-پیঠে করে ii. খানিকটা টেনে-হিঁচড়ে iii. শক্ত করে হাত ধরে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:26, q:"\"হক কথা; তবে কিনা বাজে খরচ।\" এখানে 'হক কথা' বলতে যা বোঝানো হয়েছে— i. সত্য কথা ii. সঠিক কথা iii. পুণ্যের কথা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:27, q:"জবরজঙ্গ দাড়ি-গোঁফের ভিতর হাসি— i. অতি মিষ্ট ii. শুষ্ক iii. মোলায়েম", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:28, q:"উর্ধ্বশ্বাসে ছুটছে— i. গাড়ি ii. বৃষ্টি iii. রোদ্দুর", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:29, q:"পাঠানদের দাড়ি হলো— i. লম্বা ii. দিলতা iii. রাওড়া", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:30, q:"নালার জলের পরশে কে নয়ন মেলে তাকিয়েছে?", opts:["নারগিস","মল্লিকা","হাসনাহেনা","রজনিগন্ধা"], correct:0},
+  {n:31, q:"পেশোয়ার থেকে জালালাবাদের দূরত্ব কত মাইল?", opts:["পঞ্চাশ","একশ","দেড়শ","দুশো"], correct:1},
+  {n:32, q:"কোন দেশে অচেনা-অজানা লোককে প্রশ্ন জিজ্ঞেস করতে বাধা নেই?", opts:["প্রাচ্য","পাশ্চাত্য","ইউরোপ","এশিয়া"], correct:0},
+  {n:33, q:"লেখক দুর্গন্ধের ধাক্কা খেয়ে কত দূর পিছিয়ে গিয়েছিলেন?", opts:["এক গজ","দুই গজ","তিন গজ","চার গজ"], correct:2},
+  {n:34, q:"কে চাকা সারাল?", opts:["পাঠান","কাবুলি","লেখক","হ্যাজি ম্যানন"], correct:0},
+  {n:35, q:"দুর্গের অফিসার লেখককে প্রচুর খাতির-যত্ন করলেন কেন?", opts:["বিদেশি বলে","দেশি বলে","বাঙালি বলে","ইংরেজ বলে"], correct:0},
+  {n:36, q:"'হন্তদন্ত হওয়ার মানে শয়তানের পন্থায় চলা।'— এই প্রবাদটি লেখক কী হিসেবে গ্রহণ করেছিলেন?", opts:["উক্তিরূপে","শপথরূপে","কবিতারূপে","গীতিরূপে"], correct:1},
+  {n:37, q:"আফগান সরকারের কর্মচারী ফরাসির কয়টি শব্দ জানেন?", opts:["তিনটি","চারটি","পাঁচটি","ছয়টি"], correct:1},
+  {n:38, q:"কত বছরের পুরোনো গল্পে এক মেমসাহেব ফ্রকের পর ফ্রক পরে?", opts:["দুশো","তিনশো","চারশো","পাঁচশো"], correct:0},
+  {n:39, q:"সৈয়দ মুজতবা আলী যেসব ভাষায় দক্ষ ছিলেন— i. আরবি, ফারসি ii. সংস্কৃত, জার্মান iii. মান্দারিন, রুশ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:40, q:"সাতটা বাজতে না বাজতেই রোদ গাড়িতে ঢোকে— i. হুড়মুড় করে ii. চড়চড় করে iii. টেরচা হয়ে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:41, q:"সায়েব যেসব খাবার বের করেছিল— i. মোগলাই পরোটা ii. শিককাবাব iii. মুরগি মুসল্লম", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:42, q:"সায়েবের খাবারের সঙ্গে লেখকের খাবারের মিল থাকার কারণ— i. দুজনই একই রুচিসম্পন্ন ii. খাবার একই জায়গা থেকে কেনা iii. সায়েবের স্ত্রী ও লেখক জাকারিয়া স্ট্রিট থেকে খাবার কিনেছেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:43, q:"হিন্দুস্তানের বিরিয়ানি পোলাওয়ের জৌলুস বাড়ায়— i. কিসমিস ii. পেস্তা বাদাম iii. আলুবুখারা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:44, q:"কোমরবন্ধের নিচে চলেছে— i. গাঁজা ii. আফিং iii. কোকেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:45, q:"'ফিরিঙ্গি' হলো—", opts:["ইউরোপিয়ান","ইতালিয়ান","আমেরিকান","আফ্রিকান"], correct:0},
+  {n:46, q:"বুখারা কোথায় অবস্থিত?", opts:["কাজাকিস্তান","পাকিস্তান","আফগানিস্তান","উজবেকিস্তান"], correct:3},
+  {n:47, q:"দামেস্ক শহর কত বছর আগে নির্মিত হয়?", opts:["এক হাজার বছর","দুই হাজার বছর","তিন হাজার বছর","চার হাজার বছর"], correct:3},
+  {n:48, q:"'গন্তব্য Kabul' ভ্রমণকাহিনিটির উৎসগ্রন্থ কোনটি?", opts:["দেশে বিদেশে","পঞ্চতন্ত্র","চাচাকাহিনি","শবনম"], correct:0},
+  {n:49, q:"'সর্দারজি শিলওয়ার বানাতে ক'গজ কাপড় লাগে?' লেখকের হঠাৎ এ প্রশ্ন করার কারণ— i. কথার মোড় ঘুরিয়ে দেয়া ii. সর্দারজিকে বোকা বানানো iii. পাঞ্জাবি ও কুর্তার বিতর্ক থামানো", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:50, q:"পাঠানদের দাড়ি হলো— i. লম্বা ii. দিলতা iii. রাওড়া", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

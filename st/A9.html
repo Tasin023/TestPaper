@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>মাসি-পিসি — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · গল্প · TASIN SAIMON</span>
+  <h1>মাসি-পিসি</h1>
+  <p class="byline">মানিক বন্দ্যোপাধ্যায়</p>
+  <p class="desc">অসহায় ও নির্যাতিত ভাইঝি আহ্লাদির জীবন রক্ষায় এবং নিজেদের অস্তিত্ব টিকিয়ে রাখতে দুই বিধবা নারীর অনন্য প্রতিরোধ ও জীবনসংগ্রামের গৌরবোজ্জ্বল আখ্যান।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>১০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৩</b><span>মূল চরিত্র</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/১০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        হঠাৎ করেই এলো ঘূর্ণিঝড়। ফসল ভেসে গেল বানে। স্বামীহারা লতিফা বেগম সন্তানদের জীবন বাঁচাতে মাটির হাঁড়িকুড়ির ব্যবসা শুরু করল। প্রচণ্ড পরিশ্রম করে সন্তানের মুখে দুটো ভাত তুলে দিতে পেরে হাসি ফুটল লতিফার মুখে। কিন্তু গ্রামের কিছু লোভী ও অসাধু লোক লতিফার এই স্বাধীনভাবে বেঁচে থাকাকে ভালো চোখে দেখেনি, তারা তাকে সমাজচ্যুত করার হুমকি দেয়। কিন্তু লতিফা দমে যাওয়ার পাত্রী নয়, সে দৃঢ়প্রত্যয়ী মা-পাখির মতো তার সন্তানদের আগলে রাখে।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">কদমছাঁটা চুল বলতে কেমন চুলকে বোঝায়? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>কদমছাঁটা চুল বলতে <b>ছোটো করে ছাঁটা চুলকে</b> বোঝায়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'ভাঁওতা দিয়ে আমাদের দমাবার ফিকির।'— সংলাপটি ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>উক্তিটির মাধ্যমে অসহায় আহ্লাদিকে তাদের কাছ থেকে ছিনিয়ে নেওয়ার জন্য জগু ও তার লোকজনের চালাকি ও ভয় দেখানোর চক্রান্তকে বোঝানো হয়েছে।</p>
+            <p>জগুর পাঠানো লোকজন এসে মাসি-পিসিকে মিথ্যা ভয় দেখায় যে জগু এবার আদালতে নালিশ করেছে, তাই পুলিশ এসে তাদের ধরে নিয়ে যাবে। মাসি-পিসি অত্যন্ত বুদ্ধিমতী ও বাস্তব সচেতন হওয়ায় তারা জগু এবং গ্রামের অসাধু লোকদের এই চালটি সহজেই ধরে ফেলে। তারা বুঝতে পারে এটি আসলে তাদের ভয় দেখিয়ে কাবু করার এবং আহ্লাদিকে জোর করে নিয়ে যাওয়ার একটি ফাঁদ বা ভাঁওতা মাত্র।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকে 'মাসি-পিসি' গল্পের কোন দিকটি প্রকাশ পেয়েছে? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকে 'মাসি-পিসি' গল্পের প্রধান উপজীব্য দিক অর্থাৎ প্রতিকূল পরিবেশের বিরুদ্ধে নারীর জীবনসংগ্রাম ও অর্থনৈতিক স্বাবলম্বিতা অর্জনের প্রচেষ্টা প্রকাশ পেয়েছে।</span>
+            <p>'মাসি-পিসি' গল্পে দেখা যায়, মাসি ও পিসি দুজনেই স্বামীহারা ও নিঃসন্তান বিধবা নারী। চরম দুর্ভিক্ষের দিনে বেঁচে থাকার তাগিদে এবং তাদের একমাত্র আশ্রয়হীন ভাইঝি আহ্লাদির জীবন বাঁচাতে তারা শালতি বেয়ে তরকারি বিক্রির ব্যবসা শুরু করে। পুরুষতান্ত্রিক সমাজের শত কটু কথা ও বাধাবিপত্তি এড়িয়ে তারা নিজেদের স্বাধীন জীবিকা গড়ে তোলে।</p>
+            <p>উদ্দীপকের লতিফা বেগমও ঘূর্ণিঝড়ে ফসল হারিয়ে এবং স্বামীহারা হয়ে চরম অর্থকষ্টে পতিত হন। সন্তানদের বাঁচাতে তিনি লোকলজ্জা বা সমাজের ভয়কে দূরে ঠেলে মাটির হাঁড়িকুড়ির ব্যবসা শুরু করেন এবং হাড়ভাঙা পরিশ্রম করে স্বাবলম্বী হন। লতিফা বেগমের এই সংগ্রামী রূপটি সরাসরি 'মাসি-পিসি' গল্পের মাসি ও পিসির স্বাধীন পেশা এবং জীবনসংগ্রামের উদ্দীপনার দিকটিকে ফুটিয়ে তুলেছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপকের লতিফা এবং 'মাসি-পিসি' গল্পের মাসি-পিসি উভয়েই পরিশ্রমী, সাহসী ও দৃঢ়চেতা নারীর প্রতীক।"— মন্তব্যটির সার্থকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি সম্পূর্ণ সত্য এবং গল্প ও উদ্দীপকের মূল সুরের সাথে শতভাগ সার্থক।</span>
+            <p>'মাসি-পিসি' গল্পে মানিক বন্দ্যোপাধ্যায় দেখিয়েছেন কীভাবে দুজন নারী কেবল জীবিকার জন্যই লড়াই করেননি, বরং সমাজের লম্পট ও অত্যাচারী পুরুষদের হাত থেকে ঘরের মেয়েকে বাঁচাতে লাঠি ও বঁটি হাতে প্রতিরোধী হয়ে উঠেছেন। জগু, কানাই চৌকিদার কিংবা কৈলাসের মতো ধূর্ত পুরুষেরা যখনই ফাঁদ পেতেছে, মাসি-পিসি তাদের সাহসিকতা ও একতাবদ্ধ শক্তির মাধ্যমে সেই চক্রান্ত নস্যাৎ করে দিয়েছে। তারা অত্যন্ত দৃঢ়চেতা মানসিকতার পরিচয় দিয়েছে।</p>
+            <p>উদ্দীপকের লতিফা বেগমের ক্ষেত্রেও এই একই গুণের সমাবেশ দেখা যায়। তিনি শুধু কঠোর পরিশ্রমীই নন, বরং যখন গ্রামের অসাধু ও লোভী ব্যক্তিরা তার এই স্বাধীন জীবিকাকে কেন্দ্র করে সমাজচ্যুত করার হুমকি দেয়, তখন তিনি দমে না গিয়ে আরও বেশি সাহসী ও দৃঢ় হয়ে ওঠেন এবং মা-পাখির মতো সন্তানদের রক্ষা করেন।</p>
+            <p>উভয় প্রেক্ষাপটেই নারীরা সমাজের রক্তচক্ষুকে ভয় না পেয়ে নিজেদের কর্মক্ষমতা, অদম্য সাহস এবং চারিত্রিক দৃঢ়তার মাধ্যমে টিকে থাকার সংগ্রাম চালিয়ে গেছেন। পুরুষতান্ত্রিক ও কূটিল সমাজের যেকোনো অপশক্তির মুখোমুখি দাঁড়িয়ে নিজেদের সুরক্ষার দেয়াল নিজেরাই তৈরি করেছেন।</p>
+            <p>অতএব, অবলীলায় বলা যায় যে উদ্দীপকের লতিফা এবং গল্পের মাসি-পিসি উভয়েই যুগপৎভাবে পরিশ্রমী, সাহসী ও দৃঢ়চেতা নারীর এক অপরাজেয় ও সার্থক প্রতীক।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">TASIN SAIMON</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ১০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+const DATA = [
+  {n:1, q:"মাসি-পিসির মধ্যে গভীর ঐকান্তিক ভাব বা মিল থাকার প্রধান কারণ কী?", opts:["তাদের চেহারা ও স্বভাব এক","তাদের বয়স ও আর্থিক অবস্থা এক","তাদের পারিবারিক বংশমর্যাদা এক","তাদের চিন্তা-ভাবনা এবং পরিধেয় বস্ত্র এক"], correct:1},
+  {n:2, q:"'তোমাদের সঙ্গে মোরা মেয়েনোক পারব না জানি, কিন্তু দুটো-একটাকে মারব জখম করব ঠিক।'— উক্তিটি কার?", opts:["পিসির","মাসির","যগুর","আহ্লাদির"], correct:1},
+  {n:3, q:"'মাসি-পিসি' গল্পটির মূল সারকথা বা অন্তর্নিহিত মূলভাব কোনটি?", opts:["আপসহীন ও বুদ্ধিমতী নারী","সংগ্রামী ও প্রতিরোধী নারী চেতনা","যৌতুক ও পণপ্রথার বিলোপ","গ্রামীণ সমাজব্যবস্থার কুসংস্কার"], correct:1},
+  {n:4, q:"মাসি-পিসি জীবিকা নির্বাহের জন্য কোন বাহন ব্যবহার করে তরকারি বাজারে নিয়ে যেত?", opts:["গরুর গাড়ি","নৌকা বা শালতি","ঘোড়ার গাড়ি","রিকশা"], correct:1},
+  {n:5, q:"জগুর সাথে কোন চরিত্রের স্বভাবের ও অত্যাচারী আচরণের মিল পাওয়া যায়?", opts:["রহমান","কৈলাস","গোকুল","কানাই"], correct:2},
+  {n:6, q:"আহ্লাদির বাবা, মা ও ভাই কিসে আক্রান্ত হয়ে মারা গিয়েছিল?", opts:["কলেরা","ঘূর্ণিঝড়","মহামারি দুর্ভিক্ষ","যক্ষ্মা"], correct:2},
+  {n:7, q:"মাসি-পিসির গলা 'ঝরঝরে'— এর মাধ্যমে তাদের কোন রূপটি প্রকাশ পেয়েছে?", opts:["উগ্র ও তিক্ত মনোভাব","স্পষ্ট ও দৃঢ় মনোভাব","রুক্ষ ও কঠোর মনোভাব","মিষ্টি ও নমনীয় স্বভাব"], correct:1},
+  {n:8, q:"কৈলাস মাসি-পিসিকে কার হয়ে ওকালতি করতে বা বোঝাতে এসেছিল?", opts:["গোকুলের","জগুর","কানাইয়ের","দারোগার"], correct:1},
+  {n:9, q:"'মাসি-পিসি' গল্পে খড়ের চালের ওপর কী লেপে দেওয়ার কথা বলা হয়েছে?", opts:["গোবর-মাটি","কাদা-পানি","আলকাতরা","তেল"], correct:0},
+  {n:10, q:"গল্পের শেষ দৃশ্যে মাসি ও পিসি যথাক্রমে হাতে কী নিয়ে আত্মরক্ষার জন্য দাঁড়িয়েছিল?", opts:["লাঠি ও বঁটি","দা ও কুড়াল","বঁটি ও কাটারি","লাঠি ও দা"], correct:2}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

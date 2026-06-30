@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>অর্ধাঙ্গী — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(42px, 9vw, 80px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · প্রবন্ধ · FAHAD'S TUTORIAL</span>
+  <h1>অর্ধাঙ্গী</h1>
+  <p class="byline">রোকেয়া সাখাওয়াত হোসেন</p>
+  <p class="desc">নারী-পুরুষের সমতা, মানসিক মুক্তি এবং অধিকার সচেতনতার ওপর ভিত্তি করে রচিত প্রবন্ধটির পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়, পড়ো এবং নিজেই যাচাই করো।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৪০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৪</b><span>মূল অনুষঙ্গ</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৪০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        রাহেলা বেগম একজন উচ্চশিক্ষিত গৃহিণী। কিন্তু সংসারের সমস্ত কর্তৃত্ব তাঁর স্বামীর হাতে। তাঁর ধারণা, সংসার চালানোর দায়-দায়িত্ব স্বামীরই। রাহেলা বেগমের স্বামী ন্যায়-অন্যায় যাই বলেন, তিনি তা নির্দ্বিধায় মেনে নিয়ে চলেন। অন্যদিকে মাহমুদা বেগম উচ্চশিক্ষিত নারী এবং ভালো চাকরি করেন। স্বামীর পাশাপাশি তিনিও সংসারের হাল ধরেন। তাঁর মতে, সংসারে পুরুষের সঙ্গে নারীরও অনেক কিছু করার এবং মতামত দেওয়ার প্রয়োজন আছে।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'অর্ধাঙ্গী' প্রবন্ধে কোন মহিলাদের পর্দা মোচনের কথা বলা হয়েছে? <i>(ज्ञानमूलक)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'অর্ধাঙ্গী' প্রবন্ধে <b>পার্সি মহিলাদের</b> পর্দা মোচনের কথা বলা হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">নারী ও পুরুষকে প্রাবন্ধিক দ্বিচক্রযানের সঙ্গে তুলনা করেছেন কেন? <i>(अनुधावनমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>নারী ও পুরুষ সমাজে একে অপরের পরিপূরক, তাই প্রাবন্ধিক তাদের দ্বিচক্রযানের সঙ্গে তুলনা করেছেন।</p>
+            <p>রোকেয়া সাখাওয়াত হোসেন তাঁর 'অর্ধাঙ্গী' প্রবন্ধে নারী-পুরুষের মধ্যে বিরাজমান অসংগতি উল্লেখ করে দেখিয়েছেন যে, উভয়পক্ষ সমান না হলে সমাজ ভারসাম্য বজায় রেখে চলতে পারে না। সমাজ নামক এ দ্বিচক্রযানের দুটি চাকা, তার একটি হচ্ছে নারী আর অপরটি হচ্ছে paradoxically পুরুষ। একটিকে বাদ দিয়ে আর একটির কথা চিন্তা করা যায় না। নারীরা সমাজের অর্ধাঙ্গ। নারীর উন্নতি বাদ দিয়ে সমাজের সার্বিক কল্যাণ বা অগ্রগতি সম্ভব নয়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের মাহমুদা বেগমের সঙ্গে 'অর্ধাঙ্গী' প্রবন্ধের প্রাবন্ধিকের মানসিকতার কোনো সাদৃশ্য আছে কি? ব্যাখ্যা করো। <i>(प्रयोगमूलক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">'অর্ধাঙ্গী' প্রবন্ধে রোকেয়া সাখাওয়াত হোসেন নারীকে আত্মশক্তিতে বলীয়ান হওয়ার আহ্বান জানিয়েছেন যার সাথে উদ্দীপকের মাহমুদা বেগমের মানসিকতার সাদৃশ্য দেখা যায়।</span>
+            <p>'অর্ধাঙ্গী' প্রবন্ধে প্রাবন্ধিক নারীর মুক্তি কামনা করেছেন। তিনি চেয়েছেন, নারীরা যেন উচ্চশিক্ষিত হয়ে পুরুষের যোগ্য জীবনসঙ্গী হয়ে ওঠে। তারা যেন সন্তানের উচ্চশিক্ষায় ভূমিকা রাখে এবং জীবনটাকে শুধু রান্নাঘরের মধ্যে আবদ্ধ না রাখে।</p>
+            <p>উদ্দীপকের মাহমুদা বেগম একজন উচ্চশিক্ষিত আত্মনির্ভরশীল নারী। তাঁর মতে, সংসারে পুরুষের সঙ্গে নারীরও অনেক কিছু করার এবং মতামত দেওয়ার প্রয়োজন আছে। স্বামী-স্ত্রী দুজনের সম্মিলিত প্রচেষ্টায় একটি সংসার সুন্দরভাবে গড়ে উঠতে পারে। মাহমুদা বেগম তাই নিজের মেধা ও যোগ্যতাকে কাজে লাগিয়ে স্বামীর পাশাপাশি সংসারের হাল ধরেন। এক্ষেত্রে মাহমুদা বেগম 'অর্ধাঙ্গী' প্রবন্ধের প্রাবন্ধিকের মানসিকতাকে পুরোপুরি ধারণ করেছেন।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">উদ্দীপকের রাহেলা বেগম ও মাহমুদা বেগমের মানসিকতার পার্থক্য 'অর্ধাঙ্গী' প্রবন্ধের আলোকে বিশ্লেষণ করো। <i>(उच्चতর दक्षता)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের রাহেলা বেগমের মাঝে 'অর্ধাঙ্গী' প্রবন্ধে বর্ণিত মানসিক দাসত্বের স্বরূপ এবং মাহমুদা বেগম চরিত্রে আলোচ্য প্রবন্ধের নারীর স্বাধিকারের স্বরূপ ফুটে ওঠায় তাদের মাঝে পার্থক্য লক্ষ করা যায়।</span>
+            <p>'অর্ধাঙ্গী' প্রবন্ধে প্রাবন্ধিক দেখিয়েছেন যে, নারীরা তাদের মানসিক দাসত্বের কারণে সামাজিকভাবে পশ্চাৎপদ হয়ে আছে। প্রাবন্ধিক এই অবস্থা থেকে নারীদের উত্তরণ কামনা করেছেন। তিনি চেয়েছেন নারীরা যেন পুরুষের উপর নির্ভরশীল না হয়ে নিজেদের আলাদা পরিচয় গড়ে তোলে এবং চিন্তা-চেতনায় পুরুষের সমকক্ষ হয়ে ওঠে। সমাজ ও পরিবারে তারা যেন পুরুষের মতোই অবদান রাখে। কিন্তু তৎকালীন সমাজের অধিকাংশ নারীই ছিলেন পুরুষের উপর নির্ভরশীল, অলস ও অকর্মণ্য।</p>
+            <p>উদ্দীপকের রাহেলা বেগম একজন উচ্চশিক্ষিত গৃহিণী। তার সংসারে নিয়ন্ত্রণ করে তার স্বামী। এ নিয়ে তার কোনো আক্ষেপ নেই বরং সে মনে করে সংসার চালানোর দায়িত্ব পুরুষের অর্থাৎ তার স্বামীর। তাই সে স্বামীর সমস্ত ন্যায়-অন্যায় কথা মেনে চলে। অন্যদিকে, উচ্চশিক্ষিত এবং চাকরিজীবী মাহমুদা স্বামীর পাশাপাশি সংসার পরিচালনায় ভূমিকা রাখেন। তিনি মনে করেন, সংসারে পুরুষের পাশাপাশি নারীরও মতামত প্রকাশ করা উচিত।</p>
+            <p>উদ্দীপকের রাহেলা বেগম ও মাহমুদা বেগমের মানসিক পার্থক্য প্রবন্ধেও লক্ষ করা যায়। 'অর্ধাঙ্গী' প্রবন্ধে প্রাবন্ধিক মানসিক দাসত্বের দিকটি তুলে ধরেছেন। সেই সাথে তিনি মানসিক দাসত্ব থেকে উত্তরণের জন্য নারী জাগরণ প্রত্যাশা করেছেন। উদ্দীপকের রাহেলা বেগম উচ্চশিক্ষিত হয়েও মানসিক দাসত্বের শিকার, যা আলোচ্য প্রবন্ধে দেখানো হয়েছে। আর তারই বোন মাহমুদা বেগম উচ্চশিক্ষিত হয়ে ভালো চাকরি করে স্বামীর পাশাপাশি সংসারের হাল ধরে। তার মতে, সংসারে পুরুষের সঙ্গে নারীরও বিশেষ ভূমিকা রয়েছে, যা আলোচ্য প্রবন্ধের প্রাবন্ধিকের মৌল প্রত্যাশা অর্থাৎ প্রাবন্ধিকের উপস্থাপিত নারীর মানসিক দাসত্বের চিত্র এবং তার বিপরীতে লেখকের প্রত্যাশার ভিন্নমুখী দিক উদ্দীপকের যথাক্রমে রাহেলা ও মাহমুদার মানসিক বৈপরীত্যেরই মূলসুর।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৪০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// 'অর্ধাঙ্গী' পিডিএফ ফাইল থেকে নির্বাচিত গুরুত্বপূর্ণ ৪০টি প্রশ্ন
+const DATA = [
+{n:1, q:"'অর্ধাঙ্গী' প্রবন্ধটির মূল বৈশিষ্ট্য কোনটি?", opts:["নিষ্ঠা প্রদর্শন","যুক্তি প্রদর্শন","পরামর্শ প্রদান","মূল্যবোধের জাগরণ"], correct:1},
+{n:2, q:"'অর্ধাঙ্গী' প্রবন্ধটি কোন ধরনের প্রবন্ধ?", opts:["গবেষণামূলক","শিক্ষামূলক","উদ্দেশ্যমূলক","ব্যঙ্গাত্মক"], correct:2},
+{n:3, q:"রোকেয়া সাখাওয়াতের মতে নারী জাতির অবনতি হয়েছে-\ni. নারীর মানসিক স্বাধীনতার অভাবে\nii. অবলা জাতি বলে\niii. নারীর উপযুক্ত শিক্ষার অভাবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:4, q:"'অর্ধাঙ্গী' প্রবন্ধটির উদ্দেশ্য ও মূলবক্তব্য ছিল-\ni. পুরুষ সমাজের দৃষ্টিভঙ্গির সংকীর্ণতা\nii. পাঠকের প্রত্যয় ও বিশ্বাস জাগানো\niii. নারীদের মানসিক মুক্তি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:5, q:"'অবলার হাতেও সমাজের জীবন-মরণের কাঠি আছে।'- এ কথার যুক্তি-\ni. বলহীনদের কাছেও বলবান হার মানে\nii. একটি সিংহও ছোটো ইঁদুরের সাহায্যপ্রার্থী হয়\niii. নারীদের কাছে পুরুষগণ অনেকাংশে নির্ভরশীল", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+{n:6, passageTag:"উদ্দীপক", passage:"বিয়ের পর স্বামীর ইচ্ছা ও পছন্দ অনুযায়ী এবং শ্বশুরবাড়ির সামাজিক মর্যাদার সাথে খাপ-খাওয়াতে দীপ্তি আধুনিক পোশাক-পরিচ্ছদ পরতে শুরু করেছে অথচ বিয়ের আগে সে পর্দা মেনে চলত। নিজেকে এখন সে আধুনিক, উন্নতমনা ও সংস্কারমুক্ত নারী মনে করে।", q:"দীপ্তির পর্দা মোচন হলেও তার বর্তমান অবস্থা 'অর্ধাঙ্গী' প্রবন্ধের নিম্নোক্ত কোন উক্তির समर्थन করে?", opts:["অবলার হাতেও সমাজের জীবন-মরণের কাঠি আছে","তাহারা যে জড় পদার্থ, সেই জড় পদার্থই আছে","আবশ্যক হইলে কোন্দল চলে","তাহারও ইচ্ছা প্রকাশের শক্তি আছে"], correct:1},
+{n:7, q:"'অর্ধাঙ্গী' প্রবন্ধের কোন দিকটি ওপরের উদ্দীপকে ফুটে উঠেছে?", opts:["নারীমুক্তি","মানসিক দাসত্ব","পর্দা প্রথা","নারী अधिकार"], correct:1},
+{n:8, passageTag:"উদ্দীপক", passage:"বুদ্ধিদীপ্ত রাবেয়া ৭ম শ্রেণিতে পড়ে। লেখাপড়ায় সে সবার চেয়ে এগিয়ে। মা বাবা নেই, বড়ো ভাই এখন বাড়ির কর্তা। বাবা যা রেখে গেছেন তাতে সংসারে কোনো অভাব নেই। কিন্তু স্কুলের বেতন কিংবা খাতাপত্র কেনার কথা বললেই ভাইয়ের মুখ ভার হয়ে ওঠে।", q:"উদ্দীপকের বিষয়টি 'অর্ধাঙ্গী' প্রবন্ধের নিচের কোন উক্তির সঙ্গে সঙ্গতিপূর্ণ?", opts:["স্ত্রীদের বিদ্যার দৌড় সচরাচর বোধোদয় পর্যন্ত।","ঐ যত্ন, স্নেহ, হিতৈষিতার অর্ধেকই আমরা পাই কই?","বঙ্গদেশেও বালিকাদিগকে রীতিমতো বঙ্গভাষা শিক্ষা দেওয়া হয় না।","কার্যত কন্যার ভাগে শূন্য (০) কিংবা যৎসামান্য পড়িতেছে।"], correct:3},
+{n:9, q:"'অর্ধাঙ্গী' প্রবন্ধের কোন অভাবটির কথা উদ্দীপকে ব্যক্ত হয়েছে?", opts:["সুশিক্ষার","জ্ঞানস্পৃহার","পাঠ্যপুস্তকের","সহযোগিতার"], correct:0},
+{n:10, passageTag:"উদ্দীপক", passage:"আইরিন নিয়মিত পাবলিক বাসে যাতায়াত করে। বাসের পুরুষ-যাত্রীগণ বসার জন্য তাকে জায়গা ছেড়ে দেয়। সে এ ধরনের দয়া গ্রহণে আগ্রহী নয়।", q:"উদ্দীপকের পুরুষদের আচরণে 'অর্ধাঙ্গী' প্রবন্ধের কোন ভাবটি প্রতিফলিত হয়েছে?", opts:["পুরুষের দৃষ্টিভঙ্গি","নারীর সংকীর্ণতা","নারীর প্রতি করুণাবোধ","নারীর পুরুষ-বিদ্বেষ"], correct:2},
+{n:11, q:"উদ্দীপকের ভাবটি 'অর্ধাঙ্গী' প্রবন্ধে নিচের কোন বাক্যে প্রতিফলিত হয়েছে?", opts:["ঐ রূপ পর্দা-বিরোধ কখনোই প্রশংসনীয় নহে","মুসলমানের মতে আমরা পুরুষের অর্ধেক","স্ত্রীজাতি উত্তমার্ধ, তাহারা নিকৃষ্টার্ধ","আমরা স্বামীর দাসী নহি, অর্ধাঙ্গী"], correct:2},
+{n:12, passageTag:"উদ্দীপক", passage:"বৃদ্ধ কমরুদ্দিন তাঁর পুত্রবধূ ঝুমিকে চাকরি থেকে ছাড়িয়ে দিলেন। তিনি মনে করেন, এতে সংসারের মঙ্গল হবে। তাঁর ছেলে কমলও এতে খুশি। কিন্তু চাকরি ছেড়ে দিয়ে ঝুমি ভাবতে থাকে, স্বামী ও শ্বশুরের মনোভাবের কারণে তার জীবনের অনেক বড়ো ক্ষতি হলো।", q:"উদ্দীপকের বৃদ্ধ কমরুদ্দিন ও তাঁর পুত্র কমল 'অর্ধাঙ্গী' প্রবন্ধে বর্ণিত কোন পুরুষগণের মতো?", opts:["ইরানি","ইরাকি","ইউরোপীয়","ইতালীয়"], correct:2},
+{n:13, q:"উদ্দীপকটির মূলভাব কোন বাক্যে প্রতিফলিত হয়েছে?", opts:["নতুন কাজ করতে গেলে গোলযোগ উপস্থিত হয়","সীতার অনুভব শক্তি আছে, রাম তা বুঝতে চান নি","জীবনটাকে শুধু রান্নাঘরে সীমাবদ্ধ রাখা উচিত নয়","প্রভুদের তেজস্বিতা জননীর উপর নির্ভর করে"], correct:1},
+{n:14, q:"বিক্রয়ের জন্য প্রদর্শিত দ্রব্যকে কী বলা হয়?", opts:["পসরা","মাদল","বাজার","পালকি"], correct:0},
+{n:15, passageTag:"উদ্দীপক", passage:"১০ বছরের আলিয়া প্রতিদিন তার নানাভাইয়ের কাছে গল্প শোনে। নানাভাই রহমত আলী ছেলেবেলায় তার পোষা প্রাণীর কথা মনে করে স্মৃতিকাতর হয়ে পড়েন।", q:"উদ্দীপকে 'অর্ধাঙ্গী' প্রবন্ধের কোন মূল অনুষঙ্গটির ইঙ্গিত রয়েছে?", opts:["স্মৃতিকাতরতা","নারীর অবস্থা","পারিবারিক শিক্ষা","সামাজিক সমতা"], correct:2},
+{n:16, q:"'কোনো কালে একা হয়নি ক জয়ী পুরুষের তরবারি প্রেরণাদিয়াছে, শক্তি দিয়াছে বিজয়-লক্ষ্মী নারী।' — উদ্দীপকে উল্লিখিত 'প্রেরণা' শব্দটি প্রবন্ধের কোন দিকটির প্রকাশ ঘটিয়েছে?", opts:["নারীই শক্তির উৎস","নারীরা সমাজ বিনির্মাণে সাহায্যকারী","নারীরা পুরুষদের সমকক্ষ","নারীই পুরুষদের চালিকাশক্তি"], correct:3},
+{n:17, q:"ওপরের চরণগুলোতে বেগম রোকেয়ার চিন্তাধারার যে দিকটির সাদৃশ্য রয়েছে-\ni. সমাজজীবনে নারীর ভূমিকা\nii. সমাজজীবনে নারীর-পুরুষের মিলনক্ষেত্র\niii. নারী-পুরুষের সমতা বিধান", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:18, passageTag:"উদ্দীপক", passage:"মানিক মিয়ার এক পুত্র ও এক কন্যা। তিনি পুত্রের প্রতি যতটা মায়া-মমতা প্রদর্শন করেন কন্যার প্রতি ততটা করেন না। পুত্রের লেখাপড়ার ব্যাপারে তিনি খুবই মনোযোগী কিন্তু কন্যার লেখাপড়ার ব্যাপারে মোটেই আগ্রহী নন।", q:"উদ্দীপকটি তোমার পঠিত কোন রচনার সঙ্গে সাদৃশ্যপূর্ণ?", opts:["বিলাসী","অর্ধাঙ্গী","যৌবনের গান","কবর"], correct:1},
+{n:19, q:"উদ্দীপকে উল্লিখিত মায়া-মমতার ব্যাপারটাকে উক্ত রচনায় কোন ধরনের সম্পত্তি বলে আখ্যায়িত করা হয়েছে?", opts:["পার্থিব","অপার্থিব","বস্তুগত","বিক্রয়যোগ্য"], correct:1},
+{n:20, passageTag:"উদ্দীপক", passage:"জাতি গঠনে পুরুষ ও নারীর রয়েছে সমান ভূমিকা। তাই একটা জাতিকে এগিয়ে নেওয়ার পিছনে নারীর অংশগ্রহণ না থাকলে সে জাতি কোনোদিনই অভীষ্ট লক্ষ্যে পৌঁছাতে পারে না।", q:"উদ্দীপকের বিষয়বস্তুর সঙ্গে সাদৃশ্য আছে কোন প্রবন্ধের?", opts:["যৌবনের গান","অর্ধাঙ্গী","সাহিত্যে খেলা","দুর্নীতি, উন্নয়নের অন্তরায়"], correct:1},
+{n:21, q:"উদ্দীপকে বর্ণিত জাতি গঠনে নারীর ভূমিকাকে তোমার পঠিত প্রবন্ধে প্রাবন্ধিক কোন উদাহরণের মাধ্যমে উপস্থাপন করেছেন?", opts:["সীতার প্রতি রামের ব্যবহার","পার্সি মহিলাদের পর্দা","দ্বিচক্র শকটের ছোটো-বড়ো চক্র","মহানবির মহানুভবতা"], correct:2},
+{n:22, passageTag:"উদ্দীপক", passage:"রহিম সাহেবের দুই ছেলেমেয়ে অনিক ও অনন্যা। অনিক উচ্চশিক্ষায় শিক্ষিত হলেও অনন্যাকে সে সুযোগ দেয়া হয় নি। মাধ্যমিক শ্রেণিতে পড়াকালীন পরিবারের ইচ্ছায় তার বিয়ে হয়ে যায়।", q:"উদ্দীপকের ঘটনাটি উক্ত প্রবন্ধের যে উক্তির সাথে অধিকতর সম্পর্কযুক্ত—", opts:["যাহা হোক, পড়া হইতে রক্ষা পাওয়া গেল","যে স্থলে ভ্রাতা 'শমস-ул-ওলামা' সে স্থলে ভগিনী 'নজম-ул-ওলামা' হইয়াছেন কি?","স্ত্রীদের বিদ্যার দৌড় সচরাচর বোধোদয় পর্যন্ত","করিম ববস্থা এ বরহালে মা"], correct:1},
+{n:23, q:"রহিম সাহেবের পরিবারের মতো পুত্রসন্তান ও কন্যাসন্তানের মধ্যে বৈষম্যের সুদূরপ্রসারী ফলাফল হিসেবে—\ni. স্বামীরা প্রভুরূপে পরিগণিত হবে\nii. দেশের উন্নতি বাধাগ্রস্ত হবে\niii. নারীদের মানসিক দাসত্ব ঘুচবে না", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:24, passageTag:"উদ্দীপক", passage:"মানবদেহে যেমন দুই চোখ, দুই হাত, দুই পা; সমাজদেহে তেমনি নর-নারী। যে দেহে এক চোখ কানা, এক হাত ভাঙা, এক পা খোঁড়া; সে দেহ বিকলাঙ্গ।", q:"উদ্দীপকটি তোমার পাঠ্যবইয়ের কোন রচনাকে নির্দেশ করে?", opts:["সাহিত্যে খেলা","যৌবনের গান","অপরাহ্ণের গল্প","অর্ধাঙ্গী"], correct:3},
+{n:25, q:"উদ্দীপকের বিষয়বস্তু ও নির্দেশিত প্রবন্ধের বিষয়বস্তু এক, কারণ উভয় রচনায়—\ni. নারীকে সমাজের অপরিহার্য অঙ্গ বলা হয়েছে\nii. নারী ও পুরুষকে সমান বলা হয়েছে\niii. আইনের বিভিন্ন বিষয়ের কথা বলা হয়েছে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+{n:26, q:"প্রবন্ধের আলোকে উদ্দীপকটির তাৎপর্য—\ni. নারীকে বাদ দিয়ে সমাজের উন্নয়ন সম্ভব নয়\nii. নারীসমাজকে সামনে নিয়ে যেতে পারে\niii. নারী সমাজের অর্ধ অঙ্গ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:27, passageTag:"উদ্দীপক", passage:"হালিমা পড়াশোনা তেমন না করলেও বর উচ্চশিক্ষিত। সন্তানের প্রতি প্রগাঢ় ভালোবাসা থাকা সত্ত্বেও সে অসুস্থ সন্তানের সেবা-শুশ্রুষায় যোগ্য মায়ের ভূমিকা পালন করতে পারে না কারণ জ্ঞান-বিজ্ঞানের অতি সাধারণ তথ্যও তার অজানা।", q:"উদ্দীপকের হালিমার সমস্যার সাথে 'অর্ধাঙ্গী' প্রবন্ধের কোন বাক্যের মিল খুঁজে পাওয়া যায়?", opts:["হস্তপদ থাকা সত্ত্বেও পুত্তলিকা অচেতন পদার্থ","প্রভুদের বিদ্যার গতির সীমা নেই, স্ত্রীদের বিদ্যার দৌড় 'বোধোদয়' পর্যন্ত","অবলার হাতেও সমাজের জীবন-মরণের কাঠি আছে","ভদ্র মহিলার দল कर्तव्य অপেক্ষা অল্প কাজ করেন"], correct:1},
+{n:28, passageTag:"উদ্দীপক", passage:"শামসুল হক মাস্টারের তিন ছেলে ও দুই মেয়ে। মাস্টার সাহেব বেশির ভাগ সময়েই তিন ছেলের পড়ালেখার বিষয়ে স্ত্রীর সাথে আলোচনা করত। আর মেয়ে দুটির কথা মাঝে মাঝে জিজ্ঞাসা করত।", q:"উদ্দীপকে পাঠ্যভুক্ত রচনাটির যে ভাবটি ফুটে উঠেছে—\ni. কন্যা সন্তানের প্রতি অবহেলা\nii. পরিবারে পুত্র ও কন্যার বৈষম্য\niii. কন্যা সন্তানের প্রতি পিতার ঔদাসীন্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:29, q:"'অর্ধাঙ্গী' প্রবন্ধে লেখিকা যুক্তি প্রদর্শন করেছেন—\ni. পৌরাণিক প্রেক্ষাপট থেকে\nii. সামাজিক প্রেক্ষাপট থেকে\niii. আন্তর্জাতিক প্রেক্ষাপট থেকে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:30, q:"'অর্ধাঙ্গী' প্রবন্ধে লেখকের বক্তব্যে ফুটে উঠেছে—\ni. যুক্তির তীক্ষ্ণতা\nii. আবেগের গাঢ়তা\niii. দৃষ্টিভঙ্গির বিশালতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+{n:31, q:"'মাতৃ-হৃদয়ে পক্ষপাতিতা নাই, তবে কেমন করিয়া বলিব, ঈশ্বর পক্ষপাতী?' — এ থেকে বোঝা যায় নারী-পুরুষের পার্থক্য—", opts:["পুরুষের সৃষ্টি","সমাজের সৃষ্টি","প্রকৃতির সৃষ্টি","বিধাতার সৃষ্টি"], correct:1},
+{n:32, q:"সমাজ জীবনের অগ্রগতি ও কল্যাণসাধনের জন্য প্রয়োজন—\ni. পুরুষ-সমাজের দৃষ্টিভঙ্গির পরিবর্তন\nii. নারীজাগরণ\niii. নারীশিক্ষার প্রসার", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+{n:33, q:"'অবলা জাতির' উন্নতির পথ আবিষ্কার করার পূর্বে কোনটি প্রয়োজন?", opts:["স্ত্রী জাতির অবনতির চিত্র দেখানো","পুরুষদের মনোভাবের চিত্র দেখানো","নব-দম্পতির ভাবাবেগের চিত্র দেখানো","নারী-পুরুষের অসমতার চিত্র দেখানো"], correct:0},
+{n:34, q:"রোকেয়া সাখাওয়াত হোসেন যে সময়ে 'অর্ধাঙ্গী' প্রবন্ধটি রচনা করেছেন সেই সময়ের নারীদের থেকে আমাদের বর্তমান নারীদের কোন ক্ষেত্রে বেশি উন্নতি হয়েছে?", opts:["সংস্কৃতির ক্ষেত্রে","শিক্ষার ক্ষেত্রে","সংস্কারের ক্ষেত্রে","চিন্তার ক্ষেত্রে"], correct:1},
+{n:35, q:"'বিশ্বে যা-কিছু মহান সৃষ্টি চির-কল্যাণকর/ অর্ধেক তার করিয়াছে নারী অর্ধেক তার নর।' — এ উদ্ধৃতির সাথে প্রবন্ধের মিল রয়েছে কোন ভাবনায়?", opts:["নারী পুরুষের সমান অধিকারের ভাবনায়","নারী ও পুরুষ একে অপরের পরিপূরকতায়","নারী পুরুষ একে অপরের সমকর্মসংগীতে","সমস্ত শুভকর্মে নারী পুরুষের সম-অংশীদারিত্বে"], correct:1},
+{n:36, q:"'অর্ধাঙ্গী' প্রবন্ধে নারীজাগরণের ক্ষেত্রে কোনটিকে প্রধান অন্তরায় মনে হয়?", opts:["পর্দা","অশিক্ষা","ধর্ম","স্বামীর প্রভুত্ব"], correct:3},
+{n:37, q:"বাংলাদেশের বর্তমান সামাজিক প্রেক্ষাপটে নারীদের অবস্থান কেমন?", opts:["ক্রমশ নিম্নগামী","পূর্বের থেকে উন্নত","অত্যন্ত নিম্নমানের","পুরুষের তুলনায় সামান্য"], correct:1},
+{n:38, q:"যাহারা কন্যার ব্যায়াম করা অনাবশ্যক মনে করেন, তাঁহারা দৌহিত্রকে খৃষ্টपुষ্ট পাহল-ওয়ান দেখিতে চাহেন কি না? উক্ত উক্তিটি দ্বারা লেখিকা বোঝাতে চেয়েছেন—", opts:["পারিবারিক দৃষ্টিভঙ্গিতে নারী-পুরুষের বৈষম্য","নারীদের স্বাস্থ্য সচেতন হবার আবশ্যকতা","কন্যার চেয়ে দৌহিত্র অপেক্ষাকৃত বেশি আদরের","সমাজের প্রাচীন কুসংস্কার"], correct:0},
+{n:39, q:"'মুসলমানের মতে আমরা পুরুষের অর্ধেক' বলতে রোকেয়া সাখাওয়াত হোসেন বুঝিয়েছেন—", opts:["একজন নারী একজন পুরুষের অর্ধেক","দুইজন নারী একজন নরের সমান","দুইজন পুরুষের অর্ধেক একজন নারী","নারীর কোনো একক অস্তিত্ব নেই"], correct:1},
+{n:40, q:"'মহিলাদের পর্দা মোচন হলেই তাদের মানসিক দাসত্ব মোচন হয় না।' — উক্তিটিতে 'مانসিক দাসত্ব মোচন হয় না' বলতে লেখিকা বুঝিয়েছেন—\ni. স্বকীয় বুদ্ধি-বিবেচনার উদ্ভব হয় না\nii. জীবনীশক্তির কোনো পরিচয় পাওয়া যায় না\niii. মানসিক জড়তা দূর হয় না", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>
