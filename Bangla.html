@@ -810,69 +810,76 @@ const LAB = ['ক','খ','গ','ঘ'];
 function buildMcq(){
   const list = document.getElementById('mcqList');
   list.innerHTML = '';
-  DATA.forEach(item=>{
+  DATA.forEach((item, index)=>{
     if(item.passage){
-      const p = document.createElement('div');
-      p.className = 'passage';
-      p.dataset.search = (item.passage||'').toLowerCase();
-      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
-      list.appendChild(p);
+      const pDiv = document.createElement('div');
+      pDiv.className = 'passage';
+      pDiv.innerHTML = `<span class="tag">${item.passageTag || 'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(pDiv);
     }
+
     const card = document.createElement('div');
     card.className = 'qcard';
-    card.id = 'q'+item.n;
-    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+    card.id = 'q-'+item.n;
+    
+    // Aligned to use item.a instead of item.opts
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.a.join(' ')).toLowerCase();
 
-    const head = document.createElement('div');
-    head.className = 'qhead';
-    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
-    card.appendChild(head);
+    const qhead = document.createElement('div');
+    qhead.className = 'qhead';
+    qhead.innerHTML = `<div class="qnum">${toBn(item.n)}</div><div class="qstem">${item.q}</div>`;
+    card.appendChild(qhead);
 
-    const opts = document.createElement('div');
-    opts.className = 'options';
-    item.opts.forEach((opt,i)=>{
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+
+    // Aligned to use item.a instead of item.opts
+    item.a.forEach((opt, i)=>{
       const btn = document.createElement('button');
-      btn.type = 'button';
       btn.className = 'opt';
-      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
-      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
-      opts.appendChild(btn);
+      btn.type = 'button';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span> ${opt}`;
+      btn.addEventListener('click', ()=>{
+        if(card.classList.contains('locked')) return;
+        card.classList.add('locked');
+        
+        // Aligned to use item.c instead of item.correct
+        if(i === item.c){
+          btn.classList.add('correct');
+          card.classList.add('answered-correct');
+          incrementScore();
+        } else {
+          btn.classList.add('wrong');
+          card.classList.add('answered-wrong');
+          // highlight correct option using item.c
+          const allOpts = optsDiv.querySelectorAll('.opt');
+          if(allOpts[item.c]) allOpts[item.c].classList.add('correct');
+        }
+      });
+      optsDiv.appendChild(btn);
     });
-    card.appendChild(opts);
+
+    card.appendChild(optsDiv);
     list.appendChild(card);
   });
 }
 
-let attempted = {};
-function updateScore(){
-  let correctCount = Object.values(attempted).filter(v=>v===true).length;
-  document.getElementById('liveScore').textContent = toBn(correctCount);
-  const fs = document.getElementById('floatScoreNum');
-  fs.textContent = toBn(correctCount);
-  const badge = document.getElementById('floatScore');
-  badge.classList.add('bump');
-  setTimeout(()=>badge.classList.remove('bump'), 200);
-}
-
-function selectOption(card, item, i, btn, optsWrap){
-  if(card.classList.contains('locked')) return;
-  card.classList.add('locked');
-  const buttons = optsWrap.querySelectorAll('.opt');
-  buttons.forEach((b, idx)=>{
-    b.classList.add('selected');
-    if(idx === item.correct) b.classList.add('correct');
-    else if(idx === i) b.classList.add('wrong');
-  });
-  const isCorrect = (i === item.correct);
-  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
-  attempted[item.n] = isCorrect;
-  updateScore();
+let score = 0;
+function incrementScore(){
+  score++;
+  document.getElementById('liveScore').textContent = toBn(score);
+  const fNum = document.getElementById('floatScoreNum');
+  fNum.textContent = toBn(score);
+  const fBadge = document.getElementById('floatScore');
+  fBadge.classList.add('bump');
+  setTimeout(()=>fBadge.classList.remove('bump'), 200);
 }
 
 function resetAll(){
-  attempted = {};
+  score = 0;
+  document.getElementById('liveScore').textContent = '০';
+  document.getElementById('floatScoreNum').textContent = '০';
   buildMcq();
-  updateScore();
   document.getElementById('search').value = '';
   filterQuestions('');
 }
@@ -888,7 +895,6 @@ function filterQuestions(term){
     if(match) anyVisible = true;
   });
   passages.forEach(p=>{
-    // show passage if any sibling question until next passage is visible
     let el = p.nextElementSibling;
     let show = false;
     while(el && !el.classList.contains('passage')){
@@ -903,17 +909,8 @@ function filterQuestions(term){
 document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
 document.getElementById('resetBtn').addEventListener('click', resetAll);
 
-document.querySelectorAll('[data-toggle]').forEach(head=>{
-  head.addEventListener('click', ()=>{
-    const subq = head.closest('.subq');
-    const isOpen = subq.classList.contains('open');
-    subq.classList.toggle('open', !isOpen);
-    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
-  });
-});
-
+// Self initialize
 buildMcq();
-updateScore();
 </script>
 </body>
 </html>
