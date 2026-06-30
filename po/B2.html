@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>প্রতিদান ও আঠারো বছর বয়স — পাঠ পরিক্রমা | FAHAD'S TUTORIAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(40px, 8vw, 72px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:left;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+    margin-bottom:24px;
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>প্রতিদান ও আঠারো বছর বয়স</h1>
+  <p class="byline">জসীমউদ্দীন ও সুকান্ত ভট্টাচার্য</p>
+  <p class="desc">কবি জসীমউদ্দীনের 'প্রতিদান' এবং সুকান্ত ভট্টাচার্যের 'আঠারো বছর বয়স' কবিতার পূর্ণাঙ্গ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৬০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০২</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>২</b><span>মূল কবিতা</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৬০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <!-- CQ 1 -->
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক - ১</span>
+        সোলেমান মাছ চুরির অপরাধে নিজ গ্রাম শিপপুর থেকে তাড়া খেয়ে কালুপুর গ্রামের লিয়াকত মাস্টারের বাড়িতে আশ্রয় গ্রহণ করে। লিয়াকত মাস্টার মানবদরদি। সোলেমানের চরিত্র শোধরানোর আশায় লিয়াকত মাস্টার নিজ বাড়িতে আশ্রয় দেন। ছয় মাস যেতে না যেতেই গভীর রাতে লিয়াকত মাস্টারের মোটরসাইকেল চুরি করে পালিয়ে যাওয়ার সময় স্থানীয় কয়েকজন যুবক সোলেমানকে ধরে পুলিশের হাতে সোপর্দ করে। এরপরও লিয়াকত মাস্টার থানায় গিয়ে সোলেমানকে ছাড়িয়ে এনে নিজ জায়গায় নিজ খরচে সোলেমানের বসবাসের জন্য একটা ঘর তৈরি করে দেন।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'নিঠুরিয়া বাণী' কী? <i>(ज्ञानমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p><b>'নিঠুরিয়া বাণী'</b> বলতে নিষ্ঠুর বা কঠোর বাক্য তথা হৃদয়বিদারক কথাকে বোঝানো হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'কাঁটা পেয়ে তারে ফুল করি দান সারাটি জনম-ভর' ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>উক্তিটি দ্বারা কবির পরম সহনশীলতা ও পরোপকারী মনোভাব প্রকাশ পেয়েছে। যে ব্যক্তি কবিকে কষ্ট বা আঘাত (কাঁটা) দেয়, কবি তার প্রতিশোধ না নিয়ে আজীবন তাকে ভালোবাসা ও কল্যাণ (ফুল) উপহার দেন। অনিষ্টকারীর মঙ্গল কামনার এই মহৎ মানবিক দর্শনই এখানে ব্যক্ত হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের সোলেমান 'প্রতিদান' কবিতার যে দিকটি উন্মোচন করেছে তা ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের সোলেমান 'প্রতিদান' কবিতার অনিষ্টকারী বা ক্ষতিসাধনকারী চরিত্রের দিকটি উন্মোচন করেছে।</span>
+            <p>'প্রতিদান' কবিতায় এমন এক শ্রেণীর মানুষের কথা বলা হয়েছে যারা অন্যের উপকারের পরিবর্তে ক্ষতি করে, ঘর ভেঙে দেয় এবং বুকে আঘাত হানে। উদ্দীপকের সোলেমানও তেমনি এক চরিত্র, যে আশ্রয়দাতা লিয়াকত মাস্টারের মোটরসাইকেল চুরি করে তাঁর বিশ্বাসের অবমাননা ও ক্ষতিসাধন করেছে। এই বিশ্বাসঘাতকতা ও অপকর্মের দিকটি কবিতার আঘাতকারীর আচরণের সাথে সাদৃশ্যপূর্ণ।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপকের লিয়াকত মাস্টারের ভাবাদর্শ 'প্রতিদান' কবিতায় কবির দর্শনকে সমর্থন করেছে।"- মন্তব্যটির যৌক্তিকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি সম্পূর্ণ যৌক্তিক ও যথার্থ।</span>
+            <p>'প্রতিদান' কবিতার মূল দর্শন হলো অপকারীর উপকার করা, যে ঘর ভেঙে দেয় তার ঘর বেঁধে দেওয়া এবং পরম ক্ষমায় শত্রুকে আপন করে নেওয়া। উদ্দীপকের লিয়াকত মাস্টার সোলেমান কর্তৃক চুরির শিকার হওয়া সত্ত্বেও তাকে পুলিশ থেকে মুক্ত করে আনেন এবং নিজের খরচে ঘর তৈরি করে দেন। লিয়াকত মাস্টারের এই ক্ষমাশীলতা ও পরার্থপরতা কবিতার "আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর" চরণের মূল সুরকে অবিকল প্রতিফলিত করে। তাই বলা যায়, তাঁর ভাবাদর্শ কবির উদার মানবিক দর্শনকে সম্পূর্ণরূপে সমর্থন করে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CQ 2 -->
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক - ২</span>
+        জীবন-আবেগে রুধিতে না পারি যারা উদ্ধত শির<br>
+        লঙ্ঘিতে গেল হিমালয়, গেল শুষিতে সিন্ধু-নীর।<br>
+        নবীন জগৎ সন্ধানে যারা ছুটে মেরু অভিযানে,<br>
+        তবুও থামে না যৌবন বেগ, জীবনের উল্লাসে<br>
+        চলেছে চন্দ্র-মঙ্গল-গ্রহে স্বর্গে, অসীমাকাশে।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'আঠারো বছর বয়স' কবিতাটি কোন ছন্দে রচিত? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'আঠারো বছর বয়স' কবিতাটি <b>মাত্রাবৃত্ত</b> ছন্দে রচিত।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'দুর্যোগে হাল ঠিকমতো রাখা ভার'- পঙ্ক্তিটি দ্বারা কবি কী বুঝিয়েছেন? <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>এই পঙ্ক্তিটি দ্বারা বয়ঃসন্ধিকালের বা আঠারো বছর বয়সের মানসিক অস্থিরতা ও জীবনের নানামুখী সংকটের কথা বোঝানো হয়েছে। এই বয়সে তরুণদের মনে তীব্র আবেগ ও ঝোড়ো হাওয়া বয়ে যায়, যার ফলে জীবনের সঠিক পথ বা নিয়ন্ত্রণ (হাল) বজায় রাখা অত্যন্ত কঠিন ও ঝুঁকিপূর্ণ হয়ে পড়ে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকে 'আঠারো বছর বয়স' কবিতার কোন দিকটি ফুটে উঠেছে? ব্যাখ্যা করো। <i>(প্রযোগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকে 'আঠারো বছর বয়স' কবিতার তারুণ্যের দুর্জয় গতি, অদম্য সাহস ও অভিযানের ইতিবাচক দিকটি ফুটে উঠেছে।</span>
+            <p>কবিতায় আঠারো বছর বয়সকে বিরাট দুঃসাহসের বয়স এবং দুর্যোগে বুক পাতার বয়স হিসেবে দেখানো হয়েছে। উদ্দীপকের তরুণরাও তেমনি অদম্য যৌবন বেগে হিমালয় লঙ্ঘন করতে, মেরু অভিযানে যেতে এবং মহাশূন্য জয়ে ছুটে চলেছে। কোনো বাধাই তাদের জীবন-আবেগকে রুখতে পারছে না, যা কবিতার তারুণ্যের অমিত সম্ভাবনা ও সাহসিকতার মূর্ত প্রতীক।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"উদ্দীপক ও 'আঠারো বছর বয়স' কবিতার প্রেক্ষাপট ভিন্ন কিন্তু মূলভাব অভিন্ন।" মন্তব্যটির তাৎপর্য তুলে ধরো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মন্তব্যটি যথার্থ ও যুক্তিযুক্ত।</span>
+            <p>'আঠারো বছর বয়স' কবিতার প্রেক্ষাপটে বয়ঃসন্ধিকালের ভেতরের ক্ষত, সামাজিক পরাধীনতা ও নানা ঝুঁকির কথা থাকলেও এর মূল সুর হলো তারুণ্যের অদম্য শক্তি ও দেশের কল্যাণে মাথা না নোয়ানোর প্রত্যয়। অন্যদিকে উদ্দীপকের প্রেক্ষাপট হলো বিশ্বজয়, বিজ্ঞান ও অজানাকে জানার রোমাঞ্চকর অভিযান। দুই জায়গার প্রেক্ষাপট দৃশ্যত ভিন্ন হলেও উভয় ক্ষেত্রেই মূল চালিকাশক্তি হলো— যৌবনের অপরাজেয় বেগ, নির্ভীকতা এবং জরাজীর্ণ ও অসম্ভবকে জয় করার মানসিকতা। তাই যৌবনের জয়গান গাওয়ার দিক থেকে উভয়ের মূলভাব অভিন্ন।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৬০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+const DATA = [
+  {n:1, q:"'প্রতিদান' কবিতায় কীসের প্রতিফলন লক্ষ করা যায়?", opts:["স্বার্থের","অর্থের","ভালোবাসার","মুক্তির"], correct:2},
+  {n:2, q:"'প্রতিদান' কবিতার প্রতিপাদ্য কোনটি?", opts:["ক্ষমা","সংকীর্ণতা","ক্ষমা ও পরোপকার","পরোপকার"], correct:2},
+  {n:3, q:"'প্রতিদান' কবিতায় বিষয়বস্তু হিসেবে কোনটি গুরুত্ব পেয়েছে?", opts:["অন্যায়ের প্রশ্রয়","সরলতা","দয়া","পরার্থপরতা"], correct:3},
+  {n:4, q:"জীবনে প্রকৃত সার্থকতা ও সুখ অনুভব করা যায়— i. স্বার্থ বিসর্জনে ii. অপরের কল্যাণসাধনে iii. নির্লিপ্ত জীবনযাপনে। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:5, q:"'প্রতিদান' কবিতায় কবির প্রত্যাশা— i. সুন্দর পৃথিবী ii. প্রীতিময় সম্পর্ক iii. সৌহার্দপূর্ণ মনোভাব। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:6, q:"'প্রতিদান' কবিতায় হিংসাকে কোন শব্দ দিয়ে বোঝানো হয়েছে?", opts:["বাণ","বিষ","মালঞ্চ","নিঠুর"], correct:1},
+  {n:7, q:"'যে গেছে বুকেতে আঘাত হানিয়া তার লাগি আমি কাঁদি।'— এ পঙক্তিতে কী বোঝানো হয়েছে?", opts:["ক্ষমাশীলতা","আন্তরিকতা","মানবপ্রীতি","আত্মতৃপ্তি"], correct:2},
+  {n:8, q:"কীসের মধ্যে ব্যক্তির প্রকৃত সুখ নিহিত?", opts:["জ্ঞান অর্জন","পরার্থপরতা","হানাহানি","ক্ষুদ্র স্বার্থ"], correct:1},
+  {n:9, q:"'প্রতিদান' কবিতার মূল উপজীব্য হলো— i. ক্ষমাশীলতা ii. উদারতা iii. পরার্থপরতা। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:10, passageTag:"উদ্দীপক", passage:"'পরার্থে আপন সুখ দিয়ে বিসর্জন, / তুমিও হওগো ধন্য তরুর মতন।' সূত্র: তরু - শেখ ফজলল করিম (১০ ও ১১ নং প্রশ্নের জন্য)", q:"উদ্দীপকটির সঙ্গে 'প্রতিদান' কবিতাটির কোন দিকটি সামঞ্জস্যপূর্ণ?", opts:["পরার্থপরতা","ক্ষমা","অনিষ্টকারীর মঙ্গল","সহনশীলতা"], correct:0},
+  {n:11, q:"উদ্দীপক ও 'প্রতিদান' কবিতা অনুসারে মানবজীবন সার্থক হবে— i. আত্মত্যাগ দ্বারা ii. প্রতিহিংসা দ্বারা iii. পরোপকার দ্বারা। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:12, passageTag:"উদ্দীপক", passage:"মেরেছ কলসির কানা, তাই বলে কি প্রেম দেবো না? (১২ নং প্রশ্নের জন্য)", q:"উদ্দীপকের ভাব 'প্রতিদান' কবিতার কোন চরণে অনুপস্থিত?", opts:["আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর","আপন করিতে কাঁদিয়া বেড়াই যে মোরে করেছে পর","আমার এ কূল ভাঙিয়াছে যেবা আমি তার কূল বাঁধি","রঙিন ফুলের সোহাগ-জড়ান ফুল মালঞ্চ ধরি"], correct:3},
+  {n:13, q:"'আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর'- এ পঙক্তিটি প্রতিদান কবিতায় কত বার ব্যবহৃত হয়েছে?", opts:["১ বার","২ বার","৩ বার","৪ বার"], correct:1},
+  {n:14, q:"আঘাতকারীর জন্য কান্নার মধ্য দিয়ে কবির মাঝে কী প্রকাশ পেয়েছে?", opts:["অসহায়ত্ব","প্রতিহিংসা","শোক","মানবপ্রেম"], correct:3},
+  {n:15, q:"'আমি লয়ে করে তারি মুখখানি'- এর পরবর্তী চরণ কোনটি?", opts:["কত ঠাঁই হতে কত কী যে আনি' সাজাই নিরন্তর","আপন করিতে কাঁদিয়া বেড়াই যে মোরে করেছে পর","মোর বুকে যেবা কবর বেঁধেছে আমি তার বুক ভরি","পথে পথে আমি ফিরি তার লাগি"], correct:0},
+  {n:16, q:"'আপন করিতে কাঁদিয়া বেড়াই যে মোরে করেছে পর।'— পঙক্তিটি দ্বারা বোঝানো হয়েছে—", opts:["সহমর্মিতা","আত্মসুর","পরোপকার","সর্বংসহা মনোভাব"], correct:2},
+  {n:17, q:"'বিবাগী' শব্দের অর্থ কী?", opts:["নিষ্ঠুর","উদাসীন","অনুরাগ","করুণা"], correct:1},
+  {n:18, q:"'প্রতিদান' কবিতায় কবির উচ্চারণ কীসের বিপরীত?", opts:["প্রতিশোধ-প্রতিহিংসা","লোভ","আত্মত্যাগ","সংকীর্ণতা"], correct:0},
+  {n:19, q:"রিনাকে তার চাচি অকারণে অপমান করলেও রিনা চাচিকে অনেক শ্রদ্ধা করে। 'প্রতিদান' কবিতার যে চরণে রিনার মনোভাব পরিস্ফুট— i. পথে পথে আমি ফিরি তার লাগি ii. আমি দেই তারে বুকভরা গান iii. কাঁটা পেয়ে তারে ফুল করি দান। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:20, q:"'প্রতিদান' কবিতায় কী বিসর্জনের কথা বলা হয়েছে?", opts:["ক্ষুদ্র স্বার্থ","মায়ের স্বার্থ","ব্যক্তিগত স্বার্থ","বৃহৎ স্বার্থ"], correct:2},
+  {n:21, q:"'প্রতিদান' কবিতায় মোট কয়টি চরণ রয়েছে?", opts:["১৮ টি","১৯ টি","২০ টি","২১ টি"], correct:2},
+  {n:22, q:"দীঘল রজনী কবির না ঘুমানোর কারণ— i. সহনশীলতা ii. উদারতা iii. মৌনতা। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:23, q:"কণার কিছু গহনা বাড়ির কাজের মেয়ে বানু চুরি করা সত্ত্বেও কণা বানুকে ক্ষমা করে দেয়। 'প্রতিদান' কবিতার যে চরণটি এই ঘটনার সাথে সাদৃশ্যপূর্ণ— i. আমার এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর ii. আমার এ কূল ভাঙিয়াছে যেবা আমি তার কূল বাঁধি iii. আপন করিতে কাঁদিয়া বেড়াই যে মোরে করেছে পর। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:24, q:"আমার 'এ ঘর ভাঙিয়াছে যেবা আমি বাঁধি তার ঘর'— এ পঙ্ক্তিতে কী বোঝানো হয়েছে?", opts:["পরোপকার","আত্মগ্লানি","সর্বংসহা মনোভাব","কৃতজ্ঞতাবোধ"], correct:0},
+  {n:25, passageTag:"উদ্দীপক", passage:"ইমাম হাসান (রা.) তাঁকে বিষপ্রয়োগে হত্যাকারী জাএদাকে ক্ষমা করে দিলেন এবং বললেন, পরকালে তাকে বেহেশত প্রদানের জন্য আল্লাহর কাছে সুপারিশ করবেন। (২৫ ও ২৬ নং প্রশ্নের জন্য)", q:"উদ্দীপকের হাসান (রা.)-এর কথার সাথে 'প্রতিদান' কবিতার কোন পড়ক্তির মিল আছে?", opts:["কত ঠাঁই হতে কত কী যে আমি' সাজাই নিরন্তর","দীঘল রজনী তার তরে জাগি ঘুম যে হরেছে মোর","রঙিন ফুলের সোহাগজড়ান ফুল মালঞ্চ ধরি","যে গেছে বুকেতে আঘাত হানিয়া তার লাগি আমি কাঁদি"], correct:3},
+  {n:26, q:"উপর্যুক্ত মিলের কারণ— i. ক্ষমাশীলতা ii. আত্মপ্রশংসা iii. পারস্পরিক সৌহার্দ্য। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:27, q:"جসীমউদ্দীনকে কোন বিশ্ববিদ্যালয় ডি.লিট ডিগ্রি প্রদান করে?", opts:["কলকাতা বিশ্ববিদ্যালয়","দিল্লি বিশ্ববিদ্যালয়","ঢাকা বিশ্ববিদ্যালয়","রবীন্দ্রভারতী বিশ্ববিদ্যালয়"], correct:3},
+  {n:28, passageTag:"উদ্দীপক", passage:"'পরের কারণে স্বার্থ' দিয়া বলি / এ জীবন মন সকলি দাও / তার মতো সুখ কোথাও কি আছে? / আপনার কথা ভুলিয়া যাও।' (২৮ ও ২৯ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে প্রকাশিত হয়েছে 'প্রতিদান' কবিতার কোন দিকটি?", opts:["আত্মত্যাগ","সহনশীলতা","ক্ষমা","সৌহার্দ"], correct:0},
+  {n:29, q:"উদ্দীপক ও 'প্রতিদান' কবিতার উদ্দেশ্য এক ও অভিন্ন হয়ে উঠেছে— i. পরার্থপরতায় ii. আত্মত্যাগে iii. সংযমে। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:30, q:"'সোজন বাদিয়ার ঘাট' কী জাতীয় রচনা?", opts:["কাব্য","উপন্যাস","নাটক","ছোটোগল্প"], correct:0},
+  {n:31, q:"সুকান্ত ভট্টাচার্য তাঁর কাব্যে একাত্মতা ঘোষণা করেছেন—", opts:["সশস্ত্র সংগ্রামের পক্ষে","ধর্মের পক্ষে","বিপ্লব ও মুক্তির পক্ষে","উগ্রবাদিতার পক্ষে"], correct:2},
+  {n:32, q:"'আঠারো বছর বয়স' কবিতায় 'এ বয়সে প্রাণ তীব্র আর প্রখর' বলতে বোঝানো হয়েছে—", opts:["বিদ্রোহ ও জটিলতা","তীব্রতা ও সংবেদনশীলতা","প্রগতি ও সংগ্রামশীলতা","দুঃসাহস ও স্নেহ-মমতা"], correct:1},
+  {n:33, q:"'এ বয়স জানে রক্তদানের পুণ্য' বলতে বোঝানো হয়েছে—", opts:["অধিকার আদায়ে রক্তদান","স্বাধীনতার জন্য রক্তদান","দেশের জন্য রক্তদান","শুভ, কল্যাণ ও সুন্দরের জন্য রক্তদান"], correct:3},
+  {n:34, q:"'রক্তদানের পুণ্য' বলতে কবি কী বোঝাতে চেয়েছেন?", opts:["তারুণ্যের অগ্রগতি","মুক্তি ও কল্যাণের সংগ্রাম","বিপদ মোকাবিলার ঝুঁকি","স্বাধীনভাবে চলার ঝুঁকি"], correct:1},
+  {n:35, q:"'এ দেশের বুকে আঠারো আসুক নেমে'- 'আঠারো বছর বয়স' কবিতায় চরণটিতে কবির কোন মানসিকতা প্রকাশিত? i. প্রথাবদ্ধ জীবনের ii. উদ্দীপনা ও সাহসিকতার iii. চলার দুর্বার গতির। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","গ. ii ও iii","i, ii ও iii"], correct:2},
+  {n:36, q:"'নবীন জগৎ সন্ধানে যারা ছুটে মেরু-অভিযানে, পক্ষ বাঁধিয়া উড়িয়া চলেছে যাহারা ঊর্ধ্বপানে।' উদ্দীপকটিতে 'আঠারো বছর বয়স' কবিতার তারুণ্যের যে দিকটি প্রকাশিত হয়েছে— i. তারুণ্যের আবেগ ii. তারুণ্যের দুর্নিবার রূপ iii. তারুণ্যের আত্মোৎসর্গকারী রূপ। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:37, passageTag:"উদ্দীপক", passage:"'আমরা করি ভুল / অগাধ জলে ঝাঁপ দিয়ে / যুঝিয়ে পাই কূল। / যেখানে ডাক পড়ে / জীবন মরণ ঝড়ে / আমরা প্রস্তুত।' (৩৭ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সঙ্গে অধিকতর সাদৃশ্যপূর্ণ চরণ হলো— i. ক্ষত-বিক্ষত হয় সহস্র প্রাণ ii. আঠারো বছর বয়স জানে না কাঁদা iii. বিরাট দুঃসাহসেরা দেয় যে উঁকি। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:38, q:"'আঠারো বছর বয়স' কবিতায় দুঃসাহস বলতে কী বোঝানো হয়েছে?", opts:["তীব্র যন্ত্রণা","দুঃসহ যন্ত্রণা","লক্ষ দীর্ঘশ্বাস","স্বপ্ন ও উদ্যোগ"], correct:3},
+  {n:39, q:"'আঠারো বছর বয়স' কবিতার প্রথম স্তবকে কী প্রকাশিত হয়েছে?", opts:["তারুণ্যের দুঃসাহসী রূপ","তারুণ্যের মাতৃরূপ","তারুণ্যের শক্তিময়তা","তারুণ্যের অসহায়ত্ব"], correct:0},
+  {n:40, q:"আঠারো বছর বয়সে কীসের প্রস্তুতি নিতে হয়?", opts:["আত্মসংযমী হওয়ার","স্বনির্ভর হওয়ার","ত্যাগী হওয়ার","ধ্যানী হওয়ার"], correct:1},
+  {n:41, q:"কবি এ দেশের বুকে আঠারোকে প্রত্যাশা করেছেন কেন?", opts:["বিদ্রোহের জন্য","প্রগতির জন্য","শান্তির জন্য","সমৃদ্ধির জন্য"], correct:1},
+  {n:42, q:"'আঠারো বছর বয়স' কবিতায় কী প্রকাশিত হয়েছে?", opts:["শুভ ও অশুভর দ্বন্দ্ব","সময়ের প্রতিচ্ছবি","শোষণ-বঞ্চনার বিদ্রোহ","তারুণ্যের অমিত সম্ভাবনা"], correct:3},
+  {n:43, q:"আঠারো 'বছর বয়স' কবিতাটি কয় মাত্রার পর্বে রচিত?", opts:["৬ মাত্রার","৫ মাত্রার","৭ মাত্রার","৮ মাত্রার"], correct:0},
+  {n:44, q:"'এ দেশের বুকে আঠারো আসুক নেমে' চরণটিতে কবির কোন প্রত্যাশা প্রকাশিত হয়েছে?", opts:["জাতীয় জীবনের চালিকাশক্তি হওয়ার","আত্মত্যাগের মহান মন্ত্রে উজ্জীবিত হওয়ার","অভিজ্ঞতার আলোকে বয়ঃসন্ধিকালের বৈশিষ্ট্যের","অন্যায়ের বিরুদ্ধে মাথা উঁচু করে দাঁড়াবার"], correct:0},
+  {n:45, q:"'স্পর্ধায় নেয় মাথা তোলবার ঝুঁকি'- কেন?", opts:["পৃথিবীকে দেখার জন্য","আন্দোলন করার জন্য","অধিকার আদায়ের জন্য","স্বাধীনভাবে চলার জন্য"], correct:2},
+  {n:46, q:"কবি এ দেশের বুকে আঠারোকে প্রত্যাশা করেছেন কেন? (পুনরাবৃত্তি)", opts:["বিদ্রোহের জন্য","প্রগতির জন্য","শান্তির জন্য","আন্দোলনের জন্য"], correct:1},
+  {n:47, q:"'আঠারো বছর বয়স' কবিতায় 'তবুও আঠারোর শুনেছি জয়ধ্বনি'- কেন? i. এ বয়স বাঁচে দুর্যোগে আর ঝড়ে, ii. বিপদের মুখে এ বয়স অগ্রণী iii. এ বয়সে প্রাণ তীব্র আর প্রখর। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:48, q:"'আঠারো বছর বয়স' কবিতায় কবি মূলত বোঝাতে চেয়েছেন, তরুণরা— i. এরা অফুরন্ত প্রাণশক্তিতে ভরপুর ii. আত্মত্যাগের মন্ত্রে উজ্জীবিত iii. দেশের কল্যাণে অগ্রণী। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:49, passageTag:"উদ্দীপক", passage:"পাড়ার মাঠে সামাজিক অনুষ্ঠানের আয়োজন করেছে কিছু কলেজপড়ুয়া, তবে বয়োজ্যেষ্ঠরা এগুলোকে উৎপাত বলে মনে করেন। (৪৯ ও ৫০ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে 'আঠারো বছর বয়স' কবিতায় বর্ণিত আঠারো বছর বয়সিদের কোন সংকট দেখা গেছে?", opts:["বয়সজনিত সংকট","রাজনৈতিক সংকট","মানসিক সংকট","সামাজিক সংকট"], correct:3},
+  {n:50, q:"উক্ত সংকট থেকে উত্তরণের জন্য আঠারো বছর বয়সিদের— i. আত্মবিশ্বাসী হতে হবে ii. স্বনির্ভর হতে হবে iii. আবেগ সংবরণ করতে হবে। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:51, passageTag:"উদ্দীপক", passage:"'আপদ আছে, জানি আঘাত আছে; / তাই জেনে তো বক্ষে পরান নাচে।' (৫১ ও ৫২ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সঙ্গে তোমার পঠিত 'আঠারো বছর বয়স' কবিতার মিল আছে—", opts:["ছন্দে","ভাবের","ভাষায়","রূপকে"], correct:1},
+  {n:52, q:"কোন চরণে উদ্ধৃত অংশের সবচেয়ে বেশি মিল প্রকাশ পেয়েছে?", opts:["এ বয়সে কেউ মাথা নোয়াবার নয়","এ বয়স বাঁচে দুর্যোগ আর ঝড়ে","এ বয়স জেনো ভীরু, কাপুরুষ নয়","আঠারো বছর বয়সের নেই ভয়"], correct:1},
+  {n:53, passageTag:"উদ্দীপক", passage:"'আষাঢ়ের গিরি-নিঃস্রাব-সম কোনো বাধা মানিল না।' (৫৩ ও ৫৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সঙ্গে সাদৃশ্য নিচের কোন চরণে লক্ষণীয়?", opts:["এ বয়সে কেউ মাথা নোয়াবার নয়","আঠারো বছর বয়স জানে না কাঁদা","এ বয়স জেনো ভীরু, কাপুরুষ নয়","পথ চলতে এ বয়স যায় না থেমে"], correct:3},
+  {n:54, q:"উদ্দীপকে 'আঠারো বছর বয়স' কবিতার কোন ভাবটি প্রকাশিত হয়েছে?", opts:["গতিশীলতা","উচ্ছ্বাস","সাহসিকতা","উত্তেজনা"], correct:0},
+  {n:55, passageTag:"উদ্দীপক", passage:"'মোরা ঝঞ্ঝার মতো উদ্দাম/ মোরা ঝর্ণার মতো চঞ্চল/ মোরা বিধাতার মতো নির্ভয়/ মোরা প্রকৃতির মতো সচ্ছল।' — কাজী নজরুল ইসলাম (৫৫ ও ৫৬ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সর্বনাম ও 'আঠারো বছর বয়স' কবিতার আঠারো বছর বয়সিরা কোন অর্থে অভিন্ন?", opts:["সভাবনাময়","দুঃসাহসী","অপ্রতিরোধ্য","প্রতিবাদী"], correct:2},
+  {n:56, q:"উক্ত বৈশিষ্ট্যের কারণে আঠারো বছর বয়সিরা— i. সত্যানুসন্ধানী হয়ে ওঠে ii. কল্যাণকামী হয়ে ওঠে iii. ধ্বংসাত্মক হয়ে ওঠে। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:57, q:"আঠারো বছর বয়স মানবজীবনের কোন পর্যায়?", opts:["কৈশোর","যৌবন","উত্তরণকালীন","মধ্যমকালীন"], correct:2},
+  {n:58, q:"তারুণ্যের বৈশিষ্ট্য— i. প্রগতির পথে চলা ii. অগ্রগতির পথে চলা iii. কল্যাণের পথে চলা। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:59, q:"আঠারো বছর বয়সের প্রধান বৈশিষ্ট্য কোনটি?", opts:["গতিশীলতা","নতুনকে ধারণ করা","প্রগতি ও অগ্রগতি","শক্তি ও সাহস"], correct:0},
+  {n:60, q:"আঠারো বছর বয়সে মানুষ— i. সবাইকে সমীহ করতে শেখে ii. অনেক ভুল করতে পারে iii. কৈশোর থেকে যৌবনে পদার্পণ করে। নিচের কোনটি সঠিক?", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

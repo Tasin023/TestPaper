@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>সুচেতনা — পাঠ পরিক্রমা | FAHAD'S TUTORIAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>সুচেতনা</h1>
+  <p class="byline">জীবনানন্দ দাশ</p>
+  <p class="desc">পৃথিবীর আদিম ও ঐতিহাসিক ধ্বংসযজ্ঞ ও রক্তপাতের সমান্তরালে মানুষের শাশ্বত শুভচেতনা, মানবিক ক্রমমুক্তি এবং আলোকোজ্জ্বল ভবিষ্যতের দূরদর্শী প্রত্যয় নিয়ে রচিত কালজয়ী কবিতা।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৩</b><span>মূল সুর</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের সঠিক অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে আদর্শ উত্তর দেখে নাও।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক (প্রশ্ন-১)</span>
+        মহানবি হজরত মুহম্মদ (স:) এমন এক যুগসন্ধিক্ষণে পৃথিবীতে আগমন করেন যখন আরবের সামাজিক, রাজনৈতিক, অর্থনৈতিক, সাংস্কৃতিক, নৈতিক ও ধর্মীয় অবস্থা অধঃপতনের চরম সীমায় পৌঁছে গিয়েছিল। সব অনাচার দূরীভূত করে শান্তিপূর্ণ সহাবস্থান ও সৌহার্দ্য সম্প্রীতির ভিত্তিতে তিনি একটি কল্যাণমূলক আদর্শ সমাজ প্রতিষ্ঠা করতে সক্ষম হন। সমাজ জীবনের সর্বক্ষেত্রে সুখ ও শান্তি প্রতিষ্ঠার লক্ষ্যে একটি আদর্শ জীবনবিধান প্রতিষ্ঠা করে সর্বাধিক কৃতিত্বের আসনে সমাসীন হয়েছেন।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'সুচেতনা' কবিতাটি কোন কাব্যগ্রন্থ থেকে নেওয়া হয়েছে? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'সুচেতনা' কবিতাটি জীবনানন্দ দাশের <b>'বনলতা সেন'</b> কাব্যগ্রন্থ থেকে নেওয়া হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'পৃথিবীর গভীর গভীরতর অধুলো এখন'— কথাটি দ্বারা কী বোঝানো হয়েছে? <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>প্রশ্নোক্ত চরণটি দ্বারা সমকালীন পৃথিবীর চরম নৈতিক অবক্ষয়, পারস্পরিক হিংসা-দ্বেষ, যুদ্ধবিগ্রহ এবং অশুভ শক্তির চরম তাণ্ডবলীলা ও অরাজকতাকে বোঝানো হয়েছে।</p>
+            <p>কবি জীবনানন্দ দাশ তাঁর চারপাশের যুদ্ধজর্জর ও স্বার্থান্ধ পৃথিবীকে পর্যবেক্ষণ করে গভীরভাবে ব্যথিত হয়েছেন। মানুষ যখন তার বিবেক ও মানবিক শুভবোধ বিসর্জন দিয়ে ধ্বংসাত্মক কাজে মেতে ওঠে, তখন সমাজ এক গভীর অন্ধকারে নিমজ্জিত হয়। কবির দৃষ্টিতে সমকালীন সময়ের এই অশুভ শক্তির জয়জয়কার ও মানুষের মানবিক মূল্যবোধের চরম বিপর্যয়ই হলো 'গভীর গভীরতর অন্ধকার বা অধুলো' যা সমাজকে আচ্ছন্ন করে রেখেছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকে বর্ণিত পরিস্থিতি 'সুচেতনা' কবিতার কোন দিকটির সমান্তরাল— ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকে বর্ণিত তৎকালীন আরবের চরম অরাজক ও অধঃপতিত পরিস্থিতি 'সুচেতনা' কবিতায় চিত্রিত পৃথিবীর আদিম ও ঐতিহাসিক ধ্বংসলীলা এবং মানুষের বর্বরতার দিকটির সাথে সমান্তরাল।</span>
+            <p>'সুচেতনা' কবিতায় কবি পৃথিবীর ইতিহাসজুড়ে চলা মানুষের হিংস্রতা, রক্তপাত ও সুগভীর অন্ধকারের কথা তুলে ধরেছেন। মানুষ যুগে যুগে নিজের স্বার্থে অপরের রক্তে হাত রাঙিয়েছে, সমাজকে নরকতুল্য করেছে, যা কবিতায় 'মানুষের রক্তের প্লাবন' এবং 'গভীরতর অন্ধকার' হিসেবে উপস্থাপিত হয়েছে।</p>
+            <p>উদ্দীপকে আমরা দেখি, মহানবি (স.)-এর আগমনের পূর্বে আরব সমাজ সামাজিক, রাজনৈতিক, নৈতিক ও ধর্মীয় দিক থেকে চরম অধঃপতনে নিমজ্জিত ছিল। সেখানে অন্যায়-অত্যাচার এবং পাশবিকতা চরম সীমায় পৌঁছেছিল। কবিতার এই ঐতিহাসিক ধ্বংসাত্মক প্রেক্ষাপট ও মানুষের অশুভবোধের অন্ধকারের রূপটিই উদ্দীপকের প্রাক-ইসলামী আরবের অনাচারপূর্ণ পরিস্থিতির মধ্য দিয়ে সমান্তরালভাবে প্রতিফলিত হয়েছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"সুচেতনার বিকাশেই আলোকোজ্জ্বল পৃথিবীর দেখা মিলবে"— মন্তব্যটি উদ্দীপক ও 'সুচেতনা' কবিতার আলোকে মূল্যায়ন করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">ব্যক্তিস্বার্থ ও পাশবিকতা দূর করে মানুষের অন্তরে শুভচেতনার বা সুচেতনার জাগরণ ঘটানোর মাধ্যমেই কেবল একটি শান্তিময় ও আলোকোজ্জ্বল পৃথিবী নির্মাণ সম্ভব— এই সর্বজনীন সত্যটি প্রকাশের দিক থেকে মন্তব্যটি উদ্দীপক ও 'সুচেতনা' কবিতার আলোকে শতভাগ যথার্থ।</span>
+            <p>'সুচেতনা' কবিতায় জীবনানন্দ দাশ সমকালীন পৃথিবীর যুদ্ধবিগ্রহ ও অশুভ শক্তির তাণ্ডব দেখে সাময়িকভাবে ব্যথিত হলেও চূড়ান্তভাবে আশাবাদ ব্যক্ত করেছেন। তিনি বিশ্বাস করেন, মানুষের এই পাশবিক রূপ বা সাময়িক অন্ধকারের অবসান ঘটবেই। সুচেতনা বা মানুষের ভেতরের শাশ্বত কল্যাণময় বোধই একসময় পৃথিবীর এই ক্রমমুক্তি নিশ্চিত করবে এবং আগামী দিনে একটি সুন্দর ও আলোকময় ভবিষ্যৎ গড়ে তুলবে।</p>
+            <p>উদ্দীপকের ক্ষেত্রে দেখা যায়, চরম অরাজকতার যুগে অবতীর্ণ হয়ে মহানবি (স.) তাঁর সুমহান নৈতিকতা, সত্যনিষ্ঠা এবং শুভবোধের জাগরণ ঘটিয়ে অন্ধকারাচ্ছন্ন আরব সমাজ থেকে যাবতীয় অনীতি দূর করেছিলেন। তিনি সৌহার্দ্য ও শান্তিপূর্ণ সহাবস্থানের ভিত্তিতে একটি কল্যাণমূলক আদর্শ সমাজ প্রতিষ্ঠা করেন, যা মূলত শুভচিন্তা ও চেতনারই বাস্তব বিজয়।</p>
+            <p>সুতরাং, উদ্দীপকে মহানবি (স.) কর্তৃক সত্য ও আদর্শ প্রতিষ্ঠার মাধ্যমে সমাজ পরিবর্তনের যে বাস্তব রূপ ফুটে উঠেছে, তা 'সুচেতনা' কবিতার দূরতম দ্বীপসদৃশ পরম শুভচেতনার শাশ্বত দর্শনেরই প্রতিফলন। উভয় ক্ষেত্রেই সুনিশ্চিত বার্তা দেওয়া হয়েছে যে, মানুষের শুভ বুদ্ধির উন্মেষ বা সুচেতনার বিকাশের মাধ্যমেই সমস্ত অন্ধকার কেটে যাবে এবং একদিন একটি পরম শান্তিময় আলোকোজ্জ্বল পৃথিবীর সৃষ্টি হবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">House- 7, Road- 8, Block- C, Mirpur-10, Dhaka-1216 | Call: 01601-92 92 44 | www.ft.education</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// সুচেতনা.pdf থেকে নিখুঁতভাবে সংগৃহীত ৫০টি MCQ প্রশ্নের সম্পূর্ণ ডাটা অ্যারে
+const DATA = [
+  {n:1, q:"'সুচেতনা' কীভাবে মানবসমাজের অগ্রযাত্রা নিশ্চিত করবে?", opts:["অসাম্প্রদায়িক চেতনার মাধ্যমে","দেশাত্মবোধ প্রসারের মাধ্যমে","পৃথিবীর ক্রমমুক্তির আলোকে প্রজ্বালিত রেখে","সাম্যচেতনার আলোকে প্রজ্বালিত রেখে"], correct:2},
+  {n:2, q:"'সুচেতনা' কবিতায় মানবরূপে জন্ম নেওয়াকে জীবনানন্দ দাশের কাছে আপাতভাবে কাঙ্ক্ষিত মনে হয়েছে— i. পেশাগত সংকট প্রত্যক্ষ করে ii. ব্যক্তিক সংকট প্রত্যক্ষ করে iii. সামষ্টিক সংকট প্রত্যক্ষ করে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:3, q:"সুচেতনার ইতিবাচক আলো প্রজ্বালনের মাধ্যমে সকল বিপর্যয় থেকে— i. পৃথিবী মুক্তি পাবে ii. মানুষের মুক্তি ঘটবে iii. মুক্তির দিশা মিলবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:4, q:"কবি জীবনানন্দ দাশের বিশ্বাস- পৃথিবীব্যাপী অন্ধকার ও অশুভের অন্তরালেই আছে— i. নির্জনতা ii. মুক্তির পথ iii. আলোকোজ্জ্বল পৃথিবী", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:5, passageTag:"উদ্দীপক", passage:"আজ যে শিশু পৃথিবীর আলোয় এসেছে আমরা তার তরে একটি সাজানো বাগান চাই। (৫ ও ৬ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের ভাবার্থ 'সুচেতনা' কবিতার কোন চরণের সাথে সংগতিপূর্ণ?", opts:["সুচেতনা, তুমি দূরতর দ্বীপ","পৃথিবীর গভীর গভীরতর অধুলো এখন","আজকে অনেক রূঢ় রৌদ্রে ঘুরেছি","তবুও তোমার কাছে আমাদের ধুলোবালি"], correct:0},
+  {n:6, q:"উক্ত সংগতিপূর্ণ চরণে প্রকাশ পেয়েছে— i. আগামীর সুন্দর পৃথিবীর প্রত্যাশা ii. জীবনসংগ্রামের কঠিন রূপ iii. শুভচেতনার জয়গান", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:7, passageTag:"উদ্দীপক", passage:"'হে মাটি, হে মহান পৃথিবী/ হে আদিম পথপ্রদর্শক/ তোমার কোলে জন্ম নিয়েছি/ তোমার বুকেই লীন হব।' (৭ ও ৮ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকটি 'সুচেতনা' কবিতার কোন দিকটিকে নির্দেশ করে?", opts:["পৃথিবীর প্রতি গভীর মমতা","পথের প্রাচীনত্ব","মৃত্যুর অনিবার্য বাস্তবতা","সভ্যতার আদিম রূপ"], correct:0},
+  {n:8, q:"উদ্দীপক ও 'সুচেতনা' কবিতার মূলগত সাদৃশ্য হলো— i. প্রকৃতির অবিনশ্বরতা ii. মানবজীবনের নশ্বরতা iii. ধরণীর শাশ্বত রূপ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:9, passageTag:"উদ্দীপক", passage:"শফিক ক্লাসের বন্ধুদের সবসময় অন্যায়ের বিরুদ্ধে সোচ্চার হতে বলে এবং সমাজে শান্তি শৃঙ্খলা বজায় রাখার পরামর্শ দেয়। (৯ ও ১০ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের শফিকের মানসিকতায় 'সুচেতনা' কবিতার কোন দিকটি প্রকাশ পেয়েছে?", opts:["সুচেতনার দূর দ্বীপের রূপ","অন্ধকার দূর করার ব্যাকুলতা","শুভচেতনার প্রসার ঘটানো","রূঢ় রৌদ্রে পথ চলা"], correct:2},
+  {n:10, q:"শফিকের এই পরামর্শ মূলত কোন ভাবনার বহিঃপ্রকাশ?", opts:["ব্যক্তিস্বার্থ রক্ষা","সমাজ সংস্কার ও কল্যাণ সাধন","নিজের শ্রেষ্ঠত্ব প্রমাণ","ঐতিহাসিক সত্যের অনুধাবন"], correct:1},
+  {n:11, passageTag:"উদ্দীপক", passage:"'হিংসায় উন্মত্ত এই পৃথিবী/ প্রতিনিয়ত চলছে রক্তের হোলিখেলা/ মানুষ হারিয়েছে তার মনুষ্যত্ব।' (১১ ও ১২ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকটি 'সুচেতনা' কবিতার কোন চরণের প্রতিচ্ছবি?", opts:["সুচেতনা, তুমি দূরতর দ্বীপ","মানুষের রক্তে মাটির শাশ্বত টান","পৃথিবীর গভীর গভীরতর অধুলো এখন","অনেক রূঢ় রৌদ্রে ঘুরেছি আমি"], correct:2},
+  {n:12, q:"উদ্দীপকের এই নেতিবাচক পরিস্থিতির অবসানের পথ কোনটি বলে কবি মনে করেন?", opts:["অর্থনৈতিক মুক্তি","শুভ ও কল্যাণময় চেতনার জাগরণ","নতুন প্রযুক্তির ব্যবহার","যুদ্ধবিগ্রহ বৃদ্ধি করা"], correct:1},
+  {n:13, passageTag:"উদ্দীপক", passage:"শহরের যানজট, কোলাহল ও কলকারখানার কালো ধোঁয়ায় অতিষ্ঠ হয়ে রফিক গ্রামে গিয়ে প্রকৃতির শান্ত স্নিগ্ধ পরিবেশে নিজেকে সঁপে দিল। (১৩ ও ১৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের রফিকের এই গ্রামমুখী যাত্রা 'সুচেতনা' কবিতার কোন ভাবটির বিপরীত?", opts:["শাশ্বত পৃথিবীর অন্বেষণ","রূঢ় বাস্তবতার মুখোমুখি দাঁড়িয়ে সংগ্রাম","শান্তি ও নির্জনতার খোঁজা","প্রকৃতির কোল আশ্রয় করা"], correct:1},
+  {n:14, q:"রফিক সাহেবের এই আচরণের মাধ্যমে স্পষ্ট হয়— i. সাময়িক ক্লান্তি ও পলায়নীবৃত্তি ii. গ্রামীণ জীবনের প্রতি আকর্ষণ iii. নাগরিক জীবনের অস্থিরতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:15, passageTag:"উদ্দীপক", passage:"'পথের ক্লান্তি ভুলে শান্তি খুঁজেছি তোমার নয়নে।' (১৫ ও ১৬ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের 'শান্তি' পাওয়ার আকুতি 'সুচেতনা' কবিতার কার সাথে তুলনীয়?", opts:["রূঢ় রৌদ্রের সাথে","সুচেতনার সাথে","সবুজ ঘাসের সাথে","নক্ষত্রের আলোর সাথে"], correct:1},
+  {n:16, q:"উক্ত তুলনায় ফুটে উঠেছে— i. আশ্রয়ের পরম ব্যাকুলতা ii. জীবনের গভীর হতাশা iii. ক্লান্তি অবসানের পরম তৃপ্তি", opts:["i ও iii","i ও ii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:17, q:"'সুচেতনা' কবিতার কবি জীবনানন্দ দাশ কোন শতকের কবি হিসেবে খ্যাত?", opts:["অষ্টাদশ শতকের","ঊনবিংশ শতকের","বিংশ শতকের","একবিংশ শতকের"], correct:2},
+  {n:18, q:"কবি কাকে 'দূরতর দ্বীপ' বলে সম্বোধন করেছেন?", opts:["বনলতা সেনকে","সুচেতনাকে","রূপসী বাংলাকে","পৃথিবীকে"], correct:1},
+  {n:19, q:"'সুচেতনা' কবিতায় কবি নিজেকে কীসের কারিগর হিসেবে দেখতে চেয়েছেন?", opts:["যুদ্ধের কারিগর","সভ্যতা ও শুভবোধের কারিগর","কাব্যের কারিগর","শিল্পের কারিগর"], correct:1},
+  {n:20, q:"'মানুষের সনাতন পথ' বলতে কবি কী বুঝিয়েছেন?", opts:["প্রাচীন যাতায়াতের রাস্তা","মনুষ্যত্বের ও কল্যাণের শাশ্বত পথ","ধর্মীয় রীতিনীতি","অর্থ উপার্জনের পথ"], correct:1},
+  {n:21, q:"'সুচেতনা' কবিতায় 'নাবিক' বলতে মূলত কাকে বোঝানো হয়েছে?", opts:["নৌকার মাঝিকে","দিকভ্রান্ত মানুষকে বা জীবন-পথের অভিযাত্রীকে","যুদ্ধজাহাজের চালককে","বণিকদের"], correct:1},
+  {n:22, q:"'সুচেতনা' কবিতায় মাটির টানকে কেমন বলা হয়েছে?", opts:["ক্ষণস্থায়ী","শাশ্বত ও চিরন্তন","কৃত্রিম","অপ্রয়োজনীয়"], correct:1},
+  {n:23, q:"'সবুজ ঘাসের দেশ' বলতে কবি কী ফুটিয়ে তুলেছেন?", opts:["মরুভূমির রূপ","প্রকৃতির শ্যামল ও শান্তিময় রূপ","আধুনিক নগরায়ণ","শিল্প কারখানা"], correct:1},
+  {n:24, q:"কবি জীবনানন্দ দাশ কত খ্রিষ্টাব্দে মৃত্যুবরণ করেন?", opts:["১৯৫২","১৯৫৪","১৯৫৬","১৯৫৮"], correct:1},
+  {n:25, q:"'সুচেতনা' কবিতায় মানুষের রক্তে কী অর্জিত হয় বলে কবি উল্লেখ করেছেন?", opts:["ব্যক্তিস্বার্থ","সভ্যতার ঐতিহাসিক প্রগতি ও সমাজ বিনির্মাণ","অঢেল ধনসম্পদ","সাময়িক ক্ষমতা"], correct:1},
+  {n:26, q:"'সুচেতনা' কবিতায় কবির পথ চলার অভিজ্ঞতা কেমন ছিল?", opts:["সহজ ও মসৃণ","অনেক রূঢ় রৌদ্রে ঘেরা ও সংগ্রামমুখর","আনন্দদায়ক","ভীতিকর"], correct:1},
+  {n:27, q:"'শাশ্বত রাত্রি' বলতে কবিতায় কোন ভাবটি প্রকাশ পেয়েছে?", opts:["ভয়াবহ অন্ধকার যুগ বা আদিম অশুভ সময়","নৈশকালীন সৌন্দর্য","শান্তিময় নিদ্রা","চাঁদনী রাত"], correct:0},
+  {n:28, q:"'সুচেতনা' কবিতার মূল সুর কোনটি?", opts:["চরম নিরাশা ও পলায়নবাদ","মানবকল্যাণ ও পরম শুভবোধের প্রতি গভীর আস্থা ও আশাবাদ","প্রকৃতির রূপ বর্ণনা","যুদ্ধবিগ্রহের জয়গান"], correct:1},
+  {n:29, q:"'নক্ষত্রের আলো' কিসের প্রতীক হিসেবে ব্যবহৃত হয়েছে?", opts:["আঁধারের রূপ","আশার আলো ও শাশ্বত সত্যের দিশা","বিলাসবহুল জীবন","নৈশকালীন স্তব্ধতা"], correct:1},
+  {n:30, q:"জীবনানন্দ দাশের বিখ্যাত কাব্যগ্রন্থ কোনটি?", opts:["অগ্নিবীণা","সোনার তরী","রূপসী বাংলা","কাব্য মালঞ্চ"], correct:2},
+  {n:31, q:"'সুচেতনা' কবিতায় মানবজন্মকে কবি আপাতভাবে কী বলেছেন?", opts:["পরম সার্থকতা","এক অবক্ষয়িত বা ব্যর্থ প্রয়াস","অপ্রয়োজনীয় ঘটনা","শ্রেষ্ঠ উপহার"], correct:1},
+  {n:32, q:"'ধুলোবালি' শব্দ দ্বারা কবিতায় মানব জীবনের কোন দিকটি প্রকাশিত?", opts:["পার্থিব মলিনতা ও সীমাবদ্ধতা","গৃহ নির্মাণ সামগ্রী","রাস্তার নোংরা পরিবেশ","ধনসম্পদ"], correct:0},
+  {n:33, q:"'পৃথিবীর ক্রমমুক্তি' কিসের মাধ্যমে সম্ভব?", opts:["অস্ত্র প্রতিযোগিতার মাধ্যমে","শাশ্বত শুভচিন্তা ও সুচেতনার প্রসারে","অঢেল অর্থ ব্যয়ের মাধ্যমে","নগরায়ণ বৃদ্ধির মাধ্যমে"], correct:1},
+  {n:34, q:"'সুচেতনা' কবিতায় কবির চেতনার গভীরতা কিসের সাথে তুলনা করা যায়?", opts:["নদীর স্রোত","সমুদ্রের গভীরতা বা সুদূর নির্জন দ্বীপ","আকাশের মেঘ","ঝড়ের গতি"], correct:1},
+  {n:35, q:"কবি জীবনানন্দ দাশকে প্রধানত কোন প্রকৃতির কবি বলা হয়?", opts:["বিদ্রোহী কবি","রূপসী বাংলা ও নির্জনতার কবি","পল্লী কবি","নাগরিক কবি"], correct:1},
+  {n:36, q:"'সুচেতনা' কবিতায় কবি কোনটির অবিনশ্বরতার কথা বলেছেন?", opts:["মানুষের দেহের","শুভচেতনা ও মানবপ্রেমের মূল্যের","পার্থিব ক্ষমতার","টাকা-পয়সার"], correct:1},
+  {n:37, q:"'অনেক রূঢ় রৌদ্রে ঘুরেছি আমি'— এখানে 'রূঢ় রৌদ্র' কিসের প্রতীক?", opts:["গ্রীষ্মের তীব্র উত্তাপ","জীবনের কঠিন বাস্তবতা ও নির্মম সংগ্রাম","উজ্জ্বল ভবিষ্যৎ","মরুভূমির আবহাওয়া"], correct:1},
+  {n:38, q:"'সুচেতনা' কবিতায় 'মাটি' কিসের আধার?", opts:["ফসলের","মানব ইতিহাসের শাশ্বত টান ও জীবনের মূল উৎস","ধুলোবালির","ইটের দালানের"], correct:1},
+  {n:39, q:"'সুচেতনা' কবিতার প্রথম পঙ্ক্তি কোনটি?", opts:["পৃথিবীর গভীর গভীরতর অধুলো এখন","সুচেতনা, তুমি দূরতর দ্বীপ","আজকে অনেক রূঢ় রৌদ্রে ঘুরেছি আমি","মানুষের রক্তে মাটির শাশ্বত টান"], correct:1},
+  {n:40, q:"কবি জীবনানন্দ দাশ কোথায় জন্মগ্রহণ করেন?", opts:["কলকাতায়","বরিশালে","যশোরে","ঢাকায়"], correct:1},
+  {n:41, q:"'সুচেতনা' কবিতায় মানুষের কোন প্রবণতার তীব্র সমালোচনা করা হয়েছে?", opts:["পরোপকারিতা","পরস্পর হিংসা, যুদ্ধ ও রক্তপাত","প্রকৃতি প্রেম","জ্ঞান অন্বেষণ"], correct:1},
+  {n:42, q:"'সুচেতনা' শব্দের আভিধানিক অর্থ কী?", opts:["চেতনাহীনতা","উত্তম বা কল্যাণময় চেতনা","অজ্ঞান হওয়া","স্বাভাবিক অবস্থা"], correct:1},
+  {n:43, q:"'সুচেতনা' কবিতায় কবির চূড়ান্ত দৃষ্টি কেমন?", opts:["হতাশাবাদী","চরম আশাবাদী ও কল্যাণকামী","উদাসীন","স্বার্থপর"], correct:1},
+  {n:44, q:"'বাতাসের ওপার' বলতে কবি কী নির্দেশ করেছেন?", opts:["মহাকাশ","পার্থিব জগতের ঊর্ধ্বে এক শান্তিময় আধ্যাত্মিক বা ভাব জগত","ঝড়ো হাওয়া","মেঘের আস্তানা"], correct:1},
+  {n:45, q:"কবি কখন সুচেতনাকে দেখতে পান বলে জানিয়েছেন?", opts:["দিনের আলোয়","তীব্র জীবনসংগ্রাম ও অন্ধকারের শেষ প্রান্তে অন্তরের আলোয়","ঘুমের ঘোরে","মেঘলা আকাশে"], correct:1},
+  {n:46, q:"'সুচেতনা' কবিতায় মানুষের রক্তাক্ত ইতিহাসের বিপরীতে কোনটি স্থির থাকে?", opts:["ধনসম্পদ","মানুষের শাশ্বত অন্তরের শুভবোধ ও প্রকৃতির শাশ্বত রূপ","যুদ্ধক্ষেত্রের অস্ত্র","রাজনৈতিক ক্ষমতা"], correct:1},
+  {n:47, q:"'সুচেতনা' কবিতাটির ছন্দ কেমন?", opts:["অক্ষরবৃত্ত ছন্দ","মাত্রাবৃত্ত ছন্দ","স্বরবৃত্ত ছন্দ","গদ্যছন্দ"], correct:0},
+  {n:48, q:"'সুচেতনা' কবিতায় কবির অন্বেষণ মূলত কীসের?", opts:["নতুন ভূখণ্ডের","মানবাত্মার মুক্তি ও বিশ্বশান্তির","যশ-খ্যাতির","প্রচুর ধনসম্পদের"], correct:1},
+  {n:49, q:"'আজকে অনেক রূঢ় রৌদ্রে ঘুরেছি'— এই ঘোরাঘুরি কবির মনে কী এনে দিয়েছে?", opts:["অপার আনন্দ","জীবনের রূঢ় বাস্তবতার গভীর উপলব্ধি","অসুস্থতা","ভীষণ ক্লান্তি ও নিরাশা"], correct:1},
+  {n:50, q:"'সুচেতনা' কবিতায় কবির চূড়ান্ত বাণী কোনটি?", opts:["পৃথিবী চিরকাল যুদ্ধজর্জর থাকবে","মানুষের পরাজয় নিশ্চিত","শুভচেতনার বিকাশেই একদিন আলোকময় শান্তিময় পৃথিবী আসবে","সবাইকে দেশ ছাড়তে হবে"], correct:2}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

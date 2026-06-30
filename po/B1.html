@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>আমি কিংবদন্তির কথা বলছি — পাঠ পরিক্রমা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 76px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:22px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:left;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>আমি কিংবদন্তির কথা বলছি</h1>
+  <p class="byline">আবু জাফর ওবায়দুল্লাহ</p>
+  <p class="desc">বাঙালির হাজার বছরের ইতিহাস-ঐতিহ্য, সংগ্রাম ও মুক্তির চেতনাকে কেন্দ্র করে রচিত কালজয়ী কবিতার পূর্ণ পাঠ-পরিক্রমা। নিজে পড়ুন এবং উত্তর যাচাই করুন।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৩৯</b><span>বহুনির্বাচনি প্রশ্ন</span></div>
+    <div class="stat-pill"><b>১টি</b><span>সৃজনশীল সেট</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input type="search" id="search" placeholder="প্রশ্ন খুঁজুন (যেমন: পূর্বপুরুষ, ক্ষত, পলিমাটি)..." aria-label="Search questions" />
+  <div class="score-badge">সঠিক উত্তর: <b id="scoreNum">০</b> / <span id="totalNum">৩৯</span></div>
+  <button class="reset-btn" id="resetBtn">পুনরায় শুরু</button>
+</div>
+
+<main class="shell" id="mainShell">
+
+  <div class="section-head">
+    <span class="num">১</span>
+    <h2>বহুনির্বাচনি যাচাই</h2>
+  </div>
+  <p class="section-sub">সঠিক অপশনটি নির্বাচন করুন। সবুজ রঙ সঠিক এবং লাল রঙ ভুল নির্দেশ করবে।</p>
+
+  <div id="mcqList">
+
+    <div class="qcard" data-ans="খ" data-search="১ কবির পূর্বপুরুষের করতলে কীসের সৌরভ ছিল রক্তজবার পলিমাটির শস্যদানার শ্বাপদের">
+      <div class="qhead">
+        <div class="qnum">১</div>
+        <div class="qstem">কবির পূর্বপুরুষের করতলে কীসের সৌরভ ছিল?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> রক্তজবার</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> পলিমাটির</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> শস্যদানার</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> শ্বাপদের</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="২ আমি কিংবদন্তির কথা বলছি বলতে কবি বোঝাতে চেয়েছেন বাঙালির হাজার বছরের ইতিহাস ঐতিহ্য সুদীর্ঘকালের শোষণ বঞ্চনা অন্যায় অত্যাচারের বিরুদ্ধে শাশ্বত প্রতিবাদী সত্তা">
+      <div class="qhead">
+        <div class="qnum">২</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি'- বলতে কবি বোঝাতে চেয়েছেন—<br>i. বাঙালির হাজার বছরের ইতিহাস-ঐতিহ্য<br>ii. বাঙালির সুদীর্ঘকালের শোষণ-বঞ্চনার ইতিকথা<br>iii. অন্যায়-অत्याচারের বিরুদ্ধে বাঙালির শাশ্বত প্রতিবাদী সত্তা<br>নিচের কোনটি ঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="আমি বাংলায় গান গাই আমি বাংলার গান গাই আমার আমিকে চিরদিন এই বাংলা খুঁজে পাই আমি বাংলা দেখি স্বপ্ন আমি বাংলায় বাঁধি সুর আমি এই বাংলার মায়া ভরা পথে হেঁটেছি এতটা দূর বাংলা আমার জীবনানন্দ বাংলা প্রাণের সুখ আমি একবার দেখি বার বার দেখি দেখি বাংলার মুখ">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৩ ও ৪ এর জন্য)</span>
+      "আমি বাংলায় গান গাই, আমি বাংলার গান গাই<br>
+      আমার আমিকে চিরদিন— এই বাংলা খুঁজে পাই<br>
+      আমি বাংলায় দেখি স্বপ্ন, আমি বাংলায় বাঁধি সুর<br>
+      আমি এই বাংলার মায়া ভরা পথে, হেঁটেছি এতটা দূর<br>
+      বাংলা আমার জীবনানন্দ, বাংলা প্রাণের সুখ<br>
+      আমি একবার দেখি, বার বার দেখি, দেখি বাংলার মুখ"
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৩ কবিতাংশের বাংলা আমার জীবনানন্দ এর সাথে আমি কিংবদন্তির কথা বলছি কবিতার সাদৃশ্যপূর্ণ বিষয় হলো ইতিহাসমনস্কতা ঐতিহ্যপ্রিয়তা সংগ্রামশীলতা">
+      <div class="qhead">
+        <div class="qnum">৩</div>
+        <div class="qstem">কবিতাংশের বাংলা 'আমার জীবনানন্দ'- এর সাথে "আমি কিংবদন্তির কথা বলছি" কবিতার সাদৃশ্যপূর্ণ বিষয় হলো—<br>i. ইতিহাসমনস্কতা<br>ii. ঐতিহ্যপ্রিয়তা<br>iii. সংগ্রামশীলতা<br>নিচের কোনটি ঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৪ উদ্দীপকের মূল বক্তব্য আমি কিংবদন্তির কথা বলছি কবিতার কোন পঙ্ক্তিতে ব্যস্ত হয়েছে সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা সুপুরুষ ভালোবাসার সুকণ্ঠ সংগীত আমি আমার পূর্বপুরুষের কথা বলছি যে কর্ষণ করে শস্যের সম্ভার তাকে সমৃদ্ধ করবে">
+      <div class="qhead">
+        <div class="qnum">৪</div>
+        <div class="qstem">উদ্দীপকের মূল বক্তব্য "আমি কিংবদন্তির কথা বলছি" কবিতার কোন পঙ্ক্তিতে ব্যক্ত হয়েছে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সুপুরুষ ভালোবাসার সুকণ্ঠ সংগীত কবিতা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> আমি আমার পূর্বপুরুষের কথা বলছি</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> যে কর্ষণ করে শস্যের সম্ভার তাকে সমৃদ্ধ করবে</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৫ ভাষা আন্দোলন ও মুক্তিযুদ্ধ কোন কবির কবিতায় বিষয় হিসেবে বিশেষ প্রাধান্য পেয়েছে কাজী নজরুল ইসলাম জীবনানন্দ দাশ আবু জাফর ওবায়দুল্লাহ সুফিয়া কামাল">
+      <div class="qhead">
+        <div class="qnum">৫</div>
+        <div class="qstem">ভাষা আন্দোলন ও মুক্তিযুদ্ধ কোন কবির কবিতায় বিষয় হিসেবে বিশেষ প্রাধান্য পেয়েছে? [ঢা. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কাজী নজরুল ইসলাম</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> জীবনানন্দ দাশ</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> আবু জাফর ওবায়দুল্লাহ</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সুফিয়া কামাল</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৬ কীসের সৌরভ ছিল রক্তজবার পলিমাটির শস্যদানার ভালোবাসার">
+      <div class="qhead">
+        <div class="qnum">৬</div>
+        <div class="qstem">কীসের সৌরভ ছিল? [ব. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> রক্তজবার</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> পলিমাটির</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> শস্যদানার</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> ভালোবাসার</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৭ তাঁর করতলে পলিমাটির সৌরভ ছিল আমি কিংবদন্তির কথা বলছি কবিতার চরণটিতে বোঝানো হয়েছে পূর্বপুরুষদের দাসত্ব শ্রমনিষ্ঠা ভূমিনির্ভরতা মৃত্তিকাসংলগ্নতা">
+      <div class="qhead">
+        <div class="qnum">৭</div>
+        <div class="qstem">তাঁর 'করতলে পলিমাটির সৌরভ ছিল'— 'আমি কিংবদন্তির কথা বলছি' কবিতার চরণটিতে বোঝানো হয়েছে পূর্বপুরুষদের— [ঢা. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> দাসত্ব</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> শ্রমনিষ্ঠা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ভূমিনির্ভরতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> মৃত্তিকাসংলগ্নতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৮ কোন পঙ্ক্তিটি চিত্রকল্প বা ইমেজ এর প্রকৃষ্ট উদাহরণ তাহারেই পড়ে মনে মানুষ তবুও ঋণী পৃথিবীরই কাছে কর্ষিত জমির প্রতিটি শস্যদানা কবিতা আবার ফুটেছে দ্যাখো কৃষ্ণচূড়া">
+      <div class="qhead">
+        <div class="qnum">৮</div>
+        <div class="qstem">কোন পঙ্ক্তিটি 'চিত্রকল্প' বা 'ইমেজ'-এর প্রকৃষ্ট উদাহরণ? [ঢা. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> তাহারেই পড়ে মনে, ভুলিতে পারিনা কোনো মতে।</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> মানুষ তবুও ঋণী পৃথিবীরই কাছে</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> কর্ষিত জমির প্রতিটি শস্যদানা কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> আবার ফুটেছে দ্যাখো কৃষ্ণচূড়া থরে থরে শহরের পথে</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৯ চাষি খেতে চালাইছে হাল তাঁতি বসে তাঁত বোনে জেলে ফেলে জাল উদ্দীপকটিতে আমি কিংবদন্তির কথা বলছি কবিতার যে চরণের মিল রয়েছে তাঁর করতলে পলিমাটির সৌরভ ছিল পতিত জমি আবাদের কথা বলতেন অরণ্য ও শ্বাপদের কথা বলতেন কর্ষিত জমির প্রতিটি শস্যদানা কবিতা">
+      <div class="qhead">
+        <div class="qnum">৯</div>
+        <div class="qstem">"চাষি খেতে চালাইছে হাল, তাঁতি বসে তাঁত বোনে, জেলে ফেলে জাল"— উদ্দীপকটিতে 'আমি কিংবদন্তির কথা বলছি' কবিতার যে চরণের মিল রয়েছে— [ব. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> তাঁর করতলে পলিমাটির সৌরভ ছিল</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> পতিত জমি আবাদের কথা বলতেন</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> অরণ্য ও শ্বাপদের কথা বলতেন</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কর্ষিত জমির প্রতিটি শস্যদানা কবিতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="১০ জিহ্বায় উচ্চারিত কেমন শব্দ কবিতা তীক্ষ্ণ কঠিন সহজ সত্য">
+      <div class="qhead">
+        <div class="qnum">১০</div>
+        <div class="qstem">জিহ্বায় উচ্চারিত কেমন শব্দ কবিতা? [রা. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> তীক্ষ্ণ</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> কঠিন</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সহজ</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সত্য</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="১১ তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল এ চরণটিতে কার পিঠের ক্ষতকে নির্দেশ করা হয়েছে কবির পূর্বপুরুষের মুক্তিযোদ্ধাদের বাংলার কৃষকদের কবির পিতার">
+      <div class="qhead">
+        <div class="qnum">১১</div>
+        <div class="qstem">'তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল'— এ চরণটিতে কার পিঠের ক্ষতকে নির্দেশ করা হয়েছে? [ঢা. বো. ১৯]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কবির পূর্বপুরুষের</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> মুক্তিযোদ্ধাদের</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> বাংলার কৃষকদের</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কবির পিতার</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="১২ কবিতাকে কবি কী বলে অভিহিত করেছেন অতিক্রান্ত পাহাড় উনুনের আগুন কর্ষিত জমির শস্যদানা পলিমাটির সৌরভ">
+      <div class="qhead">
+        <div class="qnum">১২</div>
+        <div class="qstem">'কবিতা'কে কবি কী বলে অভিহিত করেছেন? [রা. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> অতিক্রান্ত পাহাড়</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> উনুনের আগুন</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> কর্ষিত জমির শস্যদানা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> পলিমাটির সৌরভ</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="১৩ আমি কিংবদন্তির কথা বলছি কবিতায় যে কবিতা শুনতে জানে না সে কী শুনবে সমুদ্রের গর্জন ঝড়ের আর্তনাদ শ্বাপদের ভয়াবহতা অস্ত্রের ঝনঝনানি">
+      <div class="qhead">
+        <div class="qnum">১৩</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় যে কবিতা শুনতে জানে না সে কী শুনবে? [ম. বো. ২৪; য. বো. ১৯]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সমুদ্রের গর্জন</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> ঝড়ের আর্তনাদ</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> শ্বাপদের ভয়াবহতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> অস্ত্রের ঝনঝনানি</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="১৪ আমি কিংবদন্তির কথা বলছি কবিতায় কবির মা কীসের কথা বলতেন সাগরের পাহাড়ের নদীর গাছপালার">
+      <div class="qhead">
+        <div class="qnum">১৪</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় কবির মা কীসের কথা বলতেন? [দি. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সাগরের</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> পাহাড়ের</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> নদীর</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> গাছপালার</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="১৫ একটি উজ্জ্বল জানালার কথা বলছি এখানে উজ্জ্বল জানালা কীসের প্রতীক স্বাধীনতার সূর্য জ্ঞানের পূর্ণ বিকাশ চিন্তার স্বাধীনতা মুক্ত জীবনের প্রত্যাশা">
+      <div class="qhead">
+        <div class="qnum">১৫</div>
+        <div class="qstem">'একটি উজ্জ্বল জানালার কথা বলছি'— এখানে 'উজ্জ্বল জানালা' কীসের প্রতীক? [য. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> স্বাধীনতার সূর্য</button>
+        <button class="opt" data-v="ख"><span class="lab">খ.</span> জ্ঞানের পূর্ণ বিকাশ</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> চিন্তার স্বাধীনতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> মুক্ত জীবনের প্রত্যাশা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="১৬ যে কবিতা শুনতে জানে না সে মায়ের কোলে শুয়ে কী শুনতে পারে না গান কবিতা ছড়া গল্প">
+      <div class="qhead">
+        <div class="qnum">১৬</div>
+        <div class="qstem">যে কবিতা শুনতে জানে না সে মায়ের কোলে শুয়ে কী শুনতে পারে না? [চ. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> গান</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> কবিতা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ছড়া</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> গল্প</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="১৭ আমি কিংবদন্তির কথা বলছি কবিতায় ভালোবাসা দিলে কে মরে যায় মা গর্ভবতী বোন সন্তান মায়ের ছেলেরা">
+      <div class="qhead">
+        <div class="qnum">১৭</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় ভালোবাসা দিলে কে মরে যায়? [কু. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> মা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> গর্ভবতী বোন</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সন্তান</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> মায়ের ছেলেরা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="১৮ আমি কিংবদন্তির কথা বলছি কবিতায় ভালোবাসা দিলে মা মরে যায় চরণটির তাৎপর্য কী মায়ের ছেলেদের চলে যাওয়া মায়ের গল্প শুনতে না পারা ছেলের জন্য মায়ের উৎকণ্ঠা দেশের জন্য সন্তানের মায়াত্যাগ">
+      <div class="qhead">
+        <div class="qnum">১৮</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় 'ভালোবাসা দিলে মা মরে যায়'—চরণটির তাৎপর্য কী? [চ. বো. ১৯; সি. বো. ১৯]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> মায়ের ছেলেদের চলে যাওয়া</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> মায়ের গল্প শুনতে না পারা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ছেলের জন্য মায়ের উৎকণ্ঠা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> দেশের জন্য সন্তানের মায়াত্যাগ</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="১৯ আমি কিংবদন্তির কথা বলছি কবিতা অনুসারে কীভাবে যুদ্ধ আসে মায়ের মৃত্যুতে গৃহত্যাগে গর্ভবতী বোনের মৃত্যুতে ভালোবেসে">
+      <div class="qhead">
+        <div class="qnum">১৯</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতা অনুসারে কীভাবে যুদ্ধ আসে? [ম. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> মায়ের মৃত্যুতে</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> গৃহত্যাগে</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> গর্ভবতী বোনের মৃত্যুতে</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> ভালোবেসে</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="২০ আমি কিংবদন্তির কথা বলছি কবিতায় কবির পূর্ব পুরুষের পিঠে কীসের মতো ক্ষত ছিল কৃষ্ণচূড়া পশুর থাবা রক্তজবা শ্বাপদের">
+      <div class="qhead">
+        <div class="qnum">২০</div>
+        <div class="qstem">'আমি কিংবদন্তির बात বলছি' কবিতায় কবির পূর্ব পুরুষের পিঠে কীসের মতো ক্ষত ছিল? [য. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কৃষ্ণচূড়া</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> পশুর থাবা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> রক্তজবা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> শ্বাপদের</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="২১ পূর্বপুরুষের পিঠে রক্তজবার মতো ক্ষত ছিল কারণ তিনি ক্রীতদাস ছিলেন শিকারি ছিলেন পশুর দ্বারা আক্রান্ত হয়েছিলেন অস্ত্রের আঘাতপ্রাপ্ত হয়েছিলেন">
+      <div class="qhead">
+        <div class="qnum">২১</div>
+        <div class="qstem">পূর্বপুরুষের পিঠে রক্তজবার মতো ক্ষত ছিল। কারণ তিনি— [চ. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ক্রীতদাস ছিলেন</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> শিকারি ছিলেন</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> পশুর দ্বারা আক্রান্ত হয়েছিলেন</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> অস্ত্রের আঘাতপ্রাপ্ত হয়েছিলেন</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="২২ আমি কিংবদন্তির কথা বলছি কবিতায় যে গাভির পরিচর্যা করে জননীর আশীর্বাদ তাকে কী করে দীর্ঘায়ু দীর্ঘদেহী বলিষ্ঠ সমৃদ্ধ">
+      <div class="qhead">
+        <div class="qnum">২২</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায়— যে গাভির পরিচর্যা করে, জননীর আশীর্বাদ তাকে কী করে? [দি. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> দীর্ঘায়ু</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> দীর্ঘদেহী</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> বলিষ্ঠ</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সমৃদ্ধ</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="২৩ কার ভালোবাসার সুকণ্ঠ সংগীত কবিতা মায়ের সুপুরুষের বোনের শিল্পীর">
+      <div class="qhead">
+        <div class="qnum">২৩</div>
+        <div class="qstem">কার ভালোবাসার সুকণ্ঠ সংগীত কবিতা? [সি. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> মায়ের</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সুপুরুষের</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> বোনের</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> শিল্পীর</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="২৪ আমি কিংবদন্তির কথা বলছি কবিতায় রক্তজবার প্রসঙ্গ যে অর্থে ব্যবহৃত হয়েছে অস্তমিত রক্তিম সূর্য রক্তের প্রয়োজনীয়তা জাতীয় চেতনা অত্যাচারের তাজা আঘাত">
+      <div class="qhead">
+        <div class="qnum">২৪</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় রক্তজবার প্রসঙ্গ যে অর্থে ব্যবহৃত হয়েছে— [সি. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> অস্তমিত রক্তিম সূর্য</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> রক্তের প্রয়োজনীয়তা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> জাতীয় চেতনা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> অত্যাচারের তাজা আঘাত</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="২৫ আমি কিংবদন্তির কথা বলছি কবিতায় কোন শব্দটি ঐতিহ্যের প্রতীক হয়ে উঠেছে পূর্বপুরুষ কিংবদন্তি ক্রীতদাস কবিতা">
+      <div class="qhead">
+        <div class="qnum">২৫</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতায় কোন শব্দটি ঐতিহ্যের প্রতীক হয়ে উঠেছে? [সি. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> পূর্বপুরুষ</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> কিংবদন্তি</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ক্রীতদাস</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কবিতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="২৬ আমি কিংবদন্তির কথা বলছি কবিতায় কবি কার যুদ্ধের কথা বলেছেন ভাইয়ের বোনের মায়ের পূর্বপুরুষের">
+      <div class="qhead">
+        <div class="qnum">২৬</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতায় কবি কার যুদ্ধের কথা বলেছেন? [য. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ভাইয়ের</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> বোনের</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> মায়ের</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> পূর্বপুরুষের</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="২৭ আমি কিংবদন্তির কথা বলছি কবিতায় জননীর আশীর্বাদ কাকে দীর্ঘায়ু করবে যে গাভির পরিচর্যা করে যে মৎস্য লালন করে যে লৌহখণ্ডকে প্রজ্বলিত করে যে কর্ষণ করে">
+      <div class="qhead">
+        <div class="qnum">২৭</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় 'জননীর আশীর্বাদ' কাকে দীর্ঘায়ু করবে? [কু. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> যে গাভির পরিচর্যা করে</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> যে মৎস্য লালন করে</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> যে লৌহখণ্ডকে প্রজ্বলিত করে</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> যে কর্ষণ করে</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="২৮ আমি কিংবদন্তির কথা বলছি কবিতায় জননীর আশীর্বাদে কে দীর্ঘায়ু হবে যে কর্ষণ করে মৎস্য লালনকারী গাভির পরিচর্যাকারী লৌহখণ্ড প্রজ্বলনকারী">
+      <div class="qhead">
+        <div class="qnum">২৮</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি'— কবিতায় জননীর আশীর্বাদে কে দীর্ঘায়ু হবে? [ব. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> যে কর্ষণ করে</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> মৎস্য লালনকারী</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> গাভির পরিচর্যাকারী</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> লৌহখণ্ড প্রজ্বলনকারী</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="২৯ আমরা কি তাঁর মতো কবিতার কথা বলতে পারবো এ অংশে কবির কোন আকাঙ্ক্ষা ব্যক্ত হয়েছে প্রতিবাদী চেতনার ভাষার প্রগাঢ়তার সৌন্দর্যবোধ প্রকাশের স্বদেশপ্রীতির">
+      <div class="qhead">
+        <div class="qnum">২৯</div>
+        <div class="qstem">'আমরা কি তাঁর মতো কবিতার কথা বলতে পারবো?'— এ অংশে কবির কোন আকাঙ্ক্ষা ব্যক্ত হয়েছে? [সি. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> প্রতিবাদী চেতনার</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> ভাষার প্রগাঢ়তার</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সৌন্দর্যবোধ প্রকাশের</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> স্বদেশপ্রীতির</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৩০ কিংবদন্তি শব্দের অর্থ কী ঐতিহ্য ইতিহাস সুনাম জনশ্রুতি">
+      <div class="qhead">
+        <div class="qnum">৩০</div>
+        <div class="qstem">'কিংবদন্তি' শব্দের অর্থ কী? [রা. বো. ২২; ব. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ঐতিহ্য</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> ইতিহাস</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সুনাম</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> জনশ্রুতি</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৩১ আমি কিংবদন্তির কথা বলছি কবিতায় বিচলিত স্নেহ বলতে কবি কী বুঝিয়েছেন কপট মায়া আপনজনের উৎকণ্ঠা লোকদেখানো আদর সন্ত্রস্ত ভালোবাসা">
+      <div class="qhead">
+        <div class="qnum">৩১</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় 'বিচলিত স্নেহ' বলতে কবি কী বুঝিয়েছেন? [ব. বো. ১৯]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কপট মায়া</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> আপনজনের উৎকণ্ঠা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> লোকদেখানো আদর</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সন্ত্রস্ত ভালোবাসা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩২ আমি কিংবদন্তির কথা বলছি কবিতায় সূর্যকে হৃদপিণ্ডে ধরে রাখার মাধ্যমে কোন চেতনা প্রকাশ পায় সদা তারুণ্যের চেতনা প্রতিশোধ নেওয়ার চেতনা স্বাধীনতার চেতনা আত্মরক্ষার চেতনা">
+      <div class="qhead">
+        <div class="qnum">৩২</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতায় সূর্যকে হৃদপিণ্ডে ধরে রাখার মাধ্যমে কোন চেতনা প্রকাশ পায়? [দি. বো, ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সদা তারুণ্যের চেতনা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> প্রতিশোধ নেওয়ার চেতনা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> স্বাধীনতার চেতনা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> আত্মরক্ষার চেতনা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩৩ আমি কিংবদন্তির কথা বলছি কবিতায় সূর্যকে হূৎপিণ্ডে ধরে রাখা বলতে হৃদয়ে সূর্যের কী ধারণ করা বোঝানো হয়েছে আলো উত্তাপ শক্তি সামর্থ্য">
+      <div class="qhead">
+        <div class="qnum">৩৩</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় সূর্যকে হূৎপিণ্ডে ধরে রাখা বলতে হৃদয়ে সূর্যের কী ধারণ করা বোঝানো হয়েছে? [কু. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> আলো</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> উত্তাপ</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> শক্তি</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সামর্থ্য</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩৪ আমি কিংবদন্তির কথা বলছি কবিতায় কবি কেন তাঁর পূর্বপুরুষের কথা বলেছেন সাহসী ছিল বলে নিপীড়িত হয়েছে বলে গৌরবোজ্জ্বল ইতিহাস রয়েছে বলে জমিদার ছিল বলে">
+      <div class="qhead">
+        <div class="qnum">৩৪</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতায় কবি কেন তাঁর পূর্বপুরুষের কথা বলেছেন? [য. বো. ২২]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সাহসী ছিল বলে</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> নিপীড়িত হয়েছে বলে</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> গৌরবোজ্জ্বল ইতিহাস রয়েছে বলে</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> জমিদার ছিল বলে</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৩৫ আমি কিংবদন্তির কথা বলছি কবিতাটিতে যে দিকটি উচ্চারিত হয়েছে সর্বাঙ্গীণ মুক্তির দীপ্ত শপথ বাঙালির দাসত্বের মাত্রা দেশমাতৃকার প্রতি ভালোবাসা বেদনার অস্থিরতা">
+      <div class="qhead">
+        <div class="qnum">৩৫</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতাটিতে যে দিকটি উচ্চারিত হয়েছে— [ব. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> সর্বাঙ্গীণ মুক্তির দীপ্ত শপথ</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> বাঙালির দাসত্বের মাত্রা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> দেশমাতৃকার প্রতি ভালোবাসা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> বেদনার অস্থিরতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩৬ আমি কিংবদন্তির কথা বলছি কবিতায় কোন শব্দবন্ধ মুক্তির প্রতীক হয়ে উপস্থাপিত হয়েছে কিংবদন্তি সংস্কৃতি কবিতা পূর্বপুরুষ">
+      <div class="qhead">
+        <div class="qnum">৩৬</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতায় কোন শব্দবন্ধ মুক্তির প্রতীক হয়ে উপস্থাপিত হয়েছে? [দি. বো, ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কিংবদন্তি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সংস্কৃতি</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> পূর্বপুরুষ</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৩৭ আমি কিংবদন্তির কথা বলছি কবিতায় কবির অনুরাগ ছুঁয়ে গেছে মুক্তিযুদ্ধ সাহিত্য শিল্প সাংস্কৃতিক">
+      <div class="qhead">
+        <div class="qnum">৩৭</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় কবির অনুরাগ ছুঁয়ে গেছে— [য. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> মুক্তিযুদ্ধ</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সাহিত্য</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> শিল্প</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সাংস্কৃতিক</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩৮ আমি কিংবদন্তির কথা বলছি কবিতায় মুক্তির পূর্বশর্ত কী শান্তি সাহসী যুদ্ধ স্বাধীনতা">
+      <div class="qhead">
+        <div class="qnum">৩৮</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় মুক্তির পূর্বশর্ত কী? [রা. বো ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> শান্তি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সাহসী</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> যুদ্ধ</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> স্বাধীনতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৩৯ আমি যেখানেই থাকি যেমনি থাকি সর্বদা মনে বাংলাদেশকেই লালন করি উল্লিখিত অংশ আমি কিংবদন্তির কথা বলছি কবিতার কোন মনোভাবকে উপস্থাপন করে শিকড়সন্ধানী প্রকৃতি চেতনা দেশদরদি স্বাধীনতার">
+      <div class="qhead">
+        <div class="qnum">৩৯</div>
+        <div class="qstem">'আমি যেখানেই থাকি, যেমনি থাকি, সর্বদা মনে বাংলাদেশকেই লালন করি'— উল্লিখিত অংশ 'আমি কিংবদন্তির কথা বলছি' কবিতার কোন মনোভাবকে উপস্থাপন করে? [রা. বো. ১৭]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> শিকড়সন্ধানী</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> প্রকৃতি চেতনা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> দেশদরদি</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> স্বাধীনতার</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪০ আমি কিংবদন্তির কথা বলছি কবিতাটি কোন ছнде রচিত স্বরবৃত্ত মাত্রাবৃত্ত অক্ষরবৃত্ত গদ্যছন্দ">
+      <div class="qhead">
+        <div class="qnum">৪০</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' কবিতাটি কোন ছнде রচিত? [রা. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> স্বরবৃত্ত</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> মাত্রাবৃত্ত</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> অক্ষরবৃত্ত</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> গদ্যছন্দ</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৪১ গর্ভবর্তী বোনের মৃত্যুর কথা বলছি আমি কিংবদন্তির কথা বলছি কবিতার এই পঙক্তিতে কবিকণ্ঠের যে সুর পাওয়া যায় তা হলো আর্তনাদ আনন্দ বিদ্রোহ">
+      <div class="qhead">
+        <div class="qnum">৪১</div>
+        <div class="qstem">'গর্ভবর্তী বোনের মৃত্যুর কথা বলছি'— 'আমি কিংবদন্তির কথা বলছি' কবিতার এই পঙক্তিতে কবিকণ্ঠের যে সুর পাওয়া যায়, তা হলো—<br>i. আর্তনাদ<br>ii. আনন্দ<br>iii. বিদ্রোহ<br>নিচের কোনটি সঠিক? [ম. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৪২ কবি আবু জাফর ওবায়দুল্লাহর মতে কবিতা হলো সশস্ত্র সুন্দরের अनिवार्य অভ্যুত্থান মায়ের কোলে শুয়ে গল্প শোনা কর্ষিত জমির প্রতিটি শস্যদানা">
+      <div class="qhead">
+        <div class="qnum"></div>
+        <div class="qnum">৪২</div>
+        <div class="qstem">কবি আবু জাফর ওবায়দুল্লাহর মতে, কবিতা হলো—<br>i. সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান<br>ii. মায়ের কোলে শুয়ে গল্প শোনা<br>iii. কর্ষিত জমির প্রতিটি শস্যদানা<br>নিচের কোনটি সঠিক? [ব. বো. ১৬]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪৩ আমি কিংবদন্তির কথা বলছি কবি বলে গেছেন উচ্চারিত্ব সত্যের মতো স্বপ্নের কথা প্রবহমান নদীর কথা উজ্জ্বল জানালার কথা">
+      <div class="qhead">
+        <div class="qnum">৪৩</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবি বলে গেছেন—<br>i. উচ্চারিত সত্যের মতো স্বপ্নের কথা<br>ii. প্রবহমান নদীর কথা<br>iii. উজ্জ্বল জানালার কথা<br>নিচের কোনটি সঠিক? [ম. বো. ২৪]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪৪ সূর্যকে হৃদপিণ্ডে ধরে রাখার অর্থ হলো মুক্তির অনিবার্যতা সর্বশক্তিকে ধারণ সামর্থ্য অর্জন">
+      <div class="qhead">
+        <div class="qnum">৪৪</div>
+        <div class="qstem">সূর্যকে হৃদপিণ্ডে ধরে রাখার অর্থ হলো—<br>i. মুক্তির অনিবার্যতা<br>ii. সর্বশক্তিকে ধারণ<br>iii. সামর্থ্য অর্জন<br>নিচের কোনটি সঠিক? [রা. বো. ২৩]</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪৫ আমি কিংবদন্তির কথা বলছি বলতে কবি বোঝাতে চেয়েছেন বাঙালির হাজার বছরের ইতিহাস ঐতিহ্য বাঙালির সুদীর্ঘকালের শোষণ বঞ্চনার ইতিকতা অন্যায় অত্যাচারের বিরুদ্ধে বাঙালির শাশ্বত প্রতিবাদী">
+      <div class="qhead">
+        <div class="qnum">৪৫</div>
+        <div class="qstem">আমি 'কিংবদন্তির কথা বলছি' বলতে কবি বোঝাতে চেয়েছেন— [চ. বো. ২২]<br>i. বাঙালির হাজার বছরের ইতিহাস-ঐতিহ্য<br>ii. বাঙালির সুদীর্ঘকালের শোষণ-বঞ্চনার ইতিকথা<br>iii. অন্যায়-অत्याচারের বিরুদ্ধে বাঙালির শাশ্বত প্রতিবাদী সত্তা<br>নিচের কোনটি সঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৪৬ বিচলিত স্নেহ বলতে আমি কিংবদন্তির কথা বলছি কবিতায় কী বোঝানো হয়েছে আপনজনের উৎকণ্ঠা ভালোবাসা আর শঙ্কা বিফল স্নেহ">
+      <div class="qhead">
+        <div class="qnum">৪৬</div>
+        <div class="qstem">'বিচলিত স্নেহ' বলতে 'আমি কিংবদন্তির কথা বলছি' কবিতায় কী বোঝানো হয়েছে? [সি. বো. ১৬]<br>i. আপনজনের উৎকণ্ঠা<br>ii. ভালোবাসা আর শঙ্কা<br>iii. বিফল স্নেহ<br>নিচের কোনটি সঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="আমি জন্মেছি বাংলায় আমি বাংলায় কথা বলি আমি বাংলায় আলপথ দিয়ে হাজার বছর চলি চলি পলিমাটি কোমল হলে আমার চলার চিহ্ন ফেলে তেরোশত নদী শুধায় আমাকে কোথা থেকে তুমি এলে">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৪৭ ও ৪৮ এর জন্য)</span>
+      "আমি জন্মেছি বাংলায়, আমি বাংলায় কথা বলি,<br>
+      আমি বাংলায় আলপথ দিয়ে হাজার বছর চলি<br>
+      চলি পলিমাটি কোমল হলে আমার চলার চিহ্ন ফেলে<br>
+      তেরোশত নদী শুধায় আমাকে, 'কোথা থেকে তুমি এলে?" [ম. বো. ২২]
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৪৭ কবিতাংশের বাংলার আলপথ এর সাথে আমি কিংবদন্তির কথা বলছি কবিতার সাদৃশ্যপূর্ণ ভাব কোনটি ইতিহাস ও ঐতিহ্য সংগ্রাম ও বিপ্লব বাংলার সৌন্দর্য শাসন ও নিপীড়ন">
+      <div class="qhead">
+        <div class="qnum">৪৭</div>
+        <div class="qstem">কবিতাংশের বাংলার 'আলপথ'-এর সাথে 'আমি কিংবদন্তির কথা বলছি' কবিতার সাদৃশ্যপূর্ণ ভাব কোনটি?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ইতিহাস ও ঐতিহ্য</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সংগ্রাম ও বিপ্লব</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> বাংলার সৌন্দর্য</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> শাসন ও নিপীড়ন</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪৮ উদ্দীপকে প্রতিফলিত চেতনা ব্যক্ত হয়েছে নিচের কোন চরণে কর্ষিত জমির প্রতিটি শস্যদানা কবিতা আমি কবি এবং কবিতার কথা বলছি আমি কিংবদন্তির কথা বলছি তাঁর করতলে পলিমাটির সৌরভ ছিল">
+      <div class="qhead">
+        <div class="qnum">৪৮</div>
+        <div class="qstem">উদ্দীপকে প্রতিফলিত চেতনা ব্যক্ত হয়েছে নিচের কোন চরণে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কর্ষিত জমির প্রতিটি শস্যদানা কবিতা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> আমি কবি এবং কবিতার কথা বলছি</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> আমি কিংবদন্তির কথা বলছি</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> তাঁর করতলে পলিমাটির সৌরভ ছিল</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="ইদানীং সম্ভ্রান্ত পরিবারগুলো গৃহকর্মীর ওপর অমানবিক পাশবিক নির্যাতন করে থাকে">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৪৯ এর জন্য)</span>
+      "ইদানীং সম্ভ্রান্ত পরিবারগুলো গৃহকর্মীর ওপর অমানবিক পাশবিক নির্যাতন করে থাকে।" [সি. বো. ১৭]
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৪৯ উদ্দীপকটিতে ফুটে ওঠা ভাবের সাথে সাদৃশ্যপূর্ণ চরণ কোনটি তাঁর করতলে পলিমাটির সৌরভ ছিল তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা কারণ তিনি ক্রীতদাস ছিলেন">
+      <div class="qhead">
+        <div class="qnum">৪৯</div>
+        <div class="qstem">উদ্দীপকটিতে ফুটে ওঠা ভাবের সাথে সাদৃশ্যপূর্ণ চরণ কোনটি?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> তাঁর করতলে পলিমাটির সৌরভ ছিল</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কারণ তিনি ক্রীতদাস ছিলেন</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="কে কবি কবে কে মোরে ঘটকালি করি শব্দে শব্দে বিয়া দেয় যেই জন">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৫০ ও ৫১ এর জন্য)</span>
+      "'কে কবি- কবে কে মোরে? ঘটকালি করি<br>শব্দে শব্দে বিয়া দেয় যেই জন'," [রা. বো. ২২]
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৫০ উদ্দীপকে বর্ণিত বিষয়ের সঙ্গে আমি কিংবদন্তির কথা বলছি কবিতার নিম্নোক্ত সাদৃশ্যপূর্ণ পঙ্ক্তি কোনটি আমি কবি এবং কবিতার কথা বলছি আমরা কি তাঁর মতো কবিতার কথা বলতে পারবো সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা জিহ্বায় উচ্চারিত প্রতিটি সত্য শব্দ কবিতা">
+      <div class="qhead">
+        <div class="qnum">৫০</div>
+        <div class="qstem">উদ্দীপকে বর্ণিত বিষয়ের সঙ্গে 'আমি কিংবদন্তির কথা বলছি' কবিতার নিম্নোক্ত সাদৃশ্যপূর্ণ পঙ্ক্তি কোনটি?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> আমি কবি এবং কবিতার কথা বলছি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> আমরা কি তাঁর মতো কবিতার কথা বলতে পারবো</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> জিহ্বায় উচ্চারিত প্রতিটি সত্য শব্দ—কবিতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৫১ আমি কিংবদন্তির কথা বলছি কবিতায় উল্লিখিত কবির কাজ উদ্দীপকের কবির তুলনায় ভিন্নতর নিচের কোনটিতে তা প্রকাশ পেয়েছে কবিসৃষ্ট শব্দবন্ধ কবিতা স্বপ্নদ্রষ্টা কবির কবিতা স্বপ্নদ্রষ্টা কবি অনিবার্য অভ্যুত্থানের কথা বলেন কবি স্বাধীনতার কথা বলেন">
+      <div class="qhead">
+        <div class="qnum">৫১</div>
+        <div class="qstem">'আমি কিংবদন্তির কথা বলছি' কবিতায় উল্লিখিত কবির কাজ উদ্দীপকের কবির তুলনায় ভিন্নতর। নিচের কোনটিতে তা প্রকাশ পেয়েছে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> কবিসৃষ্ট শব্দবন্ধ কবিতা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> স্বপ্নদ্রষ্টা কবির কবিতা স্বপ্নদ্রষ্টা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> কবি অনিবার্য অভ্যুত্থানের কথা বলেন</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কবি স্বাধীনতার কথা বলেন</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="কাঁটা হেরি ক্ষান্ত কেন কমল তুলিতে দুঃখ বিনা সুখ লাভ হয় কি মহীতে">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৫২ ও ৫৩ এর জন্য)</span>
+      "কাঁটা হেরি ক্ষান্ত কেন কমল তুলিতে<br>দুঃখ বিনা সুখ লাভ হয় কি মহীতে?" [ব. বো. ২৩]
+    </div>
+
+    <div class="qcard" data-ans="গ" data-search="৫২ উদ্দীপকটি আমি কিংবদন্তির কথা বলছি কবিতা কোন চরণ সমর্থন করছে তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল সে সন্তানের জন্য মরতে পারে না কবিতা সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান জিহ্বায় উচ্চারিত প্রতিটি মুক্ত শব্দ কবিতা">
+      <div class="qhead">
+        <div class="qnum">৫২</div>
+        <div class="qstem">উদ্দীপকটি 'আমি কিংবদন্তির কথা বলছি' কবিতার কোন চরণ সমর্থন করছে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সে সন্তানের জন্য মরতে পারে না কবিতা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> জিহ্বায় উচ্চারিত প্রতিটি মুক্ত শব্দ কবিতা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৫৩ উদ্দীপকে আমি কিংবদন্তির কথা বলছি কবিতার যে বিষয় প্রকাশিত হয়েছে ত্যাগ স্বীকার ফল ভোগ আঘাতের চিহ্ন">
+      <div class="qhead">
+        <div class="qnum">৫৩</div>
+        <div class="qstem">উদ্দীপকে 'আমি কিংবদন্তির কথা বলছি' কবিতার যে বিষয় প্রকাশিত হয়েছে—<br>i. ত্যাগ স্বীকার<br>ii. ফল ভোগ<br>iii. আঘাতের চিহ্ন<br>নিচের কোনটি সঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="আমি তো এসেছি তিতুমীর আর হাজী শরিয়ত থেকে আমি তো এসেছি গীতাঞ্জলি ও অগ্নিবীণার থেকে এসেছি বাঙালি ক্ষুদিরাম আর সূর্য সেনের থেকে এসেছি বাঙালি জয়নুল আর অবন ঠাকুর থেকে এসেছি বাঙালি রাষ্ট্রভাষার লাল রাজপথ থেকে">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৫৪ ও ৫৫ এর জন্য)</span>
+      "আমি তো এসেছি তিতুমীর আর হাজী শরিয়ত থেকে<br>
+      আমি তো এসেছি গীতাঞ্জলি ও অগ্নিবীণার থেকে<br>
+      এসেছি বাঙালি ক্ষুদিরাম আর সূর্য সেনের থেকে<br>
+      এসেছি বাঙালি জয়নুল আর অবন ঠাকুর থেকে।<br>
+      এসেছি বাঙালি রাষ্ট্রভাষার লাল রাজপথ থেকে।" [কু. বো. ১৬]
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৫৪ উদ্দীপকের চেতনার সঙ্গে আমি কিংবদন্তির কথা বলছি কবিতার যে চরণের মিল রয়েছে আমি আমার ভালোবাসার কথা বলছি আমরা কি তাঁর মতো স্বাধীনতার কথা বলতে পারবো সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা আমি কবি এবং কবিতার কথা বলছি">
+      <div class="qhead">
+        <div class="qnum">৫৪</div>
+        <div class="qstem">উদ্দীপকের চেতনার সঙ্গে 'আমি কিংবদন্তির কথা বলছি' কবিতার যে চরণের মিল রয়েছে—</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> আমি আমার ভালোবাসার কথা বলছি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> আমরা কি তাঁর মতো স্বাধীনতার কথা বলতে পারবো</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> সশস্ত্র সুন্দরের অনিবার্য অভ্যুত্থান কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> আমি কবি এবং কবিতার কথা বলছি</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৫৫ উদ্দীপক ও আমি কিংবদন্তির কথা বলছি কবিতায় প্রকাশিত মূলভাব ঐতিহ্যপ্রীতি ও মুক্তির আকাঙ্ক্ষা ভালোবাসা আর শঙ্কা মানবিক উদ্ভাসনের স্বপ্ন কবিতার সত্য অনুধাবন">
+      <div class="qhead">
+        <div class="qnum">৫৫</div>
+        <div class="qstem">উদ্দীপক ও 'আমি কিংবদন্তির কথা বলছি' কবিতায় প্রকাশিত মূলভাব—</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ঐতিহ্যপ্রীতি ও মুক্তির আকাঙ্ক্ষা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> ভালোবাসা আর শঙ্কা</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> মানবিক উদ্ভাসনের স্বপ্ন</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> কবিতার সত্য অনুধাবন</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="পাহাড়ি ঢলের মতো নেমে এসে সমস্ত ভাসায় অভাগা মানুষ যেন জেগে ওঠে আবার এ আশায় যে আবার নূরলদীন একদিন আসিবে বাংলায় আবার নূরলদীন একদিন কাল পূর্ণিমায় দিবে ডাক জাগো বাহে কোনঠে সবায়">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৫৬ ও ৫৭ এর জন্য)</span>
+      "পাহাড়ি ঢলের মতো নেমে এসে—সমস্ত ভাসায়,<br>
+      অভাগা মানুষ যেন জেগে ওঠে আবার এ আশায়<br>
+      যে, আবার নূরলদীন একদিন আসিবে বাংলায়,<br>
+      আবার নূরলদীন একদিন কাল পূর্ণিমায়<br>
+      দিবে ডাক, 'জাগো, বাহে, কোনঠে সবায়?'" [ঢা. বো. ২৪]
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৫৬ আবার নূরলদীন একদিন আসিবে বাংলায় পঙ্ক্তিটিতে আমি কিংবদন্তির কথা বলছি কবিতার সাদৃশ্যপূর্ণ চেতনা হলো নবজাগরণ সংগ্রামশীলতা ইতিহাস মনস্কতা">
+      <div class="qhead">
+        <div class="qnum">৫৬</div>
+        <div class="qstem">আবার 'নূরলদীন একদিন আসিবে বাংলায়'— পঙ্ক্তিটিতে 'আমি কিংবদন্তির কথা বলছি' কবিতার সাদৃশ্যপূর্ণ চেতনা হলো—<br>i. নবজাগরণ<br>ii. সংগ্রামশীলতা<br>iii. ইতিহাস-মনস্কতা<br>নিচের কোনটি সঠিক?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> i ও ii</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> i ও iii</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> ii ও iii</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> i, ii ও iii</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৫৭ উদ্দীপকে প্রতিফলিত চেতনা ব্যক্ত হয়েছে নিচের কোন চরণে আমি আমার পূর্বপুরুষের কথা বলছি সে আজন্ম ক্রীতদাস থেকে যাবে কর্ষিত জমির প্রতিটি শস্যদানা কবিতা রক্তজবার মতো প্রতিরোধের উচ্চারণ কবিতা">
+      <div class="qhead">
+        <div class="qnum">৫৭</div>
+        <div class="qstem">উদ্দীপকে প্রতিফলিত চেতনা ব্যক্ত হয়েছে নিচের কোন চরণে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> আমি আমার পূর্বপুরুষের কথা বলছি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> সে আজন্ম ক্রীতদাস থেকে যাবে</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> কর্ষিত জমির প্রতিটি শস্যদানা কবিতা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> রক্তজবার মতো প্রতিরোধের উচ্চারণ কবিতা</button>
+      </div>
+    </div>
+
+    <div class="passage" data-search="সুনীল গঙ্গোপাধ্যায়ের আমিই সে ছোট্ট উপন্যাসটিতে বিধৃত হয়েছে মানবসভ্যতার আদিম ইতিহাস আর সভ্যতার অগ্রগতি কীভাবে আদিম মানুষ সভ্য মানুষে পরিণত হয়েছে তারই প্রকাশ ঘটেছে উপন্যাসটিতে">
+      <span class="tag">উদ্দীপক (প্রশ্ন ৫৮ ও ৫৯ এর জন্য)</span>
+      "সুনীল গঙ্গোপাধ্যায়ের 'আমিই সে' ছোট্ট উপন্যাসটিতে বিধৃত হয়েছে মানবসভ্যতার আদিম ইতিহাস আর সভ্যতার অগ্রগতি। কীভাবে আদিম মানুষ সভ্য মানুষে পরিণত হয়েছে, তারই প্রকাশ ঘটেছে উপন্যাসটিতে।" [রা. বো. ১৯]
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৫৮ উদ্দীপকের সাথে আমি কিংবদন্তির কথা বলছি কবিতার সাদৃশ্য রয়েছে ইতিহাস ঐতিহ্য ও সংগ্রামশীলতা">
+      <div class="qhead">
+        <div class="qnum">৫৮</div>
+        <div class="qstem">উদ্দীপকের সাথে 'আমি কিংবদন্তির কথা বলছি' কবিতার সাদৃশ্য রয়েছে কিসে?</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ইতিহাস, ঐতিহ্য ও সংগ্রামশীলতা</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> বাঙালির দাসত্বের ইতিহাস</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> যুদ্ধ ও আগ্রাসনের রূপরেখা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> সমকালীন রাজনীতি</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৬৫ কবি আবু জাফর ওবায়দুল্লাহ কোন বিশ্ববিদ্যালয় থেকে ইংরেজিতে বিএ অনার্স ও এমএ ডিগ্রি লাভ করেন ঢাকা বিশ্ববিদ্যালয় রাজশাহী বিশ্ববিদ্যালয় চট্টগ্রাম বিশ্ববিদ্যালয় খুলনা বিশ্ববিদ্যালয়">
+      <div class="qhead">
+        <div class="qnum">৬৫</div>
+        <div class="qstem">কবি আবু জাফর ওবায়দুল্লাহ কোন বিশ্ববিদ্যালয় থেকে ইংরেজিতে বিএ অনার্স ও এমএ ডিগ্রি লাভ করেন? (জ্ঞান)</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> ঢাকা বিশ্ববিদ্যালয়</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> রাজশাহী বিশ্ববিদ্যালয়</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> চট্টগ্রাম বিশ্ববিদ্যালয়</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> খুলনা বিশ্ববিদ্যালয়</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ঘ" data-search="৬৬ আবু জাফর ওবায়দুল্লাহ কী হিসেবে যুক্তরাষ্ট্রে যান লেখক বৈজ্ঞানিক চিকিৎসক রাষ্ট্রদূত">
+      <div class="qhead">
+        <div class="qnum">৬৬</div>
+        <div class="qstem">আবু জাফর ওবায়দুল্লাহ কী হিসেবে যুক্তরাষ্ট্রে যান? (জ্ঞান)</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> লেখক</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> বৈজ্ঞানিক</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> চিকিৎসক</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> রাষ্ট্রদূত</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="খ" data-search="৬৭ আবু জাফর ওবায়দুল্লাহর কবিতায় কোনটি প্রাধান্য পেয়েছে বাংলাদেশের প্রকৃতি ভাষা আন্দোলন ও মুক্তিযুদ্ধ মৃত্যুচেতনা বিদ্রোহীচেতনা">
+      <div class="qhead">
+        <div class="qnum">৬৭</div>
+        <div class="qstem">আবু জাফর ওবায়দুল্লাহর কবিতায় কোনটি প্রাধান্য পেয়েছে? (জ্ঞান)</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> বাংলাদেশের প্রকৃতি</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> ভাষা আন্দোলন ও মুক্তিযুদ্ধ</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> মৃত্যুচেতনা</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> বিদ্রোহীচেতনা</button>
+      </div>
+    </div>
+
+    <div class="qcard" data-ans="ক" data-search="৬৮ রাষ্ট্রভাষা আন্দোলন এবং সে বিষয়ে সাহিত্য রচনায় বিশেষ অবদান রাখায় আবু জাফর ওবায়দুল্লাহ কী লাভ করেন একুশে পদক স্বাধীনতা পুরস্কার বাংলা একাডেমি পুরস্কার আদমজী পুরস্কার">
+      <div class="qhead">
+        <div class="qnum">৬৮</div>
+        <div class="qstem">রাষ্ট্রভাষা আন্দোলন এবং সে বিষয়ে সাহিত্য রচনায় বিশেষ অবদান রাখায় আবু জাফর ওবায়দুল্লাহ কী লাভ করেন? (জ্ঞান)</div>
+      </div>
+      <div class="options">
+        <button class="opt" data-v="ক"><span class="lab">ক.</span> একুশে পদক</button>
+        <button class="opt" data-v="খ"><span class="lab">খ.</span> স্বাধীনতা পুরস্কার</button>
+        <button class="opt" data-v="গ"><span class="lab">গ.</span> বাংলা একাডেমি পুরস্কার</button>
+        <button class="opt" data-v="ঘ"><span class="lab">ঘ.</span> আদমজী পুরস্কার</button>
+      </div>
+    </div>
+
+  </div> <div class="section-head">
+    <span class="num">২</span>
+    <h2>সৃজনশীল অনুধাবন</h2>
+  </div>
+  <p class="section-sub">উদ্দীপকটি মনোযোগ সহকারে পড়ুন এবং নিচের প্রশ্নগুলোর উত্তর মিলিয়ে দেখুন।</p>
+
+  <div class="book">
+    <div class="passage">
+      <span class="tag">সৃজনশীল উদ্দীপক</span>
+      বাংলাদেশের মুক্তিযুদ্ধের কথা ইতিহাসের হাত ধরে এসেছে। শত্রুর কাছে পরাজয় মানেনি বলেই যুগে যুগে কিংবদন্তিদের আগমন ঘটেছে এ বাংলায়। বীর বাঙালি নিজের রক্ত দিয়ে এবং পূর্বপুরুষের সংগ্রামী ঐতিহ্যকে লালন করে দেশকে মুক্ত করেছে।
+    </div>
+
+    <div class="subq">
+      <div class="subq-head" data-toggle="true">
+        <span class="subq-lab">ক.</span>
+        <span class="subq-text">কবির পূর্বপুরুষের করতলে কীসের সৌরভ ছিল?</span>
+        <span class="subq-toggle">উত্তর দেখুন</span>
+      </div>
+      <div class="subq-answer">
+        <div class="subq-answer-inner">
+          <span class="verdict">জ্ঞানমূলক উত্তর:</span>
+          <p>কবির পূর্বপুরুষের করতলে পলিমাটির সৌরভ ছিল।</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subq">
+      <div class="subq-head" data-toggle="true">
+        <span class="subq-lab">খ.</span>
+        <span class="subq-text">'তাঁর পিঠে রক্তজবার মতো ক্ষত ছিল'— চরণটি বুঝিয়ে লেখো।</span>
+        <span class="subq-toggle">উত্তর দেখুন</span>
+      </div>
+      <div class="subq-answer">
+        <div class="subq-answer-inner">
+          <span class="verdict">অনুধাবনমূলক উত্তর:</span>
+          <p>আলোচ্য চরণটি দ্বারা কবির পূর্বপুরুষদের ওপর নেমে আসা অত্যাচার এবং পরাধীনতার নির্মম লাঞ্ছনার কথা বোঝানো হয়েছে।</p>
+          <p>কবির পূর্বপুরুষেরা ছিলেন এ দেশেরই ভূমিজীবী অনার্য মানুষ, যারা দীর্ঘদিন পরদেশি ও শোষকদের হাতে ক্রীতদাস হিসেবে নির্যাতিত হয়েছেন। তাদের পিঠে চাবুকের আঘাত বা অত্যাচারের যে তাজা ক্ষতচিহ্ন ছিল, তা দেখতে লাল টকটকে রক্তজবার মতো মনে হতো। কবি এখানে আমাদের পূর্বপুরুষদের দাসত্ব ও নিপীড়নের সুদীর্ঘ ইতিহাসকে চিত্রিত করেছেন।</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subq">
+      <div class="subq-head" data-toggle="true">
+        <span class="subq-lab">গ.</span>
+        <span class="subq-text">উদ্দীপকে 'আমি কিংবদন্তির কথা বলছি' কবিতার কোন মৌলিক সুরটি প্রতিফলিত হয়েছে? ব্যাখ্যা করো।</span>
+        <span class="subq-toggle">উত্তর দেখুন</span>
+      </div>
+      <div class="subq-answer">
+        <div class="subq-answer-inner">
+          <span class="verdict">প্রয়োগমূলক উত্তর:</span>
+          <p>উদ্দীপকে 'আমি কিংবদন্তির কথা বলছি' কবিতার দেশপ্রেম, লড়াইয়ের ঐতিহ্য এবং শত্রুর কাছে মাথা নত না করার সংগ্রামী মনোভাবের সুরটি প্রতিফলিত হয়েছে।</p>
+          <p>কবিতায় কবি আবু জাফর ওবায়দুল্লাহ দেখিয়েছেন যে, বাঙালি জাতি কোনো অত্যাচারীর সামনে কখনো পরাজয় মেনে নেয়নি। হাজার বছর ধরে এ দেশের মানুষ মুক্তির জন্য লড়াই করে এসেছে। উদ্দীপকেও উল্লেখ করা হয়েছে যে, শত্রুর কাছে পরাজয় মানেনি বলেই এ বাংলায় যুগে যুগে কিংবদন্তিদের আগমন ঘটেছে। এই হার না মানা মানসিকতা এবং যুদ্ধের মধ্য দিয়ে বিজয় ছিনিয়ে আনার প্রচেষ্টা কবিতার মূল ভাবনার সাথে সাদৃশ্যপূর্ণ।</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subq">
+      <div class="subq-head" data-toggle="true">
+        <span class="subq-lab">ঘ.</span>
+        <span class="subq-text">"উদ্দীপকের এ দেশের হাজার বছরের ইতিহাস ও ঐতিহ্য পরিক্রমা 'আমি কিংবদন্তির কথা বলছি' কবিতার চৈতন্যগত দিকের সঙ্গে অভিন্ন।"— মন্তব্যটি বিশ্লেষণ করো।</span>
+        <span class="subq-toggle">উত্তর দেখুন</span>
+      </div>
+      <div class="subq-answer">
+        <div class="subq-answer-inner">
+          <span class="verdict">উচ্চতর দক্ষতামূলক উত্তর:</span>
+          <p><b>"উদ্দীপকের এ দেশের হাজার বছরের ইতিহাস ও ঐতিহ্য পরিক্রমা 'আমি কিংবদন্তির কথা বলছি' কবিতার চৈতন্যগত দিকের সঙ্গে অভিন্ন।"— মন্তব্যটি সম্পূর্ণ যথার্থ।</b></p>
+          <p>'আমি কিংবদন্তির কথা বলছি' কবিতায় বাঙালি সংস্কৃতির হাজার বছরের সংগ্রাম, বিজয় ও পূর্বপুরুষদের বীরত্বগাথার ইতিহাস তুলে ধরা হয়েছে। বাংলার ভূমিজীবী অনার্য ক্রীতদাসের লড়াই করে টিকে থাকার কথা বলা হয়েছে। কবিতায় হাজার বছরের সমগ্র বাঙালি জাতির সংগ্রামের ইতিহাস এবং যুদ্ধ করে টিকে থাকা ও বিজয় লাভের গাথা উচ্চারিত হয়েছে। বাঙালি জাতির এমন সুদীর্ঘ ইতিহাস ও ঐতিহ্য কবি সংগ্রামী চেতনায় প্রকাশ করেছেন কবিতায়।</p>
+          <p>উদ্দীপকেও বাংলাদেশের মুক্তিযুদ্ধের কথা ইতিহাসের হাত ধরে এসেছে। শত্রুর কাছে পরাজয় মানেনি বলেই যুগে যুগে কিংবদন্তিদের আগমন ঘটেছে এ বাংলায়। 'আমি কিংবদন্তির কথা বলছি' কবিতায় কবি ইতিহাস ও ঐতিহ্যকে আশ্রয় করে মানবমুক্তিত আশাবাদ ব্যক্ত করেছেন। আর মুক্তির পূর্বশর্ত হলো সংগ্রাম, যা আমাদের পূর্বপুরুষেরা হাজার বছর ধরে করে এসেছেন। উদ্দীপকেও হাজার বছরের ইতিহাস ও ঐতিহ্য পরিক্রমার কথা এসেছে বাঙালির লড়াকু-প্রতিবাদী মনোভাব বোঝাতে। এই হার না মানা মনোভাবের কারণেই বাংলায় বারবার নূরুলদীন-তিতুমীর-হাজী শরিয়তউল্লাহ-সূর্যসেন-প্রীতিলতা-বঙ্গবন্ধু শেখ মুজিবুর রহমানের মতো মানুষেরা জন্মেছেন। তাই বলা যায়, উদ্দীপকের চেতনা এবং কবিতার মূল চৈতন্যগত দিক সম্পূর্ণরূপে অভিন্ন ও সমান্তরাল।</p>
+        </div>
+      </div>
+    </div>
+
+  </div> <div class="empty-state" id="emptyState" style="display:none;">আপনার খোঁজা শব্দটির সাথে কোনো প্রশ্ন মিলছে না। অনুগ্রহ করে অন্য শব্দ দিয়ে চেষ্টা করুন।</div>
+
+</main>
+
+<div class="float-score" id="floatScore">স্কোর: <b id="floatScoreNum">০</b></div>
+
+<footer>
+  <div class="fname">আমি কিংবদন্তির কথা বলছি — ডিজিটাল পাঠশালা</div>
+  <p>© ২০২৬ Fahad's Tutorial | সর্বস্বত্ব সংরক্ষিত।</p>
+</footer>
+
+<script>
+let score = 0;
+const totalQuestions = ৩৯;
+
+function resetAll(){
+  score = 0;
+  document.getElementById('scoreNum').textContent = '০';
+  document.getElementById('floatScoreNum').textContent = '০';
+  
+  const cards = document.querySelectorAll('.qcard');
+  cards.forEach(c => {
+    c.classList.remove('locked', 'answered-correct', 'answered-wrong');
+    const opts = c.querySelectorAll('.opt');
+    opts.forEach(o => {
+      o.classList.remove('selected', 'correct', 'wrong');
+    });
+  });
+}
+
+function handleOptionClick(e){
+  const opt = e.target.closest('.opt');
+  if(!opt) return;
+  
+  const card = opt.closest('.qcard');
+  if(card.classList.contains('locked')) return;
+  
+  const selectedAns = opt.dataset.v;
+  const correctAns = card.dataset.ans;
+  
+  card.classList.add('locked');
+  opt.classList.add('selected');
+  
+  const allOpts = card.querySelectorAll('.opt');
+  allOpts.forEach(o => {
+    if(o.dataset.v === correctAns) {
+      o.classList.add('correct');
+    }
+  });
+  
+  if(selectedAns === correctAns) {
+    card.classList.add('answered-correct');
+    score++;
+    const bengaliScore = score.toLocaleString('bn-BD');
+    document.getElementById('scoreNum').textContent = bengaliScore;
+    document.getElementById('floatScoreNum').textContent = bengaliScore;
+    
+    const fs = document.getElementById('floatScore');
+    fs.classList.add('bump');
+    setTimeout(()=>fs.classList.remove('bump'), 200);
+  } else {
+    card.classList.add('answered-wrong');
+    opt.classList.add('wrong');
+  }
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('mcqList').addEventListener('click', handleOptionClick);
+document.getElementById('search').addEventListener('input', e => filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তরলুকান' : 'উত্তর দেখুন';
+  });
+});
+</script>
+</body>
+</html>

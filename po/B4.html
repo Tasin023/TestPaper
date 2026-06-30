@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>বিদ্রোহী — পাঠ পরিক্রমা | FAHAD'S TUTORIAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>বিদ্রোহী</h1>
+  <p class="byline">কাজী নজরুল ইসলাম</p>
+  <p class="desc">ঔপনিবেশিক শাসনের বিরুদ্ধে কবির গভীর ক্ষোভ, চেতনা ও ঐতিহ্যবাহী আত্মপ্রকাশের ওপর ভিত্তি করে রচিত এই কালজয়ী কবিতার পূর্ণাঙ্গ বহুনির্বাচনি ও সৃজনশীল পরিক্রমা।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b id="totalMcqHeader">৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৩</b><span>মূল সুর</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/<span id="totalMcqBadge">৫০</span></div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের সঠিক অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে আদেশ উত্তর দেখে নাও।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        ১৯৭১ সালে দীর্ঘ সংগ্রামের ভেতর দিয়ে বাঙালি ছিনিয়ে আনে স্বাধীনতার লাল সূর্য। এর মধ্য দিয়ে দীর্ঘকালের শোষণ-বঞ্চনার অবসান হয়।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'বিদ্রোহী' কবিতায় ইদ্রাণী-সুতের হাতে কী আছে? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'বিদ্রোহী' কবিতায় ইদ্রাণী-সুতের হাতে <b>চাঁদ</b> আছে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'ঘুম চুমু দিয়ে করি নিখিল বিশ্বে নিঝুম'— চরণটি দ্বারা কী বোঝানো হয়েছে? <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>প্রশ্নোক্ত চরণটির মাধ্যমে বিদ্রোহী কবির হৃদয়ে লুকিয়ে থাকা গভীর শান্তিপ্রিয়তা, কোমলতা এবং বিশ্বজুড়ে একটি যুদ্ধহীন, শান্ত পরিবেশ প্রতিষ্ঠার পরম আকাঙ্ক্ষা প্রকাশ পেয়েছে।</p>
+            <p>কাজী নজরুল ইসলাম তাঁর 'বিদ্রোহী' কবিতায় যেমন একদিকে অত্যাচারীর বিরুদ্ধে সংহার রূপ ধারণ করেছেন, অন্যদিকে সমাজের নিপীড়িত ও বঞ্চিত মানুষের জন্য তাঁর মনে রয়েছে গভীর ভালোবাসা। কবি সমাজ থেকে সকল অন্যায়-অत्याচার ধ্বংস করার পাশাপাশি গোটা বিশ্বে একটি পরম শান্তিময় পরিবেশ নিশ্চিত করতে চান, যেখানে মানুষ পরম মমতায় শান্তিতে বসবাস করতে পারবে। এই চিরশান্তি প্রতিষ্ঠার প্রবল আকুতিই প্রকাশ পেয়েছে চরণটিতে।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের দীর্ঘ সংগ্রাম 'বিদ্রোহী' কবিতার যে দিকটিকে নির্দেশ করে তা ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের দীর্ঘ সংগ্রাম 'বিদ্রোহী' কবিতার মূল চালিকাশক্তি অর্থাৎ 'বিদ্রোহ চেতনা' ও অন্যায়ের বিরুদ্ধে আপসহীন আপত্তির দিকটিকে নির্দেশ করে।</span>
+            <p>'বিদ্রোহী' কবিতায় কাজী নজরুল ইসলাম তৎকালীন ঔপনিবেশিক ব্রিটিশ শাসকগোষ্ঠীর নানামুখী অত্যাচার ও শোষণের বিরুদ্ধে তাঁর বজ্রকণ্ঠ উচ্চারণ করেছেন। তিনি নিজেকে নানা পৌরাণিক ও ধ্বংসাত্মক শক্তিরূপে कल्पना করে ঘোষণা করেছেন যে, সমাজে বিরাজমান স্থবিরতা, অনিয়ম ও পরাধীনতার শৃঙ্খল ভাঙতে লড়াই চালিয়ে যাবেন।</p>
+            <p>উদ্দীপকে বাঙালির ১৯৭১ সালের দীর্ঘ সংগ্রামের কথা বলা হয়েছে, যার মূল উদ্দেশ্য ছিল দীর্ঘদিনের শোষণের হাত থেকে মুক্তি ও স্বাধীনতা অর্জন। ঠিক একইভাবে, 'বিদ্রোহী' কবিতায় কবির নিরন্তর লড়াইয়ের সুর ধ্বনিত হয়েছে সমাজ থেকে উৎপীড়ক ও অত্যাচারী শক্তির মূলোৎপাটন করার জন্য। উদ্দীপকের মুক্তিকামী চেতনা ও দীর্ঘ লড়াইয়ের প্রয়াস কবিতার এই দ্রোহাত্মক ও পরাধীনতার শৃঙ্খল ভাঙার সংগ্রামী মানসিকতার সাথে সরাসরি সাদৃশ্যপূর্ণ।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"চেতনাগত মিল বা অত্যাচারীর বিরুদ্ধে সংগ্রাম পরিচালনার দিক থেকে সাদৃশ্য সত্ত্বেও উদ্দীপকটি 'বিদ্রোহী' কবিতার সামগ্রিকতা ধারণ করে না।"— মন্তব্যটির যৌক্তিকতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">অत्याচারী শক্তির অবসান ঘটিয়ে মানবমুক্তির চেতনাগত মিল থাকা সত্ত্বেও উদ্দীপকটি 'বিদ্রোহী' কবিতার সামগ্রিক ভাব প্রকাশে আংশিক, তাই প্রশ্নোক্ত মন্তব্যটি সম্পূর্ণ যৌক্তিক।</span>
+            <p>'বিদ্রোহী' কবিতায় কেবল রাজনৈতিক স্বাধীনতার সংগ্রামই ফুটে ওঠেনি, বরং এখানে কবির আত্মজাগরণে উন্মুখ সদম্ভ আত্মপ্রকাশ ঘোষিত হয়েছে। কবি এখানে একদিকে যেমন হিন্দু-মুসলিম উভয় ঐতিহ্যের পুরাণের মেলবন্ধন ঘটিয়েছেন, অন্যদিকে নিজের প্রেমময় ও কোমল সত্তার পাশাপাশি রুদ্র ও বিধ্বংসী রূপের সমান্তরাল প্রকাশ ঘটিয়েছেন। উৎপীড়িতের ক্রন্দনরোল প্রশমিত না হওয়া পর্যন্ত তাঁর এই সংগ্রাম অব্যাহত থাকবে— এটিই ছিল কবিতার মূল প্রতিপাদ্য।</p>
+            <p>উদ্দীপকে শুধুমাত্র ১৯৭১ সালের মহান মুক্তিযুদ্ধের দীর্ঘ সংগ্রাম এবং পাকিস্তানি হানাদার বাহিনীর হাত থেকে রাজনৈতিক ও অর্থনৈতিক মুক্তি তথা পরাধীনতার অবসান ঘটিয়ে স্বাধীনতা অর্জনের বাস্তব ঐতিহাসিক রূপটি উঠে এসেছে। কিন্তু 'বিদ্রোহী' কবিতার ক্যানভাস আরও অনেক বেশি বিস্তৃত। সেখানে কবি ঔপনিবেশিক শাসনের শৃঙ্খল ভাঙার পাশাপাশি মানুষের মনের ধর্মীয় গোঁড়ামি, কুসংস্কার, জরাজীর্ণতা ভাঙা এবং সর্বজনীন মানবপ্রেমের এক বিশাল জয়গান গেয়েছেন।</p>
+            <p>অতএব, বলা যায় যে উদ্দীপকের সংগ্রামী চেতনা কবিতার একটি প্রধান দিককে স্পর্শ করলেও কবিতার সামগ্রিক আধ্যাত্মিক, পৌরাণিক, ব্যক্তিগত ভাবোচ্ছ্বাস ও চিরন্তন মানবিক বিদ্রোহের সম্পূর্ণ রূপটি উদ্দীপকে ধারণ করা সম্ভব হয়নি। তাই এটি কবিতার আংশিক রূপ প্রকাশ করে, সামগ্রিক নয়।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">House- 7, Road- 8, Block- C, Mirpur-10, Dhaka-1216 | Call: 01601-92 92 44 | www.ft.education</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// বিদ্রোহ.pdf থেকে পুঙ্খানুপুঙ্খভাবে সংগৃহীত ৫০টি MCQ প্রশ্নোত্তরের সম্পূর্ণ ডাটা অ্যারে
+const DATA = [
+  {n:1, q:"'বিদ্রোহী' কবিতায় ইদ্রাণী-সুতের হাতে কী আছে?", opts:["চাঁদ","আলোক","পদ্ম","শিখা"], correct:0},
+  {n:2, q:"'বিদ্রোহী' কবিতায় কাকে ক্ষ্যাপা বলা হয়েছে?", opts:["অর্ফিয়াসকে","শিবকে","দুর্বাসাকে","ইস্রাফিলকে"], correct:2},
+  {n:3, q:"'বিদ্রোহী' কবিতার কোন চরণে কবির কোমল হৃদয়ের পরিচয় মেলে?", opts:["আমি ইন্দ্রাণী-সুত হাতে চাঁদ ভালে সূর্য","আমি অবমানিতের মরম বেদনা","আমি পরশুরামের কঠোর কুঠার","আমি সেই দিন হব শান্ত"], correct:1},
+  {n:4, q:"'ঘুম চুমু দিয়ে করি নিখিল বিশ্বে নিঝুম' — চরণটিতে নজরুলের কোন মনোভাবটি প্রকাশ পেয়েছে?", opts:["শান্তি প্রতিষ্ঠার প্রত্যাশা","প্রবল দ্রোহের চেতনা","সম্প্রীতি ও সৌহার্দের আহ্বান","প্রচলিত রীতিনীতির বিরোধিতা"], correct:0},
+  {n:5, q:"কবি নিজেকে 'বিদ্রোহ-বাহী' বলেছেন কেন?", opts:["তিনি বিদ্রোহ বহন করেন বলে","তিনি বিদ্রোহ ছড়িয়ে দেন বলে","তিনি বিপ্লবে বিশ্বাসী বলে","তিনি 'বিদ্রোহী' কবিতা লিখেছেন বলে"], correct:0},
+  {n:6, q:"নিচের কোন পঙ্ক্তিতে নজরুলের যুদ্ধবিরোধী মনোভাব ফুটে উঠেছে?", opts:["আমি দাবানল-দাহ, দাহন করিব বিশ্ব","নিঃক্ষত্রিয় করিব বিশ্ব","ঘুম চুমু দিয়ে করি নিখিল বিশ্বে নিঝুম","আমি বিদ্রোহ-বাহী নিখিল অখিল ব্যাপিয়া"], correct:2},
+  {n:7, passageTag:"উদ্দীপক", passage:"১৯৭১ সালে দীর্ঘ সংগ্রামের ভেতর দিয়ে বাঙালি ছিনিয়ে আনে স্বাধীনতার লাল সূর্য। এর মধ্য দিয়ে দীর্ঘকালের শোষণ-বঞ্চনার অবসান হয়। (৭ ও ৮ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের দীর্ঘ সংগ্রাম 'বিদ্রোহী' কবিতার কোন দিকটিকে নির্দেশ করে?", opts:["মানবপ্রেম","দুর্বাসার ক্রোধ","উৎপীড়িতের ক্রন্দন","বিদ্রোহ চেতনা"], correct:3},
+  {n:8, q:"উদ্দীপকের সংগ্রামী চেতনা 'বিদ্রোহী' কবিতার সঙ্গে সম্পর্কিত — i. উদ্দেশ্যগত দিক থেকে ii. আপসহীন মনোভাবে iii. উৎপীড়িতের প্রতি সহানুভূতিতে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:9, passageTag:"উদ্দীপক", passage:"'থ্যাতলানো ঠোঁটজোড়া লালা- রক্তে একাকার হলো, জিভ নাড়তেই দুটো ভাঙা দাঁত ঝরে পড়ল কংক্রিটে।' — রুদ্র মুহম্মদ শহিদুল্লাহ (৯ ও ১০ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকটি তোমার পঠিত কোন কবিতার পটভূমিকে তুলে ধরে?", opts:["বিদ্রোহী","সোনার তরী","সুচেतना","তাহারে পড়ে মনে"], correct:0},
+  {n:10, q:"উদ্দীপকের সঙ্গে কবিতাটির বৈপরীত্য রয়েছে — i. বিষয়বস্তুতে ii. দৃষ্টিকোণ থেকে iii. উৎপীড়িতের হাহাকারে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:11, passageTag:"উদ্দীপক", passage:"ক্ষুদিরাম বসু ইংরেজ শাসকদের অপশাসনের বিরুদ্ধে সশস্ত্র আন্দোলনের পথ বেছে নেন। (১১ ও ১২ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের ক্ষুদিরাম বসু 'বিদ্রোহী' কবিতার কার প্রতিনিধিত্ব করে?", opts:["ইস্রাফিল","কবি","বিশ্বামিত্র","পথবাসী"], correct:1},
+  {n:12, q:"ক্ষুদিরাম বসুর আন্দোলনের সঙ্গে মিল রয়েছে 'বিদ্রোহী' কবিতার — i. মানবপ্রেমের ভাবনায় ii. বিদ্রোহী মনোভাবের iii. অন্যায়ের বিরুদ্ধে কবির অবস্থানে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:13, passageTag:"উদ্দীপক", passage:"'খোদার ঘরে কে কপাট লাগায়, কে দেয় সেখানে তালা? সব দ্বার এর খোলা রবে, চালা হাতুড়ি শাবল চালা।' — কাজী নজরুল ইসলাম (১৩ ও ১৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকটি তোমার পঠিত কোন কবিতার বিষয়বস্তুকে নির্দেশ করে?", opts:["ফেব্রুয়ারি ১৯৬৯","বিদ্রোহী","সোনার তরী","সুচেতনা"], correct:1},
+  {n:14, q:"উদ্দীপকের বক্তব্যের সঙ্গে কবিতাটির অন্তর্গত মিল — i. দ্রোহ চেতনায় ii. বিচিত্র ভাবনায় iii. আপসহীন মনোভাবে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:15, passageTag:"উদ্দীপক", passage:"১৭৮২ খ্রিষ্টাব্দে রংপুর-দিনাজপুর অঞ্চলের কৃষকনেতা নূরলদীন সামন্তবাদ-সাম্রাজ্যবাদবিরোধী আন্দোলন গড়ে তুলেন। (১৫ ও ১৬ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের নূরলদীনের সাথে 'বিদ্রোহী' কবিতার কার মিল রয়েছে?", opts:["দুর্বাসার","কবির","বিশ্বামিত্রের","ইস্রাফিলের"], correct:1},
+  {n:16, q:"উক্ত মিলের অন্তর্নিহিত কারণ — i. দ্রোহ চেতনা ii. আপসহীন মনোভাব iii. মানবপ্রেম", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:17, passageTag:"উদ্দীপক", passage:"'আমরা হারব না হারব না ভীরুর মতো ঘরের কোণে রইব না আমরা চিরদিনই হাসিমুখে মরতে জানি তোমার ভয় নেই মা, আমরা প্রতিবাদ করতে জানি।' (১৭ ও ১৮ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের মনোভাব নিচের কোন চরণে ফুটে উঠেছে?", opts:["আমি মানি না কো কোনো আইন","আমি ভেঙে করি সব চুরমার","মহা-প্রলয়ের আমি নটরাজ","আমি বিদ্রোহী-সুত বিশ্ব-বিধাতৃর"], correct:0},
+  {n:18, q:"উদ্দীপকের সাথে 'বিদ্রোহী' কবিতার সাদৃশ্য — i. আপসহীন মনোভাবে ii. ধ্বংসের উন্মত্ততায় iii. বিদ্রোহী চেতনায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:19, passageTag:"উদ্দীপক", passage:"আরিফদের গ্রামের পুরোনো ও ভগ্ন মসজিদটি ভেঙে ফেলার কথা বলায় অনেকেই দ্বিমত পোষণ করে। আরিফ বলে, এটিকে ভেঙে আবার নতুন করে আমরা গড়ে তুলব। সবাই তখন রাজি হয়। (১৯ ও ২০ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সাথে 'বিদ্রোহী' কবিতার সাদৃশ্যপূর্ণ দিক কোনটি?", opts:["ধ্বংসের রুদ্র রূপ","বিদ্রোহী চেতনা","সৃষ্টির লক্ষ্যে ধ্বংস","অন্যায়ের কাছে মাথা নত না করা"], correct:2},
+  {n:20, q:"উদ্দীপকের সাথে কবিতার এই সাদৃশ্যপূর্ণ দিকটি — i. 'বিদ্রোহী' কবিতার মূল চেতনা ii. বৈষম্যহীন সমাজ প্রতিষ্ঠার লক্ষ্যে চালিত iii. বিদ্রোহের পটভূমি তৈরিতে সহায়ক", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:21, q:"কবি সব ভেঙেচুরে চুরমার করেন কেন?", opts:["তিনি অশান্ত বলে","নতুনের আবাহনে","ক্ষমতা প্রদর্শনের জন্য","তিনি অভিশপ্ত হওয়ায়"], correct:1},
+  {n:22, passageTag:"উদ্দীপক", passage:"আজ কারবালা শুধু আরবের ওই ধু-ধু সাহারার বুকে নয়, ওই ফোরাত নদীর কূলে নয়- আজ কারবালার হাহাকার ওই নিখিল নিপীড়িত মুসলিমের বুকের সাহারায়, তোমার অপমান-জর্জরিত অশ্রু-নদীর কূলে কূলে! (২২ ও ২৩ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকটি 'বিদ্রোহী' কবিতার সাথে কোন দিক থেকে সম্পর্কিত?", opts:["কবিতার পটভূমি","কবিতার পরিণতি","বিদ্রোহের স্বরূপ","প্রেম ও দ্রোহের সমন্বয়"], correct:0},
+  {n:23, q:"উক্ত সম্পর্কের অন্তর্গত কারণ — i. নিপীড়িতের হাহাকার ii. আপসহীন মনোভাবের পরিচয় iii. অপমানিতের মনোবেদনা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:24, passageTag:"উদ্দীপক", passage:"'এই যে মায়ের অনাদরে ক্লিষ্ট শিশুগুলি, পরণে নেই ছেঁড়া কানি, সারা গায়ে ধূলি। সারাদিনের অনাহারে শুষ্ক বদনখানি ক্ষিধের জ্বালায় ক্ষুণ্ণ, তাতে জ্বরের ধুকধুকানি।' — কাজী নজরুল ইসলাম (২৪ ও ২৫ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে 'বিদ্রোহী' কবিতার কোন দিকটি ফুটে উঠেছে?", opts:["নিপীড়িতের বেদনা","বিদ্রোহী মনোভাব","প্রেম ও দ্রোহের সমন্বয়","বিধ্বংসী মনোভাব"], correct:0},
+  {n:25, q:"উদ্দীপকের সমান্তরাল ভাবনা 'বিদ্রোহী' কবিতার যে চরণে ফুটে উঠেছে তা হলো — i. আমি বিদ্রোহ-বাহী নিখিল অখিল ব্যাপিয়া ii. আমি বঞ্চিত ব্যথা পথবাসী চির গৃহহারা যত পথিকের iii. আমি অবমানিতের মরম বেদনা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:26, q:"'বিদ্রোহী' কবিতাটি প্রথম কোন পত্রিকায় প্রকাশিত হয়?", opts:["লাঙল","ধূমকেতু","বিজলী","সওগাত"], correct:2},
+  {n:27, q:"কাজী নজরুল ইসলাম কত খ্রিষ্টাব্দে জন্মগ্রহণ করেন?", opts:["১৮৯৯","১৮৯৮","১৯০১","১৯০২"], correct:0},
+  {n:28, q:"'বিদ্রোহী' কবিতাটি কবির কোন কাব্যগ্রন্থের অন্তর্ভুক্ত?", opts:["দোলনচাঁপা","বিষের বাঁশী","অগ্নিবীণা","ছায়ানট"], correct:2},
+  {n:29, q:"'অগ্নিবীণা' কাব্যগ্রন্থের প্রথম কবিতা কোনটি?", opts:["প্রলয়োল্লাস","বিদ্রোহী","রক্তাম্বর-ধারিণী মা","ধূমকেতু"], correct:0},
+  {n:30, q:"'বিদ্রোহী' কবিতায় কবি কার হাতের ডমরু ও ত্রিশূলের কথা বলেছেন?", opts:["বিষ্ণুর","শিবের/পিনাকপাণির","কৃষ্ণের","ব্রহ্মার"], correct:1},
+  {n:31, q:"'আমি আপনারে ছাড়া করি না কাহারে কুর্নিশ'— চরণে কী প্রকাশ পেয়েছে?", opts:["অহংকার","আত্মমর্যাদা ও চরম আত্মবিশ্বাস","অবাধ্যতা","উদ্ধত আচরণ"], correct:1},
+  {n:32, q:"'বিদ্রোহী' কবিতায় গ্রিক পুরাণের কোন চরিত্রের উল্লেখ আছে?", opts:["অ্যাকিলিস","হেলেন","অর্ফিয়াস","প্রমিথিউস"], correct:2},
+  {n:33, q:"অর্ফিয়াসের হাতের বাঁশির সুরে কী হয়েছিল?", opts:["পৃথিবী ধ্বংস হয়েছিল","মহা-সিন্ধু উথলে উঠেছিল","সবাই ঘুমিয়ে পড়েছিল","প্রকৃতি স্তব্ধ হয়েছিল"], correct:1},
+  {n:34, q:"'বিদ্রোহী' কবিতায় 'পরশুরামের কঠোর কুঠার' কী করবে?", opts:["পৃথিবী জয় করবে","ক্ষত্রিয়হীন করবে বিশ্বকে","পাহাড় কেটে পথ তৈরি করবে","অন্যায় ধ্বংস করবে"], correct:1},
+  {n:35, q:"'ভৃগু' কে ছিলেন?", opts:["একজন গ্রিক বীর","একজন পৌরাণিক ঋষি","একজন রাজা","একজন অত্যাচারী শাসক"], correct:1},
+  {n:36, q:"কবির পদচিহ্ন কোথায় পড়ে রয়েছে?", opts:["আকাশের বুকে","ইতিহাসের পাতায়","ভগবান বা বিধাতার বুকে","ধরণীর ধূলিতে"], correct:2},
+  {n:37, q:"'উন্মাদ আমি, আমি ঝঞ্ঝা!'— এখানে কবির কী রূপ প্রকাশিত?", opts:["শান্ত রূপ","বিধ্বংসী ও গতিময় রূপ","হতাশাজনক রূপ","করুণ রূপ"], correct:1},
+  {n:38, q:"'বিদ্রোহী' কবিতায় মোট কতবার 'আমি' শব্দটির ব্যবহার রয়েছে?", opts:["১০০ বারের বেশি","১৪০ বারের বেশি","৫০ বার","৮০ বার"], correct:1},
+  {n:39, q:"'ধূর্জটি' শব্দের অর্থ কী?", opts:["জটাধারী বা শিব","মেঘমালা","অগ্নিশিখা","ধুলোবালি"], correct:0},
+  {n:40, q:"'আমি চপলা-চপল চনমনে'— চরণে 'চপলা' শব্দের অর্থ কী?", opts:["বিদ্যুৎ","নদী","বাতাস","মেঘাচ্ছন্ন আকাশ"], correct:0},
+  {n:41, q:"কবি নিজেকে কার বুক চিরে ফেলার বিদ্রোহী বলে ঘোষণা করেছেন?", opts:["হিমালয়ের","বিধাতার","অত্যাচারী শাসকের","পৃথিবীর"], correct:1},
+  {n:42, q:"'আমি পরশুরামের কঠোর কুঠার'— এখানে 'পরশুরাম' কে?", opts:["এক প্রাচীন রাজা","বিষ্ণুর ষষ্ঠ অবতার","একজন মহর্ষি","শিবের শিষ্য"], correct:1},
+  {n:43, q:"'বিদ্রোহী' কবিতায় কবির মূল লক্ষ্য কী ছিল?", opts:["যুদ্ধে জয়লাভ করা","ঔপনিবেশিক শাসন ও অন্যায়ের অবসান","নিজের বীরত্ব প্রকাশ","নতুন ধর্ম প্রচার"], correct:1},
+  {n:44, q:"'আমি চির-উন্নত শির'— কার শির উন্নত?", opts:["হিমালয়ের পাহাড়ের","বিদ্রোহী কবির নিজের","শাসকগোষ্ঠীর","সাধারণ জনতার"], correct:1},
+  {n:45, q:"'বিদ্রোহী' কবিতায় নজরুলের দ্রোহ মূলত কার বিরুদ্ধে?", opts:["প্রকৃতির বিরুদ্ধে","সকল প্রকার শৃঙ্খল ও শোষণের বিরুদ্ধে","প্রাচীন সংস্কৃতির বিরুদ্ধে","সাধারণ মানুষের বিরুদ্ধে"], correct:1},
+  {n:46, q:"কাজী নজরুল ইসলামকে কোন কবি 'যুগান্তরের কবি' বা 'বিদ্রোহী কবি' বলে আখ্যায়িত করেন?", opts:["রবীন্দ্রনাথ ঠাকুর","শরৎচন্দ্র চট্টোপাধ্যায়","মোহিতলাল মজুমদার","প্রমথ চৌধুরী"], correct:2},
+  {n:47, q:"'আমি শ্রাবণ-প্লাবন-বন্যা'— বলতে কবি কী বুঝিয়েছেন?", opts:["প্রাকৃতিক দুর্যোগ","অন্যায়ের বিরুদ্ধে বাঁধভাঙা প্রতিরোধ","অশ্রু সজল চোখ","শান্তির বাণী"], correct:1},
+  {n:48, q:"'বিদ্রোহী' কবিতায় ব্যবহৃত 'ঐরাবত' কার বাহন?", opts:["শিবের","ইন্দ্রের","যমের","সূর্যের"], correct:1},
+  {n:49, q:"'আমি সৃষ্টি, আমি ধ্বংস'— এই চরণে কবির কোন শক্তির প্রকাশ ঘটে?", opts:["ঐশ্বরিক ও বৈপরীত্যের একাত্মতা","শারীরিক ক্ষমতা","মানসিক দুর্বলতা","রাজনৈতিক কূটনীতি"], correct:0},
+  {n:50, q:"কবি নিজেকে কখন শান্ত করার কথা বলেছেন?", opts:["দেশ স্বাধীন হলে","অত্যাচারীর খড়্গ কৃপাণ যখন আর আকাশে রণিত হবে না","নিজের সব চাওয়া পূরণ হলে","যুদ্ধ শেষ হলে"], correct:1}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

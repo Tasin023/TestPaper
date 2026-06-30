@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ফেব্রুয়ারি ১৯৬৯ — পাঠ পরিক্রমা | </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>ফেব্রুয়ারি ১৯৬৯</h1>
+  <p class="byline">শামসুর রাহমান</p>
+  <p class="desc">১৯৬৯ সালের গণঅভ্যুত্থান এবং ১৯৫২ সালের ভাষা আন্দোলনের ঐতিহাসিক প্রেক্ষাপট ও সংগ্রামী চেতনার ওপর ভিত্তি করে রচিত এই কবিতার পূর্ণ পাঠ-পরিক্রমা — বহুনির্বাচনি ও সৃজনশীল প্রশ্ন এক জায়গায়।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>৪</b><span>মূল চেতনা</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক</span>
+        তপুর হাতে মস্ত প্ল্যাকার্ডে লাল কালিতে লেখা ছিল 'রাষ্ট্রভাষা বাংলা চাই'। মিছিলটা হাইকোর্টের মোড়ে পৌঁছাতেই অকস্মাৎ আমাদের লোকগুলো চিৎকার করে পালাতে লাগল চারপাশে। ব্যাপার কী বুঝবার আগেই চেয়ে দেখি প্ল্যাকার্ডসহ লুটিয়ে পড়েছে তপু। কপালের ঠিক মাঝখানটায় গোল একটা গর্ত। আর সে গর্ত দিয়ে নির্ঝরের মতো রক্ত ঝরছে তার।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">ঘাতকের থাবার সম্মুখে বুক পাতে কে? <i>(ज्ञानমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>ঘাতকের থাবার সম্মুখে বুক পাতে <b>বরকত</b>।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'বুঝি তাই উনিশশো উনসত্তরেও' বলতে কবি কী বুঝিয়েছেন? <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'বুঝি তাই উনিশশো উনসত্তরেও' বলতে কবি ১৯৫২ সালের মতো ব্যাপকভাবে আন্দোলনের কথা বুঝিয়েছেন।</p>
+            <p>১৯৫২ সালে মাতৃভাষা বাংলাকে রাষ্ট্রভাষা করার দাবিতে এদেশের আপামর জনগণ আন্দোলনে ফুঁসে ওঠে। অধিকার আদায়ে বুকের তাজা রক্ত ঢেলে দিতেও তাঁরা কুণ্ঠিত হয় না। আর এ কারণেই পাকিস্তানি শাসকগোষ্ঠী বাংলাকে রাষ্ট্রভাষার মর্যাদা দিতে বাধ্য হয়। এই আন্দোলনের ক্রমধারায়ই ১৯৬৯ সালে বঙ্গবন্ধুর ৬ দফা ও ছাত্রদের ১১ দফার ভিত্তিতে গড়ে ওঠে ব্যাপক গণঅভ্যুত্থান। 'বুঝি তাই উনিশশো উনসত্তরেও' বলতে কবি ভাষা আন্দোলনের মতো ১৯৬৯-এ ব্যাপকভাবে গড়ে ওঠা আন্দোলনকেই বুঝিয়েছেন।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের তপুর কপালের রক্ত 'ফেব্রুয়ারি ১৯৬৯' কবিতার যে স্মৃতি স্মরণ করিয়ে দেয় তা ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">তপুর কপালের রক্ত 'ফেব্রুয়ারি ১৯৬৯' কবিতার বাংলা ভাষার জন্য ভাষাশহিদদের জীবন উৎসর্গ করার স্মৃতিকে স্মরণ করিয়ে দেয়।</span>
+            <p>'ফেব্রুয়ারি ১৯৬৯' কবিতাটি দেশপ্রেম, গণজাগরণ ও সংগ্রামী চেতনাকে ধারণ করে আছে। ১৯৬৯ সালে পাকিস্তানি শাসকগোষ্ঠীর বিরুদ্ধে তৎকালীন পূর্ববঙ্গে যে গণ আন্দোলনের সূচনা হয়েছিল কবিতাটি সেই পটভূমিতে রচিত। সেসময় জাতিগত শোষণ ও নিপীড়নের বিরুদ্ধে এ দেশের সর্বস্তরের মানুষ ক্ষুব্ধ হয়ে উঠেছিল। কবিতাটিতে এ আন্দোলনের প্রেরণা হিসেবে কবি ১৯৫২ সালের ভাষা শহিদদের আত্মত্যাগ মূর্ত করে তুলেছেন।</p>
+            <p>উদ্দীপকের তপু ১৯৫২ সালে রাষ্ট্রভাষা বাংলার দাবিতে মিছিলে অংশগ্রহণ করে। সে মিছিলে পুলিশ নির্বিচার গুলিবর্ষণ করলে তপু গুলির আঘাতে মাটিতে লুটিয়ে পড়ে। তার কপালের ঠিক মাঝখানে গুলিটি লেগেছিল, যার ফলে কপালে গর্ত হয়ে নির্ঝরের মতো রক্ত ঝরেছে। তার এই আত্মত্যাগ একুশের রক্তঝরা দিনগুলোতে স্বৈরশাসনের বিরুদ্ধে এদেশের সংগ্রামী মানুষের আত্মত্যাগ তাৎপর্যমণ্ডিত করে তুলেছে।</p>
+            <p>উদ্দীপকে ফুটে ওঠা ভাষা শহিদদের আত্মত্যাগের এই দিকটিকে কবি 'ফেব্রুয়ারি ১৯৬৯' কবিতায়ও ফুটিয়ে তুলেছেন। সেখানে কবি থরে থরে ফুটে থাকা লাল কৃষ্ণচূড়ার সাথে ভাষা শহিদদের আত্মাহুতিকে তুলনা করেছেন। শুধু তাই নয়, ১৯৬৯ সালের গণ-আন্দোলনের প্রেরণা হিসেবে ভাষা আন্দোলনের চেতনা তুলে ধরেছেন তিনি। সংগত কারণেই উদ্দীপকের তপুর কপালের রক্ত আলোচ্য কবিতায় উল্লিখিত ভাষা শহিদদের জীবন উৎসর্গের স্মৃতিকেই স্মরণ করিয়ে দেয়।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"প্রেক্ষাপটগত সাদৃশ্য থাকলেও উদ্দীপকটি 'ফেব্রুয়ারি ১৯৬৯' কবিতার সামগ্রিকতা ধারণ করে না।" বিশ্লেষণ করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">ভাষা আন্দোলনের প্রেক্ষাপটে সাদৃশ্য থাকলেও উদ্দীপকটি 'ফেব্রুয়ারি ১৯৬৯' কবিতার আংশিকভাব ধারণ করে, পূর্ণভাব নয়।</span>
+            <p>১৯৬৯ সালে পাকিস্তানি শাসকগোষ্ঠীর বিরুদ্ধে তৎকালীন পূর্ববঙ্গে যে গণ আন্দোলনের সূচনা হয়েছিল, 'ফেব্রুয়ারি ১৯৬৯' কবিতাটি সেই প্রেক্ষাপটকেই তুলে ধরেছে। সেই সঙ্গে আলোচ্য কবিতাটির কবি ১৯৫২ সালের ভাষা আন্দোলনে শহিদদের আত্মদানের মাহাত্ম্য উপস্থাপন করেছেন। কবিতাটিতে তিনি ভাষা আন্দোলনের চেতনা উনসত্তরের গণজাগরণের প্রেরণা হিসেবে দেখাতে চেয়েছেন।</p>
+            <p>উদ্দীপকের তপু চরিত্রটি ১৯৫২ সালের সাহসী ভাষাসৈনিক। রাষ্ট্রভাষা বাংলার দাবিতে মিছিলে যোগ দিয়ে পুলিশের গুলিতে শহিদ হয় সে। ভাষার জন্য তার এই আত্মত্যাগকে উদ্দীপকের লেখক তুলে ধরেছেন মমত্বের সঙ্গে। এভাবে তপুর মধ্য দিয়ে লেখক মূলত ভাষাশহিদদের অবদানকে তুলে ধরতে চেয়েছেন। প্রকৃতপক্ষে ভাষা আন্দোলনের মধ্য দিয়েই স্বতন্ত্র জাতিসত্তা হিসেবে বাঙালি আত্মপরিচয় লাভ করে। বাঙালির জাতীয় জীবনে তাই ভাষা আন্দোলন এবং তাতে আত্মোৎসর্গকারী শহিদদের অবদান অনস্বীকার্য।</p>
+            <p>পাকিস্তান সরকার কর্তৃক জাতিগত শোষণ ও নিপীড়নের বিরুদ্ধে এদেশের সাধারণ মানুষ ক্ষুব্ধ হয়ে ওঠে ১৯৬৯ সালে। শহর ও গ্রামের সকল শ্রেণি-পেশার মানুষ এ আন্দোলনে অংশগ্রহণ করে। কবি বিচিত্র শ্রেণি-পেশার মানুষের স্বতঃস্ফূর্ত সংগ্রামী চেতনার অসাধারণ এক শিল্পভাষ্য রচনা করেছেন 'ফেব্রুয়ারি ১৯৬৯' কবিতায়। কবিতাটিতে দেশমাতৃকার প্রতি জনতার বিপুল ভালোবাসা সংবর্ধিত হয়েছে। এখানে ভাষা আন্দোলনের দিকটি এসেছে গণ আন্দোলনের প্রেরণা হিসেবে। কিন্তু উদ্দীপকে কেবল ভাষা-আন্দোলনের দিকটিই আলোচিত হয়েছে। এ কবিতার উল্লিখিত অন্যান্য দিক যেমন উনসত্তরের গণঅভ্যুত্থান, ব্যাপক জনজাগরণ সেখানে অনুপস্থিত। সংগত কারণেই প্রশ্নোক্ত উক্তিটি যৌক্তিক বলে প্রতীয়মান হয়।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// DATA: {n, passageTag, passage(optional), q, opts:[4], correct: 0-3}
+const DATA = [
+  {n:1, q:"'ঘাতকের অশুভ আস্তানা' বলতে কী বোঝানো হয়েছে?", opts:["সামাজিক দুরবস্থা","রাষ্ট্রীয় দুরবস্থা","ইতিহাসের দুরবস্থা","মূল্যবোধের দুরবস্থা"], correct:1},
+  {n:2, q:"একুশের কৃষ্ণচূড়া মূলত-", opts:["শহিদদের চেতনার রং","বায়ান্নর আত্মত্যাগের স্মৃতি","ভাষা শহিদদের রক্তের প্রতীক","বাঙালির সংগ্রামের স্মারক"], correct:2},
+  {n:3, passageTag:"উদ্দীপক", passage:"বাঙালি চেতনার বীজ অঙ্কুরিত হয়েছিল ১৯৫২ সালের ভাষা আন্দোলনের মধ্য দিয়ে। বাঙালির স্বাধিকার অর্জনের পরবর্তী সকল আন্দোলন এর থেকে প্রেরণা পেয়েছে। (৩ ও ৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে বর্ণিত ভাষা-আন্দোলন 'ফেব্রুয়ারি ১৯৬৯' কবিতায় বর্ণিত কোন আন্দোলনকে প্রেরণা জুগিয়েছিল?", opts:["ছাত্র আন্দোলন","ছয় দফা আন্দোলন","ফকির আন্দোলন","৬৯-এর গণ অভ্যুত্থান"], correct:3},
+  {n:4, q:"কবিতায় বর্ণিত উক্ত আন্দোলন সম্পর্কে বলা যায়- i. এ আন্দোলন হয়েছিল পাকিস্তানি শাসকগোষ্ঠীর বিরুদ্ধে ii. এ আন্দোলনে শহিদ হন আসাদুজ্জামান, ডা. শামসুজ্জোহা iii. এ আন্দোলনে শহিদ হন আসাদুজ্জামান, সালাম, শফিউর", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:5, q:"১৯৬৯-এ এদেশের সাধারণ মানুষ ক্ষুব্ধ হয়ে উঠেছিল- i. শোষণের বিরুদ্ধে ii. নিপীড়নের বিরুদ্ধে iii. জাতিগত বৈষম্যের বিরুদ্ধে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:6, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতাটি- i. দেশপ্রেমের কবিতা ii. গণজাগরণের কবিতা iii. সংগ্রামী চেতনার কবিতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:7, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতায় প্রকাশিত হয়েছে- i. বিচিত্র শ্রেণির মানুষের সংগ্রামী চেতনা ii. বিচিত্র পেশার মানুষের সংগ্রামী চেতনা iii. দেশের প্রতি মানুষের বিপুল ভালোবাসা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:8, q:"১৯৬৯-এ এদেশের মানুষ ক্ষুব্ধ হয়ে ওঠে- i. পুঁজিপতিদের বিরুদ্ধে ii. নিপীড়নের বিরুদ্ধে iii. জাতিগত শোষণের বিরুদ্ধে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:9, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতায় শামসুর রাহমান গভীর মমতা ও শ্রদ্ধার সঙ্গে মূর্ত করে তুলেছেন- i. দেশের প্রতি ভালোবাসা ii. আনন্দ উল্লাস iii. মানুষের আত্মাহুতি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:10, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতাটি কোন কারণে সার্থক?", opts:["ভাষার জন্য","রসের জন্য","বর্ণমালার জন্য","চেতনার জন্য"], correct:3},
+  {n:11, passageTag:"উদ্দীপক", passage:"১৯৬৬ সালের ৬ দফা দাবি ও তৎপরবর্তী নানা ঘটনায় ১৯৬৯ সালে এদেশে বৃহত্তর আন্দোলন সূচিত হয়। (১১ ও ১২ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে উক্ত বৃহত্তর আন্দোলন 'ফেব্রুয়ারি ১৯৬৯' কবিতায় কীরূপে সূচিত হয়েছে?", opts:["ভাষা আন্দোলনরূপে","শিক্ষা আন্দোলনরূপে","ছাত্র আন্দোলনরূপে","গণ অভ্যুত্থানরূপে"], correct:3},
+  {n:12, q:"উক্ত আন্দোলনের মাধ্যমে বাঙালি জাতি- i. শিক্ষার অধিকার চেয়েছিল ii. নিপীড়নের বিরুদ্ধে দাঁড়িয়েছিল iii. শোষণের বিরুদ্ধে সোচ্চার হয়েছিল", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:13, passageTag:"উদ্দীপক", passage:"শিমুল সম্প্রতি 'নিজ বাসভূমে' কাব্যের একটি কবিতা পাঠ করেছে। কবিতাটিতে ১৯৫২ এবং ১৯৬৯ সালের আন্দোলনের কথা ব্যক্ত হয়েছে। (১৩ ও ১৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে বর্ণিত কবিতাটির রচয়িতা কে?", opts:["আহসান হাবীব","দিলওয়ার","শহীদ কাদরী","শামসুর রাহমান"], correct:3},
+  {n:14, q:"উক্ত কবিতাটি- i. শ্রেণি চেতনার কবিতা ii. দেশপ্রেমের কবিতা iii. গণজাগরণের কবিতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:15, passageTag:"উদ্দীপক", passage:"বিষ্ণুপদ নিমসার হাই স্কুলে পড়ে। স্কুলে আজ হোলি খেলায় সবাই মেতেছে। লাল রং দেখে তার স্বাধীনতা যুদ্ধের কথা মনে পড়ে গেল। (১৫ ও ১৬ নম্বর প্রশ্নের জন্য)", q:"'ফেব্রুয়ারি ১৯৬৯' কবিতার কৃষ্ণচূড়ার সাথে কোন অর্থে উদ্দীপকের মিল রয়েছে?", opts:["রক্ত লাল পতাকা","স্বাধীনতার রং","রক্তঝরা অভ্যুত্থান","মুক্তিযুদ্ধে আত্মত্যাগ"], correct:1},
+  {n:16, q:"বিষ্ণুপদের মনে স্বাধীনতার চেতনা যেমন, তেমনি 'ফেব্রুয়ারি ১৯৬৯' কবিতায়- i. একুশের চেতনা ii. ছেষট্টির চেতনা iii. উনসত্তরের চেতনা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:17, passageTag:"উদ্দীপক", passage:"শামসুর রাহমানের কবিতায় জাতীয় চেতনার এক স্বতঃস্ফূর্ত ধারা আমরা লক্ষ করি।", q:"'ফেব্রুয়ারি ১৯৬৯' কবিতা ও উদ্দীপকের তথ্যের ভিত্তিতে শামসুর রাহমানকে বলা যায়- i. মানুষের কবি ii. রাজনীতির কবি iii. গণচেতনার কবি", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:18, passageTag:"উদ্দীপক", passage:"পাকিস্তনিদের ক্রমাগত শোষণ বাঙালিদের একতাবদ্ধ করেছিল এবং আন্দোলনের জন্য প্রস্তুত করেছিল।", q:"উদ্দীপকের বক্তব্য 'ফেব্রুয়ারি ১৯৬৯' কবিতায় বর্ণিত কোন আন্দোলনের ক্ষেত্রে বেশি প্রাসঙ্গিক?", opts:["'৫২-র ভাষা আন্দোলন","'৬২-র ছাত্র আন্দোলন","'৬৬-র ছয় দফা আন্দোলন","'৬৯-এর গণ অভ্যুত্থান"], correct:3},
+  {n:19, passageTag:"উদ্দীপক", passage:"১৯৫২ সালের ভাষা আন্দোলনের ধারাবাহিকতায়, স্বাধিকার প্রতিষ্ঠার চেতনায় ১৯৬৯ সালে বাংলাদেশে গণ অভ্যুত্থান সংঘটিত হয়েছিল। (১৯ ও ২০ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের গণ অভ্যুত্থান 'ফেব্রুয়ারি ১৯৬৯' কবিতায় কীভাবে প্রতিফলিত হয়েছে?", opts:["সশস্ত্র আন্দোলনে","গণ আন্দোলনে","স্বৈরাচারবিরোধী আন্দোলনে","ছাত্র আন্দোলনে"], correct:1},
+  {n:20, q:"উক্ত আন্দোলনের মাধ্যমে বাঙালি জাতি- i. শোষণের বিরুদ্ধে উচ্চকিত হয়েছে ii. অন্নবস্ত্রের অধিকার চেয়েছে iii. নিপীড়নের বিরুদ্ধে দাঁড়িয়েছে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:21, passageTag:"উদ্দীপক", passage:"সুমন্তদের স্কুলে একটি ভাস্কর্য স্থাপন করা হয়েছে। সমস্ত শরীরে বর্ণমালা খোদাই করা। (২১ ও ২২ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের ভাস্কর্যটি 'ফেব্রুয়ারি ১৯৬৯' কবিতায় বর্ণিত কোন ব্যক্তিকে নির্দেশ করে?", opts:["বরকত","সালাম","রফিক","শফিউর"], correct:1},
+  {n:22, q:"কবিতায় বর্ণিত ওই ব্যক্তি সম্পর্কে বলা যায়- i. তিনি একজন ভাষা শহিদ ii. তার চোখে আজ আলোচিত ঢাকা iii. তিনি আবার রাজপথে নেমে এসেছেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:23, passageTag:"উদ্দীপক", passage:"মিছিলের ভিড়ে যুবকটিকে মনে হলো কতদিনের চেনা, তেজদীপ্ত কণ্ঠে আকাশ-বাতাস মুখরিত প্রাণ, মুষ্টিবদ্ধ লোমশ হাতে তুলেছে নিشان। (২৩ ও ২৪ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের যুবকটির সাথে মিল আছে 'ফেব্রুয়ারি ১৯৬৯' কবিতার কার?", opts:["রফিক","বরকত","জব্বার","সালাম"], correct:1},
+  {n:24, q:"উদ্দীপকের যুবকটির 'মুষ্টিবদ্ধ লোমশ হাত' ফেব্রুয়ারি ১৯৬৯ কবিতায় কীসের প্রতীক রূপে প্রকাশিত? i. সংগ্রামের ii. অন্যায়ের প্রতিবাদের iii. ঘাতকের", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:25, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতার আড়ালে প্রকাশ পায়- i. ভাষা শহিদদের মহান আত্মত্যাগ ii. আন্দোলনে সাধারণ মানুষের অবদান iii. অত্যাচারী শাসকের বিরুদ্ধে বাঙালির প্রতিবাদ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:26, q:"'চিনতে না কি সোনার ছেলে ক্ষুদিরামকে চিনতে?'- বাক্যটি তোমার কোন কবিতার কথা স্মরণ করিয়ে দেয়?", opts:["ফেব্রুয়ারি ১৯৬৯","ঐকতান","সেই অস্ত্র","সাম্যবাদী"], correct:0},
+  {n:27, q:"'কৃষ্ণচূড়ার গাছে গাছে / সালাম, বরকত, শফিক নাচে।' ভাবগত দিক থেকে চরণটি 'ফেব্রুয়ারি ১৯৬৯' কবিতার কোন চরণটির কিছুটা মিল খুঁজে পাওয়া যায়?", opts:["একুশের কৃষ্ণচূড়া আমাদের চেতনারই রং","আবার সালাম নামে রাজপথে, শূন্যে তোলে ফ্ল্যাগ","শহিদের ঝলকিত রক্তের বুদ্বুদ, স্মৃতিগন্ধে ভরপুর","ফোটে ফুল বাস্তবের বিশাল চত্বরে"], correct:1},
+  {n:28, q:"'পূর্বদিগন্তে সূর্য উঠেছে রক্তলাল রক্তলাল রক্তলাল/ জোয়ার এসেছে গণসমুদ্রে রক্তলাল রক্তলাল রক্তলাল।'- উদ্দীপকের 'জোয়ার এসেছে গণসমুদ্রে' 'ফেব্রুয়ারি ১৯৬৯' শীর্ষক কবিতায় কীভাবে সূচিত হয়েছে?", opts:["ভাষা আন্দোলনরূপে","ছাত্র আন্দোলনরূপে","শিক্ষা আন্দোলনরূপে","গণ অভ্যুত্থানরূপে"], correct:3},
+  {n:29, q:"'পালাবার পথ আজ রুদ্ধ/ এবার হতেই হবে শুদ্ধ।'- 'ফেব্রুয়ারি ১৯৬৯' কবিতায় অভিব্যক্ত কোন ঘটনার মাধ্যমে 'শুদ্ধ' হবার আকাঙ্ক্ষার প্রতিফলন ঘটেছে?", opts:["একুশের কৃষ্ণচূড়ায়","অবিনাশী বর্ণমালায়","শূন্যে তোলা ফ্ল্যাগ রূপে","গণ অভ্যুত্থানরূপে"], correct:3},
+  {n:30, q:"একুশের কৃষ্ণচূড়ার বিপরীত রং সম্পর্কে বলা যায়- i. এ রং ভালো লাগে না ii. এ রং সন্ত্রাস আনে iii. এ রং আমাদের মনে সমীহ জাগায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:31, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতায় প্রকাশিত হয়েছে- i. বিচিত্র শ্রেণির মানুষের সংগ্রামী চেতনা ii. বিচিত্র পেশার মানুষের সংগ্রামী চেতনা iii. দেশের প্রতি মানুষের বিপুল ভালোবাসা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:32, q:"'চতুর্দিকে মানবিক বাগান, কমলবন হচ্ছে তছনছ।'- পঙক্তিটি দ্বারা বোঝানো হয়েছে- i. শাসকের অত্যাচার ii. স্বৈরতান্ত্রিক মনোভাব iii. অত্যন্ত নিষ্ঠুরতা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:33, q:"এখনো বীরের রক্তে দুঃখিনী মাতার অশ্রুজলে ফোটে ফুল- i. গ্রামের আঙিনায় ii. বাস্তবের বিশাল চত্বরে iii. হৃদয়ের হরিৎ উপত্যকায়", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:34, q:"আসাদ উনসত্তরের গণ অভ্যুত্থানে শহিদ হয়। 'ফেব্রুয়ারি ১৯৬৯' কবিতায় উল্লিখিত ভাষা শহিদ হলেন- i. সালাম ii. রফিক iii. বরকত", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:35, q:"কবি শামসুর রাহমান 'ফেব্রুয়ারি ১৯৬৯' কবিতায় সালামের চোখে আজ কী দেখেছেন?", opts:["ঘাতকের থাবা","আলোচিত ঢাকা","অবিনাশী বর্ণমালা","তরুণ শ্যামল পূর্ব বাংলা"], correct:3},
+  {n:36, q:"শহরের পথে আবারও কৃষ্ণচূড়া ফোটার মাধ্যমে লেখক কী বোঝাতে চেয়েছেন?", opts:["সংগ্রামী চেতনা","ভাষা আন্দোলন","স্বাধীনতা আন্দোলন","গণ আন্দোলন"], correct:0},
+  {n:37, q:"'একুশের কৃষ্ণচূড়া'- আমাদের কীসের প্রতীক?", opts:["সংগ্রামের","আকাঙ্ক্ষার","চেতনার","বিজয়ের"], correct:2},
+  {n:38, q:"'কারার ওই লৌহকপাট ভেঙে ফেল কর রে লোপাট'- উদ্দীপকের সাথে 'ফেব্রুয়ারি ১৯৬৯' কবিতার সাদৃশ্যপূর্ণ দিক হলো-", opts:["বিজয়","সংগ্রামী চেতনা","ভাঙচুর","স্বাধীন জীবন"], correct:1},
+  {n:39, q:"কবি শামসুর রাহমান 'ফেব্রুয়ারি ১৯৬৯' কবিতায় সালামের চোখে কী দেখেছেন?", opts:["ঘাতকের থাবা","আলোচিত ঢাকা","অবিনাশী বর্ণমালা","তরুণ শ্যামল পূর্ব বাংলা"], correct:3},
+  {n:40, passageTag:"উদ্দীপক", passage:"আন্তর্জাতিক মাতৃভাষা দিবসে কলেজের 'যেমন খুশি তেমন সাজ' অনুষ্ঠানে সজীব সেজেছে ভাস্কর্যরূপে। তার সমস্ত শরীরে জড়ানো বাংলা বর্ণমালা। (৪০ ও ৪১ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের ভাস্কর্যটি 'ফেব্রুয়ারি ১৯৬৯' কবিতায় বর্ণিত কোন ব্যক্তিকে নির্দেশ করে?", opts:["রফিক","বরকত","সালাম","শফিক"], correct:2},
+  {n:41, q:"কবিতায় বর্ণিত ওই ব্যক্তি সম্পর্কে বলা যায়- i. তিনি ভাষা শহিদ ii. তার চোখে আলোচিত ঢাকা iii. তিনি রাজপথে নেমে এসেছেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:42, passageTag:"উদ্দীপক", passage:"সিলেটের একটি চা-বাগানের শ্রমিকরা নানাভাবে বঞ্চিত হলেও প্রতিবাদ করার সাহস পায় না। একদিন ঘূর্ণিঝড় ওঠার আশঙ্কা জেনেও মালিক তাদের কাজ করতে বাধ্য করে। ঝড়ের সাথে সংগ্রাম করে শ্রমিকরা প্রাণে বেঁচে যায়। এরপর তারা প্রতিবাদী হয়ে ওঠে। ঝড়ের কাছ থেকে তারা প্রতিবাদের ভাষা শেখে। (৪২ ও ৪৩ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের 'ঝড়' 'ফেব্রুয়ারি ১৯৬৯' কবিতার যে ঘটনার ইঙ্গিত করে, নিচের কোনটি সেই ঘটনার সাথে সম্পর্কিত?", opts:["কর্নল আতাউল গনি ওসমানী","আসাদুজ্জামান-মতিউর","সালাম-বরকত","শহীদুল্লাহ কায়সার"], correct:1},
+  {n:43, q:"শ্রমিকদের প্রতিবাদী চেতনা 'ফেব্রুয়ারি, ১৯৬৯' কবিতার কোন ঘটনার ইঙ্গিত করে?", opts:["সাতচল্লিশের দেশবিভাগ","ছয় দফা আন্দোলন","ভাষা আন্দোলন","উনসত্তরের গণ অভ্যুত্থান"], correct:3},
+  {n:44, passageTag:"উদ্দীপক", passage:"আন্তর্জাতিক মাতৃভাষা দিবসে সাবিহা কালোপাড়ের সাদা শাড়িতে লাল রঙের সবগুলো বাংলা বর্ণমালা এঁকেছে। সাবিহার শাড়িতে আঁকা লাল বর্ণমালা যেন ভাষা শহিদদেরই কথা বলছে। (৪৪ ও ৪৫ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সাবিহার সাজ 'ফেব্রুয়ারি ১৯৬৯' কবিতায় বর্ণিত কোন ব্যক্তির কথা স্মরণ করিয়ে দেয়?", opts:["বরকত","রফিক","সালাম","সফিউর"], correct:2},
+  {n:45, q:"কবিতায় বর্ণিত ওই ব্যক্তি সম্পর্কে বলা যায়- i. তিনি একজন ভাষা শহিদ ii. তার চোখে আজ আলোচিত ঢাকা iii. তিনি আজও রাজপথে নেমে আসেন", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:46, passageTag:"উদ্দীপক", passage:"ভোরের ঠান্ডা বাতাসে বাবার হাত ধরে হাঁটতে হাঁটতে মুক্তিযুদ্ধের গল্প শোনে কিশোর রাশেদ। কেন্দ্রীয় শহিদ মিনারের সামনে দাঁড়িয়ে তার কিশোর কল্পনায় ভেসে ওঠে ছাত্র-জনতার বিশাল মিছিল। লাল ফুলের পাপড়ি দলিত করে ওরা এগিয়ে চলে সচিবালয়ের দিকে। তাদের হাতে, ব্যানারে বাংলা বর্ণমালা। রাশেদের চোখে অশ্রু, বুকের ভিতর আনন্দের ফোয়ারা। (৪৬ থেকে ৪৮ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকে শেষ লাইনের সাথে নিচের কোনটি সাদৃশ্যপূর্ণ?", opts:["ঝলকিত রক্তের বুদ্বুদ, स्मृतिগন্ধে ভরপুর","শিহরিত ক্ষণে ক্ষণে আনন্দের রৌদ্রে আর দুঃখের ছায়ায়","এখনো বীরের রক্তে দুঃখিনী মাতার অশ্রুজলে","কেউ বা ভীষণ জেদি, দারুণ বিপ্লবে ফেটে পড়া"], correct:1},
+  {n:47, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতার যে দিকটি উদ্দীপকে প্রতিফলিত হয়েছে- i. মুক্তিযুদ্ধের ভয়ংকর স্মৃতি ii. ছাত্র-জনতার বিশাল মিছিল iii. লাল ফুলের পাপড়ি দলিত করা", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:48, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতায় লক্ষণীয় বিষয়- i. বাঙালির সংগ্রামী মানসিকতা ii. বাঙালির স্বাধিকারবোধ iii. সংগ্রাম বাঙালির ঐতিহ্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:3},
+  {n:49, q:"'ফেব্রুয়ারি ১৯৬৯' কবিতায় ভাষা শহিদ সালামের নাম কতবার উল্লেখ করা হয়েছে?", opts:["তিন","চার","পাঁচ","ছয়"], correct:1},
+  {n:50, q:"উনসত্তরের গণঅভ্যুত্থানের প্রেক্ষাপটে রচিত 'ফেব্রুয়ারি ১৯৬৯' কবিতাটির মূল সুর নিচের কোনটিকে নির্দেশ করে?", opts:["উপনিবেশবাদ ও শোষণমুক্ত সমাজ গঠন","শহিদদের স্মৃতিচারণ ও শোক প্রকাশ","গণজাগরণ ও জাতীয়তাবাদী চেতনার উন্মেষ","প্রকৃতি ও মানুষের মেলবন্ধন"], correct:2}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>সোনার তরী — পাঠ পরিক্রমা | FAHAD'S TUTORIAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10201A;
+    --ink-deep:#0A1612;
+    --ink-soft:#193228;
+    --paper:#F8F1E2;
+    --paper-dim:#EFE5CC;
+    --paper-line:#D9CCA6;
+    --brass:#C8992E;
+    --brass-light:#E5C36A;
+    --maroon:#8A2A35;
+    --maroon-deep:#5E1B23;
+    --text-on-ink:#E9E4D2;
+    --text-on-ink-dim:#9FB3A4;
+    --text-ink:#221C12;
+    --text-muted:#6B5F45;
+    --green:#3E6B4C;
+    --red:#9B3B3B;
+    --radius:14px;
+    --serif:'Tiro Bangla','Spectral',serif;
+    --sans:'Hind Siliguri','Spectral',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-light);color:var(--ink-deep);}
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 80% -10%, rgba(200,153,46,0.18), transparent 55%),
+      linear-gradient(160deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--text-on-ink);
+    padding:64px 24px 96px;
+    overflow:hidden;
+    text-align:center;
+    border-bottom:1px solid rgba(200,153,46,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .ribbon{
+    position:absolute;
+    top:0;
+    right:14%;
+    width:34px;
+    height:230px;
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    opacity:0.92;
+  }
+  .ribbon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:18px;
+    width:1px;
+    height:130px;
+    background:rgba(255,255,255,0.18);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(200,153,46,0.08);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(48px, 11vw, 96px);
+    margin:22px 0 6px;
+    letter-spacing:0.01em;
+    color:var(--paper);
+  }
+  .hero .byline{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:20px;
+    color:var(--text-on-ink-dim);
+    margin:0 0 28px;
+  }
+  .hero .desc{
+    max-width:560px;
+    margin:0 auto 36px;
+    color:var(--text-on-ink-dim);
+    font-size:15.5px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stat-pill{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:108px;
+    padding:14px 18px;
+    border-radius:12px;
+    background:rgba(248,241,226,0.05);
+    border:1px solid rgba(200,153,46,0.28);
+  }
+  .stat-pill b{font-family:var(--serif);font-size:26px;color:var(--brass-light);font-weight:600;}
+  .stat-pill span{font-size:12.5px;color:var(--text-on-ink-dim);margin-top:2px;}
+
+  /* ---------- SHELL ---------- */
+  .shell{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:56px 0 22px;
+    color:var(--paper);
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--brass-light);
+    border:1px solid rgba(200,153,46,0.4);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-sub{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    margin:-8px 0 28px;
+  }
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:rgba(10,22,18,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(200,153,46,0.25);
+    padding:14px 20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="search"]{
+    flex:1;
+    min-width:160px;
+    background:rgba(248,241,226,0.06);
+    border:1px solid rgba(200,153,46,0.3);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:10px 14px;
+    border-radius:999px;
+    outline:none;
+  }
+  .toolbar input[type="search"]::placeholder{color:var(--text-on-ink-dim);}
+  .toolbar input[type="search"]:focus{border-color:var(--brass-light);box-shadow:0 0 0 3px rgba(200,153,46,0.18);}
+  .score-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text-on-ink-dim);
+    white-space:nowrap;
+  }
+  .score-badge b{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:17px;
+  }
+  .reset-btn{
+    background:transparent;
+    border:1px solid rgba(200,153,46,0.35);
+    color:var(--text-on-ink-dim);
+    font-family:var(--sans);
+    font-size:13px;
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .reset-btn:hover{border-color:var(--brass-light);color:var(--brass-light);}
+
+  /* ---------- PASSAGE BLOCK ---------- */
+  .passage{
+    position:relative;
+    background:rgba(248,241,226,0.04);
+    border:1px solid rgba(200,153,46,0.25);
+    border-left:3px solid var(--brass);
+    border-radius:8px;
+    padding:18px 22px 18px 26px;
+    margin:18px 0 18px;
+    color:var(--text-on-ink-dim);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:15.5px;
+    line-height:1.75;
+  }
+  .passage .tag{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+
+  /* ---------- QUESTION CARD ---------- */
+  .qcard{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    margin-bottom:16px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 14px 28px -16px rgba(0,0,0,0.5);
+    border:1px solid var(--paper-line);
+    position:relative;
+  }
+  .qcard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:14px;
+    bottom:14px;
+    width:3px;
+    border-radius:0 3px 3px 0;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
+    opacity:0.55;
+  }
+  .qcard.hidden{display:none;}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
+
+  .qhead{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .qnum{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--ink-soft);
+    border-radius:50%;
+    width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .qstem{
+    font-size:16px;
+    color:var(--text-ink);
+    padding-top:3px;
+  }
+
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-left:46px;
+  }
+  @media (max-width:560px){
+    .options{grid-template-columns:1fr;}
+  }
+  .opt{
+    text-align:right;
+    direction:rtl;
+    font-family:var(--sans);
+    font-size:14.5px;
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    color:var(--text-ink);
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .12s, border-color .15s, background .15s;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .opt .lab{
+    font-family:var(--serif);
+    font-weight:600;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .opt:hover{border-color:var(--brass);transform:translateY(-1px);}
+  .opt:focus-visible{outline:2px solid var(--maroon);outline-offset:2px;}
+  .opt.selected{border-color:var(--ink-soft);}
+  .opt.correct{background:#E4EFE3;border-color:var(--green);}
+  .opt.correct .lab{color:var(--green);}
+  .opt.wrong{background:#F4E3E3;border-color:var(--red);}
+  .opt.wrong .lab{color:var(--red);}
+  .qcard.locked .opt{cursor:default;}
+  .qcard.locked .opt:hover{transform:none;}
+
+  /* ---------- CREATIVE QUESTION ---------- */
+  .book{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:26px;
+    border:1px solid var(--paper-line);
+    box-shadow:0 18px 36px -20px rgba(0,0,0,0.55);
+  }
+  .book .passage{
+    background:var(--paper-dim);
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--maroon);
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .book .passage .tag{color:var(--maroon);}
+
+  .subq{
+    border-top:1px dashed var(--paper-line);
+    padding:18px 0;
+  }
+  .subq:first-of-type{border-top:none;}
+  .subq-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+  }
+  .subq-lab{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:18px;
+    color:var(--maroon);
+    flex:0 0 auto;
+  }
+  .subq-text{
+    flex:1;
+    font-size:15.5px;
+    color:var(--text-ink);
+    padding-top:1px;
+  }
+  .subq-toggle{
+    flex:0 0 auto;
+    font-size:12px;
+    color:var(--text-muted);
+    border:1px solid var(--paper-line);
+    border-radius:999px;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .subq.open .subq-toggle{background:var(--brass-light);color:var(--ink-deep);border-color:var(--brass);}
+  .subq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .subq.open .subq-answer{max-height:1400px;}
+  .subq-answer-inner{
+    margin:14px 0 0 30px;
+    padding:14px 18px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.85;
+    color:#33291a;
+  }
+  .subq-answer-inner p{margin:0 0 10px;}
+  .subq-answer-inner p:last-child{margin-bottom:0;}
+  .subq-answer-inner .verdict{
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--maroon);
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--text-on-ink-dim);
+    font-size:13px;
+    border-top:1px solid rgba(200,153,46,0.2);
+  }
+  footer .fname{
+    font-family:var(--serif);
+    color:var(--brass-light);
+    font-size:16px;
+    margin-bottom:6px;
+  }
+
+  /* ---------- FLOATING SCORE ---------- */
+  .float-score{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:var(--ink-deep);
+    color:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s;
+  }
+  .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
+  .float-score.bump{transform:scale(1.08);}
+
+  .empty-state{
+    text-align:center;
+    color:var(--text-on-ink-dim);
+    padding:50px 0;
+    font-size:14.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="ribbon" aria-hidden="true"></span>
+  <span class="eyebrow">বাংলা ১ম পত্র · কবিতা · Tasin Saimon</span>
+  <h1>সোনার তরী</h1>
+  <p class="byline">রবীন্দ্রনাথ ঠাকুর</p>
+  <p class="desc">বর্ষার খরস্রোতা নদীর পটভূমিতে মানবজীবনের নির্মম ও শাশ্বত সত্যের রূপক প্রকাশ— যেখানে মানুষের জীবন মহাকালের গর্ভে হারিয়ে গেলেও তার মহৎ সৃষ্টিকর্ম চিরকাল টিকে থাকে।</p>
+  <div class="stat-row">
+    <div class="stat-pill"><b>৫০</b><span>বহুনির্বাচনি</span></div>
+    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+    <div class="stat-pill"><b>১</b><span>মূল সুর</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৫০</div>
+  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+</div>
+
+<main class="shell">
+
+  <section id="mcq-section">
+    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি প্রশ্নের সঠিক অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+    <div id="mcqList"></div>
+    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+  </section>
+
+  <section id="creative-section">
+    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন</h2></div>
+    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে আদর্শ উত্তর দেখে নাও।</p>
+
+    <div class="book">
+      <div class="passage">
+        <span class="tag">উদ্দীপক (প্রশ্ন-১)</span>
+        একসময়ের ডাকসাইটে জমিদার नारायण চৌধুরী প্রজ্ঞা ও প্রতিভায় ছিলেন সবার শীর্ষে। তাঁর জীবনের অর্জিত সম্পদের সবটুকু উজাড় করে দিয়ে সন্তানদের মানুষ করেছেন তিনি। ছেলেমেয়েরা ডাক্তার ও ইঞ্জিনিয়ার হয়ে বিদেশে ভালো অবস্থানে রয়েছেন। কিন্তু বৃদ্ধ বাবার খোঁজখবর নেওয়ার সময় নেই তাদের কারও। বার্ধক্যের এই সংকটাপন্ন অবস্থায় তিনি বৃদ্ধাশ্রমেও যাননি সন্তানদের সম্মানের কথা ভেবে। এখন তাঁর সময় কাটে নিজের বাড়িতে একেবারে একা একা।
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ক.</span>
+          <span class="subq-text">'সোনার তরী' কবিতাটি কোন ছন্দে রচিত? <i>(জ্ঞানমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>'সোনার তরী' কবিতাটি মূলত <b>মাত্রাবৃত্ত ছন্দে (৮+৬ মাত্রার পূর্ণ পর্ব)</b> রচিত [cite: 2358]।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">খ.</span>
+          <span class="subq-text">'শূন্য নদীর তীরে রহিনু পড়ি-' — উক্তিটি ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <p>প্রশ্নোক্ত চরণটি দ্বারা মহাকালের অমোঘ নিয়মে মানুষের নিজের তৈরি শিল্প বা সৃষ্টিকর্ম সমাদৃত হলেও ব্যক্তি-মানুষের যে কোনো স্থান হয় না, সেই নির্মম অসহায়ত্ব ও চরম একাকীত্বকে বোঝানো হয়েছে [cite: 2214, 2215]।</p>
+            <p>'সোনার তরী' কবিতার রূপক অর্থে, কৃষক তাঁর জীবনের সমস্ত কষ্টার্জিত ফসল (সোনার ধান) মাঝির নৌকায় পরম যত্নে তুলে দেয় [cite: 2340, 2342]। কিন্তু সমস্ত ফসল নৌকায় জায়গা পেলেও শেষ পর্যন্ত ব্যক্তি-কৃষকের নিজের স্থান সেই নৌকায় হয় না [cite: 2215]। মহাকাল মানুষের কেবল কর্মফল বা সৃষ্টিকর্মটুকুই গ্রহণ করে, কিন্তু রক্তমাংসের নশ্বর ব্যক্তি-মানুষকে অবহেলায় পেছনে ফেলে যায়। ব্যক্তি-মানুষের এই অবধারিত মহাজাগতিক একাকীত্ব ও নিঃসঙ্গতাই 'শূন্য নদীর তীরে রহিনু পড়ি' চরণের মাধ্যমে অত্যন্ত করুণভাবে ফুটে উঠেছে [cite: 2214, 2215]।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">গ.</span>
+          <span class="subq-text">উদ্দীপকের নারায়ণ চৌধুরীর সঙ্গে 'সোনার তরী' কবিতার কৃষকের কোন দিকটির মিল রয়েছে? আলোচনা করো। <i>(প্রয়োগমূলক)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">উদ্দীপকের নারায়ণ চৌধুরীর সঙ্গে 'সোনার তরী' কবিতার কৃষকের আজীবন সাধনার ফসল অন্যকে অর্পণ করে নিজের চরম একাকীত্ব, শূন্যতা ও নিঃসঙ্গতার দিক থেকে গভীর মিল রয়েছে [cite: 2214, 2215]।</span>
+            <p>'সোনার তরী' কবিতায় দেখা যায়, কৃষক প্রতিকূল প্রকৃতির মাঝে অত্যন্ত কষ্ট করে যে সোনার ধান উৎপাদন করেছিলেন, তা তিনি মাঝির তরণীতে সম্পূর্ণ তুলে দেন [cite: 2340, 2342]। ফসল তোলার পর নদীর কূলে আর কোনো স্থান অবশিষ্ট থাকে না এবং তরীটি ফসল নিয়ে চলে গেলে কৃষক শূন্য নদীর তীরে একা পড়ে থাকেন [cite: 2214, 2215]। তাঁর সৃষ্টিকর্ম ঠাঁই পেলেও তাঁর নিজের কোনো ঠাঁই হয় না [cite: 2215]।</p>
+            <p>উদ্দীপকের নারায়ণ চৌধুরীও তাঁর জীবনের অর্জিত সমস্ত প্রতিভাবল ও সম্পদের সবটুকু উজাড় করে দিয়ে নিজের সন্তানদের অত্যন্ত সফলভাবে বড় করে তুলেছেন। তাঁর সন্তানরা উচ্চশিক্ষিত হয়ে সমাজে প্রতিষ্ঠিত হলেও বার্ধক্যে এসে বাবার পাশে দাঁড়ানোর মতো সময় বা মানসিকতা তাদের নেই। ফলে জীবনের শেষ প্রান্তে এসে তিনি নিজের তৈরি সুন্দর ও সফল পরিমণ্ডলের বাইরে একা কাটান। নিজের সর্বস্ব দান করে দিয়েও ব্যক্তি হিসেবে তাঁর এই একাকীত্ব ও অবহেলিত অবস্থা 'সোনার তরী' কবিতার সর্বস্ব সমর্পণকারী নিঃসঙ্গ কৃষকের ট্রাজিক পরিণতির সাথে সম্পূর্ণ সাদৃশ্যপূর্ণ [cite: 2214, 2215]।</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subq">
+        <div class="subq-head" data-toggle>
+          <span class="subq-lab">ঘ.</span>
+          <span class="subq-text">"সৃষ্টিকর্ম সর্বদা মূল্যবান, সৃষ্টিকর্তা নয়।" — উদ্দীপক ও 'সোনার তরী' কবিতার আলোকে মন্তব্যটি বিশ্লেষণ করো। <i>(উচ্চতর দক্ষতা)</i></span>
+          <span class="subq-toggle">উত্তর দেখাও</span>
+        </div>
+        <div class="subq-answer">
+          <div class="subq-answer-inner">
+            <span class="verdict">মহাকাল বা সমাজ মানুষের সৃষ্ট মহৎ কর্ম বা অবদানকে সাদরে গ্রহণ করলেও ব্যক্তি-সৃষ্টিকর্তাকে অবলীলায় ভুলে যায়— এই চিরন্তন দার্শনিক সত্যের প্রেক্ষিতে মন্তব্যটি উদ্দীপক ও 'সোনার তরী' কবিতার আলোকে সর্বাংশে বাস্তবসম্মত ও যথার্থ [cite: 2394, 2395, 2401]।</span>
+            <p>'সোনার তরী' কবিতার মূল অন্তর্নিহিত বাণীই হচ্ছে— পৃথিবী বা মহাকাল মানুষের কর্মের মূল্য দেয়, কিন্তু ব্যক্তি মানুষকে ধারণ করার মতো স্থান বা চিরন্তন সুযোগ তার নেই [cite: 2394, 2395, 2401]। কৃষক তার সারা জীবনের শ্রেষ্ঠ সঞ্চয় সোনার ধান নৌকায় তুলে দেওয়ার পর নিজে যখন নৌকায় উঠতে চায়, তখন মাঝি বলে— 'ঠাঁই নাই, ঠাঁই নাই, ছোটো সে তরী, আমারি সোনার ধানে গিয়েছে ভরি।' [cite: 2415] অর্থাৎ, সৃষ্টিকর্মটি পরম যত্ন সহকারে স্থান পেলেও সৃষ্টিকর্তা মানুষটি মহাকালের কাছে মূল্যহীন ও পরিত্যক্ত হয়ে নদীকূলে পড়ে থাকে [cite: 2214, 2215]।</p>
+            <p>উদ্দীপকে নারায়ণ চৌধুরীর জীবনের চরম সত্যটিও এর ব্যতিক্রম নয়। তাঁর জীবনের শ্রেষ্ঠ সৃষ্টিকর্ম বা অবদান ছিল তাঁর সন্তানরা, যাদের তিনি ডাক্তার-ইঞ্জিনিয়ার হিসেবে প্রতিষ্ঠিত করেছেন। সমাজ ও বিশ্ব সেই সন্তানদের মেধা ও কাজ গ্রহণ করেছে এবং তারা মূল্যবান স্থান অধিকার করে আছে। কিন্তু সেই সন্তানদের জন্মদাতা ও রূপকার স্বয়ং নারায়ণ চৌধুরী বার্ধক্যে এসে একা নিজ গৃহে অবহেলিত অবস্থায় দিন কাটাচ্ছেন। তাঁর কর্ম (সন্তানরা) স্থান পেয়েছে এবং মূল্যবান প্রমাণিত হয়েছে, কিন্তু তিনি সৃষ্টিকর্তা হিসেবে সন্তানদের কাছে গুরুত্বহীন হয়ে পড়েছেন।</p>
+            <p>সুতরাং, সামগ্রিক পর্যালোচনায় বলা যায়, উদ্দীপকের পারিবারিক বাস্তবতার ট্র্যাজেডি এবং 'সোনার তরী' কবিতার মহাজাগতিক রূপক ভাবাদর্শ উভয়ই এক সূত্রে গাঁথা। রক্তমাংসের মানুষ বা সৃষ্টিকর্তা একসময় জরা ও মহাকালের অমোঘ নিয়মে পৃথিবী থেকে হারিয়ে যায়, কিন্তু তার রেখে যাওয়া শ্রেষ্ঠ অবদান ও সৃষ্টিকর্ম সমাজ বা পৃথিবীর বুকে অনন্তকাল ধরে বেঁচে থাকে [cite: 2394, 2395, 2401]। তাই বলা যায়, "সৃষ্টিকর্ম সর্বদা মূল্যবান, সৃষ্টিকর্তা নয়" উক্তিটি সম্পূর্ণ সুপ্রতিষ্ঠিত [cite: 2394, 2395, 2401]।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fname">FAHAD'S TUTORIAL</div>
+  <span style="opacity:.7">House- 7, Road- 8, Block- C, Mirpur-10, Dhaka-1216 | Call: 01601-92 92 44 | www.ft.education</span>
+</footer>
+
+<div class="float-score" id="floatScore">
+  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ৫০</span>
+</div>
+
+<script>
+const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
+
+// সোনার তৈরী.pdf থেকে নিখুঁতভাবে সংগৃহীত ৫০টি MCQ প্রশ্নের সম্পূর্ণ নির্ভুল ডাটা অ্যারে
+const DATA = [
+  {n:1, q:"বৈরী পরিবেশে গান গাইতে গাইতে মাঝির এগিয়ে আসা তার কোন বৈশিষ্ট্য নির্দেশ করে?", opts:["শান্ত রূপ","সংগীত প্রেম","आनন্দিত আগমন","নির্মোহ মনোভাব"], correct:1},
+  {n:2, q:"'ঢেউগুলো নিরুপায়' কথাটির মধ্য দিয়ে মূলত কোন বিষয়টি বোঝানো হয়েছে?", opts:["খরস্রোতা নদীর উন্মত্ততা","বর্ষা প্রকৃতির রুদ্র রূপ","শিল্পস্রষ্টার অপূর্ণতা","কাল আপন গতিতে বহমান"], correct:3},
+  {n:3, q:"'বারেক ভিড়াও তরী কূলেতে এসে।' চরণটিতে কৃষকের কীরূপ আবেদন প্রকাশিত হয়েছে?", opts:["নির্দেশ","নিবেদন","অনুনয়","আদেশ"], correct:2},
+  {n:4, q:"'ওগো, তুমি কোথা যাও কোন বিদেশে?' — এখানে 'বিদেশ' বলতে কী বোঝানো হয়েছে?", opts:["অপরিচিত স্থানে","পাশ্চাত্য দেশে","দেশের বাইরে","গ্রামের বাড়িতে"], correct:0},
+  {n:5, q:"জলকে 'বাঁকা' বলে অভিহিত করার কারণ কী?", opts:["প্রতিকূল পরিস্থিতি","স্রোতের বক্রতা","নদীর পরিস্থিতি","জলের প্রবহমানতা"], correct:0},
+  {n:6, q:"'সোনার তরী' কবিতায় মাঝির প্রতি কৃষকের অনুনয় কীরূপ ছিল?", opts:["নির্মোহ","করুণ","সাধারণ","সনির্বন্ধ"], correct:3},
+  {n:7, q:"'গান গেয়ে তরী বেয়ে কে আসে পারে।' — প্রকৃতপক্ষে উক্তিটিতে কাকে ইঙ্গিত করা হয়েছে?", opts:["মৃত্যুদূত","মহাকাল","নিষ্ঠুর সময়","অপরিচিত মাঝি"], correct:1},
+  {n:8, q:"'সুকলি দিলাম তুলে' চরণটিতে কৃষকের কেমন মনোভাব প্রকাশিত হয়েছে?", opts:["স্থান না পাওয়ার আক্ষেপ","একা পড়ে থাকার হতাশা","আন্তরিক নিবেদন","অসহায় আত্মসমর্পণ"], correct:2},
+  {n:9, q:"'চারি দিকে বাঁকা জল করিছে খেলা।' — পঙক্তিটিতে প্রকাশ পেয়েছে —\ni. কালের গর্ভে সবকিছু হারানোর শঙ্কা\nii. বর্ষার পল্লিপ্রকৃতির মোহনীয় রূপ\niii. কৃষকরূপী কবির অসহায়ত্ব", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:1},
+  {n:10, q:"'শূন্য নদীর তীরে' কয় মাত্রার পর্ব?", opts:["৫ মাত্রার","৬ মাত্রার","৭ মাত্রার","৮ মাত্রার"], correct:3},
+  {n:11, q:"'সোনার তরী' কবিতায় কবির সৃষ্টিকর্মকে কী হিসেবে কল্পনা করা হয়েছে?", opts:["সম্পদ","নদীর স্রোত","ফসল","তরী"], correct:2},
+  {n:12, passageTag:"উদ্দীপক", passage:"ফকির লালন শাহ্ তাঁর সংগীতের মাধ্যমে হয়ে উঠেছেন মানুষের মনের মানুষ। তাই তিনি মরেও বেঁচে আছেন মানুষের হৃদয়ে। (১২ ও ১৩ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের লালন শাহ্ কর্মকাণ্ডকে 'সোনার তরী' কবিতার কোনটির সাথে তুলনা করা যায়?", opts:["নৌকার মাঝি","নদীর স্রোত","সোনার ধান","সোনার তরী"], correct:2},
+  {n:13, q:"উদ্দীপক ও 'সোনার তরী' কবিতার ভাবগত ঐক্য পরিলক্ষিত হয় —\ni. অতৃপ্তির বেদনা প্রকাশে\nii. কর্মফলের মহিমায়\niii. ব্যক্তিমানুষের পরিণতিতে", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:14, passageTag:"উদ্দীপক", passage:"সভ্যতার অনেক বড়ো আবিষ্কার চাকা। চাকা আবিষ্কারকের নাম অনেকে ভুলে গেছে। আবার আগুন ও কৃষিকাজ মানবসভ্যতার নবদ্বার উন্মোচন করলেও কে আবিষ্কার করেছিল আগুন, আর কে আরম্ভ করেছিল কৃষিকাজ, তার হদিস জানতে হলে ইতিহাসের আশ্রয় নিতে হবে। অথচ এর উপযোগিতা সমাজে বাড়ছে বৈ কমছে না। (১৪ ও ১৫ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের 'চাকা, আগুন ও কৃষিকাজ' 'সোনার তরী' কবিতায় কীসের प्रतीक?", opts:["ছোটো খেত","সোনার ধান","সোনার তরী","নিঃস্ব কৃষক"], correct:1},
+  {n:15, q:"উদ্দীপকে প্রকাশিত কবিতার ভাবসত্য হলো —\ni. ব্যক্তিমানুষ হারিয়ে যায়\nii. মহৎ কর্ম টিকে থাকে\niii. কর্মই মানুষের একমাত্র লক্ষ্য", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:16, passageTag:"উদ্দীপক", passage:"জামিল সাহেব তার সমস্ত সঞ্চয় দিয়ে নিজ গ্রামে দাতব্য চিকিৎসালয়সহ নানা সেবামূলক প্রতিষ্ঠান তৈরি করেন। প্রায় দুই যুগ আগে তিনি মারা গেলেও মানুষ তাঁর কৃতকর্মের দ্বারা আজ উপকৃত হচ্ছে। (১৬ ও ১৭ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের জামিল সাহেবের কীর্তি 'সোনার তরী' কবিতার কীসের প্রতীক?", opts:["সোনার তরী","সোনার ধান","অচেনা মাঝি","খরস্রোতা নদী"], correct:1},
+  {n:17, q:"উদ্দীপকের মূলভাব প্রকাশক চরণ —\ni. এখন আমারে লহো করুণা করে।\nii. সকলি দিলাম তুলে/ থরে বিথরে —\niii. আমারি সোনার ধানে গিয়েছে ভরি।", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:2},
+  {n:18, q:"'সোনার তরী' কবিতায় বর্ষার দিনে আকাশের মেঘ কেমন ছিল?", opts:["ঘন কৃষ্ণবর্ণ ও গুরুগম্ভীর","হালকা সাদা","মেঘমুক্ত ও পরিষ্কার","রৌদ্রোজ্জ্বল"], correct:0},
+  {n:19, q:"'কাটিতে কাটিতে ধান এল বরষা।' — চরণে কীসের প্রকাশ ঘটেছে?", opts:["কৃষকের আনন্দ","সময়ের দ্রুত প্রবহমানতা ও আসন্ন সংকট","বর্ষার আবাহন","ধান কাটার শেষ মুহূর্ত"], correct:1},
+  {n:20, passageTag:"উদ্দীপক", passage:"মানুষের মৃত্যু হলে তবুও মানব থেকে যায়; অতীতের থেকে উঠে আজকের মানুষের কাছে। (২০ ও ২১ নম্বর প্রশ্নের জন্য)", q:"উদ্দীপকের সঙ্গে 'সোনার তরী' কবিতার পার্থক্য কোথায়?", opts:["মৃত্যুর ভাবনায়","বিষয়বস্তুতে","পারমার্থিক চিন্তায়","মৃত্যুর অনিবার্যতায়"], correct:1},
+  {n:21, q:"উক্ত পার্থক্যের অন্তর্নিহিত কারণ —\ni. বিষয়বস্তু\nii. কবিদ্বয়ের ভিন্ন দৃষ্টিকোণ\niii. উদ্দীপকের কবির আশাবাদ", opts:["i ও ii","i ও iii","ii ও iii","i, ii ও iii"], correct:0},
+  {n:22, q:"'সোনার তরী' কবিতায় ছোট খেতটিকে কবি কার সাথে তুলনা করেছেন?", opts:["বিশাল পৃথিবীর সাথে","মানব জীবন বা মানুষের পার্থিব পরিমণ্ডলের সাথে","নদীর দ্বীপের সাথে","সোনার ধানের সাথে"], correct:1},
+  {n:23, q:"'বাঁকা জল' কিসের প্রতীক হিসেবে কবিতায় ব্যবহৃত হয়েছে?", opts:["নদীর স্বাভাবিক বাঁক","মহাকালের হিংস্রতা বা চারপাশের বৈরী পরিবেশ ও মৃত্যুভয়","স্বচ্ছ জলের ধারা","খেলার মাঠ"], correct:1},
+  {n:24, q:"'সোনার তরী' কবিতায় মাঝি কেমনভাবে নৌকা বেয়ে আসে?", opts:["কোনো কথা না বলে নীরবে","গান গেয়ে তরী বেয়ে অবলীলায়","দ্রুত গতিতে দাঁড় টেনে","কান্না করতে করতে"], correct:1},
+  {n:25, q:"কৃষকের মনে কেন আশা জেগেছিল?", opts:["মাঝিকে খুব চেনা চেনা মনে হয়েছিল বলে","প্রচুর ধনসম্পদ পাবে বলে","নতুন কোনো নৌকার দেখা পেয়ে","নদীর জল শান্ত হওয়ায়"], correct:0},
+  {n:26, q:"'থরে বিথরে' শব্দগুচ্ছের অর্থ কী?", opts:["এলোমেলোভাবে ছড়ানো","পরম সুশৃঙ্খলভাবে স্তরে স্তরে সাজানো","নদীর এপার-ওপার","আকাশ ও মেঘের খেলা"], correct:1},
+  {n:27, q:"'ঠাঁই নাই, ঠাঁই নাই' — মাঝি এই কথাটি কেন বলেছিল?", opts:["কৃষককে তার পছন্দ হয়নি বলে","নৌকাটি ছোট এবং তা কৃষকেরই সোনার ধানে পূর্ণ ছিল বলে","নৌকায় অন্য যাত্রী ছিল বলে","মাঝি একা থাকতে ভালোবাসত বলে"], correct:1},
+  {n:28, q:"কোন উদ্ধৃতির বা উদ্ধৃতিগুচ্ছের মাধ্যমে 'সোনার তরী' কবিতার কৃষকের অসহায়ত্ব ব্যক্ত করা যায়?", opts:["আমি অপার হয়ে বসে আছি ওহে দয়াময়","আমার সাম্পান যাত্রী না লয়, ভাঙা আমার তরী","এই আসা-যাওয়ার খেয়ার কূলে আমার বাড়ি","সময় গেলে সাধন হবে না"], correct:1},
+  {n:29, passageTag:"উদ্দীপক", passage:"পৃথিবীর এই সব গল্প বেঁচে রবে চিরকাল;\nএশিরিয়া ধূলো আজ বেবিলন ছাই হয়ে আছে। (২৯ ও ৩০ নম্বর প্রশ্নের জন্য)", q:"উক্ত কবিতাংশের ভাব তোমার পঠিত কোন কবিতাকে নির্দেশ করে?", opts:["সুচেতনা","বিদ্রোহী","সোনার তরী","প্রতিদান"], correct:2},
+  {n:30, q:"উক্ত নির্দেশনার পেছনে মূল যুক্তি হলো —", opts:["সাম্রাজ্যের পতন অবধারিত","সভ্যতার মহৎ কীর্তি অমর কিন্তু স্রষ্টা নশ্বর","প্রকৃতির রূপ পরিবর্তনশীল","ইতিহাসের স্মৃতিচারণ"], correct:1},
+  {n:31, q:"'সোনার তরী' কবিতার অন্তর্নিহিত রূপক অর্থ কোনটি?", opts:["কৃষি জীবনের বাস্তব চিত্র","নদী ভাঙনের ঐতিহাসিক দৃশ্য","মহাকাল ও মানুষের সৃষ্টিকর্মের শাশ্বত সম্পর্ক","নৌকা ভ্রমণের আনন্দ"], correct:2},
+  {n:32, q:"'রাশি রাশি ভারা ভারা' বলতে কী বোঝানো হয়েছে?", opts:["অল্প পরিমাণ ধান","অজস্র ও বিপুল পরিমাণ উৎপাদিত সোনার ফসল","নদীর তীব্র ঢেউ","আকাশের কালো মেঘের দল"], correct:1},
+  {n:33, q:"নদীটি কেমন ছিল বলে কবি উল্লেখ করেছেন?", opts:["শান্ত ও ধীরস্থির","ক্ষুরধারা বা খরস্রোতা এবং ধারালো ক্ষুরের মতো প্রবহমান","শুকনো ও জলহীন","ছোট খালের মতো"], correct:1},
+  {n:34, q:"ধান কাটার পর খেতের অবস্থা কেমন ছিল?", opts:["সবুজে ভরা","ফসলহীন ও শূন্য একাকী","মানুষে পূর্ণ","পাবলিক প্লেস"], correct:1},
+  {n:35, q:"'পরপার' শব্দের অর্থ কী?", opts:["নদীর ওপার বা রূপক অর্থে অন্য এক অজানা জগৎ","বিদেশের মাটি","নিজের গ্রাম","নৌকার ভেতরকার স্থান"], correct:0},
+  {n:36, q:"আকাশের মেঘ দেখে কৃষকের মনে কোন ভাব জাগ্রত হয়েছিল?", opts:["অপার আনন্দ ও উল্লাস","আসন্ন ঝড়ের বা বিপদের শঙ্কা ও চরম একাকীত্ব","বৃষ্টিতে ভেজার ব্যাকুলতা","ঘুমের অনুভূতি"], correct:1},
+  {n:37, q:"'তরী' শব্দের আভিধানিক অর্থ কী?", opts:["পাহাড়","নৌকা বা নৌকা সদৃশ জলযান","নদী","আকাশ"], correct:1},
+  {n:38, q:"'সোনার তরী' কবিতায় কোন ঋতুর পটভূমি স্পষ্ট?", opts:["বসন্ত ঋতু","বর্ষা ঋতু","শরৎ ঋতু","শীত ঋতু"], correct:1},
+  {n:39, q:"'শূন্য নদীর তীরে/ রহিনু পড়ি।' — বলতে কবি কী বোঝাতে চেয়েছেন?", opts:["মৃত্যুর অনিবার্যতা","কালের প্রবহমানতা","কৃষক তথা ব্যক্তি-মানুষের চরম অসহায়তা ও শূন্যতা","অপ্রাপ্তির বেদনা"], correct:2},
+  {n:40, q:"মাঝির তরীতে কৃষক নিজে স্থান পেলেন না কেন?", opts:["তরীটি ছোট ছিল এবং ধানেই পূর্ণ হয়ে গিয়েছিল বলে","কৃষক নিজেই উঠতে চাননি বলে","মাঝি তাকে চিল না বলে","কৃষকের কাছে ভাড়া ছিল না বলে"], correct:0},
+  {n:41, q:"'সোনার তরী' কবিতাটি প্রথম কোন পত্রিকায় প্রকাশিত হয়?", opts:["সবুজপত্র","সাধনা","বঙ্গদর্শন","প্রবাসী"], correct:1},
+  {n:42, q:"রবীন্দ্রনাথ ঠাকুর কত সালে নোবেল পুরস্কার লাভ করেন?", opts:["১৯১১","১৯১৩","১৯১৫","১৯২১"], correct:1},
+  {n:43, q:"'সোনার তরী' কাব্যের নাম-কবিতা কোনটি?", opts:["হিং টিং ছট","সোনার তরী","পরশ পাথর","দুই বিঘা জমি"], correct:1},
+  {n:44, q:"'হেরে' শব্দের অর্থ কী?", opts:["পরাজিত হয়ে","দেখে বা দর্শন করে","হারিয়ে যাওয়া","ডেকে নেওয়া"], correct:1},
+  {n:45, q:"'সোনার তরী' কবিতায় মেঘ কাকে ঘিরে ডাকছিল?", opts:["নৌকাকে","গগন বা আকাশকে","খেতটিকে","মাঝিকে"], correct:1},
+  {n:46, q:"'সোনার তরী' কবিতায় 'মাঝি' প্রকৃতপক্ষে কিসের রূপক?", opts:["সাধারণ দিনমজুরের","নির্দয় মহাকাল বা কালের স্রোতের","ঈশ্বরের","মৃত্যুদূতের"], correct:1},
+  {n:47, q:"'সোনার ধান' প্রকৃতপক্ষে মানুষের কোন জিনিসকে নির্দেশ করে?", opts:["খাদ্যশস্যকে","মানুষের সারাজীবনের মহৎ সৃষ্টি ও কর্মফলকে","পার্থিব সোনাকে","লোভ-লালসাকে"], correct:1},
+  {n:48, q:"'আমি একেলা' কথাটির মধ্য দিয়ে মূলত কোন দিকটি উন্মোচিত হয়েছে?", opts:["পৃথিবীতে মানুষ একা","শিল্পস্রষ্টার অপূর্ণতা ও মহাকালের কাছে ব্যক্তির নিঃসঙ্গতা","কৃষকের একা থাকা","মহাকালের পরম শূন্যতা"], correct:1},
+  {n:49, q:"'সোনার তরী' কবিতার ছন্দ-বিন্যাস কেমন?", opts:["৮+৬ মাত্রার মাত্রাবৃত্ত","৮+৮ মাত্রার অক্ষরবৃত্ত","৬+৪ মাত্রার স্বরবৃত্ত","মুক্তক গদ্যছন্দ"], correct:0},
+  {n:50, q:"'সোনার তরী' কবিতার মূল বাণী বা শিক্ষা কোনটি?", opts:["কৃষিকাজ অনেক কঠিন","মহাকাল মানুষের সৃষ্টিকে গ্রহণ করে কিন্তু স্রষ্টাকে নয়","নদীমাতৃক জীবন সুন্দর","সব ফসলই সোনা দিয়ে তৈরি"], correct:1}
+];
+
+const LAB = ['ক','খ','গ','ঘ'];
+
+function buildMcq(){
+  const list = document.getElementById('mcqList');
+  list.innerHTML = '';
+  DATA.forEach(item=>{
+    if(item.passage){
+      const p = document.createElement('div');
+      p.className = 'passage';
+      p.dataset.search = (item.passage||'').toLowerCase();
+      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
+      list.appendChild(p);
+    }
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'q'+item.n;
+    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'qhead';
+    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    card.appendChild(head);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    item.opts.forEach((opt,i)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
+      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    list.appendChild(card);
+  });
+}
+
+let attempted = {};
+function updateScore(){
+  let correctCount = Object.values(attempted).filter(v=>v===true).length;
+  document.getElementById('liveScore').textContent = toBn(correctCount);
+  const fs = document.getElementById('floatScoreNum');
+  fs.textContent = toBn(correctCount);
+  const badge = document.getElementById('floatScore');
+  badge.classList.add('bump');
+  setTimeout(()=>badge.classList.remove('bump'), 200);
+}
+
+function selectOption(card, item, i, btn, optsWrap){
+  if(card.classList.contains('locked')) return;
+  card.classList.add('locked');
+  const buttons = optsWrap.querySelectorAll('.opt');
+  buttons.forEach((b, idx)=>{
+    b.classList.add('selected');
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('wrong');
+  });
+  const isCorrect = (i === item.correct);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  attempted[item.n] = isCorrect;
+  updateScore();
+}
+
+function resetAll(){
+  attempted = {};
+  buildMcq();
+  updateScore();
+  document.getElementById('search').value = '';
+  filterQuestions('');
+}
+
+function filterQuestions(term){
+  term = term.trim().toLowerCase();
+  const cards = document.querySelectorAll('#mcqList .qcard');
+  const passages = document.querySelectorAll('#mcqList .passage');
+  let anyVisible = false;
+  cards.forEach(c=>{
+    const match = !term || c.dataset.search.includes(term);
+    c.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+  });
+  passages.forEach(p=>{
+    let el = p.nextElementSibling;
+    let show = false;
+    while(el && !el.classList.contains('passage')){
+      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
+      el = el.nextElementSibling;
+    }
+    p.style.display = (!term || show) ? '' : 'none';
+  });
+  document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+}
+
+document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+document.querySelectorAll('[data-toggle]').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const subq = head.closest('.subq');
+    const isOpen = subq.classList.contains('open');
+    subq.classList.toggle('open', !isOpen);
+    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+  });
+});
+
+buildMcq();
+updateScore();
+</script>
+</body>
+</html>
