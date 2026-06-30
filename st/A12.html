@@ -3,32 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>সাহিত্যে খেলা — পাঠ পরিক্রমা | </title>
+<title>সাহিত্যে খেলা — পাঠ পরিক্রমা | TASIN SAIMON</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#10201A;
-    --ink-deep:#0A1612;
-    --ink-soft:#193228;
-    --paper:#F8F1E2;
-    --paper-dim:#EFE5CC;
-    --paper-line:#D9CCA6;
-    --brass:#C8992E;
-    --brass-light:#E5C36A;
-    --maroon:#8A2A35;
-    --maroon-deep:#5E1B23;
-    --text-on-ink:#E9E4D2;
-    --text-on-ink-dim:#9FB3A4;
-    --text-ink:#221C12;
-    --text-muted:#6B5F45;
-    --green:#3E6B4C;
-    --red:#9B3B3B;
-    --radius:14px;
-    --serif:'Tiro Bangla','Spectral',serif;
-    --sans:'Hind Siliguri','Spectral',sans-serif;
-  }
+  :root{\n    --ink:#10201A;\n    --ink-deep:#0A1612;\n    --ink-soft:#193228;\n    --paper:#F8F1E2;\n    --paper-dim:#EFE5CC;\n    --paper-line:#D9CCA6;\n    --brass:#C8992E;\n    --brass-light:#E5C36A;\n    --maroon:#8A2A35;\n    --maroon-deep:#5E1B23;\n    --text-on-ink:#E9E4D2;\n    --text-on-ink-dim:#9FB3A4;\n    --text-ink:#221C12;\n    --text-muted:#6B5F45;\n    --green:#3E6B4C;\n    --red:#9B3B3B;\n    --radius:14px;\n    --serif:'Tiro Bangla','Spectral',serif;\n    --sans:'Hind Siliguri','Spectral',sans-serif;\n  }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -268,13 +248,13 @@
     top:14px;
     bottom:14px;
     width:3px;
-    border-radius:0 6px 6px 0;
+    border-radius:0 3px 3px 0;
     background:repeating-linear-gradient(180deg, var(--maroon) 0 6px, transparent 6px 12px);
     opacity:0.55;
   }
   .qcard.hidden{display:none;}
-  .qcard.answered-correct{border-color:var(#06402B);}
-  .qcard.answered-wrong{border-color:var(#8B0000);}
+  .qcard.answered-correct{border-color:var(--green);}
+  .qcard.answered-wrong{border-color:var(--red);}
 
   .qhead{
     display:flex;
@@ -309,8 +289,7 @@
     .options{grid-template-columns:1fr;}
   }
   .opt{
-    text-align:right;
-    direction:rtl;
+    text-align:left;
     font-family:var(--sans);
     font-size:14.5px;
     background:var(--paper-dim);
@@ -455,14 +434,12 @@
   }
   .float-score b{font-family:var(--serif);color:var(--brass-light);font-size:16px;}
   .float-score.bump{transform:scale(1.08);}
-
   .empty-state{
     text-align:center;
     color:var(--text-on-ink-dim);
     padding:50px 0;
     font-size:14.5px;
   }
-
   @media (prefers-reduced-motion: reduce){
     *{transition:none !important; animation:none !important; scroll-behavior:auto !important;}
   }
@@ -470,200 +447,418 @@
 </head>
 <body>
 
-<header class="hero">
-  <span class="ribbon" aria-hidden="true"></span>
-  <span class="eyebrow">বাংলা ১ম পত্র · প্রবন্ধ · TASIN SAIMON</span>
-  <h1>সাহিত্যে খেলা</h1>
-  <p class="byline">প্রমথ চৌধুরী</p>
-  <p class="desc">সাহিত্যচর্চার প্রকৃত লক্ষ্য ও আদর্শ বিশ্লেষণ, যেখানে সাহিত্যকে শিক্ষার উদ্দেশ্য বা মনোরঞ্জনের ঊর্ধ্বে স্থান দিয়ে নিছক উদ্দেশ্যহীন আনন্দের মাধ্যম হিসেবে সাব্যস্ত করা হয়েছে।</p>
-  <div class="stat-row">
-    <div class="stat-pill"><b>১০</b><span>বহুনির্বাচনি</span></div>
-    <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
-    <div class="stat-pill"><b>১</b><span>মূল প্রতিপাদ্য</span></div>
-  </div>
-</header>
+ <header class="hero">
+   <span class="ribbon" aria-hidden="true"></span>
+   <span class="eyebrow">বাংলা ১ম পত্র · প্রবন্ধ · TASIN SAIMON</span>
+   <h1>সাহিত্যে খেলা</h1>
+   <p class="byline">প্রমথ চৌধুরী</p>
+   <p class="desc">সাহিত্যচর্চার আদর্শ, উদ্দেশ্য এবং খেলাচ্ছলে আনন্দলাভের তাৎপর্য নিয়ে প্রমথ চৌধুরীর বিখ্যাত প্রবন্ধের পূর্ণাঙ্গ পাঠ-পরিক্রমা ও মূল্যায়ন।</p>
+   <div class="stat-row">
+     <div class="stat-pill"><b>৩৪</b><span>বহুনির্বাচনি</span></div>
+     <div class="stat-pill"><b>০১</b><span>সৃজনশীল</span></div>
+     <div class="stat-pill"><b>১০০%</b><span>সঠিক উত্তর</span></div>
+   </div>
+ </header>
 
-<div class="toolbar">
-  <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
-  <div class="score-badge">সঠিক: <b id="liveScore">০</b>/১০</div>
-  <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
-</div>
+ <div class="toolbar">
+   <input id="search" type="search" placeholder="প্রশ্ন নম্বর বা শব্দ লিখে খুঁজুন…" autocomplete="off" />
+   <div class="score-badge">সঠিক: <b id="liveScore">০</b>/৩৪</div>
+   <button class="reset-btn" id="resetBtn" type="button">রিসেট করো</button>
+ </div>
 
-<main class="shell">
+ <main class="shell">
+   <section id="mcq-section">
+     <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
+     <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
+     <div id="mcqList"></div>
+     <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
+   </section>
 
-  <section id="mcq-section">
-    <div class="section-head"><span class="num">০১</span><h2>বহুনির্বাচনি প্রশ্ন</h2></div>
-    <p class="section-sub">প্রতিটি প্রশ্নের একটি অপশনে ক্লিক করো — সঠিক উত্তর সবুজ রঙে দেখাবে।</p>
-    <div id="mcqList"></div>
-    <p class="empty-state" id="emptyState" style="display:none;">কোনো প্রশ্ন পাওয়া যায়নি — অন্য শব্দ দিয়ে খুঁজে দেখো।</p>
-  </section>
+   <section id="creative-section">
+     <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
+     <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+     <div class="book">
+       <div class="passage">
+         <span class="tag">উদ্দীপক</span>
+         কয়েকটি বালক মেঘলা দিনে ঝড়-বৃষ্টি উপেক্ষা করে মাঠে উদ্দেশ্যহীনভাবে ছোটাছুটি করে খেলা করছিল এবং কাদা মাখামাখি করে আনন্দ পাচ্ছিল। মুনির দূর থেকে ছেলেদের এই ছোটাছুটি দেখছিল এবং উপলব্ধি করছিল যে, ছেলেদের এই খেলার পেছনে কোনো বস্তুগত বা বৈষয়িক উদ্দেশ্য নেই, কেবল আনন্দ পাওয়াই এদের মূল লক্ষ্য। সাহিত্যচর্চার উদ্দেশ্যও ঠিক এমনই হওয়া উচিত।
+       </div>
 
-  <section id="creative-section">
-    <div class="section-head"><span class="num">০২</span><h2>সৃজনশীল প্রশ্ন — ১</h2></div>
-    <p class="section-sub">প্রতিটি অংশের পাশে থাকা বোতামে ক্লিক করে মডেল উত্তর দেখো।</p>
+       <div class="subq">
+         <div class="subq-head" data-toggle>
+           <span class="subq-lab">ক</span>
+           <span class="subq-text">'সাহিত্যে খেলা' প্রবন্ধটির লেখক কে?</span>
+           <span class="subq-toggle">উত্তর দেখাও</span>
+         </div>
+         <div class="subq-answer">
+           <div class="subq-answer-inner">
+             <p><span class="verdict">[জ্ঞানমূলক]</span> 'সাহিত্যে খেলা' প্রবন্ধটির লেখক প্রমথ চৌধুরী।</p>
+           </div>
+         </div>
+       </div>
 
-    <div class="book">
-      <div class="passage">
-        <span class="tag">উদ্দীপক</span>
-        একদল বালক শীতের সকালে কুয়াশা আর কনকনে ঠাণ্ডা উপেক্ষা করে মনের আনন্দে মেঠো মাঠে গোল্লাছুট খেলছিল। খেলার মাঝে তাদের কোনো বৈষয়িক লাভ কিংবা পুরস্কার পাওয়ার লোভ ছিল না। পথচলতি মুনির সাহেব কিছুক্ষণ দাঁড়িয়ে থেকে বালকদের এই স্বতঃস্ফূর্ত ও আনন্দঘন ছোটাছুটি দেখে গভীরভাবে উপলব্ধি করলেন যে, মানুষের জীবনের সব কাজ কোনো সুনির্দিষ্ট বৈষয়িক বা জাগতিক উদ্দেশ্য সাধনের জন্য হওয়া উচিত নয়; কিছু কাজ হওয়া উচিত সম্পূর্ণ নিছক মনের পরম আনন্দের জন্য।
-      </div>
+       <div class="subq">
+         <div class="subq-head" data-toggle>
+           <span class="subq-lab">খ</span>
+           <span class="subq-text">"মনোরঞ্জনের সামগ্রী আজ কেউ পছন্দ করতে পারে, কিন্তু কাল খেলতে খেলতে ভেঙেও ফেলতে পারে"— উক্তিটি ব্যাখ্যা করো।</span>
+           <span class="subq-toggle">উত্তর দেখাও</span>
+         </div>
+         <div class="subq-answer">
+           <div class="subq-answer-inner">
+             <p><span class="verdict">[অনুধাবনমূলক]</span> উক্তিটি দ্বারা সাময়িক জনরঞ্জন বা পাঠকের তাৎক্ষণিক মনোরঞ্জনের জন্য রচিত সাহিত্যের ক্ষণস্থায়ী প্রকৃতিকে বোঝানো হয়েছে।</p>
+             <p>প্রমথ চৌধুরীর মতে, হাততালি বা বাহবা পাওয়ার উদ্দেশ্যে যদি সাহিত্য রচিত হয়, তবে তা সাহিত্যের আসল উদ্দেশ্য থেকে বিচ্যুত হয়। মনোরঞ্জনের সামগ্রী মানুষের সাময়িক ভালো লাগা তৈরি করতে পারে, কিন্তু মানুষের রুচি পরিবর্তনশীল হওয়ায় তা দ্রুত গুরুত্বহীন হয়ে পড়ে। তাই খাটি সাহিত্য সৃষ্টির লক্ষ্য মনোরঞ্জন নয়, বরং চিরায়ত আনন্দ দান হওয়া উচিত।</p>
+           </div>
+         </div>
+       </div>
 
-      <div class="subq">
-        <div class="subq-head" data-toggle>
-          <span class="subq-lab">ক.</span>
-          <span class="subq-text">'সাহিত্যে খেলা' প্রবন্ধের লেখকের মতে সাহিত্যের প্রধান উদ্দেশ্য কী? <i>(জ্ঞানমূলক)</i></span>
-          <span class="subq-toggle">উত্তর দেখাও</span>
-        </div>
-        <div class="subq-answer">
-          <div class="subq-answer-inner">
-            <p>'সাহিত্যে খেলা' প্রবন্ধের প্রাবন্ধিক প্রমথ চৌধুরীর মতে সাহিত্যের প্রধান ও আসল উদ্দেশ্য হলো সকলকে <b>নিছক আনন্দদান করা</b>।</p>
-          </div>
-        </div>
-      </div>
+       <div class="subq">
+         <div class="subq-head" data-toggle>
+           <span class="subq-lab">গ</span>
+           <span class="subq-text">উদ্দীপকের বালকদের উদ্দেশ্যহীন ছোটাছুটির আনন্দলাভের বিষয়টি 'সাহিত্যে খেলা' প্রবন্ধের কোন দিকটিকে নির্দেশ করে? আলোচনা করো।</span>
+           <span class="subq-toggle">উত্তর দেখাও</span>
+         </div>
+         <div class="subq-answer">
+           <div class="subq-answer-inner">
+             <p><span class="verdict">[প্রয়োগমূলক]</span> উদ্দীপকের বালকদের উদ্দেশ্যহীন ছোটাছুটি করে আনন্দলাভের বিষয়টি 'সাহিত্যে খেলা' প্রবন্ধে বর্ণিত সাহিত্যের মূল উদ্দেশ্য তথা "নিছক আনন্দ অবগাহন ও উদ্দেশ্যহীন আনন্দ সৃষ্টি"-র দিকটিকে নির্দেশ করে।</p>
+             <p>'সাহিত্যে খেলা' প্রবন্ধে লেখক প্রমথ চৌধুরী সাহিত্যচর্চাকে খেলার সাথে তুলনা করেছেন। খেলার যেমন কোনো বাহ্যিক বা বৈষয়িক বৈষয়িক লাভ-ক্ষতির উদ্দেশ্য থাকে না, কেবল আনন্দলাভই একমাত্র উদ্দেশ্য হয়; প্রকৃত সাহিত্যের উদ্দেশ্যও ঠিক তাই। উদ্দীপকের বালকেরা প্রতিকূল আবহাওয়া উপেক্ষা করে যে খেলা খেলছিল, তা কোনো বৈষয়িক উদ্দেশ্য ছাড়াই কেবল পরম আনন্দের জন্য। এই নিঃস্বার্থ আনন্দলাভের প্রক্রিয়াটিই সাহিত্যের চিরন্তন লক্ষ্যের সাথে পুরোপুরি সংগতিপূর্ণ।</p>
+           </div>
+         </div>
+       </div>
 
-      <div class="subq">
-        <div class="subq-head" data-toggle>
-          <span class="subq-lab">খ.</span>
-          <span class="subq-text">"সাহিত্যের উদ্দেশ্য শিক্ষাদান নয়"— প্রাবন্ধিক এ কথা কেন বলেছেন? ব্যাখ্যা করো। <i>(অনুধাবনমূলক)</i></span>
-          <span class="subq-toggle">উত্তর দেখাও</span>
-        </div>
-        <div class="subq-answer">
-          <div class="subq-answer-inner">
-            <p>শিক্ষার উদ্দেশ্য হলো মানুষকে কোনো তত্ত্ব বা জ্ঞানের বিষয় জানানো, কিন্তু সাহিত্যের উদ্দেশ্য মানুষের হৃদয়ে সুখানুভূতির সাড়া জাগানো ও আনন্দ দেওয়া বলেই লেখক এ কথা বলেছেন।</p>
-            <p>প্রমথ চৌধুরী মনে করেন, সাহিত্যকে যদি কোনো সুনির্দিষ্ট শিক্ষাদানের মাধ্যম বা হাতিয়ার হিসেবে ব্যবহার করা হয়, তবে তা নিজের আসল রস ও মহিমা হারিয়ে ফেলে। বিজ্ঞান বা দর্শন শাস্ত্র মানুষকে বৈষয়িক ও জাগতিক জ্ঞান দান করে, কিন্তু সাহিত্য মানুষের মনকে সমস্ত জাগতিক বন্ধন থেকে মুক্ত করে এক অপার্থিব স্বতঃস্ফূর্ত আনন্দ দেয়। খেলাচ্ছলে মনের এই রসাস্বাদনই সাহিত্যের কাজ, সরাসরি উপদেশ বা শিক্ষা দেওয়া নয়।</p>
-          </div>
-        </div>
-      </div>
+       <div class="subq">
+         <div class="subq-head" data-toggle>
+           <span class="subq-lab">ঘ</span>
+           <span class="subq-text">"মুনিরের উপলব্ধি 'সাহিত্যে খেলা' প্রবন্ধের আলোকে যথার্থ"— উক্তিটির সার্থকতা মূল্যায়ন করো।</span>
+           <span class="subq-toggle">উত্তর দেখাও</span>
+         </div>
+         <div class="subq-answer">
+           <div class="subq-answer-inner">
+             <p><span class="verdict">[উচ্চতর দক্ষতামূলক]</span> প্রমথ চৌধুরীর 'সাহিত্যে খেলা' প্রবন্ধের মূল প্রতিপাদ্যের আলোকে উদ্দীপকের মুনিরের উপলব্ধিটি সম্পূর্ণরূপে যথার্থ এবং যুক্তিযুক্ত।</p>
+             <p>প্রবন্ধে প্রমথ চৌধুরী স্পষ্টভাবে উল্লেখ করেছেন যে, সাহিত্যের প্রধান আদর্শ হলো মানুষকে আনন্দ দেওয়া, কারো সস্তা মনোরঞ্জন করা কিংবা জোরপূর্বক শিক্ষাদান করা নয়। শিক্ষার কাজ যেখানে মানুষের মনকে বিভিন্ন তথ্যের সাথে পরিচয় করিয়ে দেওয়া, সেখানে সাহিত্যের কাজ মানুষের অন্তর্নিহিত মনকে জাগ্রত করা ও আনন্দ দেওয়া। উদ্দীপকের মুনির বালকদের উদ্দেশ্যহীন খেলা দেখে বুঝতে পেরেছিল যে, এর পেছনে কোনো বাস্তব স্বার্থ নেই, কেবলই নিছক আনন্দ রয়েছে— যা প্রকৃত সাহিত্যেরও মূল ভিত্তি। অতএব, মুনিরের এই অনুধাবন প্রবন্ধের মূল সুর ও লেখকের বক্তব্যের সাথে সম্পূর্ণ একাত্ম হওয়ায় তা অনস্বীকার্যভাবে সার্থক।</p>
+           </div>
+         </div>
+       </div>
 
-      <div class="subq">
-        <div class="subq-head" data-toggle>
-          <span class="subq-lab">গ.</span>
-          <span class="subq-text">উদ্দীপকের বালকদের খেলাধুলার বিষয়টি 'সাহিত্যে খেলা' প্রবন্ধের কোন বিশেষ দিককে নির্দেশ করে? ব্যাখ্যা করো। <i>(প্রয়োগমূলক)</i></span>
-          <span class="subq-toggle">উত্তর দেখাও</span>
-        </div>
-        <div class="subq-answer">
-          <div class="subq-answer-inner">
-            <span class="verdict">উদ্দীপকের বালকদের প্রতিকূল আবহাওয়া উপেক্ষা করে কোনো বৈষয়িক লাভ ছাড়া খেলাধুলার বিষয়টি 'সাহিত্যে খেলা' প্রবন্ধে বর্ণিত সাহিত্যের "উদ্দেশ্যহীন ও স্বতঃস্ফূর্ত আনন্দ-অবগাহন"-এর দিকটিকে নির্দেশ করে।</span>
-            <p>'সাহিত্যে খেলা' প্রবন্ধে প্রমথ চৌধুরী সাহিত্যচর্চাকে খেলাচ্ছলে আনন্দের সাথে তুলনা করেছেন। খেলা যেমন কোনো বস্তুগত লাভ বা বৈষয়িক স্বার্থের কথা চিন্তা করে খেলা হয় না, স্রেফ মনের আনন্দের জন্য মানুষ খেলায় মত্ত হয়; প্রকৃত সাহিত্যসৃষ্টি এবং সাহিত্যপাঠও তেমনই কোনো জাগতিক উদ্দেশ্য বা মনোরঞ্জনের বশবর্তী হয়ে হওয়া উচিত নয়।</p>
-            <p>উদ্দীপকেও দেখা যায়, বালকেরা তীব্র শীত ও কুয়াশা উপেক্ষা করে কোনো পুরস্কার বা বৈষয়িক ফায়দার কথা না ভেবে কেবল আনন্দের জন্য গোল্লাছুট খেলছিল। তাদের এই উদ্দেশ্যহীন স্বতঃস্ফূর্ত আনন্দলাভের প্রক্রিয়াটি প্রাবন্ধিকের সাহিত্য সম্পর্কিত মূল দর্শনের সাথে সম্পূর্ণ সংগতিপূর্ণ।</p>
-          </div>
-        </div>
-      </div>
+     </div>
+   </section>
+ </main>
 
-      <div class="subq">
-        <div class="subq-head" data-toggle>
-          <span class="subq-lab">ঘ.</span>
-          <span class="subq-text">"উদ্দীপকের মুনিরের উপলব্ধি মূলত 'সাহিত্যে খেলা' প্রবন্ধের মূল সুরেরই সার্থক স্বীকৃতি"— মন্তব্যটির যথার্থতা বিচার করো। <i>(উচ্চতর দক্ষতা)</i></span>
-          <span class="subq-toggle">উত্তর দেখাও</span>
-        </div>
-        <div class="subq-answer">
-          <div class="subq-answer-inner">
-            <span class="verdict">উদ্দীপক এবং 'সাহিত্যে খেলা' প্রবন্ধের দার্শনিক চেতনা ও গভীর মনস্তত্ত্ব বিশ্লেষণ করলে প্রতীয়মান হয় যে, মন্তব্যটি সর্বাংশে যথার্থ ও যুক্তিযুক্ত।</span>
-            <p>প্রবন্ধে প্রাবন্ধিক স্পষ্ট করেছেন যে, হাততালি, বাহবা বা অন্যের সাময়িক মনোরঞ্জনের জন্য যে সাহিত্য রচিত হয়, তা দীর্ঘস্থায়ী হয় না। মনোরঞ্জনের সামগ্রী মানুষ আজ পছন্দ করলেও কাল তা ভেঙে ফেলতে পারে। কিন্তু খেলাচ্ছলে সাহিত্যচর্চার মাধ্যমে মানুষের মনে যে নির্মল আনন্দের সৃষ্টি হয়, তা চিরন্তন। সাহিত্যের কাজ হলো কোনো জাগতিক চাওয়া-পাওয়ার গণ্ডি পেরিয়ে মানবাত্মাকে এক পরম তৃপ্তি ও সুখানুভূতি উপহার দেওয়া।</p>
-            <p>উদ্দীপকের মুনির সাহেব যখন মাঠে বালকদের উদ্দেশ্যহীনভাবে পরম উৎসাহে ছুটে চলা দেখলেন, তখন তাঁর মনেও এই গভীর জীবনসত্যটি উদিত হলো যে, জীবনের সবকিছুতেই জাগতিক লাভ-ক্ষতির হিসাব খোঁজা ঠিক নয়; কিছু কাজ হওয়া উচিত সম্পূর্ণ নিছক অন্তরের আনন্দের জন্য।</p>
-            <p>অতএব, মুনির সাহেবের এই অন্তর্নিহিত উপলব্ধিটি আসলে প্রমথ চৌধুরীর সাহিত্যের আদর্শ ও উদ্দেশ্যের ধারণারই অবিকল রূপান্তর। খেলাধুলার আনন্দের মধ্য দিয়ে মুনির যে সত্য বুঝতে পেরেছেন, প্রাবন্ধিক সেই একই সত্য সাহিত্যের ক্ষেত্রে প্রবর্তন করেছেন। তাই নিঃসন্দেহে বলা যায়, মুনিরের উপলব্ধি প্রবন্ধের মূল সুরের এক সার্থক ও যথার্থ স্বীকৃতি বহন করে।</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+ <div class="float-score" aria-live="polite">স্কোর: <b id="floatScore">০/৩৪</b></div>
 
-</main>
-
-<footer>
-  <div class="fname">TASIN SAIMON</div>
-  <span style="opacity:.7">এই পাতাটি পাঠ-সহায়িকার একান্ত ব্যক্তিগত চর্চার জন্য সাজানো হয়েছে।</span>
-</footer>
-
-<div class="float-score" id="floatScore">
-  <span>📖 সঠিক উত্তর</span><b id="floatScoreNum">০</b><span>/ ১০</span>
-</div>
+ <footer>
+   <div class="fname">TASIN SAIMON</div>
+   <div>© ২০২৬ সর্বস্বত্ব সংরক্ষিত · সাহিত্য খেলা পাঠ পরিক্রমা</div>
+ </footer>
 
 <script>
-const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
-function toBn(n){ return String(n).split('').map(d=>bn[+d]||d).join(''); }
-
-const DATA = [
-  {n:1, q:"'সাহিত্যে খেলা' প্রবন্ধটির মূল প্রতিপাদ্য বিষয় কোনটি?", opts:["সাহিত্যের স্বরূপ বিশ্লেষণ","সাহিত্যের উদ্দেশ্য বিশ্লেষণ","সাহিত্যের গুরুত্ব বিশ্লেষণ"," can সাহিত্যের প্রয়োজনীয়তা বিশ্লেষণ"], correct:1},
-  {n:2, q:"'সাহিত্যে খেলা' নামকরণের মধ্য দিয়ে প্রবন্ধের কোন দিকটি সবচেয়ে বেশি ফুটে উঠেছে?", opts:["সাহিত্যের প্রকৃত রূপ","সাহিত্যের প্রকৃত উদ্দেশ্য","সাহিত্য ও খেলাধুলার গুরুত্ব","সাহিত্যে খেলার প্রয়োজনীয়তা"], correct:1},
-  {n:3, q:"'সাহিত্যে খেলা' প্রবন্ধের আলোকে সাহিত্যের প্রকৃত উদ্দেশ্য ও স্বরূপ কেমন হওয়া উচিত?", opts:["মনোরঞ্জন ও শিক্ষাদান করা","কেবল বস্তুগত ও বৈষয়িক জ্ঞানদান","উদ্দেশ্যহীন স্বতঃস্ফূর্ত আনন্দদান","সমাজের কড়া নিয়ম-কানুন শেখানো"], correct:2},
-  {n:4, q:"'সাহিত্যে খেলা' প্রবন্ধের নামকরণটি সাহিত্যের কোন বিষয়ের ওপর ভিত্তি করে করা হয়েছে?", opts:["বিষয়বস্তুর ওপর ভিত্তি করে","অন্তর্নিহিত তাৎপর্যের ওপর ভিত্তি করে","প্রতীকের ওপর ভিত্তি করে","বক্তব্যের ধরনের ওপর ভিত্তি করে"], correct:1},
-  {n:5, q:"প্রবন্ধে লেখকের কেমন মানসিকতা ও চিন্তাধারার সার্থক পরিচয় পাওয়া যায়?", opts:["প্রগতিশীল মনের পরিচয়","সনাতন ও প্রাচীন মানসিকতার পরিচয়","বিপ্লবী ও চরমপন্থী মানসিকতার পরিচয়","কোমল ও আবেগী মনের পরিচয়"], correct:0},
-  {n:6, q:"প্রাবন্ধিক প্রমথ চৌধুরীর মতে, হাততালি বা সাময়িক বাহবা পাওয়ার জন্য সাহিত্য রচনা করলে কী ঘটবে?", opts:["সাহিত্য আরও বেশি জনপ্রিয় হবে","সাহিত্য তার আসল উদ্দেশ্য থেকে বিচ্যুত হবে","সাহিত্যের সামাজিক মূল্য অনেক বৃদ্ধি পাবে","সাহিত্য দীর্ঘস্থায়ী রূপ ধারণ করবে"], correct:1},
-  {n:7, q:"'মনোরঞ্জনের সামগ্রী আজ মানুষ পছন্দ করতে পারে, কিন্তু কাল খেলতে খেলতে ভেঙেও ফেলতে পারে'— এই বক্তব্য দ্বারা কী বোঝানো হয়েছে?", opts:["খেলার সামগ্রীর স্থায়ীত্ব কম","মনোরঞ্জনের সাহিত্য ক্ষণস্থায়ী ও গুরুত্বহীন","মানুষের মন পরিবর্তনশীল নয়","সাহিত্যিকদের মনোভাব সবসময় কঠোর থাকে"], correct:1},
-  {n:8, q:"শিক্ষার মূল উদ্দেশ্য মানুষের মনের কোন দিকটির সাথে সম্পর্কিত এবং সাহিত্যের উদ্দেশ্য কীসের সাথে?", opts:["জ্ঞান জানানো ও আনন্দ দেওয়ার সাথে","টাকা উপার্জন ও দায়িত্ব পালনের সাথে","ভাবুক হওয়া ও উদাসীন থাকার সাথে","নীতি শিক্ষা ও শাসন করার সাথে"], correct:0},
-  {n:9, q:"প্রমথ চৌধুরীর মতে, সাহিত্যচর্চার আদর্শ মূলত কার সাথে তুলনা করা চমৎকার ও যুক্তিযুক্ত?", opts:["কঠোর পরিশ্রমের সাথে","খেলাচ্ছলে আনন্দের সাথে","ব্যবসায়িক লাভ-ক্ষতির সাথে","বিদ্যালয়ের ধরাবাঁধা নিয়মের সাথে"], correct:1},
-  {n:10, q:"কোনো বৈষয়িক উদ্দেশ্য বা পুরস্কারের লোভ ছাড়া কাজ করার আনন্দকে 'সাহিত্যে খেলা' প্রবন্ধের আলোকে কী বলা যায়?", opts:["অর্থহীন সময় নষ্ট","স্বার্থপরতা ও অহংকার","নিছক আনন্দ-অবগাহন ও প্রকৃত রসাস্বাদন","লৌকিকতা ও বাহ্যিক আড়ম্বর"], correct:2}
+const QUESTIONS = [
+  {
+    id: 1,
+    q: "'সাহিত্যে খেলা' প্রবন্ধটির মূল প্রতিপাদ্য বিষয় কী?",
+    opts: ["সাহিত্যের স্বরূপ বিশ্লেষণ", "সাহিত্যের উদ্দেশ্য বিশ্লেষণ", "Layout এর গুরুত্ব বিশ্লেষণ", "সাহিত্যের প্রয়োজনীয়তা বিশ্লেষণ"],
+    ans: 1
+  },
+  {
+    id: 2,
+    q: "'সাহিত্যে খেলা' নামকরণের মধ্য দিয়ে প্রকাশ পেয়েছে-",
+    opts: ["সাহিত্যের প্রকৃত রূপ", "সাহিত্যের প্রকৃত উদ্দেশ্য", "সাহিত্য ও খেলাধুলার গুরুত্ব", "সাহিত্যে খেলার গুরুত্ব"],
+    ans: 1
+  },
+  {
+    id: 3,
+    q: "'সাহিত্যে খেলা' প্রবন্ধের তাৎপর্য হলো-<br>i. সাহিত্যের প্রকৃত উদ্দেশ্য<br>ii. সাহিত্যের প্রকৃত গুরুত্ব<br>iii. সাহিত্যের প্রকৃত স্বরূপ<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 3
+  },
+  {
+    id: 4,
+    q: "'সাহিত্যে খেলা' প্রবন্ধের নামকরণ কীভাবে করা হয়েছে?",
+    opts: ["বিষয়বস্তুর উপর ভিত্তি করে", "অন্তর্নিহিত তাৎপর্যের উপর ভিত্তি করে", "প্রতীকের উপর ভিত্তি করে", "বক্তব্যের ধরনের উপর ভিত্তি করে"],
+    ans: 1
+  },
+  {
+    id: 5,
+    q: "'সাহিত্যে খেলা' প্রবন্ধে ব্যক্ত হয়েছে-",
+    opts: ["সাহিত্যের প্রকৃত স্বরূপ", "সাহিত্যের আদর্শ ও উদ্দেশ্য", "সাহিত্য ও খেলাধুলার গুরুত্ব", "সাহিত্যে খেলাধুলার প্রভাব"],
+    ans: 1
+  },
+  {
+    id: 6,
+    q: "'সাহিত্যে খেলা' প্রবন্ধে লেখকের-",
+    opts: ["প্রগতিশীল মনের পরিচয় পাওয়া যায়", "সনাতন মানসিকতার পরিচয় পাওয়া যায়", "বিপ্লবী মানসিকতার পরিচয় পাওয়া যায়", "কোমল মনের পরিচয় পাওয়া যায়"],
+    ans: 0
+  },
+  {
+    id: 7,
+    q: "'সাহিত্যে খেলা' প্রবন্ধের সাথে কোনটির আঙ্গিকগত মিল রয়েছে?",
+    opts: ["বিলাসী", "অর্ধাঙ্গী", "হৈমন্তী", "কমলাকান্তের জবানবন্দি"],
+    ans: 3
+  },
+  {
+    id: 8,
+    q: "'শিব' শব্দটি 'সাহিত্যে খেলা' প্রবন্ধে যে অর্থে ব্যবহৃত হয়েছে-<br>i. মহাদেব<br>ii. দেবরাজ<br>iii. মঙ্গলকারী দেবতা<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 1
+  },
+  {
+    id: 9,
+    q: "<b>উদ্দীপক পড়ো (৯-১০):</b> সিজার মাহমুদ একজন সাহিত্যিক। তিনি সমাজের বিতর্কিত বিষয়কে প্রাধান্য দিয়ে গল্প রচনা করেন। এতে পাঠকেরা আনন্দ খোঁজেন না, খোঁজেন উদ্দেশ্য ও মতাদর্শ। তিনি লাভের আশায় গল্প-উপন্যাস লিখেই চলেছেন।<br><br>প্রমথ চৌধুরী সিজার মাহমুদের মতো সাহিত্যিকদের যে অপবাদ দিয়েছেন, তা হলো-",
+    opts: ["তিনি গীতের অর্থও বোঝেন না, গীতার ধর্মও বোঝেন না", "পাথুরে কয়লা হীরার স্ববর্ণ না হলেও স্বগোত্র", "যিনি গড়তে জানেন, তিনি শিবও গড়তে পারেন, বাঁদরও গড়তে পারেন", "তারাই হচ্ছেন যথার্থ সামাজিক জীব"],
+    ans: 0
+  },
+  {
+    id: 10,
+    q: "'সাহিত্যে খেলা' প্রবন্ধের আলোকে সিজার মাহমুদের সাহিত্যকর্মকে বলা যায়-",
+    opts: ["যথার্থ", "স্বধর্মচ্যুত", "গৃহীত", "নিন্দিত"],
+    ans: 1
+  },
+  {
+    id: 11,
+    q: "<b>উদ্দীপক পড়ো (১১-১২):</b> দীপক স্কুলের পড়া পড়তে একদম পছন্দ করে না। মায়ের বকুনির ভয়ে পড়তে বসলেও অনেক সময় পাঠ্যপুস্তকের নিচে লুকিয়ে রেখে গল্পের বই পড়ে।<br><br>'সাহিত্যে খেলা' প্রবন্ধ অনুসারে দীপকের গল্পের বই পড়ার কারণ, এসব বই-",
+    opts: ["মনোরঞ্জনকারী", "উদ্দেশ্যমূলক", "आनন্দদায়ক", "শিক্ষামূলক"],
+    ans: 2
+  },
+  {
+    id: 12,
+    q: "উদ্দীপকের ভাবের প্রতিফলন নিচের কোন বাক্যে লক্ষ করা যায়?",
+    opts: ["সাহিত্যের উদ্দেশ্য সকলকে আনন্দ দেওয়া", "স্কুলঘরে আমরা কাব্যের রূপ দেখতে পাইনে", " can সাহিত্যের উদ্দেশ্য মানুষের মনকে জাগানো", "কাব্যরস লোকে শুধু স্বেচ্ছায় নয়, সানন্দে পান করে"],
+    ans: 1
+  },
+  {
+    id: 13,
+    q: "<b>উদ্দীপক পড়ো (১৩-১৪):</b> মানিকের লেখায় খুঁজে পাওয়া যায় গভীর জীবনবোধ। তিনি লিখেছেন মনের আনন্দে। তিনি মনে করতেন তাঁর লেখা পাঠকের ভালো লাগলেই শ্রম সার্থক।<br><br>উদ্দীপকটি তোমার পঠিত কোন রচনার উদ্দেশ্যের সাথে সাদৃশ্যপূর্ণ?",
+    opts: ["কমলাকান্তের জবানবন্দি", "সাহিত্যে খেলা", "একুশের গল্প", "অর্ধাঙ্গী"],
+    ans: 1
+  },
+  {
+    id: 14,
+    q: "উদ্দীপকের ভাবটি নিচের কোন বাক্যে যথাযথভাবে প্রকাশিত হয়েছে?",
+    opts: ["সাহিত্যের উদ্দেশ্য খেলনা তৈরি করা", "সাহিত্য পাঠককে মনোরঞ্জন করে", "সাহিত্যচর্চার উদ্দেশ্য মানুষকে আনন্দ দেওয়া", "সাহিত্য শুধু পাঠককে বিনোদন দেয়"],
+    ans: 2
+  },
+  {
+    id: 15,
+    q: "<b>উদ্দীপক পড়ো (১৫-১৬):</b> অনন্যা ও ঐশী দুজনেই সাহিত্য নিয়ে অনার্স পড়ে। অনন্যা নির্দিষ্ট পাঠ্যবইয়ের বাইরে কোনো বই পড়ে না। কিন্তু ঐশী পাঠ্যবইয়ের বাইরেও অনেক বই পড়ে।<br><br>ঐশীর পাঠাভ্যাস নিচের কোন উক্তিটির সঙ্গে সাদৃশ্যপূর্ণ?",
+    opts: ["বৈশ্য লেখকের পক্ষেই শূদ্র পাঠকের মনোরঞ্জন করা সংগত", "সাহিত্যের উদ্দেশ্য আনন্দদান করা, শিক্ষাদান করা নয়", "কাব্যজগতে যার নাম আনন্দ, তারই নাম বেদনা", "সাহিত্য ছেলের হাতের খেলনাও নয়, গুরুর হাতের বেতও নয়"],
+    ans: 3
+  },
+  {
+    id: 16,
+    q: "ঐশীর পাঠাভ্যাস সহায়ক-<br>i. আনন্দলাভে<br>ii. ব্যক্তিত্ব গঠনে<br>iii. ভালো ফললাভে<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 17,
+    q: "<b>উদ্দীপক পড়ো (১৭-১৮):</b> অধ্যাপক কাজী রশিদ প্রায় বারো বছর ধরে সুনামের সঙ্গে ছাত্রদের রবীন্দ্র ও নজরুল সাহিত্য পড়াচ্ছেন। ক্লাসে দায়িত্ব পালনে তিনি যথেষ্ট নিষ্ঠাবান। কিন্তু সাহিত্য পড়িয়ে তিনি কোনো আনন্দ পান না।<br><br>'সাহিত্যে খেলা' প্রবন্ধ অনুযায়ী কাজী রশিদ সম্পর্কে প্রযোজ্য-<br>i. তিনি কাব্যের রূপ দেখেছেন<br>ii. তিনি কাব্যের গুণ শুনেছেন<br>iii. তিনি কাব্যের বিশ্লেষণে দক্ষ<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 2
+  },
+  {
+    id: 18,
+    q: "কাজী রশিদের মানসিকতা বিশ্লেষণ করে 'সাহিত্যে খেলা' প্রবন্ধের আলোকে তাঁকে বলা যায়-",
+    opts: ["আত্মসচেতন", "সাহিত্যপ্রেমিক", "বিদ্যানুরাগী", "কর্তব্যপরায়ণ"],
+    ans: 3
+  },
+  {
+    id: 19,
+    q: "<b>উদ্দীপক পড়ো (১৯-২০):</b> স্কুল-কলেজের শিক্ষা যে অনেকাংশে ব্যর্থ নয়, অনেক স্থলে মারাত্মক। কেননা, আমাদের স্কুল-কলেজ ছেলেদের স্বশিক্ষিত হওয়ার সে সুযোগ দেয় না। শুধু তাই নয়, স্বশিক্ষিত হওয়ার শক্তি পর্যন্ত নষ্ট করে।<br><br>'সাহিত্যে খেলা' প্রবন্ধের আলোকে উদ্দীপকে স্বশিক্ষিত হওয়ার সুযোগ না দেওয়ার জন্য দায়ী কোনটি?",
+    opts: ["শিক্ষাব্যবস্থা", "শিক্ষাপ্রতিষ্ঠান", "স্কুলমাস্টারেরা", "ছাত্র-ছাত্রীরা"],
+    ans: 2
+  },
+  {
+    id: 20,
+    q: "উদ্দীপকে 'সাহিত্যে খেলা' প্রবন্ধের যে বিষয়টি প্রকাশ পেয়েছে-<br>i. সাহিত্যের উদ্দেশ্যকে বধ করা<br>ii. সাহিত্যের উদ্দেশ্যকে ব্যাহত করা<br>iii. সাহিত্যের উদ্দেশ্যকে সফল করা<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 21,
+    q: "<b>উদ্দীপক পড়ো (২১-২২):</b> কাব্যামৃতে যে আমাদের অরুচি ধরেছে সে অবশ্য আমাদের দোষ নয়, আমাদের শিক্ষার দোষ। যার আনন্দ নেই সে নির্জীব, এ কথা যেমন সত্য, যে নির্জীব তারও আনন্দ নেই, সে কথাও তেমনি সত্য।<br><br>উদ্দীপকে যাকে নির্জীব বলা হয়েছে 'সাহিত্যে খেলা' প্রবন্ধে তা হলো-",
+    opts: ["শিক্ষাপ্রতিষ্ঠান", "শিক্ষক", "শিক্ষা", "ছাত্র সমাজ / মানুষ"],
+    ans: 3
+  },
+  {
+    id: 22,
+    q: "উদ্দীপকটিতে বর্ণিত 'কাব্যামৃতে অরুচি' কথাটির অন্তর্নিহিত তাৎপর্য কী?",
+    opts: ["সাহিত্যে অনীহা", "বিজ্ঞানে অনীহা", "শিক্ষায় অনীহা", "কবিতা"],
+    ans: 0
+  },
+  {
+    id: 23,
+    q: "<b>উদ্দীপক পড়ো (২৩-২৪):</b> নদীর তীরে বসবাসজনিত কারণে মানুষের মনের যে উন্নতি ঘটে তা প্রমাণ করা যায় না। অথচ নদীর তলদেশে জাল টেনে ছোটো-বড়ো মাছ জুটতে পারে তা প্রমাণসাপেক্ষ।<br><br>উদ্দীপকটি তোমার পঠিত কোন প্রবন্ধকে নির্দেশ করে?",
+    opts: ["অর্ধাঙ্গী", "সাহিত্যে খেলা", "যৌবনের গান", "দুর্নীতি, উন্নয়নের অন্তরায়"],
+    ans: 1
+  },
+  {
+    id: 24,
+    q: "উদ্দীপকে 'সাহিত্যে খেলা' প্রবন্ধের যে দিক প্রকাশ পেয়েছে-<br>i. সাহিত্য অনুভূতিসাপেক্ষ<br>ii. বিজ্ঞান প্রমাণসাপেক্ষ<br>iii. সাহিত্য প্রমাণসাপেক্ষ নয়<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 3
+  },
+  {
+    id: 25,
+    q: "ইতর শিল্পীদের সঙ্গে কলারাজ্যের মহাপুরুষ বা বড়ো শিল্পীদের পার্থক্য হলো-<br>i. তাঁরা শিবও গড়তে পারেন, বাঁদরও গড়তে পারেন<br>ii. তাঁদের হাতে এক করতে করতে আর হয় না<br>iii. তাঁদের যা-খুশি তাই করার অধিকার আছে<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 1
+  },
+  {
+    id: 26,
+    q: "প্রমথ চৌধুরীর মতে, আমাদের শিক্ষাব্যবস্থা ত্রুটিপূর্ণ হওয়ার কারণ-<br>i. বিদ্যালয়গুলোতে প্রকৃত সাহিত্য পাঠ দেওয়া হয় না<br>ii. বিদ্যালয়গুলোতে সাহিত্যের আদর্শ জানানো হয় না<br>iii. শিক্ষকগণ সাহিত্যের তাৎপর্য সম্পর্কে উদাসীন<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 27,
+    q: "'সাহিত্যে খেলা' প্রবন্ধ অনুসারে দর্শক এবং শ্রোতৃমণ্ডলীর নয়ন মন আকর্ষণ করতে হলে-<br>i. রঙ্গমঞ্চে চড়ে অভিনয় করতে হবে<br>ii. কাষ্ঠমঞ্চে দাঁড়িয়ে বক্তৃতা করতে হবে<br>iii. বেদিতে দাঁড়িয়ে উপদেশ দিতে হবে<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 3
+  },
+  {
+    id: 28,
+    q: "'পাঠক সমাজ যে খেলনা আজ আদর করে, কাল সেটিকে ভেঙে ফেলে।'- উক্তিটির তাৎপর্য হলো-<br>i. পাঠকের রুচির উপর গড়ে ওঠা সাহিত্যকর্ম ক্ষণস্থায়ী<br>ii. পাঠকের রুচি লেখকের সন্তুষ্টির বিপরীত<br>iii. সাহিত্য পাঠক সমাজের হাতের খেলনা নয়<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 1
+  },
+  {
+    id: 29,
+    q: "সাহিত্যের উদ্দেশ্য আনন্দদান করা হলেও প্রকৃতপক্ষে সাহিত্যিকের উদ্দেশ্য হলো-<br>i. আনন্দ সৃষ্টি করা<br>ii. আনন্দ অবগাহন করা<br>iii. পাঠকের মনতুষ্টি করা<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 30,
+    q: "'সাহিত্যে খেলা' প্রবন্ধে বড়ো মাপের শিল্পীদের সম্পর্কে বলা হয়েছে, যিনি গড়তে জানেন তিনি-<br>i. শিবও গড়তে পারেন<br>ii. বাঁদরও গড়তে পারেন<br>iii. সভ্যতাও গড়তে পারেন<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 31,
+    q: "মনের বৈশিষ্ট্য প্রকাশ করতে প্রমথ চৌধুরী বলেছেন-<br>i. মন উঁচুতেও উঠতে পারে<br>ii. নিচুতেও নামতে চায়<br>iii. মন সঠিক জায়গায় অবস্থান করে<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 32,
+    q: "প্রমথ চৌধুরী শিক্ষা ও সাহিত্যের মধ্যে যে পার্থক্য নির্ণয় করেছেন তা হলো-<br>i. শিক্ষার উদ্দেশ্য মানুষকে বিশ্বের খবর জানানো<br>ii. সাহিত্যের উদ্দেশ্য মানুষকে জাগানো<br>iii. শিক্ষার উদ্দেশ্য আনন্দদান করা<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 0
+  },
+  {
+    id: 33,
+    q: "'সাহিত্যে খেলা' প্রবন্ধে প্রমথ চৌধুরী রোদ্যার প্রসঙ্গ দিয়ে শুরু করেছেন-<br>i. মহৎ শিল্পীর উল্লেখে প্রবন্ধকে সমৃদ্ধ করতে<br>ii. মহৎ শিল্পীর স্বাভাবিক ক্ষমতা বোঝাতে<br>iii. শিল্প সৃষ্টির প্রকৃত উপায় বোঝাতে<br>নিচের কোনটি সঠিক?",
+    opts: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"],
+    ans: 3
+  },
+  {
+    id: 34,
+    q: "প্রমথ চৌধুরীর মতে সাহিত্যের খেলা কেমন খেলা?",
+    opts: ["নিয়ম-কানুনহীন মুক্ত খেলা", "শিক্ষাদানের খেলা", "মনোরঞ্জনের সস্তা খেলা", "উপদেশ দেওয়ার খেলা"],
+    ans: 0
+  }
 ];
 
-const LAB = ['ক','খ','গ','ঘ'];
+let correctCount = 0;
+const totalCount = QUESTIONS.length;
 
-function buildMcq(){
+function renderQuestions(){
   const list = document.getElementById('mcqList');
   list.innerHTML = '';
-  DATA.forEach(item=>{
-    if(item.passage){
-      const p = document.createElement('div');
-      p.className = 'passage';
-      p.dataset.search = (item.passage||'').toLowerCase();
-      p.innerHTML = `<span class="tag">${item.passageTag||'উদ্দীপক'}</span>${item.passage}`;
-      list.appendChild(p);
-    }
+  
+  QUESTIONS.forEach((q, idx) => {
     const card = document.createElement('div');
     card.className = 'qcard';
-    card.id = 'q'+item.n;
-    card.dataset.search = (toBn(item.n)+' '+item.q+' '+item.opts.join(' ')).toLowerCase();
-
+    card.id = `q-${q.id}`;
+    
+    // Create datasets for interactive searching
+    let searchText = `${idx+1} ${q.q} ${q.opts.join(' ')}`.toLowerCase();
+    card.dataset.search = searchText;
+    
     const head = document.createElement('div');
     head.className = 'qhead';
-    head.innerHTML = `<span class="qnum">${toBn(item.n)}</span><span class="qstem">${item.q}</span>`;
+    
+    const num = document.createElement('div');
+    num.className = 'qnum';
+    num.textContent = (idx + 1).toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+    
+    const stem = document.createElement('div');
+    stem.className = 'qstem';
+    stem.innerHTML = q.q;
+    
+    head.appendChild(num);
+    head.appendChild(stem);
     card.appendChild(head);
-
-    const opts = document.createElement('div');
-    opts.className = 'options';
-    item.opts.forEach((opt,i)=>{
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'opt';
-      btn.innerHTML = `<span class="lab">${LAB[i]}.</span><span>${opt}</span>`;
-      btn.addEventListener('click', ()=> selectOption(card, item, i, btn, opts));
-      opts.appendChild(btn);
+    
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    
+    const labels = ['ক', 'খ', 'গ', 'ঘ'];
+    q.opts.forEach((optText, oIdx) => {
+      const optBtn = document.createElement('button');
+      optBtn.className = 'opt';
+      optBtn.type = 'button';
+      
+      const labSpan = document.createElement('span');
+      labSpan.className = 'lab';
+      labSpan.textContent = labels[oIdx] + '. ';
+      
+      const txtNode = document.createTextNode(optText);
+      
+      optBtn.appendChild(labSpan);
+      optBtn.appendChild(txtNode);
+      
+      optBtn.addEventListener('click', () => handleSelect(q.id, oIdx, optBtn));
+      optsDiv.appendChild(optBtn);
     });
-    card.appendChild(opts);
+    
+    card.appendChild(optsDiv);
     list.appendChild(card);
   });
+  
+  updateScoreUI();
 }
 
-let attempted = {};
-function updateScore(){
-  let correctCount = Object.values(attempted).filter(v=>v===true).length;
-  document.getElementById('liveScore').textContent = toBn(correctCount);
-  const fs = document.getElementById('floatScoreNum');
-  fs.textContent = toBn(correctCount);
-  const badge = document.getElementById('floatScore');
-  badge.classList.add('bump');
-  setTimeout(()=>badge.classList.remove('bump'), 200);
-}
-
-function selectOption(card, item, i, btn, optsWrap){
+function handleSelect(qId, selectedIdx, btnEl){
+  const card = document.getElementById(`q-${qId}`);
   if(card.classList.contains('locked')) return;
+  
+  const qObj = QUESTIONS.find(x => x.id === qId);
   card.classList.add('locked');
-  const buttons = optsWrap.querySelectorAll('.opt');
-  buttons.forEach((b, idx)=>{
-    b.classList.add('selected');
-    if(idx === item.correct) b.classList.add('correct');
-    else if(idx === i) b.classList.add('wrong');
-  });
-  const isCorrect = (i === item.correct);
-  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
-  attempted[item.n] = isCorrect;
-  updateScore();
+  
+  const allBtns = card.querySelectorAll('.opt');
+  allBtns.forEach(b => b.setAttribute('disabled', 'true'));
+  
+  if(selectedIdx === qObj.ans){
+    btnEl.classList.add('correct');
+    card.classList.add('answered-correct');
+    correctCount++;
+    triggerBump();
+  } else {
+    btnEl.classList.add('wrong');
+    card.classList.add('answered-wrong');
+    allBtns[qObj.ans].classList.add('correct');
+  }
+  
+  updateScoreUI();
+}
+
+function updateScoreUI(){
+  const banglaCorrect = correctCount.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+  const banglaTotal = totalCount.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+  
+  document.getElementById('liveScore').textContent = banglaCorrect;
+  document.getElementById('floatScore').textContent = `${banglaCorrect}/${banglaTotal}`;
+  document.querySelector('.score-badge').style.visibility = 'visible';
+}
+
+function triggerBump(){
+  const fs = document.querySelector('.float-score');
+  fs.classList.add('bump');
+  setTimeout(() => fs.classList.remove('bump'), 200);
 }
 
 function resetAll(){
-  attempted = {};
-  buildMcq();
-  updateScore();
+  correctCount = 0;
+  renderQuestions();
   document.getElementById('search').value = '';
   filterQuestions('');
 }
@@ -671,39 +866,29 @@ function resetAll(){
 function filterQuestions(term){
   term = term.trim().toLowerCase();
   const cards = document.querySelectorAll('#mcqList .qcard');
-  const passages = document.querySelectorAll('#mcqList .passage');
   let anyVisible = false;
-  cards.forEach(c=>{
+  cards.forEach(c => {
     const match = !term || c.dataset.search.includes(term);
     c.classList.toggle('hidden', !match);
     if(match) anyVisible = true;
   });
-  passages.forEach(p=>{
-    let el = p.nextElementSibling;
-    let show = false;
-    while(el && !el.classList.contains('passage')){
-      if(el.classList.contains('qcard') && !el.classList.contains('hidden')) show = true;
-      el = el.nextElementSibling;
-    }
-    p.style.display = (!term || show) ? '' : 'none';
-  });
   document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
 }
 
-document.getElementById('search').addEventListener('input', e=>filterQuestions(e.target.value));
+document.getElementById('search').addEventListener('input', e => filterQuestions(e.target.value));
 document.getElementById('resetBtn').addEventListener('click', resetAll);
 
-document.querySelectorAll('[data-toggle]').forEach(head=>{
-  head.addEventListener('click', ()=>{
+document.querySelectorAll('[data-toggle]').forEach(head => {
+  head.addEventListener('click', () => {
     const subq = head.closest('.subq');
     const isOpen = subq.classList.contains('open');
     subq.classList.toggle('open', !isOpen);
-    head.querySelector('.subq-toggle').textContent = !isOpen ? 'উত্তর লুকাও' : 'উত্তর দেখাও';
+    head.querySelector('.subq-toggle').textContent = isOpen ? 'উত্তর দেখাও' : 'উত্তর লুকাও';
   });
 });
 
-buildMcq();
-updateScore();
+// Initial Render
+renderQuestions();
 </script>
 </body>
 </html>
