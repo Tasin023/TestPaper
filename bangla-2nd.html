@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা ২য় পত্র — স্বপ্ন চাবি খাতা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF6EA;
+  --paper-line:#E4D9BE;
+  --ink:#20263F;
+  --ink-soft:#4A5170;
+  --cover-green:#2F6F4E;
+  --cover-green-dark:#204F37;
+  --red:#B8433D;
+  --amber:#F0B94D;
+  --amber-soft:#FBE7BC;
+  --muted:#7A7566;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--cover-green-dark);
+  color:var(--ink);
+  font-family:'Hind Siliguri',sans-serif;
+}
+.disp{font-family:'Baloo Da 2',sans-serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ===== COVER ===== */
+.cover{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(240,185,77,.18), transparent 45%),
+    linear-gradient(160deg,var(--cover-green) 0%, var(--cover-green-dark) 75%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:40px 20px;
+  overflow:hidden;
+}
+.spine-holes{
+  position:absolute; left:18px; top:0; bottom:0; width:22px;
+  display:flex; flex-direction:column; justify-content:space-evenly; align-items:center;
+}
+.spine-holes span{
+  width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #0000 0 3px, var(--cover-green-dark) 4px 100%);
+  background-color:#00000030;
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.5);
+}
+.cover-card{
+  background:var(--paper);
+  width:min(560px,92vw);
+  border-radius:6px;
+  padding:52px 40px 40px;
+  box-shadow:0 30px 60px rgba(0,0,0,.35), 0 2px 0 rgba(0,0,0,.1);
+  position:relative;
+  text-align:center;
+  border:1px solid var(--paper-line);
+}
+.cover-card::before{
+  content:"";
+  position:absolute; inset:14px;
+  border:1.5px solid var(--red);
+  opacity:.35;
+  border-radius:3px;
+  pointer-events:none;
+}
+.tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; letter-spacing:.14em;
+  color:var(--cover-green-dark);
+  background:var(--amber-soft);
+  border:1px solid var(--amber);
+  padding:5px 12px;border-radius:20px;
+  margin-bottom:22px;
+  text-transform:uppercase;
+}
+.cover-card h1{
+  font-size:clamp(48px,10vw,74px);
+  margin:0;
+  line-height:1;
+  color:var(--cover-green-dark);
+  font-weight:800;
+}
+.cover-card h2{
+  margin:6px 0 26px;
+  font-size:clamp(22px,5vw,30px);
+  color:var(--red);
+  font-weight:700;
+}
+.cover-sub{
+  font-size:15px;
+  color:var(--ink-soft);
+  border-top:1px dashed var(--paper-line);
+  padding-top:18px;
+  margin-top:6px;
+  line-height:1.7;
+}
+.cover-sub b{color:var(--ink);}
+.start-btn{
+  margin-top:26px;
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cover-green-dark);
+  color:var(--paper);
+  border:none;
+  font-family:'Hind Siliguri',sans-serif;
+  font-weight:600;
+  font-size:17px;
+  padding:14px 30px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:transform .15s ease, background .15s ease;
+}
+.start-btn:hover{background:var(--red); transform:translateY(-2px);}
+.start-btn:focus-visible{outline:3px solid var(--amber); outline-offset:3px;}
+
+/* ===== APP SHELL ===== */
+.app{display:none; min-height:100vh; background:var(--paper);}
+.app.active{display:block;}
+
+.topbar{
+  position:sticky; top:0; z-index:40;
+  background:var(--cover-green-dark);
+  color:var(--paper);
+  padding:10px 16px;
+  display:flex; align-items:center; gap:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+.topbar .brand{
+  font-family:'Baloo Da 2',sans-serif;
+  font-weight:700; font-size:19px;
+  white-space:nowrap;
+}
+.topbar .brand span{color:var(--amber);}
+.menu-toggle{
+  display:none;
+  background:none;border:1px solid rgba(255,255,255,.3);
+  color:var(--paper); border-radius:6px; padding:7px 10px; cursor:pointer;
+  font-size:16px;
+}
+.search-wrap{flex:1; max-width:420px; margin-left:auto; position:relative;}
+.search-wrap input{
+  width:100%;
+  padding:9px 14px 9px 34px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.1);
+  color:var(--paper);
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:14px;
+}
+.search-wrap input::placeholder{color:rgba(255,255,255,.55);}
+.search-wrap input:focus{outline:2px solid var(--amber); background:rgba(255,255,255,.16);}
+.search-wrap::before{
+  content:"🔍"; position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  font-size:12px; opacity:.7;
+}
+
+.layout{display:flex; align-items:flex-start;}
+.sidebar{
+  width:250px; flex-shrink:0;
+  background:#F1E9D5;
+  border-right:1px solid var(--paper-line);
+  height:calc(100vh - 52px);
+  position:sticky; top:52px;
+  padding:18px 10px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.sidebar::-webkit-scrollbar{width:8px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--paper-line); border-radius:4px;}
+.sidebar-home{
+  display:flex; align-items:center; gap:8px;
+  width:100%; text-align:left;
+  background:var(--cover-green-dark); color:var(--paper);
+  border:none; cursor:pointer;
+  padding:11px 12px; border-radius:8px;
+  font-family:'Hind Siliguri',sans-serif; font-weight:600; font-size:15px;
+  margin-bottom:14px;
+}
+.sidebar-home:hover{background:var(--red);}
+.sidebar-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px; letter-spacing:.1em; color:var(--muted);
+  text-transform:uppercase; padding:0 10px 10px;
+}
+.nav-item{
+  display:flex; align-items:center; gap:10px;
+  width:100%; text-align:left;
+  background:none; border:none; cursor:pointer;
+  padding:10px 10px; border-radius:8px;
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:15px; color:var(--ink-soft);
+  margin-bottom:2px;
+  border-left:3px solid transparent;
+}
+.nav-item .num{
+  font-family:'JetBrains Mono',monospace; font-size:11px;
+  color:var(--muted); width:20px; flex-shrink:0;
+}
+.nav-item:hover{background:rgba(184,67,61,.08); color:var(--ink);}
+.nav-item.active{
+  background:var(--paper);
+  color:var(--red);
+  font-weight:600;
+  border-left:3px solid var(--red);
+  box-shadow:0 1px 3px rgba(0,0,0,.06);
+}
+.nav-item.active .num{color:var(--red);}
+
+.content{flex:1; min-width:0; padding:28px 34px 90px;}
+.page{display:none;}
+.page.active{display:block; animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+.page-head{
+  border-bottom:2px solid var(--ink);
+  padding-bottom:14px; margin-bottom:22px;
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.page-head h2{
+  font-family:'Baloo Da 2',sans-serif;
+  font-size:clamp(24px,4vw,32px);
+  margin:0; color:var(--ink);
+}
+.page-head .count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px; color:var(--muted);
+  background:var(--amber-soft); border:1px solid var(--amber);
+  padding:4px 10px; border-radius:14px;
+}
+.hint{font-size:13.5px; color:var(--muted); margin:-12px 0 20px;}
+
+/* ruled notebook page for text-heavy sections */
+.ruled{
+  background:
+    repeating-linear-gradient(var(--paper), var(--paper) 33px, var(--paper-line) 34px);
+  border-left:3px solid var(--red);
+  padding:20px 22px;
+  border-radius:2px;
+  position:relative;
+}
+
+/* flashcards grid (উচ্চারণ, বানান, সমাস, পরিভাষা) */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:10px;
+}
+.flip-card{
+  background:#fff;
+  border:1px solid var(--paper-line);
+  border-radius:8px;
+  padding:14px 16px;
+  cursor:pointer;
+  transition:box-shadow .15s ease, border-color .15s ease;
+  min-height:64px;
+}
+.flip-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08); border-color:var(--amber);}
+.flip-card .fc-term{font-weight:600; font-size:16px; color:var(--ink);}
+.flip-card .fc-ans{
+  margin-top:6px; font-size:14.5px; color:var(--red);
+  display:none; border-top:1px dashed var(--paper-line); padding-top:6px;
+}
+.flip-card.revealed .fc-ans{display:block;}
+.flip-card .fc-sub{font-size:12px; color:var(--muted); margin-top:3px;}
+.flip-card.hidden{display:none;}
+
+.tools-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+.tool-btn{
+  font-family:'Hind Siliguri',sans-serif; font-size:13.5px;
+  background:var(--paper); border:1px solid var(--paper-line);
+  padding:7px 14px; border-radius:20px; cursor:pointer; color:var(--ink-soft);
+}
+.tool-btn:hover{border-color:var(--red); color:var(--red);}
+
+/* entry blocks: diary / letters / summaries */
+.entry{
+  background:#fff; border:1px solid var(--paper-line); border-radius:8px;
+  margin-bottom:18px; overflow:hidden;
+}
+.entry-head{
+  background:var(--amber-soft);
+  padding:10px 18px;
+  font-weight:600; color:var(--cover-green-dark);
+  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+  cursor:pointer;
+}
+.entry-head .meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); font-weight:400;}
+.entry-body{padding:16px 20px; line-height:1.9; font-size:15.5px; display:none;}
+.entry.open .entry-body{display:block;}
+.entry-body p{margin:0 0 12px;}
+.summary-box{
+  background:var(--paper);
+  border-left:3px solid var(--cover-green);
+  padding:10px 14px; margin-top:10px; border-radius:0 6px 6px 0;
+  font-size:14.5px; color:var(--ink-soft);
+}
+.summary-box b{color:var(--cover-green-dark);}
+
+/* application letter */
+.letter-table{width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px;}
+.letter-table td,.letter-table th{border:1px solid var(--paper-line); padding:6px 10px; text-align:left;}
+.letter-table th{background:var(--amber-soft);}
+
+/* topic chips */
+.chip-list{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{
+  background:#fff; border:1px solid var(--paper-line);
+  padding:10px 16px; border-radius:8px; font-size:15px;
+  display:flex; gap:10px; align-items:baseline;
+}
+.chip .n{font-family:'JetBrains Mono',monospace; color:var(--red); font-size:12px;}
+
+/* baktotto table */
+.bk-row{
+  background:#fff; border:1px solid var(--paper-line); border-radius:8px;
+  padding:12px 16px; margin-bottom:8px; font-size:15px; line-height:1.7;
+}
+.bk-row .orig{color:var(--ink);}
+.bk-row .type{color:var(--red); font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--amber-soft); padding:2px 8px; border-radius:10px; margin:0 6px;}
+.bk-row .arrow{color:var(--muted); margin:0 6px;}
+.bk-row .trans{color:var(--cover-green-dark); font-weight:500;}
+
+.empty-msg{color:var(--muted); font-style:italic; padding:30px 0; text-align:center;}
+
+/* dashboard */
+.dash-hero{
+  background:linear-gradient(135deg,var(--cover-green) 0%, var(--cover-green-dark) 100%);
+  border-radius:12px; padding:28px 26px; color:var(--paper); margin-bottom:26px;
+  position:relative; overflow:hidden;
+}
+.dash-hero::after{
+  content:"বাংলা ২য়"; position:absolute; right:-10px; bottom:-30px;
+  font-family:'Baloo Da 2',sans-serif; font-size:120px; font-weight:800;
+  color:rgba(255,255,255,.06); white-space:nowrap; pointer-events:none;
+}
+.dash-hero h2{margin:0 0 6px; font-family:'Baloo Da 2',sans-serif; font-size:clamp(22px,4vw,30px);}
+.dash-hero p{margin:0; opacity:.85; font-size:14.5px; max-width:520px; line-height:1.7;}
+.dash-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px;
+}
+.dash-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:10px;
+  padding:18px; cursor:pointer; text-align:left;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  display:flex; flex-direction:column; gap:8px;
+}
+.dash-card:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,.1); border-color:var(--amber);}
+.dash-card .dc-icon{font-size:26px;}
+.dash-card .dc-title{font-family:'Baloo Da 2',sans-serif; font-size:19px; color:var(--ink); font-weight:700;}
+.dash-card .dc-desc{font-size:13px; color:var(--muted); line-height:1.6;}
+.dash-card .dc-count{
+  align-self:flex-start; font-family:'JetBrains Mono',monospace; font-size:11px;
+  color:var(--cover-green-dark); background:var(--amber-soft); border:1px solid var(--amber);
+  padding:3px 9px; border-radius:12px; margin-top:2px;
+}
+
+footer.credit{
+  text-align:center; padding:26px 10px 40px; color:var(--muted); font-size:12.5px;
+}
+
+/* dashboard stats */
+.dash-stats{display:flex; gap:26px; margin-top:18px; flex-wrap:wrap;}
+.dstat{display:flex; flex-direction:column;}
+.dstat-num{font-size:28px; font-weight:700; line-height:1;}
+.dstat-label{font-size:11.5px; opacity:.85; margin-top:4px;}
+.dc-progress{width:100%; height:6px; background:var(--paper-line); border-radius:4px; overflow:hidden; margin-top:8px;}
+.dc-progress-fill{height:100%; background:var(--cover-green); border-radius:4px; transition:width .3s ease;}
+.dc-pct{font-size:11px; color:var(--muted); margin-top:4px;}
+.dc-visit{font-size:11.5px; color:var(--muted); margin-top:8px;}
+.dc-visit.done{color:var(--cover-green-dark); font-weight:600;}
+
+/* flip cards */
+.card-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px;}
+.card-grid-long{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.flip-card{perspective:900px; height:126px;}
+.card-grid-long .flip-card{height:150px;}
+.fc-inner{position:relative; width:100%; height:100%; cursor:pointer; transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
+.flip-card.revealed .fc-inner{transform:rotateY(180deg);}
+.fc-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:10px; padding:14px 16px; border:1px solid var(--paper-line); display:flex; flex-direction:column; justify-content:center;}
+.fc-front{background:#fff; position:relative;}
+.flip-card:hover .fc-front{border-color:var(--amber); box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.flip-card.mastered .fc-front{border-color:var(--cover-green); box-shadow:0 0 0 2px rgba(47,111,78,.12) inset;}
+.flip-card.mastered .fc-front::after{content:"✓"; position:absolute; top:8px; right:10px; color:var(--cover-green); font-weight:800; font-size:15px;}
+.fc-term{font-weight:600; font-size:16px; color:var(--ink);}
+.card-grid-long .fc-term{font-size:13.5px; line-height:1.45; font-weight:500;}
+.card-grid-long .fc-ans{font-size:13.5px; line-height:1.45;}
+.fc-tap{font-size:11px; color:var(--muted); margin-top:8px;}
+.fc-back{background:var(--cover-green-dark); color:#fff; transform:rotateY(180deg); justify-content:space-between;}
+.fc-ans{font-size:15.5px; font-weight:700;}
+.fc-sub{font-size:12px; opacity:.85; margin-top:4px;}
+.fc-grade{display:flex; gap:6px; margin-top:8px;}
+.grade-btn{flex:1; border:none; border-radius:6px; padding:7px 4px; font-size:12px; cursor:pointer; font-family:'Hind Siliguri',sans-serif; font-weight:600;}
+.grade-btn.again{background:rgba(255,255,255,.16); color:#fff;}
+.grade-btn.know{background:var(--amber); color:var(--cover-green-dark);}
+
+/* checklist cards (spelling) */
+.check-card{background:#fff; border:1px solid var(--paper-line); border-radius:8px; padding:13px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; font-size:15px; transition:border-color .15s ease, background .15s ease;}
+.check-card:hover{border-color:var(--amber);}
+.chk-box{width:20px; height:20px; border-radius:5px; border:2px solid var(--paper-line); display:flex; align-items:center; justify-content:center; font-size:12px; color:transparent; flex-shrink:0;}
+.check-card.checked{border-color:var(--cover-green); background:#F3FBF6;}
+.check-card.checked .chk-box{background:var(--cover-green); border-color:var(--cover-green); color:#fff;}
+.check-card.checked .chk-word{color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--cover-green);}
+
+/* quiz overlay */
+.quiz-launch{background:var(--cover-green-dark); color:#fff; border-color:var(--cover-green-dark);}
+.quiz-launch:hover{background:var(--red); border-color:var(--red); color:#fff;}
+.quiz-overlay{display:none; position:fixed; inset:0; background:rgba(18,24,40,.72); z-index:100; align-items:center; justify-content:center; padding:18px;}
+.quiz-overlay.show{display:flex;}
+.quiz-modal{background:var(--paper); border-radius:16px; width:min(460px,100%); max-height:88vh; overflow:auto; box-shadow:0 30px 70px rgba(0,0,0,.45);}
+.quiz-top{display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--paper-line); position:sticky; top:0; background:var(--paper);}
+.quiz-progress-bar{flex:1; height:6px; background:var(--paper-line); border-radius:4px; overflow:hidden;}
+.quiz-progress-fill{height:100%; background:var(--red); width:0%; transition:width .3s ease;}
+.quiz-close{background:none; border:none; font-size:13px; cursor:pointer; color:var(--muted); font-family:'Hind Siliguri',sans-serif;}
+.quiz-score{font-size:12px; color:var(--muted); white-space:nowrap;}
+.quiz-body{padding:30px 24px 34px; text-align:center;}
+.quiz-q{font-size:23px; font-weight:700; margin-bottom:4px; color:var(--ink); font-family:'Baloo Da 2',sans-serif;}
+.quiz-q-sub{font-size:12.5px; color:var(--muted); margin-bottom:6px;}
+.quiz-a-box{display:none; align-items:center; justify-content:center; background:#fff; border:1.5px dashed var(--cover-green); border-radius:10px; padding:18px; margin:16px 0; min-height:56px; font-size:17px; color:var(--cover-green-dark); font-weight:700;}
+.quiz-btn{font-family:'Hind Siliguri',sans-serif; font-weight:600; font-size:15px; border:none; border-radius:9px; padding:12px 18px; cursor:pointer; margin:4px;}
+.quiz-btn.primary{background:var(--cover-green-dark); color:#fff;}
+.quiz-btn.wrong{background:#F4D9D7; color:var(--red);}
+.quiz-btn.right{background:var(--amber); color:var(--cover-green-dark);}
+.quiz-result-emoji{font-size:52px; margin-bottom:6px;}
+.quiz-result-score{font-size:38px; font-weight:800; color:var(--cover-green-dark); font-family:'Baloo Da 2',sans-serif;}
+.quiz-result-msg{font-size:14.5px; color:var(--ink-soft); margin:8px 0 22px; line-height:1.6;}
+
+/* mobile */
+.overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:35;}
+@media (max-width:880px){
+  .menu-toggle{display:inline-block;}
+  .sidebar{
+    position:fixed; top:52px; left:0; bottom:0; z-index:36;
+    transform:translateX(-105%); transition:transform .2s ease;
+    width:250px; box-shadow:4px 0 16px rgba(0,0,0,.2);
+  }
+  .sidebar.open{transform:translateX(0);}
+  .overlay.show{display:block;}
+  .content{padding:20px 16px 70px;}
+  .search-wrap{max-width:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover" id="cover">
+  <div class="spine-holes">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="cover-card">
+    <span class="tag">HSC 26' Special Suggestion</span>
+    <h1 class="disp">বাংলা</h1>
+    <h2 class="disp">২য় পত্র</h2>
+    <div class="cover-sub">
+      উচ্চারণ, বানান, সমাস, পারিভাষিক শব্দ, অপপ্রয়োগ ও শুদ্ধ প্রয়োগ থেকে শুরু করে দিনলিপি, ই‑চিঠি, আবেদনপত্র, সারাংশ, সারমর্ম, ভাব সম্প্রসারণ, বাক্যান্তর ও রচনা — সবকিছু এক খাতায়।<br>
+      <b>প্রস্তুতি হবে স্মার্ট, সাফল্য হবে সহজ।</b>
+    </div>
+    <button class="start-btn disp" onclick="openApp()">খাতা খুলুন →</button>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="app" id="app">
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="brand disp">স্বপ্ন <span>চাবি</span></div>
+    <div class="search-wrap" id="searchWrap">
+      <input id="globalSearch" type="text" placeholder="এই অধ্যায়ে খুঁজুন…" oninput="applySearch()">
+    </div>
+  </div>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-title">সূচিপত্র</div>
+      <div id="navList"></div>
+    </nav>
+
+    <main class="content" id="content"></main>
+  </div>
+  <footer class="credit">তাসিন সাইমনের জন্য তৈরি স্টাডি নোটবুক · উৎস: স্বপ্ন চাবি পাবলিকেশন, HSC 26' Special Suggestion</footer>
+</div>
+
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <div class="quiz-top">
+      <button class="quiz-close" onclick="closeQuiz()">✕ বন্ধ করো</button>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <div class="quiz-score mono" id="quizScoreLabel">0 · 0</div>
+    </div>
+    <div class="quiz-body" id="quizBody"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+
+const uchcharon = [
+["অধ্যক্ষ","অধ্‌ধোক্‌খো"],["অসীম","অশিম্"],["অদ্বিতীয়","অদ্‌দিতিয়ো"],["অনিঃশেষ","অনিশ্‌শেশ্"],
+["আবৃত্তি","আবৃত্তি"],["আহ্বান","আওভান্"],["ইতঃপূর্বে","ইতোপ্পুর্বে"],["উদ্যোগ","উদ্‌দোগ্"],
+["উদ্বেগ","উদ্‌বেগ্"],["উদাহরণ","উদাহরোন্"],["ঋগ্বেদ/ঋদ্বেদ","রিগ্‌বেদ্"],["একাডেমি","অ্যাকাডেমি"],
+["এক","অ্যাক্"],["ঐশ্বর্য","ওইশ্‌শোর্‌জো"],["ঐকতান","ওইকোতান্"],["কবিতা","কোবিতা"],
+["কন্যা","কোন্না"],["গ্রীষ্মকাল","গ্রিশ্‌শোকাল্"],["গ্রহণ","গ্রোহোন্"],["চিহ্ন","চিন্‌হো"],
+["চর্যাপদ","চোর্‌জাপদ্"],["ছাত্র","ছাত্‌ত্রো"],["জয়ধ্বনি","জয়োদ্‌ধোনি"],["জিহ্বা","জিউভা"],
+["জ্ঞাত","গ্যাঁতো"],["দক্ষ","দোক্‌খো"],["দীনবন্ধু","দিনোবোন্‌ধু"],["দায়িত্ব","দায়িত্তো"],
+["দ্রষ্টব্য","দ্রোশ্‌টোব্‌বো"],["ধন্যবাদ","ধোন্‌নোবাদ্"],["নদী","নোদী"],["নক্ষত্র","নোক্‌খোত্‌ত্রো"],
+["প্রায়শ্চিত্ত","প্রায়োশ্চিত্তো"],["পরীক্ষা","পোরিক্‌খা"],["পর্যন্ত","পোর্‌জোন্তো"],["প্রতিজ্ঞা","প্রোতিগ্‌গাঁ"],
+["পক্ষ","পোক্‌খো"],["পুনঃপুন","পুনোপ্‌পুনো"],["পদ্য","পোদ্‌দো"],["প্রথম","প্রোথোম্"],
+["পদ্ম","পদ্‌দোঁ"],["ব্রহ্মপুত্র","ব্রোম্‌হোপুত্‌ত্রো"],["বিজ্ঞান","বিগ্‌গ্যান্"],["ব্যতিক্রম","বেতিক্‌ক্রোম্"],
+["ব্যতীত","বেতিতো"],["ব্রাহ্মণ","ব্রাম্‌হোন্"],["বিজ্ঞ","বিগ্‌গো"],["বিশেষজ্ঞ","বিশেশ্‌গো"],
+["ব্যাখ্যা","ব্যাক্‌খা"],["ভবিষ্যৎ","ভোবিশ্‌শোত্"],["মধ্যাহ্ন","মোদ্‌ধান্‌হো"],["মর্যাদা","মোর্‌জাদা"],
+["মনঃকষ্ট","মনোক্‌কষ্টো"],["লাবণ্য","লাবোন্‌নো"],["লক্ষ্মণ","লক্‌খোন্"],["শূন্য","শুন্‌নো"],
+["শ্রাবণ","স্রাবোন্"],["ষান্মাসিক","ষান্‌মাশিক্"],["স্বাগত","শাগতো"],["স্মর্তব্য","শোর্‌তোব্‌বো"],
+["সভ্য","শোব্‌ভো"],["সংবাদপত্র","শঙ্‌বাদপোত্‌ত্রো"],["হিংস্র","হিঙ্‌স্রো"],["হৃদয়","হৃদয়"],
+["প্রজ্ঞাপন","প্রোগ্‌গ্যাপন্"],["চক্রবর্তী","চক্রোবোর্‌তি"],["নিঃস্পৃহ","নিস্‌স্পৃহো"],["প্রেক্ষিত","প্রেক্‌খিতো"],
+["বন","বোন্"],["অকৃতজ্ঞ","অকৃতগ্‌গোঁ"],["অতঃপর","অতোপ্‌পর্"],["মুক্তিযুদ্ধ","মুক্‌তিজুদ্‌ধো"],
+["অপরাহ্ন","অপরান্‌হো"],["অকস্মাৎ","অকোশ্‌শাৎ"],["একতা","একোতা"],["যথাযোগ্য","জথাজোগ্‌গো"],
+["যকৃৎ","জক্‌কৃৎ"],["উত্থাপন","উত্‌থাপন্"],["চট্টগ্রাম","চট্‌টোগ্রাম্"],["লিখন","লিখন্"],
+["ছদ্মবেশ","ছদ্‌দোবেশ্"],["প্রাসঙ্গিক","প্রাশোংগিক"],["ভ্রাতুষ্পুত্র","ভ্রাতুশ্‌পুত্রো"],["উদ্যত","উদ্‌দতো"],
+["আহ্লাদ","আল্‌হাদ্"],["ঐক্যমত্য","ওইকোমোত্তো"],["বিদ্রোহ","বিদ্‌দ্রোহো"],["সন্ত্রস্ত","শন্‌ত্রোস্তো"],
+["উৎকৃষ্ট","উদ্‌কৃশ্‌টো"],["সম্মান","শম্‌মান্"],["চিহ্নিত","চিন্‌হিতো"],["তন্ময়","তন্‌ময়"],
+["অভ্যাগত","ওভ্‌ভাগতো"],["গঞ্জনা","গন্‌জোনা"],["মাধ্যাকর্ষণ","মাদ্‌দাকোর্‌শোন্"],["পয়ঃপ্রণালি","পয়োপ্রোনালি"],
+["ঔপনিবেশিক","ঔপোনিবেশিক"],["মন","মোন্"],["বনভোজন","বোন্‌ভোজোন্"],["বিজ্ঞপ্তি","বিগ্‌গোঁপ্তি"],
+["অধ্যাপক","ওদ্‌ধাপক্"],["তীক্ষ্ণ","তিক্‌খোনো"],["সহ্য","শোজ্‌ঝো"],["পাঠ্যক্রম","পাট্‌ঠোক্রোম্"],
+["দৌহিত্র","দৌহিত্রো"],["পনেরো","পোনেরো"],["ভগ্নী","ভোগ্‌নি"],["গঠিত","গঠিতো"],
+["নিঃস্ব","নিশ্‌শো"],["অঙ্ক","অক্‌খো"],["মতি","মোতি"],["শব্দ","শব্‌দো"],
+["দুঃখ","দুক্‌খো"],["প্রাঙ্গণ","প্রাংগন্"],["প্রচণ্ড","প্রোচন্‌ডো"],["প্রাক্তন","প্রাক্‌তন্"],
+["শুভ্র","শুভ্রো"],["একটি","একটি"],["বিন্যস্ত","বিন্‌নস্তো"],["পদ্মাসন","পদ্‌দাঁশোন্"],
+["কুক্ষিগত","কুক্‌খিগতো"],["গৃহস্বামী","গৃহোশ্‌শামি"],["প্রাতঃস্নান","প্রাতোস্‌স্নান"],["ত্রয়োদশ","ত্রয়োদশ"],
+["লঙ্ঘন","লংঘোন্"],["মঙ্গল","মোংগল্"],["ক্ষয়িষ্ণু","খোয়িশ্‌নু"],["সহস্র","শহোস্রো"],
+["পঞ্চাশ","পঞ্চাশ্"],["একটা","অ্যাকটা"],["কক্ষচ্যুত","কোক্‌খোচ্‌চুতো"],["বাহ্যজগৎ","বাজ্‌ঝোজগোট্"],
+["যাবজ্জীবন","জাবোজ্‌জিবন্"],["কুঞ্জ","কুব্‌জো"],["পরামর্শ","পরামোর্‌শো"],["ক্রম","ক্রোম্"],
+["মনঃক্ষুণ্ন","মোনোক্‌খুন্‌না"],["মসলা","মশ্‌লা"],["ন্যায্য","ন্যাজ্‌জো"],["স্বাধীনতা","শাধিনতা"],
+["সম্ভব","শম্‌ভব্"]
+];
+
+const banan = [
+["পরগণা","পরগনা"],["অপরাহ্ন","অপরাহ্নে"],["পূর্বাহ্ন","পূর্বাহ্ণ"],["লঠন","লণ্ঠন"],
+["সায়াহ্ন","সায়াহ্ন"],["পুরষ্কার","পুরস্কার"],["ধরণ","ধরন"],["পরিবহন","পরিবহন"],
+["দূরবীন","দূরবিন"],["ভাঙার","ভাঙার"],["শিহরণ","শিহরন"],["কঙ্খন","কঙ্কন"],
+["বাষ্প","বাষ্প"],["দুষ্কর","দুষ্কর"],["মিথঃক্রিয়া","মিথস্ক্রিয়া"],["রুগন","রুগ্ণ"],
+["তোরন","তোরণ"],["ব্রাহ্মন","ব্রাহ্মণ"],["চতুস্কোণ","চতুষ্কোণ"],["ফার্ণিচার","ফার্নিচার"],
+["পোষাক","পোশাক"],["নির্নিমেষ","নির্নিমেষ"],["গৃহায়ণ","গৃহায়ণ"],["বহ্নি","বহ্নি"],
+["দুরাবস্থা","দুরবস্থা"],["উপরোক্ত","উপর্যুক্ত"],["তরুছায়া","তরুচ্ছায়া"],["দৈন্যতা","দৈন্য/দীনতা"],
+["অর্ধরাত্রি","অর্ধরাত"],["অহোরাত্রি","অহোরাত"],["মনবেদনা","মনোবেদনা"],["দারিদ্রতা","দারিদ্র্য/দরিদ্রতা"],
+["দিবারাত্রি","দিবারাত"],["নীরোগী","নীরোগ"],["অগ্নুৎপাত","অগ্ন্যুৎপাত"],["সৌজন্যতা","সৌজন্য"],
+["ইতিপূর্বে","ইতঃপূর্বে"],["শিরোপীড়া","শিরঃপীড়া"],["মনোকষ্ট","মনঃকষ্ট"],["সদ্যজাত","সদ্যোজাত"],
+["শিরচ্ছেদ","শিরশ্ছেদ"],["মরুদ্যান","মরূদ্যান"],["কটূক্তি","কটুক্তি"],["পুনঃনির্মাণ","পুনর্নির্মাণ"],
+["উল্লেখিত","উল্লিখিত"],["হৃদপিণ্ড","হৃৎপিণ্ড"],["মনযোগ","মনোযোগ"],["জাত্যাভিমান","জাত্যভিমান"],
+["চলচ্চিত্র","চলচ্চিত্র"],["অতিন্দ্রীয়","অতীন্দ্রিয়"],["পৃথিশ","পৃথিবী"],["দুরিফরন","দূরীকরণ"],
+["বুৎপত্তি","ব্যুৎপত্তি"],["প্রাণীবিদ্যা","প্রাণিবিদ্যা"],["শ্রদ্ধাঞ্জলী","শ্রদ্ধাঞ্জলি"],["বহির্ভুত","বহির্ভূত"],
+["নারিত্ব","নারীত্ব"],["প্রাতঃরাশ","প্রাতরাশ"],["ব্যার্থ","ব্যর্থ"],["ভস্মিভূত","ভস্মীভূত"],
+["অধীকরণ","অধিকরণ"],["সমিভবন","সমীভবন"],["দুর্বা","দূর্বা"],["মডার্ণ","মডার্ন"],
+["অদ্যবধি","অদ্যাবধি"],["বাগেছড়ী","বাগীশ্বরী"],["বিদ্যাচল","বিন্ধ্যাচল"],["বৈচিত্র্যতা","বৈচিত্র্য"],
+["শুদ্ধিকরণ","শুদ্ধীকরণ"],["বশিকরণ","বশীকরণ"],["যুবতী","যুবতি"],["আভ্যন্তরীন","অভ্যন্তরীণ"],
+["ব্যধি","ব্যাধি"],["এতদ্দ্বারা","এতদ্দ্বারা"],["চক্ষুরোগ","চক্ষুরোগ"],["সতীন","সতিন"],
+["অতলস্পর্শী","অতলস্পর্শ"],["ঐক্যমত","ঐক্যমত্য"],["দোষণীয়","দূষণীয়"],["ইদানিং","ইদানীং"],
+["দধিচি","দধীচি"],["একত্রিত","একত্র"],["আকাংখা","আকাঙ্ক্ষা"],["ভূবন","ভুবন"],
+["আয়ত্তাধীন","আয়ত্ত"],["ভৌগলিক","ভৌগোলিক"],["সময়কাল","সময়/কাল"],["ত্রিভূজ","ত্রিভুজ"],
+["জ্যেষ্ঠ্য","জ্যেষ্ঠ"],["অনুদিত","অনূদিত"],["সাক্ষরতা","সাক্ষরতা"],["সহকারি","সহকারী"],
+["বিদূষী","বিদুষী"],["কুজ্জটিকা","কুজ্ঝটিকা"],["উদিচী","উদীচী"],["সর্বশান্ত","সর্বস্বান্ত"],
+["সাক্ষর","স্বাক্ষর"],["সমীচিন","সমীচীন"],["পরজীবি","পরজীবী"],["জাজ্জল্যমান","জাজ্বল্যমান"],
+["স্বত্রীক","সস্ত্রীক"],["মনীষি","মনীষী"],["সান্তনা","সান্ত্বনা"],["মূর্ছনা","মূর্ছনা"],
+["মহিয়সী","মহীয়সী"],["মুমুক্ষু","মুমুক্ষু"],["মুমূর্ষু","মুমূর্ষু"],["স্বাগতম","স্বাগত"],
+["পাণিনি","পাণিনি"],["মুহুর্ত","মুহূর্ত"],["সুষ্ঠ","সুষ্ঠু"],["স্তপ","স্তূপ"],
+["মুহুমুহু","মুহুর্মুহু"],["অন্তঃস্থল","অন্তস্তল"],["অন্তঃসত্তা","অন্তঃসত্ত্বা"],["মহত্ব","মহত্ত্ব"],
+["স্বরস্বতী","সরস্বতী"],["শুশ্রুষা","শুশ্রূষা"],["স্বায়ত্বশাসন","স্বায়ত্তশাসন"],["অদ্ভুদ","অদ্ভুত"],
+["নুপুর","নূপুর"],["উচ্ছাস","উচ্ছ্বাস"],["নিক্কন","নিক্বণ"],["দ্বন্ধ","দ্বন্দ্ব"],
+["যাদুঘর","জাদুঘর"],["ঘুষ","ঘুস"],["পৈত্রিক","পৈতৃক"],["প্রোজ্বলন","প্রজ্বলন"],
+["বাঞ্চনীয়","বাঞ্ছনীয়"],["প্রাতঃভ্রমণ","প্রাতর্ভ্রমণ"],["সচিত্রত","সচিত্র"],["উজ্জ্বল্য","ঔজ্জ্বল্য"],
+["স্নেহাশীষ","স্নেহাশিস"],["উনবিংশ","ঊনবিংশ"],["অতিথী","অতিথি"],["সৌখিন","শৌখিন"],
+["বৈয়াকরণিক","বৈয়াকরণ"],["গোষ্ঠি","গোষ্ঠী"],["পিপিলিকা","পিপীলিকা"],["কৃপমন্ডুক","কূপমণ্ডূক"],
+["মরিচিকা","মরীচিকা"],["লজ্জাস্কর","লজ্জাকর"],["নৈঋত","নৈঋত"],["হীনমন্যতা","হীনম্মন্যতা"],
+["দীঘি","দিঘি"],["ঊষা","ঊষা"]
+];
+
+const somas = [
+["আমরা","তুমি সে ও আমি","নিত্য সমাস"],
+["কোলাকুলি","কোলে কোলে যে মিলন","ব্যতিহার বহুব্রীহি"],
+["কানাকানি","কানে কানে যে কথা","ব্যতিহার বহুব্রীহি"],
+["গৃহস্থ","গৃহে থাকে যে","উপপদ তৎপুরুষ"],
+["তেপান্তর","তিন প্রান্তরের সমাহার","দ্বিগু সমাস"],
+["চিরসুখী","চিরকাল ব্যাপিয়া সুখী","দ্বিতীয়া তৎপুরুষ"],
+["আয়কর","আয়ের উপর কর","মধ্যপদলোপী কর্মধারয়"],
+["উপজেলা","জেলার সদৃশ","অব্যয়ীভাব সমাস"],
+["উদ্বেল","বেলাকে অতিক্রান্ত","অব্যয়ীভাব সমাস"],
+["কাজলকালো","কাজলের ন্যায় কালো","উপমান কর্মধারয়"],
+["কুসুমকোমল","কুসুমের ন্যায় কোমল","উপমান কর্মধারয়"],
+["চৌচালা","চৌ (চার) চাল আছে যার","সংখ্যাবাচক বহুব্রীহি"],
+["চৌরাস্তা","চার রাস্তার সমাহার","দ্বিগু সমাস"],
+["জ্যোৎস্নারাত","জ্যোৎস্না শোভিত রাত","মধ্যপদলোপী কর্মধারয়"],
+["তেপায়া","তিন পায়া আছে যার","সংখ্যাবাচক বহুব্রীহি"],
+["ত্রিফলা","তিন ফলার সমাহার","দ্বিগু সমাস"],
+["গুরুভক্তি","গুরুর প্রতি ভক্তি","চতুর্থী তৎপুরুষ"],
+["অবিশ্বাস্য","নয় বিশ্বাস্য","নঞ তৎপুরুষ"],
+["তপোবন","তপের নিমিত্তে বন","চতুর্থী তৎপুরুষ"],
+["দম্পতি","জায়া ও পতি","একশেষ দ্বন্দ্ব সমাস"],
+["দুধেভাতে","দুধে ও ভাতে","অলুক দ্বন্দ্ব সমাস"],
+["নদীমাতৃক","নদী মাতা যার","বহুব্রীহি সমাস"],
+["পুষ্পসৌরভ","পুষ্পের সৌরভ","ষষ্ঠী তৎপুরুষ সমাস"],
+["পকেটমার","পকেট মারে যে","উপপদ তৎপুরুষ সমাস"],
+["প্রভাত","প্রকৃষ্ট যে ভাত","প্রাদি সমাস"],
+["প্রবচন","প্রকৃষ্ট যে বচন","প্রাদি সমাস"],
+["পঙ্কজ","পঙ্কে জন্মে যে","উপপদ তৎপুরুষ সমাস"],
+["বেওয়ারিশ","নেই ওয়ারিশ যার","নঞর্থক বহুব্রীহি সমাস"],
+["চাঁদমুখ","মুখ চাঁদের ন্যায়","উপমিত কর্মধারয় সমাস"],
+["সিংহাসন","সিংহ চিহ্নিত আসন","মধ্যপদলোপী কর্মধারয়"],
+["নবরত্ন","নবরত্নের সমাহার","দ্বিগু সমাস"],
+["আলুনি","নুনের অভাব","অব্যয়ীভাব সমাস"],
+["হজযাত্রা","হজের নিমিত্তে যাত্রা","চতুর্থী তৎপুরুষ সমাস"],
+["মহানবী","মহান যে নবী","কর্মধারয় সমাস"],
+["গায়েহলুদ","গায়ে হলুদ দেওয়া হয় যে অনুষ্ঠানে","অলুক বহুব্রীহি সমাস"],
+["যুবজানি","যুবতী জায়া যার","বহুব্রীহি সমাস"],
+["বিলাতফেরত","বিলাত হতে ফেরত","পঞ্চমী তৎপুরুষ সমাস"],
+["যৌবনসূর্য","যৌবন রূপ সূর্য","রূপক কর্মধারয়"],
+["যথারীতি","রীতিকে অতিক্রম না করে","অব্যয়ীভাব সমাস"],
+["যথাসাধ্য","সাধ্যকে অতিক্রম না করে","অব্যয়ীভাব সমাস"],
+["যুগান্তর","অন্য যুগ","নিত্য সমাস"],
+["রাজপথ","পথের রাজা","ষষ্ঠী তৎপুরুষ সমাস"],
+["শিক্ষামন্ত্রী","শিক্ষা বিষয়ক মন্ত্রী","মধ্যপদলোপী কর্মধারয় সমাস"],
+["শতাব্দী","শত অব্দের সমাহার","দ্বিগু সমাস"],
+["সপ্তর্ষি","সপ্ত ঋষির সমাহার","দ্বিগু সমাস"],
+["সেতার","সে (তিন) তার আছে যার","বহুব্রীহি সমাস"],
+["হাসাহাসি","হাসতে হাসতে যে ক্রিয়া","ব্যতিহার বহুব্রীহি সমাস"],
+["নবপৃথিবী","নব যে পৃথিবী","কর্মধারয়"],["দেশ পলাতক","দেশ থেকে পলাতক","৫মী তৎপুরুষ"],
+["বজ্রকঠোর","বজ্রের ন্যায় কঠোর","উপমান কর্মধারয়"],["ভবনদী","ভব রূপ নদী","রূপক কর্মধারয়"],
+["মোহনিদ্রা","মোহ রূপ নিদ্রা","রূপক কর্মধারয়"],["মহাজন","মহান যে জন","কর্মধারয়"],
+["ধর্মঘট","ধর্ম রক্ষার্থে ঘট","মধ্যপদলোপী কর্মধারয়"],["মুখচন্দ্র","চন্দ্রের ন্যায় মুখ","উপমিত কর্মধারয়"],
+["বিদ্যাসাগর","বিদ্যা রূপ সাগর","রূপক কর্মধারয়"],["মুক্তিযুদ্ধ","মুক্তির নিমিত্তে যুদ্ধ","৪র্থী তৎপুরুষ"],
+["সহৃদয়","হৃদয়ের সহিত বর্তমান","বহুব্রীহি"],["মনগড়া","মন দিয়ে গড়া","৩য়া তৎপুরুষ"],
+["হাতেখড়ি","হাতে খড়ি দেওয়া হয় যে অনুষ্ঠানে","বহুব্রীহি"],["মনোরোগ","মনে রোগ","৭মী তৎপুরুষ"],
+["বিস্ময়াপন্ন","বিস্ময়কে আপন্ন","২য়া তৎপুরুষ"],["ফুলকুমারী","কুমারী ফুলের ন্যায়","উপমিত কর্মধারয়"],
+["অহোরাত্র","অহঃ ও রাত্রি","দ্বন্দ্ব"],["বিশ্ববিদ্যালয়","বিশ্ববিদ্যার আলয়","৬ষ্ঠী তৎপুরুষ"],
+["সহোদর","সমান উদর যার","বহুব্রীহি"],["বাগদত্তা","বাক দ্বারা দত্তা","৩য়া তৎপুরুষ"],
+["অমর","মরণ নেই যার","নঞ বহুব্রীহি"],["নরাধম","অধম যে নর","কর্মধারয়"],
+["লোকান্তর","অন্য লোক","নিত্য"],["উপশহর","শহরের সদৃশ","অব্যয়ীভাব"],
+["মৌমাছি","মৌ আশ্রিত মাছি","মধ্যপদলোপী কর্মধারয়"],["উপকূল","কূলের সমীপে","অব্যয়ীভাব"],
+["হাতাহাতি","হাতে হাতে যে লড়াই","ব্যতিহার বহুব্রীহি"],["কুশীলব","কুশ ও লব","দ্বন্দ্ব"],
+["অনাশ্রিত","নয় আশ্রিত","নঞ তৎপুরুষ"],["কচুকাটা","কচুর ন্যায় কাটা","উপমান কর্মধারয়"],
+["জনাকীর্ণ","জন দ্বারা আকীর্ণ","৩য়া তৎপুরুষ"],["শ্রমলব্ধ","শ্রম দ্বারা লব্ধ","৩য়া তৎপুরুষ"],
+["যুদ্ধযাত্রা","যুদ্ধের নিমিত্তে যাত্রা","৪র্থী তৎপুরুষ"],["শাপমুক্ত","শাপ থেকে মুক্ত","৫মী তৎপুরুষ"],
+["হিতাহিত","হিত ও অহিত","দ্বন্দ্ব"],["ঊর্ণনাভ","ঊর্ণ নাভিতে যার","বহুব্রীহি"],
+["কেবল দর্শন","দর্শনমাত্র","নিত্য"],["দুর্ভিক্ষ","ভিক্ষার অভাব","অব্যয়ীভাব"],
+["দশানন","দশ আনন যার","বহুব্রীহি"],["নীলকণ্ঠ","নীল কণ্ঠ যার","বহুব্রীহি"],
+["বকধার্মিক","বকের ন্যায় ধার্মিক","উপমান কর্মধারয়"],["কালস্রোত","কাল রূপ স্রোত","রূপক কর্মধারয়"],
+["দণ্ডপাণি","দণ্ড পানিতে যার","বহুব্রীহি"],["আশীবিষ","আশীতে বিষ যার","বহুব্রীহি"],
+["আকাশ নীল","আকাশের ন্যায় নীল","উপমান কর্মধারয়"],["বীণাপাণি","বীণা পানিতে যার","বহুব্রীহি"],
+["বিপত্নীক","পত্নী গত হয়েছে যার","বহুব্রীহি"],["সৈন্য-সামন্ত","সৈন্য ও সামন্ত","দ্বন্দ্ব"],
+["বেতার","তার নেই যার","নঞ বহুব্রীহি"],["প্রাণপাখি","প্রাণ রূপ পাখি","রূপক কর্মধারয়"],
+["রাজর্ষি","রাজা অথচ ঋষি","কর্মধারয়"],["মকরমুখো","মকরের ন্যায় মুখ যার","বহুব্রীহি"],
+["মতান্তর","অন্য মত","নিত্য"],["ইন্দ্রজিৎ","ইন্দ্রকে জয় করেছে যে","উপপদ তৎপুরুষ"],
+["ক্ষণজীবী","ক্ষণকাল ব্যাপিয়া জীবী","২য়া তৎপুরুষ"],["গজানন","গজের ন্যায় আনন যার","বহুব্রীহি"],
+["রাঙামাটি","রঙিন যে মাটি","কর্মধারয়"],["পাঁচসেরি","পাঁচ সের ওজন যার","বহুব্রীহি"],
+["আহত","ঈষৎ হত","অব্যয়ীভাব"],["অগ্রদূত","অগ্রে দূত","৭মী তৎপুরুষ"],
+["সলিল সমাধি","সলিলে সমাধি","৭মী তৎপুরুষ"],["রাজদণ্ড","রাজা কর্তৃক দণ্ড","৩য়া তৎপুরুষ"],
+["দেবদত্ত","দেবতাকে দত্ত","৪র্থী তৎপুরুষ"],["পলান্ন","পল মিশ্রিত অন্ন","মধ্যপদলোপী কর্মধারয়"],
+["যথাবিধি","বিধিকে অতিক্রম না করে","অব্যয়ীভাব"],["আরক্তিম","ঈষৎ রক্তিম","অব্যয়ীভাব"],
+["রাজপুত্র","রাজার পুত্র","৬ষ্ঠী তৎপুরুষ"],["কবিগুরু","কবিদের গুরু","৬ষ্ঠী তৎপুরুষ"],
+["চতুর্দশপদী","চৌদ্দ পদ আছে যার","বহুব্রীহি"],["চরণকমল","চরণ কমলের ন্যায়","উপমিত কর্মধারয়"],
+["অনাহূত","নয় আহূত","নঞ তৎপুরুষ"],["বিমনা","বিচলিত মন যার","বহুব্রীহি"],
+["গুণমুগ্ধ","গুণ দ্বারা মুগ্ধ","৩য়া তৎপুরুষ"],["উত্তরোত্তর","উত্তর থেকে উত্তর","৫মী তৎপুরুষ"],
+["গ্রন্থকার","গ্রন্থ রচনা করেন যিনি","উপপদ তৎপুরুষ"],["বীরকেশরী","বীরের ন্যায় কেশর যার","বহুব্রীহি"],
+["প্রভাকর","প্রভা করে যা","উপপদ তৎপুরুষ"],["সত্যভ্রষ্ট","সত্য থেকে ভ্রষ্ট","৫মী তৎপুরুষ"],
+["যথেষ্ট","ইষ্টকে অতিক্রম না করে","অব্যয়ীভাব"],["বিশালাক্ষী","বিশাল অক্ষি যার","বহুব্রীহি"],
+["অতীন্দ্রিয়","ইন্দ্রিয়কে অতিক্রম না করে","অব্যয়ীভাব"],["চোখাচোখি","চোখে চোখে যে কথা","ব্যতিহার বহুব্রীহি"],
+["ফুলকপি","কপি ফুলের ন্যায়","উপমিত কর্মধারয়"],["তুষারধবল","তুষারের ন্যায় ধবল","উপমান কর্মধারয়"],
+["শতায়ু","শত আয়ু যার","বহুব্রীহি"],["পল্লিকবি","পল্লির কবি","৬ষ্ঠী তৎপুরুষ"],
+["অনতিবৃহৎ","নয় অতি বৃহৎ","নঞ তৎপুরুষ"],["অস্ত্রোপচার","অস্ত্র দ্বারা উপচার","৩য়া তৎপুরুষ"],
+["রাজধানী","রাজার ধানী","৬ষ্ঠী তৎপুরুষ"],["আমূল","মূল পর্যন্ত","অব্যয়ীভাব"],
+["মেঘলুপ্ত","মেঘ দ্বারা লুপ্ত","৩য়া তৎপুরুষ"],["প্রত্যক্ষ","অক্ষির সম্মুখ","অব্যয়ীভাব"],
+["জীবনপ্রদীপ","জীবন রূপ প্রদীপ","রূপক কর্মধারয়"],["গৃহকর্ত্রী","গৃহের কর্ত্রী","৬ষ্ঠী তৎপুরুষ"],
+["প্রাণপ্রিয়","প্রাণের চেয়ে প্রিয়","৫মী তৎপুরুষ"],["মিঠেকড়া","যা মিঠা তাই কড়া","কর্মধারয়"],
+["উপকণ্ঠ","কণ্ঠের সমীপে","অব্যয়ীভাব"],["শশব্যস্ত","শশের ন্যায় ব্যস্ত","উপমান কর্মধারয়"],
+["জয়পতাকা","জয়সূচক পতাকা","মধ্যপদলোপী কর্মধারয়"],["খড়মপা","খড়মের মতো পা যার","বহুব্রীহি"],
+["পদদলিত","পদ দ্বারা দলিত","৩য়া তৎপুরুষ"],["তেভাগা","তিন ভাগ যার","বহুব্রীহি"],
+["দেহলতা","দেহ লতার ন্যায়","উপমিত কর্মধারয়"],["সর্বশ্রেষ্ঠ","সবার চেয়ে শ্রেষ্ঠ","৫মী তৎপুরুষ"],
+["মধুকর","মধু সংগ্রহ করে যে","উপপদ তৎপুরুষ"],["দ্রুতগামী","দ্রুত গমন করে যে","উপপদ তৎপুরুষ"],
+["পানাপুকুর","পানা আচ্ছাদিত পুকুর","মধ্যপদলোপী কর্মধারয়"],["অকাল বার্ধক্য","অকালে বার্ধক্য","৭মী তৎপুরুষ"],
+["সুশীল","সু (সুন্দর) শীল যার","বহুব্রীহি"],["ভরণপোষণ","ভরণ ও পোষণ","দ্বন্দ্ব"],
+["বেহায়া","হায়া নেই যার","নঞ বহুব্রীহি"],["মনবিহঙ্গ","মন রূপ বিহঙ্গ","রূপক কর্মধারয়"],
+["গিন্নিমা","যিনি গিন্নি তিনি মা","কর্মধারয়"],["তিমিরবিদারী","তিমির বিদীর্ণ করে যা","উপপদ তৎপুরুষ"],
+["কর্মকর্তা","কর্মের নিমিত্তে কর্তা","৪র্থী তৎপুরুষ"],["দুধভাত","দুধ মিশ্রিত ভাত","মধ্যপদলোপী কর্মধারয়"],
+["সদর্প","দর্পের সহিত বর্তমান","বহুব্রীহি"],["নিমতিতা","নিমের ন্যায় তিতা","উপমান কর্মধারয়"],
+["নিমরাজি","ঈষৎ রাজি","অব্যয়ীভাব"],["ছেলে মেয়ে","ছেলে ও মেয়ে","দ্বন্দ্ব"],
+["রাজায় রাজায়","রাজায় ও রাজায়","অলুক দ্বন্দ্ব"],["জীবনবীমা","জীবন রক্ষার্থে বীমা","মধ্যপদলোপী কর্মধারয়"],
+["চপেটাঘাত","চপেট দ্বারা আঘাত","৩য়া তৎপুরুষ"],["কালসাপ","কাল তুল্য সাপ","নিত্য"],
+["অতিথি","তিথি নেই যার","নঞ বহুব্রীহি"],["ওষ্ঠাধর","ওষ্ঠ ও অধর","দ্বন্দ্ব"],
+["পঞ্চানন","পঞ্চ আনন যার","বহুব্রীহি"],["প্রগতি","প্র যে গতি","প্রাদি"],
+["রক্তকমল","রক্ত কমলের ন্যায়","উপমিত কর্মধারয়"],["হস্তলিখিত","হস্ত দ্বারা লিখিত","৩য়া তৎপুরুষ"],
+["তিমিরকুন্তলা","তিমিরের ন্যায় কুন্তল যার","বহুব্রীহি"],["বউদি","যিনি বউ তিনি দিদি","কর্মধারয়"],
+["রক্তারক্তি","রক্তে রক্তে যে লড়াই","ব্যতিহার বহুব্রীহি"],["কুম্ভকার","কুম্ভ করে যে","উপপদ তৎপুরুষ"],
+["সতীর্থ","সমান তীর্থ যার","বহুব্রীহি"],["গলাগলি","গলায় গলায় যে ভাব","ব্যতিহার বহুব্রীহি"],
+["সুহৃদয়","সুন্দর হৃদয় যার","বহুব্রীহি"],["তন্মাত্র","কেবল মাত্র","নিত্য সমাস"],
+["জয়ন্তী","জন্মের জন্য উৎসব","বহুব্রীহি"],["ত্রিলোক","তিন লোকের সমাহার","দ্বিগু"],
+["ঘনশ্যাম","ঘনের ন্যায় শ্যাম","উপমান কর্মধারয়"],["পাষাণস্তূপ","পাষাণের স্তূপ","৬ষ্ঠী তৎপুরুষ"],
+["গণ্যমান্য","যিনি গণ্য তিনি মান্য","কর্মধারয়"],["বিরানব্বই","দুই ও নব্বই","নিত্য সমাস"],
+["প্রতিবিপ্লব","বিপ্লবের প্রতিরূপ","অব্যয়ীভাব"],["হতাহত","হত ও আহত","দ্বন্দ্ব"],
+["অগ্নিবীণা","অগ্নি রূপ বীণা","রূপক কর্মধারয়"],["উদ্বাস্তু","বাস্তু থেকে উৎখাত হয়েছে যে","বহুব্রীহি"],
+["বর্ণচোরা","বর্ণচুরি করে যে","উপপদ তৎপুরুষ"],["একাদশ","এক অধিক দশ","মধ্যপদলোপী কর্মধারয়"],
+["মায়েঝিয়ে","মায়ে ও ঝিয়ে","অলুক দ্বন্দ্ব"],["প্রভাষক","প্রকৃষ্ট ভাষণ দেন যিনি","উপপদ তৎপুরুষ"],
+["লোকভয়","লোক থেকে ভয়","৫মী তৎপুরুষ"],["প্রবাদ","প্র (প্রকৃষ্ট) যে বাদ","প্রাদি সমাস"],
+["রক্তনদী","রক্ত রূপ নদী","রূপক কর্মধারয়"],["প্রশান্তি","প্র (প্রকৃষ্ট) যে শান্তি","প্রাদি সমাস"],
+["হরতাল","তালের অভাব","অব্যয়ীভাব"]
+];
+
+const porivashik = [
+["Agenda","আলোচ্যসূচি"],["Acting","ভারপ্রাপ্ত"],["Allotment","বরাদ্দ"],["Assembly","পরিষদ"],
+["Aid","সাহায্য"],["Autograph","স্বাক্ষর, স্বলেখন"],["Audio","শ্রুতি"],["Acid","অম্ল"],
+["Autonomous","স্বায়ত্তশাসিত"],["Attestation","সত্যায়ন"],["Auction","নিলাম"],["Banquet","ভোজসভা"],
+["Bail","জামিন"],["Biodata","জীবনবৃত্তান্ত"],["Bond","প্রতিজ্ঞাপত্র"],["Bankrupt","দেউলিয়া"],
+["Booklet","পুস্তিকা"],["Bulletin","জ্ঞানপত্র/ বুলেটিন"],["Cabinet","মন্ত্রিপরিষদ"],["Cartoon","ব্যঙ্গচিত্র"],
+["Catalogue","তালিকা"],["Copyright","স্বত্ব, মেধাস্বত্ব"],["Dialect","উপভাষা"],["Deputation","প্রতিনিধিত্ব, প্রেষণ"],
+["Deed","দলিল"],["Data","উপাত্ত"],["Dynamic","গতিশীল/ প্রাণবন্ত"],["Deed of gift","দানপত্র"],
+["Editor","সম্পাদক"],["Ethics","নীতিশাস্ত্র"],["Eye-wash","ধোঁকা"],["Embargo","অবরোধ, নিষেধাজ্ঞা"],
+["Expert","বিশেষজ্ঞ, দক্ষ"],["Equation","সমীকরণ"],["Fiction","কথাসাহিত্য, কল্পকাহিনি"],["File","নথি"],
+["Fine Arts","চারুকলা"],["Fundamental","মৌলিক"],["Forecast","পূর্বাভাস"],["Global","বিশ্বব্যাপী, বৈশ্বিক"],
+["Galaxy","ছায়াপথ"],["Gratuity","আনুতোষিক, উপহার"],["Goods","পণ্যদ্রব্য, অস্থাবর সম্পত্তি"],["Hostage","জিম্মি"],
+["Headline","শিরোনাম"],["Home Ministry","স্বরাষ্ট্র মন্ত্রণালয়"],["Hygiene","স্বাস্থ্যবিজ্ঞান/ স্বাস্থ্যবিধি"],
+["Impeachment","অভিশংসন"],["Irrigation","জলসেচ"],["Index","নির্ঘণ্ট, সূচি"],["Idiom","বাগধারা"],
+["Justice","ন্যায়বিচার"],["Leap year","অধিবর্ষ"],["Lien","কর্মস্বত্ব"],["Legend","কিংবদন্তি"],
+["Lease","ইজারা"],["Leaflet","প্রচারপত্র"],["Manifesto","ইশতেহার"],["Manuscript","পাণ্ডুলিপি"],
+["Memorandum","স্মারকলিপি"],["Miscreant","দুর্বৃত্ত"],["Myth","পৌরাণিক কাহিনি"],["Newspaper","সংবাদপত্র"],
+["Note","মন্তব্য"],["Nursery","শিশুশালা, তরুশালা"],["Nationalism","দেশাত্মবোধ"],["Nebula","নীহারিকা"],
+["Option","ঐচ্ছিকতা"],["Oath","শপথ, হলফনামা"],["Octave","অষ্টক (ছন্দ)"],["Ordinance","অধ্যাদেশ"],
+["Pay-bill","বেতন-বিল"],["Principle","নীতি"],["Public works","গণপূর্ত"],["Pass-word","সংকেত"],
+["Quack","হাতুড়ে বিদ্যা"],["Quality","গুণ"],["Racism","বর্ণবাদ"],["Rank","পদমর্যাদা"],
+["Reform","পুনর্গঠন"],["Refugee","উদ্বাস্তু"],["Sabotage","অন্তর্ঘাত"],["Subsidy","ভরতুকি"],
+["Sanction","মঞ্জুরি"],["Surplus","উদ্বৃত্ত"],["Secular","ধর্মনিরপেক্ষ"],["Sponsor","পোষক"],
+["Tribunal","বিচারসভা"],["Terminology","পরিভাষা"],["Thesis","গবেষণাপত্র"],["Urban","পৌর"],
+["Vacation","অবকাশ"],["Violation","লঙ্ঘন"],["Vision","লক্ষ্য, দূরদর্শিতা"],["White paper","শ্বেতপত্র"],
+["Walk-out","সভা বর্জন"],["Worship","পূজা"],["War Crime","যুদ্ধাপরাধ"],["X-ray","রঞ্জনরশ্মি"],
+["Zone","অঞ্চল"],["Zoom","বিমানের তীব্র খাড়"]
+];
+
+const diary = [
+{title:"১) কলেজের প্রথম দিনের অভিজ্ঞতা", meta:"১৫ জুলাই ২০২৬ · বুধবার · রাত ১০টা ২০ মিনিট · কুমিল্লা",
+body:`আজ আমার কলেজের প্রথম দিন ছিল। অনেক আগ্রহ ও উৎসাহ নিয়ে বাবার সঙ্গে কলেজে গেলাম। কেরানির কাছে খোঁজ নিয়ে বাবা আমাকে ক্লাসে বসতে বললেন। শিক্ষক তখনো আসেননি। আশপাশে যারা আছে সবাই অপরিচিত। কারণ আমার বন্ধুদের কেউ এই কলেজে ভর্তি হয়নি। পাশে বসা মেয়েটির সঙ্গে পরিচয় হলো। নাম ছন্দা, তারও এই কলেজে কোনো বন্ধু নেই। আমরা দুজন অনেক গল্প করলাম। অন্তত একজন বন্ধু পেয়েছি ভেবে আমি মনে মনে সান্ত্বনা অনুভব করলাম। একটু একটু করে আরও অনেকের সঙ্গে পরিচয় হবে ভেবে মনে মনে খুশি হলাম।
+
+একজন শিক্ষক ক্লাসে ঢুকলেন। অনেক শিক্ষার্থী, তাই মাইক্রোফোনে লেকচার দিতে লাগলেন। কীভাবে চলতে হবে, পড়াশোনা কীভাবে করতে হবে — এসব বিষয়ে বললেন। প্রথম দিন বলে আজ একটা মাত্র ক্লাসই হলো আমাদের। এটাকে ঠিক ক্লাস বলা যাবে না, উদ্বোধনী ক্লাস ছিল এটি। ক্লাস শেষে আমরা অনেকেই কলেজের মাঠে গিয়ে বসলাম। মাঠে বসে অনেকের সঙ্গে পরিচিত হলাম। ছন্দা, রোশনি, পাভেল, জীবনসহ অনেকেই আমার বন্ধু হয়ে গেল। এরা সবাই খুব আন্তরিক। আর এদের অনেকেই গ্রাম থেকে এসেছে, আবার অনেকের বাসা কলেজের খুব কাছাকাছি। সবার সঙ্গে কথা হলো। তারপর বাড়ি ফিরে এলাম। বাড়ি ফিরে প্রথম দিনের কলেজের অনুভূতির কথা মাকে জানালাম, দিনটি আমার স্মৃতিতে একটি বিশেষ দিন হয়ে থাকবে চিরদিন।`},
+
+{title:"২) বিভিন্ন দিবস উদযাপন", meta:"২১শে ফেব্রুয়ারি ২০২৬ · রবিবার · রাত ১১টা ৫৮ মিনিট",
+body:`ফেব্রুয়ারির ২১ তারিখ আমাদের দেশের জন্য জাতীয় শহিদ দিবস আর বৃহত্তর পরিসরে আন্তর্জাতিক মাতৃভাষা দিবস। ১৯৫২ সালের ২১শে ফেব্রুয়ারি রাষ্ট্রভাষা বাংলার দাবিতে আমাদের দেশের দামাল ছেলেরা বুকের রক্ত ঢেলে দিয়েছিল রাজপথে। পূর্ব পাকিস্তানের জনগণকে দমিয়ে রাখতে পশ্চিম পাকিস্তানি শাসকচক্রের প্রথম ষড়যন্ত্র ভাষা নিয়ে। তাদের ষড়যন্ত্র নস্যাৎ করে দিতে সালাম, বরকত, রফিকরা সেদিন রাজপথে আন্দোলনে নেমে শহিদ হয়েছিলেন। সেই ভাষাশহিদদের স্মরণে দিনটা শুরু হলো প্রভাতফেরির মাধ্যমে। খুব ভোরে ঘুম থেকে উঠে কলেজের প্রশাসনিক ভবনের সামনে আমরা সমবেত হলাম। শিক্ষকবৃন্দ এসে প্রভাতফেরিতে যোগদান করলে শুরু হলো খালি পায়ে আমাদের পদযাত্রা। সে সঙ্গে সমবেত কণ্ঠে গাওয়া হচ্ছিল 'আমার ভাইয়ের রক্তে রাঙানো একুশে ফেব্রুয়ারি, আমি কি ভুলিতে পারি'। প্রভাতফেরিটি কলেজের শহিদ মিনারে পৌঁছালে পুষ্পস্তবক অর্পণ করে এক মিনিট দাঁড়িয়ে থেকে ভাষাশহিদদের স্মরণে নীরবতা পালন করা হলো। তারপর কলেজে আয়োজিত সাংস্কৃতিক অনুষ্ঠানে যোগ দিলাম বন্ধুদের সঙ্গে। কবিতা আবৃত্তি ও সংগীতানুষ্ঠানের পর কলেজের অধ্যক্ষ ও অন্য শিক্ষকগণ আজকের দিনটির মহিমান্বিত দিক আমাদের সামনে তুলে ধরলেন। আলোচনা অনুষ্ঠান শেষে প্রবন্ধ ও কবিতা প্রতিযোগিতায় বিজয়ী শিক্ষার্থীদের মাঝে পুরস্কার বিতরণ করেন অধ্যক্ষ মহোদয়। আমি নিজেও প্রবন্ধ প্রতিযোগিতায় দ্বিতীয় স্থান অধিকারের জন্য পুরস্কার পেলাম। অনুষ্ঠান শেষে বাড়িতে এসে বাবাকে পুরস্কার দেখালাম। বাবা খুব খুশি হলেন।`},
+
+{title:"৩) বিভিন্ন জায়গায় ঘুরতে যাওয়া", meta:"৯ এপ্রিল ২০২৬ · বৃহস্পতিবার · রাত ১১টা ৪৫ মিনিট · নওগাঁ",
+body:`আজ সারাদিন আমার জন্য খুবই আনন্দের ছিল। আমরা ক্লাসের সব বন্ধু মিলে নওগাঁ জেলার পাহাড়পুরে গেলাম। ভোরে আমরা ১০ জন বন্ধু মিলে ঢাকা থেকে জামালগঞ্জ স্টেশনের উদ্দেশে রওনা হলাম। পাহাড়পুর বৌদ্ধবিহার জামালগঞ্জ রেলস্টেশন থেকে মাত্র ৫ কিলোমিটার দূরে। নওগাঁ জেলা শহর থেকে এর দূরত্ব প্রায় ৩০ কিলোমিটার হওয়ায় আমরা জামালগঞ্জ দিয়েই গেলাম। পাহাড়পুরের বৌদ্ধবিহারটি ১৮৭৯ সালে আবিষ্কৃত হয়। আমরা সেখানে পৌঁছে প্রথমেই বিহারটি ঘুরে দেখা শুরু করলাম। এর ভূমি পরিকল্পনা আমাকে মুগ্ধ করল। আমরা ১০ বন্ধু দুটি দলে ভাগ হয়ে বিহারটি ঘুরে ঘুরে দেখতে লাগলাম। আমাদের সঙ্গে একজন গাইড ছিলেন। তিনি আমাদের জানালেন এই বিহারটিতে ৮৯টি কক্ষ রয়েছে। তিনি আরও জানালেন, পাহাড়পুর বৌদ্ধবিহার ১৯৮৫ সালে ইউনেস্কো কর্তৃক বিশ্ব-ঐতিহ্যের মর্যাদা লাভ করে। বিহারটি অনেকক্ষণ ঘুরে দেখার পর আমরা দুপুরের খাবার খেয়ে নিলাম। তারপর আবার বিহারের ছোটো-বড়ো কক্ষগুলো ঘুরে দেখতে লাগলাম। জানতে পারলাম, পাহাড়পুর বৌদ্ধবিহারটি পাল বংশের রাজা ধর্মপাল অষ্টম বা নবম শতকে তৈরি করেন। সারাদিন বিহারটি ঘুরে ঘুরে দেখার পর আমরা বিকাল ৫টায় ট্রেনে করে বাসায় ফেরার উদ্দেশে রওনা হলাম।`}
+];
+
+const emailTopics = [
+"মোবাইল ফোনের অপব্যবহারের ক্ষতি উল্লেখ করে বন্ধুর কাছে একটি ইমেইল রচনা কর",
+"সামাজিক যোগাযোগ মাধ্যম/ইন্টারনেট অতিরিক্ত ব্যবহারের কুফল",
+"দুর্যোগে ক্ষতিগ্রস্তদের/দুর্ঘটনায় ক্ষতিগ্রস্ত জন্য আর্থিক সহায়তা চাওয়া",
+"মাদকাসক্তি/খারাপ অভ্যাস এর কুফল"
+];
+
+const emails = [
+{to:"shanto10@gmail.com", subject:"মাদকাসক্তির কুফল সম্বন্ধে।", sign:"শিবলি",
+body:`আশা করি ভালো আছিস। তুই একটি ভালো কলেজে ভর্তি হয়েছিস জেনে খুব খুশি হয়েছি। তোর জীবনের এই গুরুত্বপূর্ণ সময়টায় তোকে বড়ো ভাই হিসেবে একটি পরামর্শ দিচ্ছি। সবসময় মাদক থেকে দূরে থাকবি। মাদকাসক্তি ব্যক্তি, পরিবার, সমাজ ও দেশের জন্য অভিশাপস্বরূপ। মাদকাসক্ত ব্যক্তির দেহে রক্তশূন্যতা দেখা দেয়, ফুসফুস, হৃদপিণ্ড, পাকস্থলী প্রভৃতি ক্ষয়প্রাপ্ত হতে থাকে, মস্তিষ্কের স্নায়ুকোষ নষ্ট হয়ে যায়। এ ধরনের ব্যক্তি যেকোনো অনৈতিক কাজ করতে পারে। মাদকাসক্তি দারিদ্র্যের অন্যতম প্রধান কারণ। তাই নতুন জায়গায় তোকে শুরু থেকেই এ ব্যাপারে সচেতন থাকতে হবে।`},
+
+{to:"rajildutta@gmail.com", subject:"বন্যায় ক্ষতিগ্রস্তদের জন্য আর্থিক সহায়তা।", sign:"তারেক মাহমুদ",
+body:`প্রবাস জীবনে তোমরা সবাই একসাথে ভালো আছ জেনে খুশি হলাম। সম্প্রতি আমাদের এলাকায় ভয়াবহ আকস্মিক বন্যার খবর নিশ্চয়ই পেয়েছ। আমরা যারা দেশে অবস্থান করছি তারা মিলে ক্ষতিগ্রস্তদের পুনর্বাসনে সর্বাত্মক সহযোগিতার চেষ্টা করছি। আশা করি, তুমিও প্রবাস জীবন থেকে আমাদের এই কাজে আর্থিক সহায়তা দিয়ে সঙ্গী হবে। অপেক্ষায় রইলাম।`},
+
+{to:"prova07@gmail.com; suison28@gmail.com; piashdu@gmail.com", subject:"মোবাইল ফোনের অপব্যবহার।", sign:"গোলাম রব্বানী",
+body:`আজ এক সেমিনারে মোবাইল ফোনের অপব্যবহারের কুফল সম্পর্কে জেনে এলাম। অত্যধিক মোবাইল ফোন ব্যবহার আমাদের শরীর ও মনে বিরূপ প্রভাব ফেলে। অধিক সময় সামাজিক যোগাযোগমাধ্যমে ব্যয় করে, গেম খেলে, মোবাইলে বেশিক্ষণ কথা বলে আমরা আমাদের মূল্যবান সময় নষ্ট করে ফেলছি। আমরা খেলাধুলা না করে, বই না পড়ে, মোবাইলে অধিক সময় ব্যয় করছি যা আমাদের শারীরিক ও মানসিক বিকাশে বাধা সৃষ্টি করছে। মোবাইল ফোনের বিভিন্ন অ্যাপে আমাদের ব্যক্তিগত তথ্যের গোপনীয়তা নষ্ট করছে। তাই বন্ধুরা তোমরা মোবাইল ফোনের অতিরিক্ত ব্যবহার থেকে বিরত থেকো।`}
+];
+
+const applicationLetter = {
+date:"২ মে ২০২৬",
+to:"অধ্যক্ষ, ভিকারুননিসা নূন স্কুল এন্ড কলেজ, ঢাকা",
+subject:"সহকারী শিক্ষক পদে নিয়োগ লাভের জন্য আবেদন।",
+body:`জনাব,
+গত ২৮ জুন ২০২৩ তারিখে 'দৈনিক যুগান্তর' পত্রিকায় প্রকাশিত বিজ্ঞাপনের মাধ্যমে জানতে পারলাম, আপনার অধীনে বাংলা বিষয়ে একজন সহকারী শিক্ষক নিয়োগ দেওয়া হবে। উক্ত পদের একজন প্রার্থী হিসেবে আমি আমার শিক্ষাগত যোগ্যতা ও অন্যান্য প্রয়োজনীয় তথ্য আপনার সদয় বিবেচনার জন্য উপস্থাপন করছি।`,
+fields:[["নাম","ফাতেমা ওয়ারা"],["পিতার নাম","ওয়াজেদ মল্লিক"],["মায়ের নাম","রাবেয়া সুলতানা"],
+["স্থায়ী ঠিকানা","গ্রাম: লক্ষণপুর, ডাকঘর ও উপজেলা: পীরগঞ্জ, জেলা: ঠাকুরগাঁও।"],["বর্তমান ঠিকানা","ঐ"],
+["জন্ম তারিখ","৩০ জানুয়ারি ২০০১"],["জাতীয়তা","বাংলাদেশি"],["ধর্ম","ইসলাম"]],
+table:[["পরীক্ষার নাম","বিভাগ/বিষয়","প্রাপ্ত জিপিএ/সিজিপিএ","পাশের বছর","বোর্ড/বিশ্ববিদ্যালয়"],
+["এসএসসি","বিজ্ঞান","৪.০০ (৫-এর মধ্যে)","২০১৭","দিনাজপুর বোর্ড"],
+["এইচএসসি","বিজ্ঞান","৪.৪০ (৫-এর মধ্যে)","২০১৯","দিনাজপুর বোর্ড"],
+["বিএ (সম্মান)","বাংলা","৩.১২ (৪-এর মধ্যে)","২০২৩","রাজশাহী বিশ্ববিদ্যালয়"],
+["এমএ","বাংলা","৩.২১ (৪-এর মধ্যে)","২০২৪","রাজশাহী বিশ্ববিদ্যালয়"]],
+experience:"১ নভেম্বর ২০২৫ থেকে একটি বেসরকারি শিক্ষা প্রতিষ্ঠানে সহকারী শিক্ষক পদে কর্মরত আছি।",
+closing:"অতএব, মহোদয়ের নিকট বিনীত প্রার্থনা এই যে, উপরে বর্ণিত তথ্যাদি বিচার করে আমাকে উক্ত পদে নিয়োগদান করলে কৃতজ্ঞ থাকব।",
+sign:"ফাতেমা ওয়ারা",
+attachments:["দুই কপি পাসপোর্ট সাইজ ছবি","যাবতীয় শিক্ষা সনদের অনুলিপি","অভিজ্ঞতার সনদের অনুলিপি","জাতীয় পরিচয় পত্রের অনুলিপি"]
+};
+
+const sarangsho = [
+{p:`অভ্যাস ভয়ানক জিনিস। একে হঠাৎ স্বভাব থেকে তুলে ফেলা কঠিন। মানুষ হওয়ার সাধনাতেও তোমাকে সহিষ্ণু হতে হবে। সত্যবাদী হতে চাও? তাহলে ঠিক করো, সপ্তাহে অন্তত এক দিন মিথ্যা বলবে না। হয়তো মাস ধরে এমনই করে নিজে সত্য কথা বলতে অভ্যাস করো। তারপর এক শুভদিনে আর একবার প্রতিজ্ঞা করো, সপ্তাহে তুমি দুদিন মিথ্যা বলবে না। এক বছর পরে দেখবে সত্য কথা বলা তোমার কাছে অনেকটা সহজ হয়ে পড়েছে। সাধনা করতে করতে এমন একদিন আসবে যখন ইচ্ছা করলেও মিথ্যা বলতে পারবে না। নিজেকে মানুষ করার চেষ্টায় পাপ ও প্রবৃত্তির সঙ্গে সংগ্রামে তুমি হঠাৎ জয়ী হতে কখনো ইচ্ছা কোরো না, তাহলে সব পণ্ড হবে।`,
+s:`অভ্যাসের আকস্মিক পরিবর্তন সম্ভব নয়। এজন্য প্রয়োজন লক্ষ্য স্থির করে সে লক্ষ্য অর্জনে ক্রমাগত সাধনা করে যাওয়া। এক্ষেত্রে তাড়াহুড়ো ব্যর্থতাকেই নিশ্চিত করে।`},
+
+{p:`বিদ্যা মানুষের মূল্যবান সম্পদ, সে বিষয়ে সন্দেহ নাই। কিন্তু চরিত্র তদপেক্ষাও মূল্যবান। অতএব, কেবল বিদ্বান বলিয়াই কোনো লোক সমাদর লাভের যোগ্য বলিয়া বিবেচিত হইতে পারে না। চরিত্রহীন ব্যক্তি যদি নানা বিদ্যায় আপনার জ্ঞানভাণ্ডার পূর্ণ করিয়াও থাকে, তথাপি তাহার সব পরিত্যাগ করাই শ্রেয়। প্রবাদ আছে যে, কোনো কোনো বিষধর সর্পের মস্তকে মণি থাকে। মণি মহামূল্যবান পদার্থ বটে, কিন্তু তাই বলিয়া যেমন মণিলাভের নিমিত্তে বিষধর সর্পের সাহচর্য লাভ করা বুদ্ধিমানের কার্য নহে, সেইরূপ বিদ্যা আদরণীয় হইলেও বিদ্যালাভের নিমিত্তে বিদ্বান দুর্জনের নিকট গমন বিধেয় নহে।`,
+s:`বিদ্যা মানুষের মূল্যবান সম্পদ হলেও চরিত্র মানবজীবনের শ্রেষ্ঠ অলংকার এবং বিদ্যার চেয়ে অধিকতর মূল্যবান। বিদ্বান ব্যক্তি চরিত্রহীন হলে অবশ্যই সে পরিত্যাজ্য। কারণ দুর্জনের সাহচর্যে নিজের চরিত্রও হতে পারে কলুষিত।`},
+
+{p:`বৃক্ষের দিকে তাকালে জীবনের সার্থকতা উপলব্ধি করা যায়। তাই বারবার সেদিকে তাকানো প্রয়োজন। মাটির রস টেনে নিয়ে নিজেকে মোটাসোটা করে তোলাতেই বৃক্ষের কাজের সমাপ্তি নয়। তাকে ফুল ফোটাতে হয়, ফল ধরাতে হয়। নইলে তার জীবন অসম্পূর্ণ থেকে যাবে। তাই বৃক্ষকে সার্থকতার প্রতীক হিসেবে গ্রহণ করার প্রয়োজনীয়তা, সজীবতা ও সার্থকতার এমন জীবন্ত দৃষ্টান্ত আর নেই।`,
+s:`বৃক্ষ ও প্রকৃতির সঙ্গে মানবজীবনের গভীর ঐক্য রয়েছে। প্রকৃতির রূপ, রস, আহরণ করাতেই জীবনের শেষ নয়। প্রজ্ঞা ও মানসিকতা দ্বারা দানের পাত্র পূর্ণ করে যাওয়াতেই মানুষের সার্থকতা।`},
+
+{p:`বার্ধক্য তাহাই- যাহা পুরাতনকে, মিথ্যাকে, মৃত্যুকে আঁকড়িয়া পড়িয়া থাকে। বৃদ্ধ তাহারাই-যাহারা মায়াচ্ছন্ন, নব মানবের অভিনব জয়যাত্রায় শুধু বোঝা নয়, বিঘ্ন, শতাব্দীর নব যাত্রীর চলার ছন্দে ছন্দ মিলাইয়া যাহারা কুচকাওয়াজ করিতে জানে না; পারে না, যাহারা জীব হইয়াও জড়, যাহারা অটল সংস্কারের পাষাণ-স্তূপ আঁকড়িয়ে পড়িয়া আছে। বৃদ্ধ তাহারাই— যাহারা নব অরুণোদয় দেখিয়া নিদ্রাভঙ্গের ভয়ে দ্বার রুদ্ধ করিয়া পড়িয়া থাকে। আলোকপিয়াসী প্রাণচঞ্চল শিশুদের কল-কোলাহলে যাহারা বিরক্ত— বৃদ্ধ তাহারাই। ইহাদের ধর্ম বার্ধক্য।`,
+s:`বার্ধক্যকে সবসময় বয়সের ফ্রেমে বেঁধে বিচার করা ঠিক নয়। মন যাদের জড় পদার্থের মতো কুসংস্কারাচ্ছন্ন, নতুন উদ্যম ও চেতনাকে যারা ভয় পায়— তারাই প্রকৃতপক্ষে বৃদ্ধ। অপরপক্ষে যারা উদ্যমী, নতুনকে বরণ করতে দ্বিধাগ্রস্ত হয় না— তারা বয়সে স্বাধীন বৃদ্ধ হয়েও তরুণ।`},
+
+{p:`আজকের দুনিয়াটা আশ্চর্যভাবে অর্থের বা বিত্তের উপর নির্ভরশীল। লাভ ও লোভের দুর্নিবার গতি কেবল আগে যাবার নেশায় লক্ষ্যহীন প্রচণ্ডবেগে শুধু আত্মবিনাশের পথে এগিয়ে চলেছে। মানুষ যদি এই মূঢ়তাকে জয় না করতে পারে তবে মনুষ্যত্ব কথাটাই হয়তো লোপ পেয়ে যাবে। মানুষের জীবন আজ এমন একপর্যায়ে এসে পৌঁছেছে সেখান থেকে আর হয়তো নামবার উপায় নেই, এবার উঠবার সিঁড়ি না খুঁজলেই নয়। উঠবার সিঁড়িটা না খুঁজে পেলে আমাদের আত্মবিনাশ যে অনিবার্য তাতে আর কোনো সন্দেহ থাকে না।`,
+s:`বর্তমান পৃথিবীতে মানুষ নেশাগ্রস্তের মতো ধনসম্পদের পিছনে ধাবমান। অর্থের এ অন্ধ নেশা মানুষের আত্মবিনাশের পথকেই প্রশস্ত করছে। অথচ এ অবস্থা থেকে উত্তরণের জন্য এখনই এ নেশা পরিত্যাগ করা প্রয়োজন।`},
+
+{p:`মানুষ-ধর্মই সবচেয়ে বড়ো ধর্ম। হিন্দু-মুসলমানের মিলনের অন্তরায় বা ফাঁকি কোনখানে তা দেখিয়ে দিয়ে এর গলদ দূর করা আমার এ পথের অন্যতম উদ্দেশ্য। মানুষে মানুষে যেখানে প্রাণের মিল, আদত সত্যের মিল সেখানে ধর্মের বৈষম্য, কোনো হিংসার দুশমনির ভাব আনে না। যার নিজের ধর্মে বিশ্বাস আছে, যে নিজের ধর্মের সত্যকে চিনেছে, সে কখনো অন্য ধর্মকে ঘৃণা করতে পারে না।`,
+s:`পৃথিবীতে নানা মত ও ধর্ম থাকলেও সবার ঊর্ধ্বে রয়েছে মানবধর্ম। মানুষে মানুষে প্রাণের মিল থাকলে সেখানে কোনো হিংসা, বৈষম্য, দুশমনি স্থান পায় না। ভিন্ন ধর্মাবলম্বী হয়েও যে মনের ভিতরে মানবধর্মকে লালন করে সে অন্য ধর্মকেও ভালোবাসে।`}
+];
+
+const sarmormo = [
+{p:`ক্ষমা যেথা ক্ষীণ দুর্বলতা,
+হে রুদ্র, নিষ্ঠুর যেন হতে পারি তথা
+তোমার আদেশে। যেন রসনায় মম
+সত্যবাক্য জ্বলি ওঠে খরখড়্গসম
+তোমার ইঙ্গিতে। যেন রাখি তব মান
+তোমার বিচারাসনে লয়ে নিজ স্থান।
+অন্যায় যে করে আর অন্যায় যে সহে
+তব ঘৃণা তারে যেন তৃণসম দহে।`,
+s:`ক্ষমা করা মহৎ গুণ। ক্ষমার অজুহাতে অন্যায়কে প্রশ্রয় দেওয়া সমীচীন নয়। সেক্ষেত্রে যে অন্যায় করে আর যে ক্ষমা করে দুজনই সমান অপরাধী। দুজনকেই তাই সমানভাবে ঘৃণা করা উচিত।`},
+
+{p:`কোথায় স্বর্গ, কোথায় নরক, কে বলে তা বহুদূর?
+মানুষের মাঝে স্বর্গ-নরক, মানুষেতে সুরাসুর।
+রিপুর তাড়নে যখনই মোদের বিবেক পায় গো লয়,
+আত্মগ্লানির নরক অনলে তখনই পুড়িতে হয়।
+প্রীতি ও প্রেমের পুণ্য বাঁধনে যবে মিলি পরস্পরে,
+স্বর্গ আসিয়া দাঁড়ায় তখন আমাদেরই কুঁড়েঘরে।`,
+s:`পৃথিবীতেই মানুষের মধ্যে স্বর্গ ও নরকের অবস্থান। প্রীতি ও প্রেমেই স্বর্গীয় সুখ; হিংসা ও গ্লানিই দেয় নরক-যন্ত্রণা।`},
+
+{p:`দৈন্য যদি আসে আসুক, লজ্জা কিবা তাহে?
+মাথা উঁচু রাখিস।
+সুখের সাথী মুখের পানে যদি না চাহে
+ধৈর্য ধরে থাকিস।
+রুদ্ররূপে তীব্র দুঃখ যদি আসে নেমে,
+বুক ফুলিয়ে দাঁড়াস।
+আকাশ যদি বজ্র নিয়ে মাথায় পড়ে ভেঙে
+ঊর্ধ্বে দু'হাত বাড়াস।`,
+s:`জীবনের চলার পথে দুরবস্থা ও বিপর্যয়ে মানুষের ধৈর্য হারানো উচিত নয়। প্রতিকূলতাকে সাহস ও ধৈর্যের সঙ্গে প্রতিহত করাই মানুষের একান্ত করণীয়।`},
+
+{p:`জলহারা মেঘখানি বর্ষার শেষে
+পড়ে আছে গগনের এক কোণ ঘেঁষে।
+বর্ষাপূর্ণ সরোবর তারি দশা দেখে
+সারাদিন ঝিকিমিকি হাসে থেকে থেকে।
+কহে, ওহে লক্ষ্মীছাড়া, চালচুলা হীন,
+নিজেরে নিঃশেষ করি, কোথায় বিলীন।
+আমি দেখো চিরকাল থাকি জলভরা।
+সরোবর, সুগভীর নাই চড়াচড়া।
+মেঘ কহে, ওহে বাপু, করো না গরব
+তোমার পূর্ণতা সে যে আমারই গৌরব।`,
+s:`মেঘের জলে পুকুর পরিপূর্ণ হয়। অথচ অকৃতজ্ঞ পুকুর বর্ষা শেষে তাকে উপহাস করে। তবে পরোপকারী মানুষ উপহাস অগ্রাহ্য করেই মানবের কল্যাণে নিজেকে বিলিয়ে দিতে গৌরববোধ করে।`}
+];
+
+const bhabSomprosaron = [
+"কীর্তিমানের মৃত্যু নাই","গতি যার নীচ সহ, নীচ সে দুর্মতি","তুমি অধম - তাই বলিয়া আমি উত্তম হইবো না কেন?",
+"দুর্জন বিদ্বান হলেও পরিত্যাজ্য","সর্পের মস্তকে মণি থাকিলেও তাহা কি ভয়ংকর নহে?",
+"প্রয়োজনে যে মরিতে প্রস্তুত, বাঁচিবার অধিকার তাহারই","বন্যেরা বনে সুন্দর, শিশুর মাতৃক্রোড়ে",
+"ভোগে সুখ নাই, ত্যাগেই প্রকৃত সুখ / ভোগে নয়, ত্যাগেই মনুষ্যত্বের বিকাশ","রাত যত গভীর হয়, প্রভাত তত নিকটে আসে।",
+"স্বাধীনতা অর্জনের চেয়ে স্বাধীনতা রক্ষা করা কঠিন।","সাহিত্য জাতির দর্পণস্বরূপ"
+];
+
+const baktotto = [
+["অনুগ্রহ করে সব খুলে বলুন","যৌগিক","অনুগ্রহ করুন এবং সব খুলে বলুন।"],
+["আমার পথ দেখাবে আমার সত্য","জটিল","যা আমাকে পথ দেখাবে তা আমার সত্য।"],
+["আমাদের দেশ সুন্দরভাবে এগিয়ে যাচ্ছে","বিস্ময় বোধক","আমাদের দেশ কত সুন্দরভাবে এগিয়ে যাচ্ছে!"],
+["আমি বহু কষ্টে শিক্ষা লাভ করেছি","যৌগিক","আমি বহু কষ্ট করেছি এবং শিক্ষা লাভ করেছি।"],
+["উদারতা কৃপণদের ধর্ম নয়","অস্তিবাচক","অনুদারতা কৃপণদের ধর্ম।"],
+["এ পৃথিবী অস্থায়ী","নেতিবাচক","এ পৃথিবী চিরস্থায়ী নয়।"],
+["একথা স্বীকার করতেই হয়","নেতিবাচক","একথা অস্বীকার করা চলে না।"],
+["একেই কি বলে সভ্যতা?","নেতিবাচক","একেই সভ্যতা বলে না।"],
+["এখন খাঁটি জিনিস সহজলভ্য নয়","অস্তিবাচক","এখন খাঁটি জিনিস দুর্লভ।"],
+["এখানে আসতেই হলো","নেতিবাচক","এখানে না এসে পারা গেল না।"],
+["এটি ভারী লজ্জার কথা","বিস্ময় বোধক","ছিঃ! কি লজ্জার কথা এটি।"],
+["কীর্তিমানের মৃত্যু নেই","জটিল","যিনি কীর্তিমান, তার মৃত্যু নেই।"],
+["ঘরে এলে খাতির না করবো কেন?","অস্তিবাচক","ঘরে এলে খাতির করব।"],
+["চরিত্রহীন লোক পশুর চেয়েও অধম","জটিল","যে লোক চরিত্রহীন সে পশুর চেয়েও অধম।"],
+["ছাত্রদের অধ্যয়নই তপস্যা","জটিল","যারা ছাত্র, তাদের অধ্যয়নই তপস্যা।"],
+["জননী ও জন্মভূমি কি স্বর্গের চেয়েও প্রিয় নয়?","নির্দেশাত্মক","জননী ও জন্মভূমি স্বর্গের চেয়েও প্রিয়।"],
+["সাতটার সম্পর্কটাকে স্থায়ী করিবার ইচ্ছা আমার নাই।","জটিল","যেহেতু সম্পর্কটা ঠাট্টার সেহেতু স্থায়ী করিবার ইচ্ছা আমার নেই।"],
+["তারা নিয়মিত শিক্ষার্থী নয়","অস্তিবাচক","তারা অনিয়মিত শিক্ষার্থী।"],
+["তিনি ধনী ছিলেন কিন্তু সুখী ছিলেন না","জটিল","যদিও তিনি ধনী ছিলেন, তথাপি সুখী ছিলেন না।"],
+["তুমি অধম বলে আমি উত্তম হবো না কেন?","যৌগিক","তুমি অধম তাই বলে আমি উত্তম হবো না কেন?"],
+["১০ মিনিট পর ট্রেন এলো","যৌগিক","ট্রেন এলো কিন্তু ১০ মিনিট পর।"],
+["দেশপ্রেমিককে কে না ভালোবাসে?","নির্দেশাত্মক","দেশপ্রেমিককে সবাই ভালোবাসে।"],
+["দেশের সেবা করা কর্তব্য","অনুজ্ঞাসূচক","দেশের সেবা করো।"],
+["দুর্জনকে দূরে রাখা উচিত","অনুজ্ঞাসূচক","দুর্জনকে দূরে রেখো।"],
+["দৃশ্যটি বড়ই সুন্দর","বিস্ময় সূচক","বাহ! দৃশ্যটি কি সুন্দর।"],
+["ধনীর কন্যা তার পছন্দ নয়।","অস্তিবাচক","ধনীর কন্যা তার অপছন্দ।"],
+["নদীটি খুব সুন্দর","বিস্ময়সূচক","বাহ! কি সুন্দর নদী।"],
+["পুলিশের লোক জানবি কি করিয়া?","নেতিবাচক","পুলিশের লোক জানিবে না।"],
+["ফুল সকলেই ভালোবাসে","প্রশ্নসূচক","ফুল কে না ভালোবাসে?"],
+["বাংলাদেশ একটি উন্নয়নশীল দেশ","প্রশ্নসূচক","বাংলাদেশ কি একটি উন্নয়নশীল দেশ নয়?"],
+["বাংলাদেশের চিরস্থায়িত্ব কামনা করি","ইচ্ছাসূচক","বাংলাদেশ চিরস্থায়ী হোক।"],
+["বিপদে অধীর হতে নেই","অনুজ্ঞাসূচক","বিপদে অধীর হইয়ো না।"],
+["বিদ্বান হল তার অহংকার নেই","যৌগিক","তিনি বিদ্বান তবুও তার অহংকার নেই।"],
+["মাতৃভূমিকে সকলেই ভালোবাসে","নেতিবাচক","মাতৃভূমিকে ভালোবাসা না এমন কেউ নেই।"],
+["মানুষ মরণশীল","নেতিবাচক","মানুষ অমর নয়।"],
+["মানুষটা সমস্ত রাত খেতে পাবে না","প্রশ্নবাচক","মানুষটা সমস্ত রাত খেতে পাবে কি?"],
+["মিথ্যাবাদীকে কেউ পছন্দ করে না","অস্তিবাচক","মিথ্যাবাদীকে সবাই ঘৃণা করে।"],
+["যা বার্ধক্য, তাকে সব সময় বয়সের ফ্রেমে বাঁধা যায় না","সরল","বার্ধক্যকে সব সময় বয়সের ফ্রেমে বাঁধা যায় না।"],
+["যিনি জ্ঞানী তিনি সত্যিকার ধনী","সরল","জ্ঞানীরাই সত্যিকারের ধনী।"],
+["শম্ভুনাথ এ কথায় একেবারে যোগই দিলেন না।","অস্তিবাচক","শম্ভুনাথ এ কথায় যোগ দেওয়া থেকে একেবারে বিরত থাকলেন।"],
+["শিশুরা দূষণমুক্ত পরিবেশ চায়","নেতিবাচক","শিশুরা দূষিত পরিবেশ চায় না।"],
+["সত্য কথা না বলে বিপদে পড়েছি","যৌগিক","সত্য কথা বলিনি তাই বিপদে পড়েছি।"],
+["সদা সত্য কথা বলা উচিত","অনুজ্ঞাসূচক","সদা সত্য কথা বলবে।"],
+["সরস্বতী বর দেবেন না","প্রশ্নবাচক","সরস্বতী বর দেবেন কি?"],
+["সাহিত্য জীবনের স্বাভাবিক প্রকাশ","প্রশ্নবোধক","সাহিত্য কি জীবনের স্বাভাবিক প্রকাশ নয়?"],
+["সেই বাঁশির সুর খুব মিষ্টি","বিস্ময় সূচক","বাহ! সেই বাঁশির সুর কি মিষ্টি।"],
+["সূর্যোদয়ে অমানিশা কেটে যাবে","জটিল","যখন সূর্যোদয় হবে তখন অমানিশা কেটে যাবে।"],
+["হেমন্তী কোন কথা কহিল না","অস্তিবাচক","হেমন্তী চুপ করিয়া রহিল।"],
+["হেম তাহার অর্থ বুঝিলো না","অস্তিবাচক","হেম তাহার অর্থ বুঝিতে ব্যর্থ হইল।"],
+["ধনীরা প্রায়ই কৃপণ হয়।","জটিল","যারা ধনী, তারা প্রায়ই কৃপণ হয়।"],
+["ভয়াল শব্দে বাজ পড়ছে, এর বিরাম নেই।","সরল","অবিরাম ভয়াল শব্দে বাজ পড়ছে।"],
+["তারা একটি জীর্ণ কুটিরে বাস করে।","জটিল","তারা যে কুটিরে বাস করে তা জীর্ণ।"],
+["না গেলে দেখতে পাবে না।","যৌগিক","যাও, নতুবা দেখতে পাবে না।"],
+["চরিত্রহীন লোক পশুর চেয়েও অধম।","জটিল","যে চরিত্রহীন, সে পশুর চেয়েও অধম।"],
+["তাদের গ্রামে ফিরে যাওয়া চলে না।","প্রশ্ন","তাদের গ্রামে ফিরে যাওয়া চলে কি?"],
+["তারা কি যথার্থ সভ্য বলে দাবি করতে পারে?","নির্দেশ","তারা যথার্থ সভ্য বলে দাবি করতে পারে না।"],
+["আমি প্রশ্ন করি নি।","অস্তি","আমি নীরব ছিলাম।"],
+["তিনি আর এ পথ মাড়ান না।","জটিল","যিনি এই পথ মাড়ান না, তিনি সেই ব্যক্তি।"],
+["শিশুরা দূষণমুক্ত পরিবেশ চায়।","নেতি","শিশুরা দূষিত পরিবেশ চায় না।"],
+["পরোপকারেই পুণ্য লাভ হয়।","নেতি","পরোপকার ব্যতীত পুণ্য লাভ হয় না।"],
+["কাপুরুষরাই মৃত্যুকে ভয় করে।","নেতিবাচক","কাপুরুষ ছাড়া অন্য কেউ মৃত্যুকে ভয় করে না।"],
+["তাতে সমাজ জীবন চলে না।","অস্তিবাচক","তাতে সমাজ জীবন অচল হয়ে পড়ে।"],
+["ইচ্ছে হয় যেন আবার শৈশবে ফিরে যাই।","বিস্ময়","আবার যদি শৈশবে ফিরে যেতে পারতাম।"],
+["সূর্য পশ্চিম দিকে অস্ত যায়।","নেতি","সূর্য পশ্চিম দিক ব্যতীত অস্ত যায় না।"],
+["সুশিক্ষিত লোক মাত্রই স্বশিক্ষিত।","জটিল","যিনি সুশিক্ষিত তিনি স্বশিক্ষিত।"],
+["অনেকের জীবনে প্রথমে দুঃখ আসে, পরে সুখ আসে।","সরল","অনেকের জীবনে দুঃখের পরে সুখ আসে।"],
+["বিদ্বান হলেও তার অহংকার নেই।","যৌগিক","তিনি বিদ্বান কিন্তু নিরহংকার।"],
+["মিথ্যাবাদীকে সবাই অপছন্দ করে।","নেতিবাচক","মিথ্যাবাদীকে কেউ পছন্দ করে না।"],
+["দেখে শুনে পথ চলো।","যৌগিক","দেখো, শুনো ও পথ চলো।"],
+["এমন কেউ নেই যে সুখী হতে চায় না।","অস্তি","সবাই সুখী হতে চায়।"],
+["অভিজ্ঞতা না থাকলে বুঝা যায় না।","অস্তি","অনভিজ্ঞ হলে বুঝা অসম্ভব।"],
+["এ জন্যই তোমাকে সবাই প্রিয়ংবদা না বলে পারে না।","অস্তিবাচক","এ জন্যই তোমাকে সবাই প্রিয়ংবদা বলে।"],
+["বাংলাদেশের রাজধানীর নাম কী, তা জানতে চাই।","প্রশ্ন","বাংলাদেশের রাজধানীর নাম কী?"],
+["সত্য কথা না বলে বিপদে পড়েছি।","জটিল","যেহেতু সত্য কথা বলিনি, তাই বিপদে পড়েছি।"],
+["আমারও ইহাদের উপর স্নেহ আছে।","নেতিবাচক","আমারও ইহাদের ওপর যে স্নেহ নেই তা নয়।"],
+["অসৎ সঙ্গ ত্যাগ করো।","প্রশ্ন","অসৎ সঙ্গ ত্যাগ করা উচিত নয় কি?"],
+["সদা সত্য কথা বলবে।","প্রশ্ন","সদা সত্য কথা বলা উচিত নয় কি?"],
+["গুরুজনের কথা মেনে চলো।","প্রশ্ন","গুরুজনের কথা মেনে চলা উচিত নয় কি?"],
+["এবার কাজে লেগে যাও।","প্রশ্ন","এবার কাজে লেগে না গেলে চলবে কি?"],
+["পুলিশের লোক জানিবে কি করিয়া?","নির্দেশ","পুলিশের লোক জানিবার উপায় নেই।"],
+["এসব কথা সে মুখে আনিতে পারিত না।","অস্তিবাচক","এসব কথা সে মুখে আনিতে অপারগ ছিল।"],
+["ছাত্রদের বিদ্যালয়ের সংখ্যা গণনা করা যায় না।","প্রশ্নসূচক","ছাত্রদের বিদ্যালয়ের সংখ্যা কি গণনা করা যায়?"],
+["তোমাকে এই কটা দিন মাত্র জানিলাম, তবু তোমার হাতেই তা রহিল।","সরল","তোমাকে এই কটা দিন মাত্র জানা সত্ত্বেও তোমার হাতেই তা রহিল।"],
+["পৃথিবীতে অসম্ভব বলে কিছু নেই।","জটিল","যদি ইচ্ছা থাকে, তাহলে পৃথিবীতে সবকিছুই করা সম্ভব।"],
+["সে অনেক চেষ্টা করে সাফল্য লাভ করেছে।","যৌগিক","সে অনেক চেষ্টা করেছে এবং সাফল্য লাভ করেছে।"],
+["এ অবস্থায় কেউ কাউকে চিনতে পারে না।","অস্তিবাচক","এ অবস্থায় কেউ কাউকে চিনতে পারা অসম্ভব।"],
+["যে মিথ্যা কথা বলে তাকে কেউ ভালোবাসে না।","সরল","মিথ্যাবাদীকে কেউ ভালোবাসে না।"],
+["কোথাও ধার পেলাম না বলে তোমার কাছে এসেছি।","সরল","কোথাও ধার না পেয়ে তোমার কাছে এসেছি।"],
+["যদি পাশ করতে চাও, তাহলে পড়ো।","সরল","পাশ করতে চাইলে পড়ো।"],
+["আমার এমন কিছু নেই, যা তোমাকে দিতে পারি।","সরল","তোমাকে দেওয়ার মতো আমার কিছু নেই।"],
+["গাছটি ওপড়ানোর জন্য কারও হাত কি এগিয়ে আসে?","নির্দেশাত্মক","গাছটি ওপড়ানোর জন্য কারও হাত এগিয়ে আসে না।"],
+["ওকে চেনাই যায় না।","অস্তি","ওকে অচেনা মনে হয়।"],
+["আমরা বাধা দিতে পারলাম না।","অস্তিবাচক","আমরা বাধা দিতে অক্ষম ছিলাম।"],
+["সরস্বতী বর দেবেন না।","প্রশ্নবোধক","সরস্বতী বর দেবেন কি?"],
+["মাংসাশী পশু অত্যন্ত বলবান।","জটিল","যে সব পশু মাংস খায় তারা অত্যন্ত বলবান।"],
+["তিনি ধনী হয়েও সুখী ছিলেন না।","যৌগিক","তিনি ধনী ছিলেন কিন্তু সুখী ছিলেন না।"],
+["তিনি দরিদ্র কিন্তু সত্যবাদী।","জটিল","যদিও তিনি দরিদ্র তথাপি তিনি সত্যবাদী।"],
+["যারা জ্ঞানী, তারা সত্যিকার ধনী।","সরল","জ্ঞানীরাই সত্যিকার ধনী।"],
+["পরোপকারীকে সবাই শ্রদ্ধা করে।","যৌগিক","তিনি পরোপকারী তাই তাকে সবাই শ্রদ্ধা করে।"],
+["জামিল বাড়িতে নেই।","নেতি","জামিল বাড়িতে অনুপস্থিত নয়।"],
+["পৃথিবী যে গোলাকার তা আমরা প্রমাণ করতে পারি।","যৌগিক","পৃথিবী গোলাকার এবং তা আমরা প্রমাণ করতে পারি।"],
+["শীতে দরিদ্র মানুষের খুব কষ্ট হয়।","বিস্ময়সূচক","শীতে দরিদ্র মানুষের কী কষ্ট!"],
+["সে একটু বিস্মিত না হয়ে পারে না।","অস্তিবাচক","সে একটু বিস্মিত হতে বাধ্য হল।"],
+["এটা নিঃসন্দেহে যে তুলসী গাছটির যত্ন নিচ্ছে কেউ।","নেতিবাচক","সন্দেহ থাকে না যে, তুলসী গাছটির কেউ যত্ন নিচ্ছে।"],
+["আমি যে গান গাই, তাহা যৌবনের গান।","সরল","আমি যৌবনের গান গাই।"],
+["যার বিদ্যা আছে তিনি সর্বত্র পূজিত হন।","যৌগিক","তিনি বিদ্বান, তাই সর্বত্র পূজিত হন।"],
+["কেহ কহিয়া দিতেছে না কিন্তু তপোবন বলে বোধ হইতেছে।","মিশ্র","যদিও কেহ কহিয়া দিতেছে না তবুও তপোবন বলিয়া মনে হইতেছে।"],
+["এতে দোষ নেই।","প্রশ্নবোধক","এতে দোষ কি?"],
+["ভুল সকলেই করে।","প্রশ্নবোধক","সকলে কি ভুল করে না?"],
+["কোথাও কি তিনি আছেন?","নেতিবাচক","কোথাও তিনি নেই।"],
+["দেশের সেবা করা সকলের কর্তব্য।","অনুজ্ঞাসূচক","দেশের সেবা করো।"],
+["যা বার্ধক্য তা বয়সের ফ্রেমে বাঁধা যায় না।","সরল","বার্ধক্যকে বয়সের ফ্রেমে বাঁধা যায় না।"],
+["সে মরবে তবু এ কথা বলবে না।","জটিল","যদি তার মৃত্যুও হয়, তবুও এ কথা বলবে না।"],
+["দয়া করে সব কথা খুলে বলুন।","যৌগিক","দয়া করুন এবং সব কথা খুলে বলুন।"],
+["ছাত্রদের অধ্যয়নই তপস্যা।","জটিল","যারা ছাত্র অধ্যয়নই তাদের তপস্যা।"],
+["সেই বাঁশির সুর ভারি মিষ্টি।","বিস্ময়সূচক","আহ্! ভারি মিষ্টি সেই বাঁশির সুর!"],
+["ভালো ছেলেরা শিক্ষকের আদেশ পালন করে।","মিশ্র","যারা ভালো ছেলে, তারা শিক্ষকের আদেশ পালন করে।"],
+["মহারাজ, তিনি আশ্রমে নাই।","অস্তিবাচক","মহারাজ, তিনি আশ্রমের বাইরে আছেন।"],
+["প্রিয়ংবদা যথার্থ কহিয়াছে।","নেতিবাচক","প্রিয়ংবদা অযথার্থ কহে নাই।"],
+["তাহারা কি পাষাণ?","নেতিবাচক","তাহারা পাষাণ নয়।"],
+["জননী ও জন্মভূমি কি স্বর্গের চেয়েও প্রিয় নয়?","নির্দেশসূচক","জননী ও জন্মভূমি স্বর্গের চেয়েও প্রিয়।"],
+["আমি তোমাকে নিতে এসেছি।","জটিল","আমি তোমাকে নেব বলে এসেছি।"],
+["যদিও সে দরিদ্র তথাপি সে চরিত্রবান।","যৌগিক","সে দরিদ্র কিন্তু চরিত্রবান।"],
+["মন দিয়ে লেখাপড়া করা উচিত।","অনুজ্ঞাসূচক","মন দিয়ে লেখাপড়া করো।"],
+["হৈম তার অর্থ বুঝল না।","অস্তিবাচক","হৈম তার অর্থ বুঝতে অপারগ রইল।"],
+["তোমার নাম কী?","অনুজ্ঞা","তোমার নাম কী বলো।"],
+["এখনই কি কলেজে যাবে না?","অনুজ্ঞা","এখনই কলেজে যাও।"],
+["তুমি সফল হও।","নির্দেশ","তোমার সাফল্য কামনা করি।"],
+["তাদের জয় হোক।","নির্দেশ","তাদের জয় কামনা করি।"],
+["লোভ পরিত্যাগ করলে সুখে থাকবে।","জটিল","যদি লোভ পরিত্যাগ করো, তাহলে সুখে থাকবে।"],
+["সময় নষ্ট করো না।","নির্দেশ","সময় নষ্ট না করার পরামর্শ দিচ্ছি।"],
+["আমার কথা বিশ্বাস করো, তোমার মঙ্গল হবে।","সরল","আমার কথা বিশ্বাস করলে তোমার মঙ্গল হবে।"],
+["শাহানার স্বাস্থ্য ভালো।","নেতিবাচক","শাহানার স্বাস্থ্য খারাপ নয়।"],
+["মিথ্যাবাদীকে কেউ পছন্দ করে না।","অস্তিবাচক","মিথ্যাবাদীকে সবাই অপছন্দ করে।"],
+["উজ্জ্বল স্বাস্থ্যহীন নয়।","অস্তিবাচক","উজ্জ্বল স্বাস্থ্যবান।"],
+["যে রক্ষক, সে ভক্ষক।","সরল","রক্ষকই ভক্ষক।"],
+["সবাই দেশের সেবা কর।","নির্দেশ","দেশের সেবা করা সকলের কর্তব্য।"],
+["পৃথিবী চিরস্থায়ী নয়।","অস্তিবাচক","পৃথিবী ক্ষণস্থায়ী।"],
+["অন্ধের দুঃখ কেউ বোঝে না।","প্রশ্ন","অন্ধের দুঃখ কি কেউ বোঝে?"],
+["তোমাকে দিয়ে আর কি হবে?","নির্দেশ","তোমাকে দিয়ে আর কিছু হবে না।"],
+["জোর যার মুল্লুক তার।","প্রশ্নবাচক","জোর যার মুল্লুক কি তার নয়?"],
+["পরিশ্রমীরাই সাফল্য লাভ করে।","জটিল","যারা পরিশ্রমী তারাই সাফল্য লাভ করে।"],
+["পঞ্জিকার পাতা উল্টাইতে থাকিল।","নেতিবাচক","পঞ্জিকার পাতা উল্টানো বন্ধ রইল না।"],
+["পুলিশের লোক জানিবে কি করিয়া?","নির্দেশ","পুলিশের লোকের জানিবার কোনো উপায় নেই।"],
+["যাদের বুদ্ধি নেই, তারাই এ কথা বিশ্বাস করবে।","সরল","বুদ্ধিহীনরাই এ কথা বিশ্বাস করবে।"],
+["একলা যেতে ভয় করবে না তো?","অস্তিবাচক","একলা যেতে ভয় করবে কি না, তা জানতে চাই।"],
+["লোভ পরিত্যাগ করলে সুখে থাকবে।","জটিল","যদি লোভ পরিত্যাগ করো, তাহলে সুখে থাকবে।"],
+["দেশের সেবা করা সকলের কর্তব্য।","অনুজ্ঞাসূচক","সকলেই দেশের সেবা করবে।"],
+["এ আশ্রমমৃগ, বধ করিবেন না।","অস্তিবাচক","আশ্রমমৃগ, বধ করা থেকে বিরত হন।"],
+["হৈমন্তী চুপ করিয়া রহিল।","নেতিবাচক","হৈমন্তী কোনো কথা কহিল না।"],
+["যে অন্ধ, তাকে আলো দাও।","সরল","অন্ধকে আলো দাও।"],
+["যদি পড়াশোনা না করো, তাহলে ভবিষ্যৎ অন্ধকার।","যৌগিক","পড়াশোনা করো, নইলে ভবিষ্যৎ অন্ধকার।"],
+["শৈশবে তাঁর বাবা মারা যান।","প্রশ্নবাচক","তাঁর বাবা কি শৈশবে মারা যান নি?"],
+["সুসংবাদটা পেয়ে সে আনন্দিত হলো।","জটিল","যখন সে সুসংবাদটা পেল, তখন সে আনন্দিত হলো।"],
+["কেহ কহিয়া দিতেছে না।","অস্তিবাচক","সকলেই নীরব থাকিতেছে।"],
+["বরফ গলিল না।","অস্তিবাচক","বরফ অগলিত রইল।"],
+["পুলিশের লোক জানিবে না।","প্রশ্নবোধক","পুলিশের লোক জানিবে কি?"],
+["এ কথা কোনো বাপ ভদ্র সমাজে কবুল করিতে চাহিত না।","প্রশ্নবাচক","এ কথা কোনো বাপ ভদ্র সমাজে কবুল করিতে চাহিত কি?"],
+["তোমার এই কটা দিন মাত্র জানিলাম, তবুও তোমার হাতেই তা রহিল।","সরল","তোমাকে এই কটা দিন মাত্র জানা সত্ত্বেও তোমার হাতেই তা রহিল।"],
+["দৃশ্যটি বড়ই সুন্দর।","বিস্ময়সূচক","দৃশ্যটি কী সুন্দর!"],
+["সে ‘কি’ শব্দের ব্যবহার নিয়ে তর্ক করছে।","প্রশ্নবোধক","সে কি ‘কি’ শব্দের ব্যবহার নিয়ে তর্ক করছে না?"],
+["তোমার সব জিনিসই দামি।","নেতি","কোনো জিনিসই সস্তা নয়।"],
+["আজ চাঁদ উঠেছে।","নেতি","আজ চাঁদ না উঠে পারে নি।"],
+["তুমি কি বইটি পছন্দ কর না?","নির্দেশ","তুমি কি বইটি অপছন্দ কর।"],
+["তার বক্তৃতায় কি ভালো ফল হবে?","নির্দেশ","তার বক্তৃতায় ভালো ফল হবে না।"]
+];
+
+const probondho = [
+"মুক্তিযুদ্ধের চেতনা/স্বদেশ প্রেম","মানব কল্যাণে বিজ্ঞান/তথ্যপ্রযুক্তি ও বাংলাদেশ/ডিজিটাল বাংলাদেশ সামাজিক যোগাযোগের মাধ্যম",
+"বাংলাদেশের পোশাক শিল্প: সমস্যা ও সম্ভাবনা","বাংলাদেশের পাটশিল্প: সমস্যা ও সম্ভাবনা",
+"কৃষিক্ষেত্রে বিজ্ঞান/বাংলাদেশের কৃষি বিপ্লব","দেশ গঠনে ছাত্রসমাজের ভূমিকা",
+"জাতি গঠনে নারীসমাজের ভূমিকা/বাংলাদেশে নারীর ক্ষমতায়ন","পরিবেশ দূষণ ও তার প্রতিকার",
+"দুর্নীতি উন্নয়নের অন্তরায়","বৈশ্বিক উষ্ণতা ও জলবায়ু পরিবর্তন এবং বাংলাদেশ",
+"যুদ্ধ ও বর্তমান বিশ্ব/যুদ্ধ নয় শান্তি","মাদকাসক্তির কারণ ও প্রতিকার","অধ্যবসায়","শীতের সকাল"
+];
+
+const oproyog = [
+["আমি এ ঘটনা চাক্ষুষ প্রত্যক্ষ করেছি","আমি এ ঘটনা চাক্ষুষ দেখেছি/ প্রত্যক্ষ করেছি"],
+["তিনি স্বস্ত্রীক ঢাকায় থাকেন","তিনি সস্ত্রীক ঢাকায় থাকেন"],
+["শুধুমাত্র তুমি গেলেই হবে","শুধু/ কেবল তুমি গেলেই হবে"],
+["বৃক্ষটি সমূলসহ উৎপাটিত হয়েছে","বৃক্ষটি সমূলে/ মূলসহ উৎপাটিত হয়েছে"],
+["সকল ছাত্রগণ উপস্থিত ছিল","সকল ছাত্র/ ছাত্ররা উপস্থিত ছিল"],
+["তার চোখে দৃষ্টিশক্তি কম","তার দৃষ্টিশক্তি কম"],
+["তার বৈমাত্রেয় সহোদর ডাক্তার","তার বৈমাত্রেয়/ সহোদর ডাক্তার"],
+["তা প্রমাণ হয়েছে","তা প্রমাণিত হয়েছে"],
+["সে অপমান হয়েছে","সে অপমানিত হয়েছে"],
+["সূর্য উদয় হয়েছে","সূর্য উদিত হয়েছে"],
+["আমি সন্তোষ হলাম","আমি সন্তুষ্ট হলাম"],
+["অশ্রুজলে বুক ভেসে গেল","অশ্রুতে/ চোখের জলে বুক ভেসে গেল"],
+["তাকে এখান থেকে যাইতে হইবে","তাকে এখান থেকে যেতে হবে"],
+["ইহা একটি কিংবদন্তী","ইহা একটি কিংবদন্তি"],
+["বাড়ির মালিক যে পিঠ প্রদর্শন করেছিল তা নয়","বাড়ির মালিক যে পৃষ্ঠ প্রদর্শন করেছিল তা নয়"],
+["অন্নাভাবে প্রতি ঘরে ঘরে হাহাকার","প্রতি ঘরে/ ঘরে ঘরে হাহাকার"],
+["আপনি স্বপরিবারে আমন্ত্রিত","আপনি সপরিবার নিমন্ত্রিত"],
+["দশচক্রে ঈশ্বর ভূত","দশচক্রে ভগবান ভূত"],
+["রবীন্দ্রনাথ ভয়ঙ্কর কবি ছিলেন","রবীন্দ্রনাথ বিখ্যাত কবি ছিলেন"],
+["গাছে কাঁঠাল মাথায় তেল","গাছে কাঁঠাল গোঁফে তেল"],
+["মহারাজ প্রবেশ করিলেন","মহারাজ প্রবেশ করলেন"],
+["উৎপন্ন বৃদ্ধির জন্য প্রচুর পরিশ্রম করতে হবে","উৎপাদন বৃদ্ধির জন্য প্রচুর পরিশ্রম করতে হবে"],
+["খাঁটি গরুর খাঁটি দুধ","গরুর খাঁটি দুধ"],
+["অতি লোভে তাঁতী নষ্ট","অতি লোভে তাঁতি নষ্ট"],
+["লাল বাতি জ্বলাকালীন সময় নামায পড়বেন না","লাল বাতি জ্বলার সময়/ জ্বলাকালীন নামায পড়বেন না"],
+["ঘামজলে শার্ট ভিজে গেছে","ঘামে শার্ট ভিজে গেছে"],
+["এ বিষয়ে অজ্ঞানতাই তার পতনের কারণ","এ বিষয়ে অজ্ঞতাই তার পতনের কারণ"],
+["এটা হচ্ছে ষষ্ঠদশ বার্ষিক সাধারণ সভা","এটা হচ্ছে ষোড়শ বার্ষিক সাধারণ সভা"],
+["স্বজনরা মরাদাহ করতে শ্মশানে গেছে","স্বজনরা শবদাহ করতে শ্মশানে গেছে"],
+["যারে দেখতে নারী তার হাঁটা বাঁকা","যারে দেখতে নারি তার চলন বাঁকা"],
+["কুপুরুষের মতো কথা বলছ কেন?","কাপুরুষের মতো কথা বলছ কেন?"],
+["কীর্তিবাস বাংলা রামায়ণ লিখেছেন","কৃত্তিবাস বাংলা রামায়ণ লিখেছেন"],
+["কথাটি সঠিক নয়","কথাটি ঠিক নয়"],
+["কালীদাস বিখ্যাত কবি","কালিদাস বিখ্যাত কবি"],
+["অতিশয় দুঃখিত হলাম","অত্যন্ত দুঃখ পেলাম"],
+["অভাগা মেয়েটিকে নিয়ে বিপদে পড়েছি","অভাগী মেয়েটিকে নিয়ে বিপদে পড়েছি"],
+["অত্র মিলনায়তনে সবাই উপস্থিত","এই মিলনায়তনে সবাই উপস্থিত"],
+["আমি অহর্নিশি সেই কথাই ভাবি","আমি অহর্নিশ সেই কথাই ভাবি"],
+["আমার সন্তান যেন থাকে দুধভাতে","আমার সন্তান যেন থাকে দুধেভাতে"],
+["এলে তুমি পরে এতদিন","এতদিন পর তুমি এলে"],
+["কথাটি শুনে আমি আশ্চর্য হলাম","কথাটি শুনে আমি আশ্চর্যান্বিত হলাম"],
+["আসছে আগামীকাল কলেজ বন্ধ","আগামীকাল কলেজ বন্ধ"],
+["তারা একত্রে গমন করল","তারা একত্র গমন করল"],
+["শকুনদের দোয়ায় হাতি মরে না","শকুনের দোয়ায় গরু মরে না"],
+["চোখে হলুদ ফুল দেখছি","চোখে সরষে ফুল দেখছি"],
+["অন্যায়ের ফল আবশ্যক","অন্যায়ের ফল অনিবার্য"],
+["সাবধানপূর্বক চলবে","সাবধানে চলবে"],
+["কাব্যটির উৎকর্ষতা প্রশংসনীয়","কাব্যটির উৎকর্ষ প্রশংসনীয়"],
+["অপরাহ্ন লিখতে অনেকে ভুল করে","অপরাহ্ণ লিখতে অনেকে ভুল করে"],
+["আবশ্যকীয় ব্যয়ে কার্পণ্যতা অনুচিত","আবশ্যিক ব্যয়ে কৃপণতা অনুচিত"],
+["এই নিশীথ রাতে কোথায় যাবে","এই নিশীথে কোথায় যাবে"],
+["তিনি শিরোপীড়ায় ভুগছেন","তিনি শিরঃপীড়ায় ভুগছেন"],
+["বিধি লঙ্ঘন হয়েছে","বিধি লঙ্ঘিত হয়েছে"],
+["সারাজীবন ভূতের মজুরি খেটে মরলাম","সারা জীবন ভূতের বেগার খেটে মরলাম"],
+["সে সভায় উপস্থিত ছিলেন","তিনি সভায় উপস্থিত ছিলেন"],
+["মাতাহীন শিশুর কী দুঃখ","মাতৃহীন শিশুর কী দুঃখ!"]
+];
+
+/* ---------------- SECTIONS CONFIG ---------------- */
+const sections = [
+  {id:"uchcharon", label:"উচ্চারণ", type:"flash2", icon:"🔊", desc:"শুদ্ধ উচ্চারণ ফ্ল্যাশকার্ড — শব্দ দেখে উচ্চারণ মনে করুন।"},
+  {id:"banan", label:"বানান", type:"flash2b", icon:"✍️", desc:"অশুদ্ধ বানান দেখে শুদ্ধ রূপ মনে করার ফ্ল্যাশকার্ড।"},
+  {id:"somas", label:"সমাস", type:"flash3", icon:"🧩", desc:"সমস্তপদ, ব্যাসবাক্য ও সমাসের নামসহ কার্ড।"},
+  {id:"porivashik", label:"পারিভাষিক শব্দ", type:"flash2", icon:"🔤", desc:"ইংরেজি পরিভাষার শুদ্ধ বাংলা প্রতিশব্দ।"},
+  {id:"oproyog", label:"অপপ্রয়োগ ও শুদ্ধ প্রয়োগ", type:"flash2b", icon:"🩹", desc:"ভুল বাক্য দেখে শুদ্ধ প্রয়োগ মনে করার কার্ড।"},
+  {id:"diary", label:"দিনলিপি", type:"diary", icon:"📔", desc:"নমুনা দিনলিপি — কলেজের প্রথম দিন, দিবস উদযাপন, ভ্রমণ।"},
+  {id:"email", label:"বৈদ্যুতিক চিঠি", type:"email", icon:"✉️", desc:"সম্ভাব্য বিষয় ও নমুনা ইমেইল/চিঠি।"},
+  {id:"application", label:"আবেদন পত্র", type:"application", icon:"📝", desc:"চাকরির আবেদনপত্রের সম্পূর্ণ নমুনা কাঠামো।"},
+  {id:"sarangsho", label:"সারাংশ", type:"sarangsho", icon:"📄", desc:"গদ্যাংশ ও তার সংক্ষিপ্ত সারাংশ, একসাথে।"},
+  {id:"sarmormo", label:"সারমর্ম", type:"sarangsho2", icon:"🪶", desc:"কবিতার অংশ ও তার সারমর্ম।"},
+  {id:"bhab", label:"ভাব সম্প্রসারণ", type:"chips", icon:"💡", desc:"পরীক্ষায় আসতে পারে এমন ভাব সম্প্রসারণের বিষয়।"},
+  {id:"baktotto", label:"বাক্যান্তর", type:"baktotto", icon:"🔁", desc:"বাক্য রূপান্তরের ১৬৫টি নমুনা — মূল বাক্য থেকে রূপান্তরিত বাক্য।"},
+  {id:"probondho", label:"রচনা তালিকা", type:"chips", icon:"📚", desc:"সম্ভাব্য প্রবন্ধ রচনার বিষয়সমূহ।"}
+];
+
+/* ---------------- PROGRESS STORE (localStorage) ---------------- */
+const STORAGE_KEY = 'sopnochabi_bangla2_v1';
+function loadStore(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {mastered:{}, visited:{}, streak:{last:null, count:0}};
+}
+function saveStore(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }catch(e){} }
+let store = loadStore();
+
+function markMastered(secId, idx, val){
+  const key = secId+'_'+idx;
+  if(val) store.mastered[key] = true; else delete store.mastered[key];
+  saveStore();
+}
+function isMastered(secId, idx){ return !!store.mastered[secId+'_'+idx]; }
+function sectionMasteredCount(secId, total){
+  let n=0; for(let i=0;i<total;i++){ if(store.mastered[secId+'_'+i]) n++; } return n;
+}
+function markVisited(secId){ if(!store.visited[secId]){ store.visited[secId]=true; saveStore(); } }
+
+function touchStreak(){
+  const today = new Date().toISOString().slice(0,10);
+  if(store.streak.last===today) return;
+  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  store.streak.count = (store.streak.last===yesterday) ? (store.streak.count+1) : 1;
+  store.streak.last = today;
+  saveStore();
+}
+
+const SECTION_TOTALS = {
+  get uchcharon(){ return uchcharon.length; },
+  get somas(){ return somas.length; },
+  get porivashik(){ return porivashik.length; },
+  get baktotto(){ return baktotto.length; },
+  get banan(){ return banan.length; },
+  get oproyog(){ return oproyog.length; }
+};
+const TRACKED_IDS = ['uchcharon','somas','porivashik','baktotto','banan','oproyog'];
+const QUIZZABLE = ['uchcharon','somas','porivashik','baktotto','banan','oproyog'];
+
+/* ---------------- RENDER ---------------- */
+function openApp(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('app').classList.add('active');
+  touchStreak();
+  buildNav();
+  buildDashboard();
+  sections.forEach(buildPage);
+  showSection('dashboard');
+}
+
+function buildNav(){
+  const nav = document.getElementById('navList');
+  nav.innerHTML =
+    `<button class="sidebar-home" id="nav-dashboard" onclick="showSection('dashboard')">🏠 ড্যাশবোর্ড</button>` +
+    sections.map((s,i)=>`
+    <button class="nav-item" id="nav-${s.id}" onclick="showSection('${s.id}')">
+      <span class="num mono">${String(i+1).padStart(2,'0')}</span>${s.label}
+    </button>`).join('');
+}
+
+function buildDashboard(){
+  const c = document.getElementById('content');
+  const page = document.createElement('div');
+  page.className = 'page';
+  page.id = 'page-dashboard';
+  page.innerHTML = `
+    <div class="dash-hero">
+      <h2 class="disp">সবগুলো টপিক এক জায়গায় — ১৩টি অধ্যায়</h2>
+      <p>প্রতিটি কার্ড ট্যাপ করলেই পড়া শুরু। ফ্ল্যাশকার্ডে নিজেকে যাচাই করো, কুইজ মোডে স্কোর দেখো — প্রতিদিন একটু একটু করে এগোলেই পুরো বইটা মুখস্থ হয়ে যাবে।</p>
+      <div class="dash-stats">
+        <div class="dstat"><span class="dstat-num mono" id="streakStat">0</span><span class="dstat-label">দিন ধারাবাহিক 🔥</span></div>
+        <div class="dstat"><span class="dstat-num mono" id="overallStat">0%</span><span class="dstat-label">সামগ্রিক অগ্রগতি</span></div>
+      </div>
+    </div>
+    <div class="dash-grid" id="dashGrid"></div>
+  `;
+  c.appendChild(page);
+  refreshDashboardStats();
+}
+
+function dashCardHTML(s,i){
+  let progressHTML;
+  if(TRACKED_IDS.includes(s.id)){
+    const total = SECTION_TOTALS[s.id];
+    const done = sectionMasteredCount(s.id, total);
+    const pct = total ? Math.round(done/total*100) : 0;
+    const label = s.id==='banan' ? 'মুখস্থ' : 'শেখা হয়েছে';
+    progressHTML = `<div class="dc-progress"><div class="dc-progress-fill" style="width:${pct}%"></div></div><div class="dc-pct mono">${done}/${total} ${label}</div>`;
+  } else {
+    const visited = !!store.visited[s.id];
+    progressHTML = `<div class="dc-visit ${visited?'done':''}">${visited?'✓ পড়া হয়েছে':'এখনো পড়া হয়নি'}</div>`;
+  }
+  return `<button class="dash-card" onclick="showSection('${s.id}')">
+    <div class="dc-icon">${s.icon}</div>
+    <div class="dc-title disp">${s.label}</div>
+    <div class="dc-desc">${s.desc}</div>
+    ${progressHTML}
+  </button>`;
+}
+
+function refreshDashboardStats(){
+  const grid = document.getElementById('dashGrid');
+  if(!grid) return;
+  grid.innerHTML = sections.map((s,i)=>dashCardHTML(s,i)).join('');
+  const streakEl = document.getElementById('streakStat');
+  if(streakEl) streakEl.textContent = store.streak.count || 0;
+  let doneAll=0, totalAll=0;
+  TRACKED_IDS.forEach(id=>{
+    const total = SECTION_TOTALS[id];
+    totalAll += total;
+    doneAll += sectionMasteredCount(id, total);
+  });
+  const overallEl = document.getElementById('overallStat');
+  if(overallEl) overallEl.textContent = (totalAll ? Math.round(doneAll/totalAll*100) : 0) + '%';
+}
+
+function showSection(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item, .sidebar-home').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const navBtn = document.getElementById('nav-'+id);
+  if(navBtn) navBtn.classList.add('active');
+  const search = document.getElementById('globalSearch');
+  const searchWrap = document.getElementById('searchWrap');
+  if(search) search.value='';
+  if(searchWrap) searchWrap.style.display = id==='dashboard' ? 'none' : '';
+  if(id==='dashboard'){ refreshDashboardStats(); } else { markVisited(id); }
+  applySearch();
+  if(window.innerWidth<=880){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+  document.getElementById('content').scrollTo({top:0,behavior:'instant'});
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+function buildPage(sec){
+  const c = document.getElementById('content');
+  const page = document.createElement('div');
+  page.className='page'; page.id='page-'+sec.id;
+  let inner = `<div class="page-head"><h2 class="disp">${sec.label}</h2><span class="count mono" id="count-${sec.id}"></span></div>`;
+
+  if(sec.type==="flash2"||sec.type==="flash3"){
+    inner += `<p class="hint">কার্ডে ট্যাপ করে উত্তর দেখো, তারপর নিজেকে যাচাই করো — পারলে ✅ পারি চাপো, না পারলে 🔁 আবার।</p>
+    <div class="tools-row">
+      <button class="tool-btn quiz-launch" onclick="startQuiz('${sec.id}')">🎯 কুইজ মোড শুরু করো</button>
+      <button class="tool-btn" onclick="revealAll('${sec.id}',true)">সব উত্তর দেখাও</button>
+      <button class="tool-btn" onclick="revealAll('${sec.id}',false)">সব বন্ধ করো</button>
+    </div>
+    <div class="card-grid" id="grid-${sec.id}"></div>`;
+  } else if(sec.type==="flash2b"){
+    inner += `<p class="hint">সামনে ভুল রূপ, পেছনে শুদ্ধ রূপ — কার্ডে ট্যাপ করে যাচাই করো।</p>
+    <div class="tools-row">
+      <button class="tool-btn quiz-launch" onclick="startQuiz('${sec.id}')">🎯 কুইজ মোড শুরু করো</button>
+      <button class="tool-btn" onclick="revealAll('${sec.id}',true)">সব উত্তর দেখাও</button>
+      <button class="tool-btn" onclick="revealAll('${sec.id}',false)">সব বন্ধ করো</button>
+    </div>
+    <div class="card-grid card-grid-long" id="grid-${sec.id}"></div>`;
+  } else if(sec.type==="checklist"){
+    inner += `<p class="hint">মুখস্থ হয়ে গেলে কার্ডে ক্লিক করে ✓ দাও — অগ্রগতি ড্যাশবোর্ডে দেখা যাবে।</p>
+    <div class="card-grid" id="grid-${sec.id}"></div>`;
+  } else if(sec.type==="diary"){
+    inner += `<div id="list-${sec.id}"></div>`;
+  } else if(sec.type==="email"){
+    inner += `<div class="ruled" style="margin-bottom:20px;">
+      <b>সম্ভাব্য বিষয়:</b>
+      <ol style="margin:10px 0 0; padding-left:20px; line-height:2;">${emailTopics.map(t=>`<li>${t}</li>`).join('')}</ol>
+    </div>
+    <div id="list-${sec.id}"></div>`;
+  } else if(sec.type==="application"){
+    inner += `<div id="list-${sec.id}"></div>`;
+  } else if(sec.type==="sarangsho"||sec.type==="sarangsho2"){
+    inner += `<div id="list-${sec.id}"></div>`;
+  } else if(sec.type==="chips"){
+    inner += `<div class="chip-list" id="list-${sec.id}"></div>`;
+  } else if(sec.type==="baktotto"){
+    inner += `<div class="tools-row"><button class="tool-btn quiz-launch" onclick="startQuiz('baktotto')">🎯 কুইজ মোড শুরু করো</button></div>
+    <div id="list-${sec.id}"></div>`;
+  }
+  page.innerHTML = inner;
+  c.appendChild(page);
+  renderSectionData(sec);
+}
+
+function cardHTML(secId, idx, front, back, sub, mono){
+  const mastered = isMastered(secId, idx);
+  return `<div class="flip-card ${mastered?'mastered':''}" data-term="${front} ${back} ${sub||''}">
+    <div class="fc-inner" onclick="flipCard(this)">
+      <div class="fc-face fc-front">
+        <div class="fc-term ${mono?'mono':''}">${front}</div>
+        <div class="fc-tap">ট্যাপ করে দেখো</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div>
+          <div class="fc-ans">${back}</div>
+          ${sub?`<div class="fc-sub">${sub}</div>`:''}
+        </div>
+        <div class="fc-grade">
+          <button class="grade-btn again" onclick="event.stopPropagation(); gradeCard(this,'${secId}',${idx},false)">🔁 আবার</button>
+          <button class="grade-btn know" onclick="event.stopPropagation(); gradeCard(this,'${secId}',${idx},true)">✅ পারি</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function checklistHTML(secId, idx, word){
+  const mastered = isMastered(secId, idx);
+  return `<div class="check-card ${mastered?'checked':''}" data-term="${word}" data-sec="${secId}" data-idx="${idx}" onclick="toggleCheck(this)">
+    <span class="chk-box">✓</span><span class="chk-word">${word}</span>
+  </div>`;
+}
+
+function flipCard(inner){
+  inner.closest('.flip-card').classList.toggle('revealed');
+}
+function gradeCard(btn, secId, idx, know){
+  const card = btn.closest('.flip-card');
+  markMastered(secId, idx, know);
+  card.classList.toggle('mastered', know);
+  setTimeout(()=>card.classList.remove('revealed'), 450);
+}
+function toggleCheck(el){
+  const now = !el.classList.contains('checked');
+  el.classList.toggle('checked', now);
+  markMastered(el.dataset.sec, el.dataset.idx, now);
+}
+
+function renderSectionData(sec){
+  if(sec.id==="uchcharon"){
+    document.getElementById('grid-uchcharon').innerHTML = uchcharon.map(([w,p],i)=>cardHTML('uchcharon',i,w,p)).join('');
+  }
+  if(sec.id==="banan"){
+    document.getElementById('grid-banan').innerHTML = banan.map(([wrong,right],i)=>cardHTML('banan',i,wrong,right)).join('');
+  }
+  if(sec.id==="oproyog"){
+    document.getElementById('grid-oproyog').innerHTML = oproyog.map(([wrong,right],i)=>cardHTML('oproyog',i,wrong,right)).join('');
+  }
+  if(sec.id==="somas"){
+    document.getElementById('grid-somas').innerHTML = somas.map(([w,m,t],i)=>cardHTML('somas',i,w,m,t)).join('');
+  }
+  if(sec.id==="porivashik"){
+    document.getElementById('grid-porivashik').innerHTML = porivashik.map(([e,b],i)=>cardHTML('porivashik',i,e,b,null,true)).join('');
+  }
+  if(sec.id==="diary"){
+    document.getElementById('list-diary').innerHTML = diary.map((d,i)=>`
+      <div class="entry" data-term="${d.title} ${d.body}">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span>${d.title}</span><span class="meta">${d.meta}</span>
+        </div>
+        <div class="entry-body">${d.body.split('\n\n').map(p=>`<p>${p}</p>`).join('')}</div>
+      </div>`).join('');
+  }
+  if(sec.id==="email"){
+    document.getElementById('list-email').innerHTML = emails.map(e=>`
+      <div class="entry open" data-term="${e.subject} ${e.body}">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span>বিষয়: ${e.subject}</span><span class="meta">প্রাপক: ${e.to}</span>
+        </div>
+        <div class="entry-body">
+          <p>${e.body}</p>
+          <p style="margin-top:14px;">ইতি,<br><b>${e.sign}</b></p>
+        </div>
+      </div>`).join('');
+  }
+  if(sec.id==="application"){
+    const a = applicationLetter;
+    document.getElementById('list-application').innerHTML = `
+      <div class="ruled">
+        <p class="mono" style="color:var(--muted); font-size:13px;">${a.date}</p>
+        <p style="margin-top:0;"><b>${a.to}</b><br>বিষয়: ${a.subject}</p>
+        <p>${a.body}</p>
+        <table class="letter-table">
+          ${a.fields.map(([k,v])=>`<tr><th style="width:180px;">${k}</th><td>${v}</td></tr>`).join('')}
+        </table>
+        <p><b>শিক্ষাগত যোগ্যতা:</b></p>
+        <table class="letter-table">
+          <tr>${a.table[0].map(h=>`<th>${h}</th>`).join('')}</tr>
+          ${a.table.slice(1).map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+        </table>
+        <p><b>অভিজ্ঞতা:</b> ${a.experience}</p>
+        <p>${a.closing}</p>
+        <p>বিনীত,<br><b>${a.sign}</b></p>
+        <p><b>সংযুক্তি:</b></p>
+        <ol>${a.attachments.map(x=>`<li>${x}</li>`).join('')}</ol>
+      </div>`;
+  }
+  if(sec.id==="sarangsho"){
+    document.getElementById('list-sarangsho').innerHTML = sarangsho.map((x,i)=>`
+      <div class="entry ${i<2?'open':''}" data-term="${x.p} ${x.s}">
+        <div class="entry-head" onclick="toggleEntry(this)"><span>সারাংশ ${i+1}</span><span class="meta">ক্লিক করো</span></div>
+        <div class="entry-body">
+          <p>${x.p}</p>
+          <div class="summary-box"><b>সারাংশ:</b> ${x.s}</div>
+        </div>
+      </div>`).join('');
+  }
+  if(sec.id==="sarmormo"){
+    document.getElementById('list-sarmormo').innerHTML = sarmormo.map((x,i)=>`
+      <div class="entry ${i<1?'open':''}" data-term="${x.p} ${x.s}">
+        <div class="entry-head" onclick="toggleEntry(this)"><span>সারমর্ম ${i+1}</span><span class="meta">ক্লিক করো</span></div>
+        <div class="entry-body">
+          <p style="white-space:pre-line; font-style:italic;">${x.p}</p>
+          <div class="summary-box"><b>সারমর্ম:</b> ${x.s}</div>
+        </div>
+      </div>`).join('');
+  }
+  if(sec.id==="bhab"){
+    document.getElementById('list-bhab').innerHTML = bhabSomprosaron.map((t,i)=>`<div class="chip" data-term="${t}"><span class="n">${i+1}</span>${t}</div>`).join('');
+  }
+  if(sec.id==="probondho"){
+    document.getElementById('list-probondho').innerHTML = probondho.map((t,i)=>`<div class="chip" data-term="${t}"><span class="n">${i+1}</span>${t}</div>`).join('');
+  }
+  if(sec.id==="baktotto"){
+    document.getElementById('list-baktotto').innerHTML = baktotto.map(([o,ty,tr])=>`
+      <div class="bk-row" data-term="${o} ${tr} ${ty}">
+        <span class="orig">${o}</span><span class="type">${ty}</span><span class="arrow">→</span><span class="trans">${tr}</span>
+      </div>`).join('');
+  }
+  updateCount(sec.id);
+}
+
+function toggleEntry(head){
+  head.parentElement.classList.toggle('open');
+}
+function revealAll(id,show){
+  document.querySelectorAll('#grid-'+id+' .flip-card').forEach(c=>c.classList.toggle('revealed',show));
+}
+
+/* ---------------- QUIZ MODE ---------------- */
+let quiz = {secId:null, deck:[], idx:0, correct:0, wrong:0, wrongItems:[]};
+
+function buildQuizDeck(secId){
+  if(secId==='uchcharon') return uchcharon.map(([w,p],i)=>({q:w, a:p, sub:null, idx:i}));
+  if(secId==='somas')     return somas.map(([w,m,t],i)=>({q:w, a:m, sub:t, idx:i}));
+  if(secId==='porivashik')return porivashik.map(([e,b],i)=>({q:e, a:b, sub:null, idx:i, mono:true}));
+  if(secId==='baktotto')  return baktotto.map(([o,ty,tr],i)=>({q:o, a:tr, sub:ty, idx:i}));
+  if(secId==='banan')     return banan.map(([wrong,right],i)=>({q:wrong, a:right, sub:'কোনটি শুদ্ধ?', idx:i}));
+  if(secId==='oproyog')   return oproyog.map(([wrong,right],i)=>({q:wrong, a:right, sub:'শুদ্ধ প্রয়োগ কী?', idx:i}));
+  return [];
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function startQuiz(secId){
+  quiz = {secId, deck:shuffle(buildQuizDeck(secId)), idx:0, correct:0, wrong:0, wrongItems:[]};
+  document.getElementById('quizOverlay').classList.add('show');
+  renderQuizStep();
+}
+function closeQuiz(){
+  document.getElementById('quizOverlay').classList.remove('show');
+  if(quiz.secId){
+    const sec = sections.find(s=>s.id===quiz.secId);
+    if(sec) renderSectionData(sec);
+  }
+  refreshDashboardStats();
+}
+function updateQuizChrome(){
+  const total = quiz.deck.length;
+  const done = Math.min(quiz.idx, total);
+  document.getElementById('quizProgressFill').style.width = (total ? done/total*100 : 0)+'%';
+  document.getElementById('quizScoreLabel').textContent = `✅ ${quiz.correct} · 🔁 ${quiz.wrong}`;
+}
+function renderQuizStep(){
+  const body = document.getElementById('quizBody');
+  updateQuizChrome();
+  if(quiz.idx >= quiz.deck.length){
+    const total = quiz.deck.length;
+    const pct = total ? Math.round(quiz.correct/total*100) : 0;
+    let emoji='🌱', msg='আরেকটু অনুশীলন করলেই হয়ে যাবে।';
+    if(pct>=90){ emoji='🏆'; msg='অসাধারণ! প্রায় সবটাই মনে আছে তোমার।'; }
+    else if(pct>=70){ emoji='🎉'; msg='বেশ ভালো করেছ! আরেকবার ঝালাই করে নাও।'; }
+    else if(pct>=40){ emoji='💪'; msg='চলছে ভালোই — বাকিগুলো আবার দেখে নাও।'; }
+    body.innerHTML = `
+      <div class="quiz-result-emoji">${emoji}</div>
+      <div class="quiz-result-score">${pct}%</div>
+      <div class="quiz-result-msg">${quiz.correct} / ${total} সঠিক হয়েছে — ${msg}</div>
+      <div>
+        ${quiz.wrongItems.length ? `<button class="quiz-btn primary" onclick="retryWrong()">🔁 ভুলগুলো আবার দাও (${quiz.wrongItems.length})</button>`:''}
+        <button class="quiz-btn wrong" onclick="closeQuiz()">বন্ধ করো</button>
+      </div>`;
+    return;
+  }
+  const item = quiz.deck[quiz.idx];
+  body.innerHTML = `
+    <div class="quiz-q ${item.mono?'mono':''}">${item.q}</div>
+    ${item.sub?`<div class="quiz-q-sub">${item.sub}</div>`:''}
+    <div class="quiz-a-box" id="quizAnswerBox">${item.a}</div>
+    <button class="quiz-btn primary" id="quizRevealBtn" onclick="revealQuizAnswer()">উত্তর দেখাও</button>
+    <div id="quizGradeButtons" style="display:none; margin-top:6px;">
+      <button class="quiz-btn wrong" onclick="answerQuiz(false)">🔁 ভুল হয়েছে</button>
+      <button class="quiz-btn right" onclick="answerQuiz(true)">✅ ঠিক ছিল</button>
+    </div>`;
+}
+function revealQuizAnswer(){
+  document.getElementById('quizAnswerBox').style.display='flex';
+  document.getElementById('quizRevealBtn').style.display='none';
+  document.getElementById('quizGradeButtons').style.display='block';
+}
+function answerQuiz(isCorrect){
+  const item = quiz.deck[quiz.idx];
+  if(isCorrect) quiz.correct++; else { quiz.wrong++; quiz.wrongItems.push(item); }
+  markMastered(quiz.secId, item.idx, isCorrect);
+  quiz.idx++;
+  renderQuizStep();
+}
+function retryWrong(){
+  quiz.deck = quiz.wrongItems; quiz.idx=0; quiz.correct=0; quiz.wrong=0; quiz.wrongItems=[];
+  renderQuizStep();
+}
+
+/* ---------------- SEARCH ---------------- */
+function applySearch(){
+  const active = document.querySelector('.page.active');
+  if(!active) return;
+  const q = document.getElementById('globalSearch').value.trim().toLowerCase();
+  const items = active.querySelectorAll('[data-term]');
+  let visible = 0;
+  items.forEach(el=>{
+    const match = !q || el.getAttribute('data-term').toLowerCase().includes(q);
+    el.style.display = match ? '' : 'none';
+    if(match) visible++;
+  });
+  const id = active.id.replace('page-','');
+  const countEl = document.getElementById('count-'+id);
+  if(countEl && items.length) countEl.textContent = q ? `${visible} / ${items.length}` : `${items.length} আইটেম`;
+}
+function updateCount(id){
+  const countEl = document.getElementById('count-'+id);
+  const items = document.querySelectorAll('#page-'+id+' [data-term]').length;
+  if(countEl && items) countEl.textContent = items + ' আইটেম';
+}
+
+window.addEventListener('keydown', e=>{
+  if(e.key==='/' && document.getElementById('app').classList.contains('active')){
+    e.preventDefault();
+    document.getElementById('globalSearch').focus();
+  }
+});
+</script>
+</body>
+</html>
